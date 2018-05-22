@@ -9,6 +9,7 @@ namespace CMSManage.Controllers
 {
     public class MethodsController : Controller
     {
+        //Test
         private CTContext ct = new CTContext();
         public string ChangeAllState()
         {

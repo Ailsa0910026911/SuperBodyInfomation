@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Images\FDM.png" />
     <Content Include="Images\GDLogo.png" />
     <Content Include="Images\GFLogo.png" />

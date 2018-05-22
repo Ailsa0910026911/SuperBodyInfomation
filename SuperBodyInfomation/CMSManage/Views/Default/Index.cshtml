@@ -12,15 +12,17 @@
                 <span>交易通道名称</span>
                 <span>@Html.DropDownList("otitle", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "form-control" })</span>
                 @*<span>手机号码：</span><input type="text" name="phone" id="phone" style="width:120px" class="form-control" />
-                    <span>开始时间：</span>
+                    <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />
+                *@
+                <span>开始时间：</span>
                     <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
                     <span>结束时间：</span>
                     <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
-                    <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />*@
-                <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
-                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
-                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
-                <input type="button" value="批量更改" class="btn btn-danger" onclick="ChangeAllState(); return false;" />
+
+                    <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
+                    <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
+                    <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
+                    <input type="button" value="批量更改" class="btn btn-danger" onclick="ChangeAllState(); return false;" />
             }
         </fieldset>
         <div id="articles">
@@ -37,7 +39,7 @@
     ///全选 全不选
     function selectBox(selectType) {
         var checkboxis = document.getElementsByName("qx");
-        if (selectType == "reverse") {   
+        if (selectType == "reverse") {
             for (var i = 0; i < checkboxis.length; i++) {
                 checkboxis[i].checked = false;
                 $("#quanxuan").checked = false;
@@ -86,7 +88,7 @@
     };
     //单项更改更改
     function ChangeState(id) {
-        if (id!=""&&id!=null) {
+        if (id != "" && id != null) {
             var url = "/Methods/ChangeState";
             var data = "id=" + id;
             $.ajax({
@@ -113,6 +115,5 @@
         $("#M2").addClass("active");
     });
 </script>
-
 
 

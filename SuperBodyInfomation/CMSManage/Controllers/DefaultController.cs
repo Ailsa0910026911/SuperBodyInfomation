@@ -18,7 +18,7 @@ namespace CMSManage.Controllers
 
         #region 收款订单分润处理
         [LoginCheckFilterAttribute(IsCheck = true)]
-        public ActionResult Index(string otitle = "", string TNum = "", int id = 1)
+        public ActionResult Index(string otitle = "", string TNum = "", string startTime = "", string endTime = "", int id = 1)
         {
             var title = ct.FastPayWay.ToList();
             //绑定交易通道下拉列表
@@ -30,6 +30,16 @@ namespace CMSManage.Controllers
             //var startTime = DateTime.Now.AddDays(-30);
             //var model = ct.FastOrder.Where(o=>o.AddTime>startTime).ToList();
             var model = ct.FastOrder.Where(o => o.PayState == 0).ToList();
+            if (startTime != "")
+            {
+                DateTime startDate = DateTime.Parse(startTime);
+                model = model.Where(o => o.AddTime > startDate).ToList();
+            }
+            if (endTime != "")
+            {
+                DateTime endDate = DateTime.Parse(endTime);
+                model = model.Where(o => o.AddTime < endDate).ToList();
+            }
             if (TNum != "")
             {
                 model = model.Where(O => O.TNum == TNum).ToList();
