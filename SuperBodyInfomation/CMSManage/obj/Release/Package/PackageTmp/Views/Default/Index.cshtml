@@ -1,0 +1,117 @@
+﻿@model PagedList<CTModel.FastOrder>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "收款订单分润处理";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <fieldset>
+            @using (Ajax.BeginForm("Index", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "articles", HttpMethod = "Get", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" }, { "class", "form-inline well" } }))
+            {
+                <span>交易通道名称</span>
+                <span>@Html.DropDownList("otitle", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "form-control" })</span>
+                @*<span>手机号码：</span><input type="text" name="phone" id="phone" style="width:120px" class="form-control" />
+                    <span>开始时间：</span>
+                    <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
+                    <span>结束时间：</span>
+                    <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
+                    <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />*@
+                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
+                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
+                <input type="button" value="批量更改" class="btn btn-danger" onclick="ChangeAllState(); return false;" />
+            }
+        </fieldset>
+        <div id="articles">
+            @Html.Partial("_IndexTable", Model)
+        </div>
+        @section scripts
+{
+            @{Html.RegisterMvcPagerScriptResource();}
+            <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    ///全选 全不选
+    function selectBox(selectType) {
+        var checkboxis = document.getElementsByName("qx");
+        if (selectType == "reverse") {   
+            for (var i = 0; i < checkboxis.length; i++) {
+                checkboxis[i].checked = false;
+                $("#quanxuan").checked = false;
+                $("#quanxuan").attr("onclick", "selectBox('all');return false;");
+
+            }
+        }
+        else if (selectType == "all") {
+            for (var i = 0; i < checkboxis.length; i++) {
+                checkboxis[i].checked = true;
+                $("#quanxuan").checked = true;
+                $("#quanxuan").attr("onclick", "selectBox('reverse');return false;");
+
+            }
+        }
+    };
+    //批量更改
+    function ChangeAllState() {
+        var IDs = "";
+        $('input[name="qx"]:checked').each(function () {
+            IDs += $(this).val() + ',';
+        });
+        if (IDs.length > 0) {
+            IDs = IDs.substring(0, IDs.length - 1);
+            var url = "/Methods/ChangeAllState";
+            var data = "IDs=" + IDs;
+            $.ajax({
+                url: url,
+                data: data,
+                type: 'POST',
+                success: function (msg) {
+                    if (msg = "1") {
+                        window.location.reload();
+                        alert("操作成功！");
+                    }
+                    else {
+                        alert("操作失败！");
+                    }
+                }
+            });
+        }
+        else {
+            alert("请选择需要更改的消息！");
+            return false;
+        }
+    };
+    //单项更改更改
+    function ChangeState(id) {
+        if (id!=""&&id!=null) {
+            var url = "/Methods/ChangeState";
+            var data = "id=" + id;
+            $.ajax({
+                url: url,
+                data: data,
+                type: 'POST',
+                success: function (msg) {
+                    if (msg = "1") {
+                        window.location.reload();
+                        alert("操作成功！");
+                    }
+                    else {
+                        alert("操作失败！");
+                    }
+                }
+            });
+        }
+        else {
+            alert("请选择需要更改的消息！");
+            return false;
+        }
+    }
+    $(function () {
+        $("#M2").addClass("active");
+    });
+</script>
+
+
+

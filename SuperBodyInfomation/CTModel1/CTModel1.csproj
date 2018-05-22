@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{411FE625-8447-4109-AA80-BA39357F9E52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CTModel</RootNamespace>
+    <AssemblyName>CTModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdInfo.cs" />
+    <Compile Include="AdTag.cs" />
+    <Compile Include="AgentType.cs" />
+    <Compile Include="APPBlock.cs" />
+    <Compile Include="ApplyCredit.cs" />
+    <Compile Include="ApplyCreditCard.cs" />
+    <Compile Include="ApplyJoin.cs" />
+    <Compile Include="ApplyLoan.cs" />
+    <Compile Include="APPModule.cs" />
+    <Compile Include="AppUpdate.cs" />
+    <Compile Include="Attach.cs" />
+    <Compile Include="BanKaList.cs" />
+    <Compile Include="BanKaOrder.cs" />
+    <Compile Include="BanKaType.cs" />
+    <Compile Include="BaoConfig.cs" />
+    <Compile Include="BaoLog.cs" />
+    <Compile Include="BaoStory.cs" />
+    <Compile Include="BaoUsers.cs" />
+    <Compile Include="BasicBank.cs" />
+    <Compile Include="BasicBankCard.cs" />
+    <Compile Include="BasicBankInfo.cs" />
+    <Compile Include="BasicCarBrand.cs" />
+    <Compile Include="BasicCardBin.cs" />
+    <Compile Include="BasicCity.cs" />
+    <Compile Include="BasicCode.cs" />
+    <Compile Include="BasicDesc.cs" />
+    <Compile Include="BasicDistrict.cs" />
+    <Compile Include="BasicMobile.cs" />
+    <Compile Include="BasicProvince.cs" />
+    <Compile Include="Card.cs" />
+    <Compile Include="CheckResult.cs" />
+    <Compile Include="CheckTask.cs" />
+    <Compile Include="CheckUser.cs" />
+    <Compile Include="CheckUserMoney.cs" />
+    <Compile Include="CTContext.cs" />
+    <Compile Include="CutAct.cs" />
+    <Compile Include="CutLog.cs" />
+    <Compile Include="CutUsers.cs" />
+    <Compile Include="DaiLiApply.cs" />
+    <Compile Include="DaiLiOrder.cs" />
+    <Compile Include="DB_Account_DailyCompared.cs" />
+    <Compile Include="DB_Account_DailyStatistic.cs" />
+    <Compile Include="DeductMoney.cs" />
+    <Compile Include="DownFile.cs" />
+    <Compile Include="DownFileTag.cs" />
+    <Compile Include="Equipment.cs" />
+    <Compile Include="FastConfig.cs" />
+    <Compile Include="FastOrder.cs" />
+    <Compile Include="FastOrderChange.cs" />
+    <Compile Include="FastOrderOP.cs" />
+    <Compile Include="FastPayWay.cs" />
+    <Compile Include="FastSplit.cs" />
+    <Compile Include="FastUser.cs" />
+    <Compile Include="FastUserPay.cs" />
+    <Compile Include="FinTotal.cs" />
+    <Compile Include="HaoWool.cs" />
+    <Compile Include="JobItem.cs" />
+    <Compile Include="JobLog.cs" />
+    <Compile Include="JobOrders.cs" />
+    <Compile Include="JobPayWay.cs" />
+    <Compile Include="JobSet.cs" />
+    <Compile Include="JobUserPay.cs" />
+    <Compile Include="MsgAbout.cs" />
+    <Compile Include="MsgAdmin.cs" />
+    <Compile Include="MsgCallBack.cs" />
+    <Compile Include="MsgHelp.cs" />
+    <Compile Include="MsgNotice.cs" />
+    <Compile Include="MsgTemplate.cs" />
+    <Compile Include="MsgUser.cs" />
+    <Compile Include="OrderCash.cs" />
+    <Compile Include="OrderCashLog.cs" />
+    <Compile Include="OrderF2F.cs" />
+    <Compile Include="OrderHouse.cs" />
+    <Compile Include="OrderProfitLog.cs" />
+    <Compile Include="OrderRecharge.cs" />
+    <Compile Include="Orders.cs" />
+    <Compile Include="OrdersDDLog.cs" />
+    <Compile Include="OrdersPayOnly.cs" />
+    <Compile Include="OrdersRec.cs" />
+    <Compile Include="OrdersRefund.cs" />
+    <Compile Include="OrdersRefundLog.cs" />
+    <Compile Include="OrdersRepair.cs" />
+    <Compile Include="OrdersRepairLog.cs" />
+    <Compile Include="OrderTransfer.cs" />
+    <Compile Include="PayConfig.cs" />
+    <Compile Include="PayConfigChange.cs" />
+    <Compile Include="PayConfigOrder.cs" />
+    <Compile Include="PayConfigTemp.cs" />
+    <Compile Include="PayLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QRCode.cs" />
+    <Compile Include="SalesLog.cs" />
+    <Compile Include="ShareTotal.cs" />
+    <Compile Include="SMSCode.cs" />
+    <Compile Include="SMSLog.cs" />
+    <Compile Include="StopPayAudit.cs" />
+    <Compile Include="SysAdmin.cs" />
+    <Compile Include="SysAgent.cs" />
+    <Compile Include="SysAgentSet.cs" />
+    <Compile Include="SysAsk.cs" />
+    <Compile Include="SysControl.cs" />
+    <Compile Include="sysdiagrams.cs" />
+    <Compile Include="SysLog.cs" />
+    <Compile Include="SysMenu.cs" />
+    <Compile Include="SysMoneySet.cs" />
+    <Compile Include="SysPower.cs" />
+    <Compile Include="SysSet.cs" />
+    <Compile Include="TaskCash.cs" />
+    <Compile Include="TaskCashInfo.cs" />
+    <Compile Include="TaskOrders.cs" />
+    <Compile Include="TaskTimeSet.cs" />
+    <Compile Include="TurnLog.cs" />
+    <Compile Include="TurnProc.cs" />
+    <Compile Include="Turntable.cs" />
+    <Compile Include="TurnUsers.cs" />
+    <Compile Include="UserAsk.cs" />
+    <Compile Include="UserAuth.cs" />
+    <Compile Include="UserBlackList.cs" />
+    <Compile Include="UserCard.cs" />
+    <Compile Include="UserCardOpen.cs" />
+    <Compile Include="UserFrozenLog.cs" />
+    <Compile Include="UserLog.cs" />
+    <Compile Include="UserLoginSceneid.cs" />
+    <Compile Include="UserMaillist.cs" />
+    <Compile Include="UserPay.cs" />
+    <Compile Include="UserPayAgent.cs" />
+    <Compile Include="UserPayChange.cs" />
+    <Compile Include="UserPayCredit.cs" />
+    <Compile Include="UserPayTemp.cs" />
+    <Compile Include="UserPic.cs" />
+    <Compile Include="UserPromoteGet.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="UsersAmountErrLog.cs" />
+    <Compile Include="UsersFace.cs" />
+    <Compile Include="UsersMoveLog.cs" />
+    <Compile Include="UsersPayCard.cs" />
+    <Compile Include="UsersPayCardOpen.cs" />
+    <Compile Include="UserTrack.cs" />
+    <Compile Include="UserTrail.cs" />
+    <Compile Include="VIPOrder.cs" />
+    <Compile Include="WeiXinUsers.cs" />
+    <Compile Include="YYApply.cs" />
+    <Compile Include="YYDaily.cs" />
+    <Compile Include="YYDevice.cs" />
+    <Compile Include="YYPage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

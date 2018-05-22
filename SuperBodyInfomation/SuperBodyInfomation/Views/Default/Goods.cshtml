@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "商品列表";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <header>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label class="sr-only" for="name">选择日期：</label>
+                    <input type="date" id="BeginDate" class="form-control"
+                           placeholder="请输入名称">
+                </div>
+                <span>-</span>
+                <div class="form-group">
+                    <input type="date" id="BeginDate" class="form-control"
+                           placeholder="请输入名称">
+                </div>
+                <button type="submit" class="btn btn-default">导出</button>
+            </form>
+        </header>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>产品</th>
+                    <th>付款日期</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active">
+                    <td>产品1</td>
+                    <td>23/11/2013</td>
+                    <td>待发货</td>
+                </tr>
+                <tr class="success">
+                    <td>产品2</td>
+                    <td>10/11/2013</td>
+                    <td>发货中</td>
+                </tr>
+                <tr class="warning">
+                    <td>产品3</td>
+                    <td>20/10/2013</td>
+                    <td>待确认</td>
+                </tr>
+                <tr class="danger">
+                    <td>产品4</td>
+                    <td>20/10/2013</td>
+                    <td>已退货</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

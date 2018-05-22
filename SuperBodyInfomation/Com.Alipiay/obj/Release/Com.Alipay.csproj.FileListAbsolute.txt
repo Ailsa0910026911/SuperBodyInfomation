@@ -1,0 +1,10 @@
+E:\desktop\Code\SuperBodyInfomation\SuperBodyInfomation\Com.Alipiay\bin\Release\Com.Alipiay.dll
+E:\desktop\Code\SuperBodyInfomation\SuperBodyInfomation\Com.Alipiay\bin\Release\Com.Alipiay.pdb
+E:\desktop\Code\SuperBodyInfomation\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipay.csprojResolveAssemblyReference.cache
+E:\desktop\Code\SuperBodyInfomation\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipiay.dll
+E:\desktop\Code\SuperBodyInfomation\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipiay.pdb
+E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\bin\Release\Com.Alipiay.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\bin\Release\Com.Alipiay.pdb
+E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipay.csprojResolveAssemblyReference.cache
+E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipiay.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Release\Com.Alipiay.pdb

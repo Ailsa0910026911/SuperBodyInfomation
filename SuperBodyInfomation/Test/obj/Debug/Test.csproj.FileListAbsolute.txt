@@ -1,0 +1,12 @@
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\Test.dll.config
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\Test.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\Test.pdb
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\EntityFramework.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\EntityFramework.SqlServer.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\MySql.Data.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\MySql.Data.Entity.EF6.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\EntityFramework.xml
+E:\Code\YKLMCode\SuperBodyInfomation\Test\bin\Debug\EntityFramework.SqlServer.xml
+E:\Code\YKLMCode\SuperBodyInfomation\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+E:\Code\YKLMCode\SuperBodyInfomation\Test\obj\Debug\Test.dll
+E:\Code\YKLMCode\SuperBodyInfomation\Test\obj\Debug\Test.pdb

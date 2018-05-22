@@ -1,0 +1,38 @@
+﻿@model PagedList<SBIModel.ordersinfo>
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "订单列表";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <fieldset>
+            @using (Ajax.BeginForm("Orders", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "articles", HttpMethod = "Get", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" }, { "class", "form-inline well" } }))
+            {
+                <span>手机号码：</span><input type="text" name="phone" id="phone" style="width:120px" class="form-control" />
+                <span>开始时间：</span>
+                <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
+                <span>结束时间：</span>
+                <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
+                <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />
+                <input type="submit" value="搜索(S)" accesskey="S" class="btn btn-search" />
+            }
+        </fieldset>
+        <div id="articles">
+            @Html.Partial("_OrdersTable", Model)
+        </div>
+        @section scripts
+{
+            @{Html.RegisterMvcPagerScriptResource();}
+            <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+        }
+    </div>
+</div>
+<script src="~/Script_Ajax/Orders_Ajax.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#nav_all li").removeClass("active");
+        $("#nav_all").children("li").eq(2).addClass("active");
+    });
+</script>
+

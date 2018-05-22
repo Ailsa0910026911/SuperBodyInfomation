@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Template/css/style.css" rel="stylesheet" />
+    <link href="~/Template/css/style-responsive.css" rel="stylesheet" />
+    <script src="~/Template/js/jquery-1.10.2.min.js"></script>
+    <style type="text/css">
+        .BgColor {
+            background-color: #FCFCFC;
+        }
+
+        .BgColor1 {
+            background-color: #F5F5F5;
+        }
+    </style>
+</head>
+<body class="sticky-header">
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo" style="background-color:white">
+            <a href="#"><img src="~/Images/LOGO.png" /></a>
+        </div>
+        <div class="logo-icon text-center" style="background-color:white">
+            <a href="#"><img style="padding-left:2px;" src="~/Images/LOGO.png" alt=""></a>
+        </div>
+        <div class="left-side-inner">
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li id="M1"><a href="~/Default/Configuration"><i class="fa fa-home"></i> <span>分销信息设置</span></a></li>
+                <li id="M2"><a href="~/Default/Index"><i class="fa fa-laptop"></i> <span>收款订单分润处理</span></a></li>
+                @*<li id="M3"><a href="~/Media/Channel"><i class="fa fa-book"></i> <span>频道分析</span></a></li>
+                <li id="M4"><a href="~/Media/CustomerLevel"><i class="fa fa-tasks"></i> <span>议题信息</span></a> </li>
+                <li id="M5"><a href="~/Media/Monitoring"><i class="fa fa-bar-chart-o"></i> <span>爬虫监测</span></a></li>
+                <li id="M6"><a href="~/Media/CrawlManagement"><i class="fa fa-bug"></i> <span>爬虫管理</span></a></li>
+                <li id="M10"><a href="~/Media/ChannelInfo"><i class="fa fa-pencil-square-o"></i> <span>频道管理</span></a></li>
+                <li id="M7"><a href="~/Media/MediaInfo"><i class="fa fa-cogs"></i> <span>媒体管理</span></a></li>
+                <li id="M8"><a href="~/Media/AnalysisInfo"><i class="fa fa-file-text"></i> <span>文章分析</span></a></li>
+                <li id="M9"><a href="~/Media/CrawlQuality "><i class="fa fa-bars"></i> <span>爬虫质量评测</span></a></li>
+                <li id="M10"><a href="~/Media/MediaAudit "><i class="fa fa-print"></i> <span>媒体审核</span></a></li>
+                <li id="M14"><a href="~/MediaMethods/ItemsCount "><i class="fa fa-bars"></i> <span>查看咨询量</span></a></li>*@
+                @*<li id="M13"><a href="~/SocialMedia/Index "><i class="fa fa-comments-o"></i> <span>社交媒体</span></a></li>
+                    <li id="M11"><a href="~/SocialMedia/Keywords "><i class="fa fa-stack-exchange"></i> <span>posts</span></a></li>
+                    <li id="M12"><a href="~/SocialMedia/PeopleDetail "><i class="fa  fa-dot-circle-o"></i> <span>people</span></a></li>*@
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    <!-- main content start-->
+    <div class="main-content">
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            @*<!--search start-->
+            <form class="searchform" action="/Media/SearchItems" method="">
+                <input type="text" class="form-control" name="keyword" placeholder="文章关键词" />
+            </form>
+            <!--search end-->*@
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li class="btn btn-default dropdown-toggle" style="display:none"><input id="IssueID" value="" /></li>
+
+                    @if (Session["name"]!=null)
+                    {
+                        <li class="btn btn-default dropdown-toggle" style="background-color:white;color:#7a7676" id="Name">@Session["name"]，欢迎登录！</li>
+                        <li class="btn btn-default dropdown-toggle"><a href="~/Default/SignOut">退出</a></li>
+                    }
+                   
+                </ul>
+            </div>
+            <!--notification menu end -->
+            <!-- header section end-->
+
+        </div>
+
+        <section>
+            @RenderBody()
+        </section>
+        <!--footer section start-->
+        <footer>
+            @DateTime.Now.Year - &copy; 亿卡联盟后台管理
+        </footer>
+        <!--footer section end-->
+        @RenderSection("scripts", required: false)
+
+    </div>
+    <!-- main content end-->
+    <script src="~/Template/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="~/Template/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Template/js/bootstrap.min.js"></script>
+    <script src="~/Template/js/modernizr.min.js"></script>
+    <script src="~/Template/js/jquery.nicescroll.js"></script>
+
+    <!--common scripts for all pages-->
+    <script src="~/Template/js/scripts.js"></script>
+
+    @*<script type="text/javascript">
+            $(function () {
+                $.ajax({
+                    type: 'post',
+                    url: '/LoginMedia/LoginMedia',
+                    success: function (result) {
+                        var obj = $.parseJSON(result);
+                        if (obj != null && obj != "") {
+                            $("#Name").html(obj[0] + "，欢迎您登录！");
+                            if (obj[1] != "Common") {
+                                $("#M4").css("display", "none");
+                            }
+                        }
+                    }
+                });
+                var bar = document.all.verticalScrollBar;
+                if (bar != undefined) {
+                    bar.onmousewheel = function (e) {
+                        e = e || window.event;
+                        if (e && e.preventDefault) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        } else {
+                            e.returnvalue = false;
+                            return false;
+                        }
+                    };
+                }
+            });
+        </script>*@
+</body>
+</html>
