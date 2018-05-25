@@ -1,0 +1,90 @@
+﻿@using CTCommon.Extended
+@using Webdiyer.WebControls.Mvc
+@model PagedList<CTModel.FastPayWay>
+<table class="table table-condensed table-hover" id="table">
+    <thead>
+        <tr style="background-color:#EBF3FA">
+            <th>接口名称</th>
+            <th>显示名称</th>
+            <th>组件</th>
+            <th>时间限制</th>
+            <th>限制时间段</th>
+            <th>结算费用</th>
+            <th>状态</th>
+            <th>排序</th>
+            <th>类型</th>
+            <th>入网费率</th>
+            <th>成本费率</th>
+            <th>手续费</th>
+            <th>限额</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="tooltip-test" data-toggle="tooltip" data-placement="top">
+
+                <td>@item.Title</td>
+                <td>@item.ShowName</td>
+                <td>@(item.DllName)(@(item.GroupType))</td>
+                <td>
+                    @if (item.TimeType == 0)
+                {
+                        @("不限制")
+                    }
+                    else
+                    {
+                        <i class="color-green">按天</i>
+                    }
+                </td>
+                <td>
+                    @(item.STime.ToString("HH:mm")) -
+                    @( item.ETime.ToString("HH:mm"))
+                </td>
+                <td><span class="permillage">@GetDispose.GetPoint(item.Cash)</span>元</td>
+                <td>
+                    @if (item.State == 1)
+                {
+                        <i class="fa fa-check color-green"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-times color-red"></i>
+                    }
+                </td>
+                <td>@item.Sort</td>
+                <td class="center">
+                    @if (item.CanOpenBank == 1)
+                    {
+                        <span>银联</span>
+                    }
+
+                </td>
+
+                <td>@(Math.Round(item.InCost3 * 10000) / 100)%</td>
+                <td>@(Math.Round(item.BankCost3 * 10000) / 100)%</td>
+                <td>
+                    @if (item.CanOpenBank == 1)
+                    {
+                        <span>@GetDispose.GetPoint(item.MinCost3)-@GetDispose.GetPoint(item.MaxCost3)</span>
+                    }
+                </td>
+                <td>
+                    @if (item.CanOpenBank == 1)
+                    {
+                        <span>@GetDispose.GetPoint(item.BankSNum)-@GetDispose.GetPoint(item.BankENum)</span>
+                    }
+                </td>
+                <td>
+                    <input value="修改" accesskey="S" class="btn btn-search" data-toggle="modal" onclick="GetFastPayWay(@item.Id)" data-target="#myModalEdit" />
+                    <a class="label label-sm label-danger Ajax" href="Delete?Id=@(item.Id)"><i class="fa fa-wrench"></i>删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+</div>
+<div id="MediaNum">30天订单： @ViewBag.OrderNum</div>

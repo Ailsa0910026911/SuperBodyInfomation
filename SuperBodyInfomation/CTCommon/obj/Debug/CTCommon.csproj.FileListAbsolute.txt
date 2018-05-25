@@ -20,3 +20,14 @@ E:\Codes\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.xml
 E:\Codes\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.csprojResolveAssemblyReference.cache
 E:\Codes\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.dll
 E:\Codes\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.pdb
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\CTCommon.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\CTCommon.pdb
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.OOXML.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.OpenXml4Net.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.OpenXmlFormats.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Debug\NPOI.xml
+E:\Code\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.dll
+E:\Code\SuperBodyInfomation\CTCommon\obj\Debug\CTCommon.pdb

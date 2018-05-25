@@ -57,9 +57,12 @@ namespace CMSManage.Controllers
             }
         }
         // GET: Methods
-        public ActionResult Index()
+        public string GetPoint(decimal num)
         {
-            return View();
+            var num1 = num.ToString();
+            var nl = num1.IndexOf(".");
+            var num2 = num1.Substring(nl);
+            return num2;
         }
     }
 }

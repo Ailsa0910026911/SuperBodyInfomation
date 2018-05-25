@@ -22,3 +22,15 @@ E:\Codes\SuperBodyInfomation\CTModel\bin\Debug\zh-Hans\EntityFramework.SqlServer
 E:\Codes\SuperBodyInfomation\CTModel\obj\Debug\CTModel.csprojResolveAssemblyReference.cache
 E:\Codes\SuperBodyInfomation\CTModel\obj\Debug\CTModel.dll
 E:\Codes\SuperBodyInfomation\CTModel\obj\Debug\CTModel.pdb
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\CTModel.dll.config
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\CTModel.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\CTModel.pdb
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\EntityFramework.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\EntityFramework.SqlServer.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\EntityFramework.xml
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\zh-Hans\EntityFramework.resources.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
+E:\Code\SuperBodyInfomation\CTModel\obj\Debug\CTModel.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\CTModel\obj\Debug\CTModel.dll
+E:\Code\SuperBodyInfomation\CTModel\obj\Debug\CTModel.pdb

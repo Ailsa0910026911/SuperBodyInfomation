@@ -19,7 +19,7 @@ namespace SuperBodyInfomation.Control
 {
     public class DefaultController : Controller
     {
-
+       
         // GET: Default
         public ActionResult Index()
         {

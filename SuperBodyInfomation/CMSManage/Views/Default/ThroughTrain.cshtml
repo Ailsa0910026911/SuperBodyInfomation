@@ -1,0 +1,241 @@
+﻿@model PagedList<CTModel.FastPayWay>
+@using CTCommon.Extended
+@using Webdiyer.WebControls.Mvc
+@{
+
+    ViewBag.Title = "直通车支付配置";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+<link href="~/Template/js/data-tables/DT_bootstrap.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet" />
+<div class="panel panel-default">
+    <div class="panel-body">
+        <fieldset>
+            @using (Ajax.BeginForm("ThroughTrain", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "articles", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" }, { "class", "form-inline well" } }))
+            {
+                @*<span>交易通道名称</span>
+                    <span>@Html.DropDownList("otitle", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "form-control" })</span>*@
+                @*<span>手机号码：</span><input type="text" name="phone" id="phone" style="width:120px" class="form-control" />
+                    <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />
+                *@
+                <span>开始时间：</span>
+                <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
+                <span>结束时间：</span>
+                <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
+
+                <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
+                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
+                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
+                <input value="添加" accesskey="S" class="btn btn-search" data-toggle="modal" data-target="#myModalAdd" />
+            }
+        </fieldset>
+        <div id="articles">
+            @Html.Partial("_ThroughTrainTable", Model)
+        </div>
+        @section scripts
+{
+            @{Html.RegisterMvcPagerScriptResource();}
+            <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+        }
+    </div>
+</div>
+<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" action="AddFastPayWay" method="post" role="form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">通道名称：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="Name" id="Name" placeholder="请输入需要修改的通道名称" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">APP显示名称：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="ShowName" id="ShowName" placeholder="请输入需要修改的显示名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">通道设置：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <span onclick="GetNeekRegState()"><input type="checkbox" name="NeekReg" id="NeekReg" value="1" /><a>需要注商户</a></span>
+                            <span onclick="GetNeekCardState()"><input type="checkbox" name="NeekCard" id="NeekCard" value="1" /><a>需要绑定结算卡</a></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">时间限制：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="TimeType" id="ShowName" placeholder="请选择">
+                                <option value="0">
+                                    不限制
+                                </option>
+                                <option value="1">
+                                    按每天时段
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">限制时间段：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <div class="input-group date form_datetime">
+                                <input type="text" class="form-control" id="STimeHH" name="CreateTime" readonly="" size="16">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary date-reset"><i class="fa fa-times"></i></button>
+                                    <button type="button" class="btn btn-success date-set"><i class="fa fa-calendar"></i></button>
+                                </div>
+                            </div>
+                            -
+                            <div class="input-group date form_datetime">
+                                <input type="text" class="form-control" id="ETimeHH" name="CreateTime" readonly="" size="16">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary date-reset"><i class="fa fa-times"></i></button>
+                                    <button type="button" class="btn btn-success date-set"><i class="fa fa-calendar"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">入网费率:<span class="required"> * </span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="InCost3" id="InCost3" placeholder="请输入需要修改的入网费率">
+                        </div>
+                        <div class="col-sm-1 control-label">
+                            <span>%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">成本费率:<span class="required"> * </span></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="BankCost3" id="BankCost3" placeholder="请输入需要修改的成本费率">
+                        </div>
+                        <div class="col-sm-1 control-label">
+                            <span>%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">手续费:<span class="required"> * </span></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="MinCost3" id="MinCost3" />
+                        </div>
+                        <div class="col-sm-1" style="width: 10px;">-</div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="MaxCost3" id="MaxCost3" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">限额:<span class="required"> * </span></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="BankSNum" id="BankSNum" />
+                        </div>
+                        <div class="col-sm-1" style="width: 10px;">-</div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="BankENum" id="BankENum" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">结算成本：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="Cash" id="Cash" placeholder="请输入需要修改的结算成本">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">排序：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="Sort" id="Sort" placeholder="请输入需要修改的排序">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">状态：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="State" id="State">
+                                <option value="1">显示</option>
+                                <option value="0">隐藏</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">商户号，密钥，通道：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="请分别输入并用英文,隔开" name="QueryArray" id="QueryArray" >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="firstname" class="col-sm-3 control-label">通道类型：<span class="required"> * </span></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="Type" id="Type" placeholder="请输入需要修改的通道类型">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        提交更改
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="~/scripts/jquery.form.js"></script>
+<script src="~/Template/js/bootstrap.js"></script>
+<script src="~/Template/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="~/Template/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#M7").addClass("active");
+
+        $(".form_datetime").datetimepicker({
+            format: "yyyy-mm-dd hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            language: 'zh-CN',
+            pickerPosition: "bottom-left"
+        });
+    });
+    function GetFastPayWay(id) {
+        $.ajax({
+            type: 'post',
+            url: '/Default/GetString?Id='+id,
+            success: function (result) {
+                var obj = $.parseJson(result);
+                $("#Name").val(item.Name);
+            }
+        });
+        
+    }
+    function GetNeekRegState() {
+        if ($("#NeekReg").prop("checked") == true) {
+            $("#NeekReg").attr("checked", false);
+            $("#NeekReg").val("0");
+        }
+        else {
+            $("#NeekReg").attr("checked", true);
+            $("#NeekReg").val("1");
+        }
+    }
+    function GetNeekCardState() {
+        if ($("#NeekCard").prop("checked") == true) {
+            $("#NeekCard").attr("checked", false);
+            $("#NeekCard").val("0");
+        }
+        else {
+            $("#NeekCard").attr("checked", true);
+            $("#NeekCard").val("1");
+        }
+    }
+</script>

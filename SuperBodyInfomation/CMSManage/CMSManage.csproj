@@ -132,6 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="HtmlPage1.html" />
     <Content Include="Images\FDM.png" />
@@ -158,7 +164,15 @@
     <Content Include="Images\ZXLogo.png" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\bootstrap.js" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <None Include="scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="scripts\jquery-1.10.2.js" />
+    <Content Include="scripts\jquery-1.10.2.min.js" />
+    <Content Include="scripts\jquery.form.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="scripts\jquery.validationEngine.js" />
+    <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\MvcPager.js" />
     <Content Include="Template\css\bootstrap-fileupload.min.css" />
     <Content Include="Template\css\bootstrap-reset.css" />
@@ -864,7 +878,6 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\MethodsController.cs" />
     <Compile Include="Extended\LoginCheckFilterAttribute.cs" />
@@ -878,6 +891,7 @@
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_LayoutPage.cshtml" />
     <Content Include="Template\fonts\fonts\fontawesome-webfont.eot" />
@@ -935,7 +949,16 @@
     <Content Include="Views\Shared\_IndexTable.cshtml" />
     <Content Include="Views\Default\Login.cshtml" />
     <Content Include="Views\Default\Configuration.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\CMSWeb.pubxml" />
+    <Content Include="Views\Default\ThroughTrain.cshtml" />
+    <Content Include="Views\Shared\_ThroughTrainTable.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Default\Test.cshtml" />
+    <Content Include="scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -946,7 +969,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Authentication\" />
     <Folder Include="Views\Methods\" />
   </ItemGroup>
   <ItemGroup>
