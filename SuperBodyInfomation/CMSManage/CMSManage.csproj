@@ -955,10 +955,10 @@
     <None Include="Properties\PublishProfiles\CMSWeb.pubxml" />
     <Content Include="Views\Default\ThroughTrain.cshtml" />
     <Content Include="Views\Shared\_ThroughTrainTable.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Default\Test.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Default\ConfigurationList.cshtml" />
+    <Content Include="Views\Shared\_ConfigurationListTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

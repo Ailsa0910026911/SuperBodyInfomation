@@ -6,8 +6,12 @@
     ViewBag.Title = "直通车支付配置";
     Layout = "~/Views/_LayoutPage.cshtml";
 }
-<link href="~/Template/js/data-tables/DT_bootstrap.css" rel="stylesheet" />
-<link href="~/Template/js/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-datepicker/css/datepicker-custom.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-timepicker/css/timepicker.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+<link href="~/Template/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" rel="stylesheet" />
+
 <div class="panel panel-default">
     <div class="panel-body">
         <fieldset>
@@ -18,15 +22,16 @@
                 @*<span>手机号码：</span><input type="text" name="phone" id="phone" style="width:120px" class="form-control" />
                     <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />
                 *@
-                <span>开始时间：</span>
+                @*<span>开始时间：</span>
                 <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
                 <span>结束时间：</span>
                 <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
 
                 <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
                 <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
-                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
-                <input value="添加" accesskey="S" class="btn btn-search" data-toggle="modal" data-target="#myModalAdd" />
+                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />*@
+                <span>操作：</span>
+                <input value="添加" accesskey="S" class="btn btn-search" data-toggle="modal" data-target="#myModalAdd" onclick="GetmyModalLabel()" style="width:54px"/>
             }
         </fieldset>
         <div id="articles">
@@ -42,7 +47,7 @@
 <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" action="AddFastPayWay" method="post" role="form">
+            <form class="form-horizontal" action="SaveFastPayWay" method="post" role="form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
@@ -52,29 +57,35 @@
                     </h4>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group" style="display:none">
+                        <label for="firstname" class="col-sm-3 control-label">Id：</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="Id" id="Id" value="0">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">通道名称：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="Name" id="Name" placeholder="请输入需要修改的通道名称" required>
+                            <input type="text" class="form-control" name="Title" id="Title" placeholder="请输入需要修改的通道名称" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">APP显示名称：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="ShowName" id="ShowName" placeholder="请输入需要修改的显示名称">
+                            <input type="text" class="form-control" name="ShowName" id="ShowName" placeholder="请输入需要修改的显示名称" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">通道设置：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <span onclick="GetNeekRegState()"><input type="checkbox" name="NeekReg" id="NeekReg" value="1" /><a>需要注商户</a></span>
-                            <span onclick="GetNeekCardState()"><input type="checkbox" name="NeekCard" id="NeekCard" value="1" /><a>需要绑定结算卡</a></span>
+                            <span onclick="GetNeekRegState()"><input type="checkbox" name="NeekReg" id="NeekReg" value="0" /><a>需要注商户</a></span>
+                            <span onclick="GetNeekCardState()"><input type="checkbox" name="NeekCard" id="NeekCard" value="0" /><a>需要绑定结算卡</a></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">时间限制：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="TimeType" id="ShowName" placeholder="请选择">
+                            <select class="form-control" name="TimeType" id="TimeType" placeholder="请选择" onchange="GetTimeState()">
                                 <option value="0">
                                     不限制
                                 </option>
@@ -84,11 +95,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="TimeTypeState" style="display:none">
                         <label for="firstname" class="col-sm-3 control-label">限制时间段：<span class="required"> * </span></label>
                         <div class="col-sm-9">
                             <div class="input-group date form_datetime">
-                                <input type="text" class="form-control" id="STimeHH" name="CreateTime" readonly="" size="16">
+                                <input type="text" class="form-control" id="STime" name="STime" readonly="" size="16">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-primary date-reset"><i class="fa fa-times"></i></button>
                                     <button type="button" class="btn btn-success date-set"><i class="fa fa-calendar"></i></button>
@@ -96,7 +107,7 @@
                             </div>
                             -
                             <div class="input-group date form_datetime">
-                                <input type="text" class="form-control" id="ETimeHH" name="CreateTime" readonly="" size="16">
+                                <input type="text" class="form-control" id="ETime" name="ETime" readonly="" size="16">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-primary date-reset"><i class="fa fa-times"></i></button>
                                     <button type="button" class="btn btn-success date-set"><i class="fa fa-calendar"></i></button>
@@ -107,7 +118,7 @@
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">入网费率:<span class="required"> * </span></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="InCost3" id="InCost3" placeholder="请输入需要修改的入网费率">
+                            <input type="text" class="form-control" name="InCost3" id="InCost3" placeholder="请输入需要修改的入网费率" required />
                         </div>
                         <div class="col-sm-1 control-label">
                             <span>%</span>
@@ -116,7 +127,7 @@
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">成本费率:<span class="required"> * </span></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="BankCost3" id="BankCost3" placeholder="请输入需要修改的成本费率">
+                            <input type="text" class="form-control" name="BankCost3" id="BankCost3" placeholder="请输入需要修改的成本费率" required />
                         </div>
                         <div class="col-sm-1 control-label">
                             <span>%</span>
@@ -125,34 +136,34 @@
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">手续费:<span class="required"> * </span></label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="MinCost3" id="MinCost3" />
+                            <input type="text" class="form-control" name="MinCost3" id="MinCost3" required />
                         </div>
                         <div class="col-sm-1" style="width: 10px;">-</div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="MaxCost3" id="MaxCost3" />
+                            <input type="text" class="form-control" name="MaxCost3" id="MaxCost3" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">限额:<span class="required"> * </span></label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="BankSNum" id="BankSNum" />
+                            <input type="text" class="form-control" name="BankSNum" id="BankSNum" required />
                         </div>
                         <div class="col-sm-1" style="width: 10px;">-</div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="BankENum" id="BankENum" />
+                            <input type="text" class="form-control" name="BankENum" id="BankENum" required />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">结算成本：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="Cash" id="Cash" placeholder="请输入需要修改的结算成本">
+                            <input type="text" class="form-control" name="Cash" id="Cash" placeholder="请输入需要修改的结算成本" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">排序：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="Sort" id="Sort" placeholder="请输入需要修改的排序">
+                            <input type="text" class="form-control" name="Sort" id="Sort" placeholder="请输入需要修改的排序" required />
                         </div>
                     </div>
                     <div class="form-group">
@@ -164,18 +175,18 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">商户号，密钥，通道：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="请分别输入并用英文,隔开" name="QueryArray" id="QueryArray" >
+                            <input type="text" class="form-control" placeholder="请分别输入并用英文,隔开" name="QueryArray" id="QueryArray" required />
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">通道类型：<span class="required"> * </span></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="Type" id="Type" placeholder="请输入需要修改的通道类型">
+                            <input type="text" class="form-control" name="Type" id="Type" placeholder="请输入需要修改的通道类型" required />
                         </div>
                     </div>
                 </div>
@@ -191,32 +202,140 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<script src="~/scripts/jquery.form.js"></script>
-<script src="~/Template/js/bootstrap.js"></script>
+<script src="~/Template/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="~/Template/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script src="~/Template/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="~/Template/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="~/Template/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="~/Template/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script src="~/Template/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
+<script src="~/Template/js/pickers-init.js"></script>
+@*<script src="~/scripts/jquery.form.js"></script>*@
+<script src="~/Template/js/bootstrap.js"></script>
+@*<script src="~/Template/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>*@
+@*<script src="~/Template/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>*@
 <script type="text/javascript">
     $(function () {
-        $("#M7").addClass("active");
-
+        $("#M3").addClass("active");
         $(".form_datetime").datetimepicker({
-            format: "yyyy-mm-dd hh:ii",
+            //format: "yyyy-mm-dd hh:ii",
+            format: "hh:ii",
             autoclose: true,
             todayBtn: true,
             language: 'zh-CN',
             pickerPosition: "bottom-left"
         });
     });
+    function GetTimeState() {
+        var tval = $("#TimeType").val();
+        if (tval == "0") {
+            $("#TimeTypeState").css('display', 'none');
+        }
+        else if(tval=="1")
+        {
+            $("#TimeTypeState").css('display', 'block');
+            //$("#TimeTypeState").css("display", "block");
+        }
+    }
+    function GetmyModalLabel() {
+        $("#myModalLabel").text("添加");
+        $("#Id").val("");
+        $("#Title").val("");
+        $("#ShowName").val("");
+        $("#NeekReg").val("0");
+        $("#NeekReg").attr("checked", false);
+        $("#NeekCard").val("0");
+        $("#NeekCard").attr("checked", false);
+        $("#TimeType").val("0");
+        $("#STime").val("");
+        $("#ETime").val("");
+        $("#InCost3").val("");
+        $("#BankCost3").val("");
+        $("#MinCost3").val("");
+        $("#MaxCost3").val("");
+        $("#BankSNum").val("");
+        $("#BankENum").val("");
+        $("#Cash").val("");
+        $("#Sort").val("");
+        $("#State").val("1");
+        $("#QueryArray").val("");
+        $("#Type").val("");
+        GetTimeState();
+    };
+    function DeleteFastPayWay(id) {
+        $.ajax({
+            type: 'post',
+            url: '/Default/DeleteFastPayWay?Id=' + id,
+            success: function (result) {
+                if(result=="1")
+                {
+                    alert("删除操作成功！");
+                    location.reload();
+                }
+                else if(result=="0")
+                {
+                    alert("删除操作失败！");
+                }
+            }
+        });
+
+    }
     function GetFastPayWay(id) {
         $.ajax({
             type: 'post',
-            url: '/Default/GetString?Id='+id,
+            url: '/Default/GetString?Id=' + id,
             success: function (result) {
-                var obj = $.parseJson(result);
-                $("#Name").val(item.Name);
+                var obj = $.parseJSON(result);
+                var Id = obj[0].Id;
+                var Title = obj[0].Title;
+                var ShowName = obj[0].ShowName;
+                var NeekReg = obj[0].NeekReg;
+                var NeekCard = obj[0].NeekCard;
+                var TimeType = obj[0].TimeType;
+                var STime = obj[0].STime.slice(11, 16);
+                var ETime = obj[0].ETime.slice(11, 16);
+                var InCost3 = obj[0].InCost3;
+                var BankCost3 = obj[0].BankCost3;
+                var MinCost3 = obj[0].MinCost3;
+                var MaxCost3 = obj[0].MaxCost3;
+                var BankSNum = obj[0].BankSNum;
+                var BankENum = obj[0].BankENum;
+                var Cash = obj[0].Cash;
+                var Sort = obj[0].Sort;
+                var State = obj[0].State;
+                var QueryArray = obj[0].QueryArray;
+                var Type = obj[0].Type;
+                $("#myModalLabel").text("修改");
+                $("#Id").val(Id);
+                $("#Title").val(Title);
+                $("#ShowName").val(ShowName);
+                if (NeekReg == 1) {
+                    $("#NeekReg").val(NeekReg);
+                    $("#NeekReg").attr("checked", true);
+                }
+                if (NeekCard == 1) {
+                    $("#NeekCard").val(NeekCard);
+                    $("#NeekCard").attr("checked", true);
+                }
+
+                $("#TimeType").val(TimeType);
+                $("#STime").val(STime);
+                $("#ETime").val(ETime);
+                $("#InCost3").val(InCost3 * 100);
+                $("#BankCost3").val(BankCost3 * 100);
+                $("#MinCost3").val(MinCost3);
+                $("#MaxCost3").val(MaxCost3);
+                $("#BankSNum").val(BankSNum);
+                $("#BankENum").val(BankENum);
+                $("#Cash").val(Cash);
+                $("#Sort").val(Sort);
+                $("#State").val(State);
+                $("#QueryArray").val(QueryArray);
+                $("#Type").val(Type);
+                GetTimeState();
             }
         });
-        
+
     }
     function GetNeekRegState() {
         if ($("#NeekReg").prop("checked") == true) {

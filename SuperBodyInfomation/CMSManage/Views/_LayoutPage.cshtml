@@ -31,10 +31,30 @@
         <div class="left-side-inner">
             <!--sidebar nav start-->
             <ul class="nav nav-pills nav-stacked custom-nav">
-                <li id="M1"><a href="~/Default/Configuration"><i class="fa fa-home"></i> <span>分销信息设置</span></a></li>
+                <li class="menu-list" id="M1">
+                    <a href=""><i class="fa fa-home"></i> <span>分销中心设置</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="~/Default/ConfigurationList">展示分销模块</a></li>
+                        <li><a href="~/Default/Configuration">分销模块操作</a></li>
+                    </ul>
+                </li>
+                <li><a href="~/Default/Configuration"><i class="fa fa-home"></i> <span>分销信息配置</span></a></li>
                 <li id="M2"><a href="~/Default/Index"><i class="fa fa-laptop"></i> <span>收款订单分润处理</span></a></li>
-                @*<li id="M3"><a href="~/Media/Channel"><i class="fa fa-book"></i> <span>频道分析</span></a></li>
-                <li id="M4"><a href="~/Media/CustomerLevel"><i class="fa fa-tasks"></i> <span>议题信息</span></a> </li>
+                <li id="M3"><a href="~/Default/ThroughTrain"><i class="fa fa-book"></i> <span>直通车支付配置</span></a></li>
+                <li class="menu-list">
+                    <a href=""><i class="fa fa-tasks"></i> <span>Forms</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="form_layouts.html"> Form Layouts</a></li>
+                        <li><a href="form_advanced_components.html"> Advanced Components</a></li>
+                        <li><a href="form_wizard.html"> Form Wizards</a></li>
+                        <li><a href="form_validation.html"> Form Validation</a></li>
+                        <li><a href="editors.html"> Editors</a></li>
+                        <li><a href="inline_editors.html"> Inline Editors</a></li>
+                        <li><a href="pickers.html"> Pickers</a></li>
+                        <li><a href="dropzone.html"> Dropzone</a></li>
+                    </ul>
+                </li>
+                @*<li id="M4"><a href="~/Media/CustomerLevel"><i class="fa fa-tasks"></i> <span>议题信息</span></a> </li>
                 <li id="M5"><a href="~/Media/Monitoring"><i class="fa fa-bar-chart-o"></i> <span>爬虫监测</span></a></li>
                 <li id="M6"><a href="~/Media/CrawlManagement"><i class="fa fa-bug"></i> <span>爬虫管理</span></a></li>
                 <li id="M10"><a href="~/Media/ChannelInfo"><i class="fa fa-pencil-square-o"></i> <span>频道管理</span></a></li>
@@ -89,13 +109,14 @@
             @DateTime.Now.Year - &copy; 亿卡联盟后台管理
         </footer>
         <!--footer section end-->
-        @RenderSection("scripts", required: false)
+        @RenderSection("Scripts", required: false)
 
     </div>
     <!-- main content end-->
     <script src="~/Template/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="~/Template/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="~/Template/js/bootstrap.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    @*<script src="~/Template/js/bootstrap.min.js"></script>*@
     <script src="~/Template/js/modernizr.min.js"></script>
     <script src="~/Template/js/jquery.nicescroll.js"></script>
 

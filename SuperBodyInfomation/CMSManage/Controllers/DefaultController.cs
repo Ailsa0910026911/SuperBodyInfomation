@@ -18,15 +18,9 @@ namespace CMSManage.Controllers
     public class DefaultController : Controller
     {
         private CTContext ct = new CTContext();
-        public string GetString()
+
+        public ActionResult Test()
         {
-            var Id = Request["id"];
-            int id = int.Parse(Id);
-            var model = ct.FastPayWay.Where(o => o.Id == id);
-            var obj = JsonConvert.SerializeObject(model);
-            return obj;
-        }
-        public ActionResult Test(){
             var num = "17638836608";
             //电信手机号码正则        
             string dianxin = @"^1[3578][01379]\d{8}$";
@@ -47,7 +41,7 @@ namespace CMSManage.Controllers
         }
         // GET: Default
 
-        #region 收款订单分润处理
+        #region 收款订单分润处理（Index）
         [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult Index(string otitle = "", string TNum = "", string startTime = "", string endTime = "", int id = 1)
         {
@@ -86,6 +80,7 @@ namespace CMSManage.Controllers
             return View(model);
         }
         #endregion
+        #region 登录验证
         public ActionResult Login()
         {
             return View();
@@ -103,7 +98,7 @@ namespace CMSManage.Controllers
                     if (model.Count() > 0)
                     {
                         Session["name"] = model[0].UserName;
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Default");
                     }
                     else
                     {
@@ -124,14 +119,17 @@ namespace CMSManage.Controllers
             }
 
         }
+        #endregion
+        #region 退出登录
         public ActionResult SignOut()
         {
             if (Session["name"] != null)
             {
                 Session.Remove("name");
             }
-            return RedirectToAction("Login");
+            return RedirectToAction("Login", "Default");
         }
+        #endregion
         //分销配置
         [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult Configuration(BusinessInfo bi)
@@ -154,7 +152,17 @@ namespace CMSManage.Controllers
                 return View();
             }
         }
+        public ActionResult ConfigurationList(int id = 0)
+        {
+            var model = ct.BusinessInfo.OrderByDescending(o => o.Id).ToPagedList(id, 10);
+            if (Request.IsAjaxRequest())
+                return PartialView("_ConfigurationListTable", model);
+            return View(model);
+        }
+
+        #region 直通车支付配置（ThroughTrain）
         //直通车支付配置
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult ThroughTrain(int id = 1)
         {
             var model = ct.FastPayWay.OrderByDescending(o => o.AddTime).ToPagedList(id, 10);
@@ -162,24 +170,17 @@ namespace CMSManage.Controllers
                 return PartialView("_ThroughTrainTable", model);
             return View(model);
         }
-        public ActionResult Edit(FastPayWay FastPayWay)
+        //获取需要修改的FastPayWay信息
+        public string GetString()
         {
-            if (FastPayWay.Id != 0) FastPayWay = ct.FastPayWay.FirstOrDefault(n => n.Id == FastPayWay.Id);
-            //var a = "yklm123456";
-            //var b = a.GetMD5();
-            if (FastPayWay == null)
-            {
-                ViewBag.ErrorMsg = "数据不存在";
-                return View("Error");
-            }
-            ViewBag.FastPayWay = FastPayWay;
-            if (Request.UrlReferrer != null)
-            {
-                Session["Url"] = Request.UrlReferrer.ToString();
-            }
-            return View();
+            var Id = Request["id"];
+            int id = int.Parse(Id);
+            var model = ct.FastPayWay.Where(o => o.Id == id);
+            var obj = JsonConvert.SerializeObject(model);
+            return obj;
         }
-        public ActionResult Save(FastPayWay FastPayWay, string[] queryArray, int STimeHH, int STimemm, int ETimeHH, int ETimemm)
+        //添加和修改操作
+        public ActionResult SaveFastPayWay(FastPayWay FastPayWay)
         {
             FastPayWay.Cost = FastPayWay.Cost / 100;
             FastPayWay.Cost2 = FastPayWay.Cost2 / 100;
@@ -194,55 +195,61 @@ namespace CMSManage.Controllers
             FastPayWay.InCost3 = FastPayWay.InCost3 / 100;
             if (FastPayWay.Cost < 0 || FastPayWay.BankCost < 0 || FastPayWay.Cost >= 1)
             {
-                ViewBag.ErrorMsg = "费率设置有误";
-                return View("Error");
+                return Content("<script>alert('费率设置有误！');window.history.go(-1);</script>");
             }
             FastPayWay baseFastPayWay = ct.FastPayWay.FirstOrDefault(n => n.Id == FastPayWay.Id);
             if (baseFastPayWay != null)//修改直通车通道
             {
-                //如果是微信支付配置的子商户号没有填写的话，去掉这个元素
-                if (baseFastPayWay.DllName == "WeiXin")
-                {
-                    if (queryArray[4].IsNullOrEmpty())
-                    {
-                        var temp = new ArrayList(queryArray);
-                        temp.RemoveAt(4);
-                        queryArray = (string[])temp.ToArray(typeof(string));
-                    }
-                }
-                if (queryArray != null)
-                {
-                    baseFastPayWay.QueryArray = string.Join(",", queryArray);
-                }
-                baseFastPayWay = Request.ConvertRequestToModel(baseFastPayWay, FastPayWay);
-                baseFastPayWay.HasAliPay = FastPayWay.HasAliPay;
-                baseFastPayWay.HasBank = FastPayWay.HasBank;
-                baseFastPayWay.HasWeiXin = FastPayWay.HasWeiXin;
-                DateTime STime = DateTime.Parse("1990-01-01 " + STimeHH + ":" + STimemm + ":00");
-                DateTime ETime = DateTime.Parse("1990-01-01 " + ETimeHH + ":" + ETimemm + ":" + (ETimeHH == 23 && ETimemm == 59 ? "59" : "00"));
-                baseFastPayWay.STime = STime;
-                baseFastPayWay.ETime = ETime;
+                baseFastPayWay.Title = FastPayWay.Title;
+                baseFastPayWay.ShowName = FastPayWay.ShowName;
+                baseFastPayWay.NeekReg = FastPayWay.NeekReg;
+                baseFastPayWay.NeekCard = FastPayWay.NeekCard;
+                baseFastPayWay.TimeType = FastPayWay.TimeType;
+                baseFastPayWay.STime = FastPayWay.STime;
+                baseFastPayWay.ETime = FastPayWay.ETime;
+                baseFastPayWay.InCost3 = FastPayWay.InCost3;
+                baseFastPayWay.BankCost3 = FastPayWay.BankCost3;
+                baseFastPayWay.MinCost3 = FastPayWay.MinCost3;
+                baseFastPayWay.MaxCost3 = FastPayWay.MaxCost3;
+                baseFastPayWay.BankSNum = FastPayWay.BankSNum;
+                baseFastPayWay.BankENum = FastPayWay.BankENum;
+                baseFastPayWay.Cash = FastPayWay.Cash;
+                baseFastPayWay.Sort = FastPayWay.Sort;
+                baseFastPayWay.State = FastPayWay.State;
+                baseFastPayWay.QueryArray = FastPayWay.QueryArray;
+                baseFastPayWay.Type = FastPayWay.Type;
             }
             else//添加直通车通道
             {
-                FastPayWay.Title = "测试名称";
                 FastPayWay.DllName = "HFJSPay";
                 FastPayWay.AddTime = DateTime.Now;
                 FastPayWay.GroupType = "D0";
                 FastPayWay.Version = "V1.0.0";
                 FastPayWay.CanOpenBank = 1;
-                DateTime STime = DateTime.Parse("1990-01-01 " + STimeHH + ":" + STimemm + ":00");
-                DateTime ETime = DateTime.Parse("1990-01-01 " + ETimeHH + ":" + ETimemm + ":" + (ETimeHH == 23 && ETimemm == 59 ? "59" : "00"));
-                FastPayWay.STime = STime;
-                FastPayWay.ETime = ETime;
-
                 ct.FastPayWay.Add(FastPayWay);
             }
             ct.SaveChanges();
 
-            APIExtensions.ClearCacheAll();
-            ViewBag.Msg = "操作成功";
-            return View("Succeed");
+            return Content("<script>alert('操作成功！');history.go(-1);</script>");
         }
+        //删除操作
+        public string DeleteFastPayWay()
+        {
+            var id = Request["Id"];
+            int Id = int.Parse(id);
+            var model = ct.FastPayWay.Where(o => o.Id == Id).FirstOrDefault();
+            if (model != null)
+            {
+                ct.FastPayWay.Remove(model);
+                ct.SaveChanges();
+                return "1";
+            }
+            else
+            {
+                return "0";
+            }
+
+        }
+        #endregion
     }
 }

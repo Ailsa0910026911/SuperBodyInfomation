@@ -1,0 +1,44 @@
+﻿@using CTCommon.Extended
+@using Webdiyer.WebControls.Mvc
+@model PagedList<CTModel.BusinessInfo>
+<table class="table table-condensed table-hover" id="table">
+    <thead>
+        <tr style="background-color:#EBF3FA">
+            <th>名称</th>
+            <th>Url</th>
+            <th>类型</th>
+            <th>logo</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="tooltip-test" data-toggle="tooltip" data-placement="top">
+                <td>@item.Name</td>
+                <td>@item.Url</td>
+
+                <td>
+                    @if (item.Type == 0)
+                   {
+                        <span>信用卡</span>
+                    }
+                    else
+                    {
+                        <span>贷款</span>
+                    }
+                </td>
+                <td>
+                    <img style="width:30px;height:30px;" src="@item.Img"/>
+                </td>
+                <td>
+                    <a href=""><input value="修改" accesskey="S" class="btn btn-info" data-toggle="modal" data-target="#myModalAdd" onclick="GetFastPayWay(@item.Id)" style="width:54px" /></a>
+                    <input value="删除" class="btn btn-danger" onclick="DeleteFastPayWay(@item.Id)" style="width:54px" />
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+</div>
+

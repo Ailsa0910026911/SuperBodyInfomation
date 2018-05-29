@@ -77,9 +77,8 @@
                     }
                 </td>
                 <td>
-                    <input value="修改" accesskey="S" class="btn btn-search" data-toggle="modal" onclick="GetFastPayWay(@item.Id)" data-target="#myModalEdit" />
-                    <a class="label label-sm label-danger Ajax" href="Delete?Id=@(item.Id)"><i class="fa fa-wrench"></i>删除</a>
-                </td>
+                    <input value="修改" accesskey="S" class="btn btn-info" data-toggle="modal" data-target="#myModalAdd" onclick="GetFastPayWay(@item.Id)" style="width:54px"/>
+                    <input value="删除" class="btn btn-danger" onclick="DeleteFastPayWay(@item.Id)"  style="width:54px"/>
             </tr>
         }
     </tbody>
@@ -87,4 +86,3 @@
 <div class="text-center">
     @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
 </div>
-<div id="MediaNum">30天订单： @ViewBag.OrderNum</div>
