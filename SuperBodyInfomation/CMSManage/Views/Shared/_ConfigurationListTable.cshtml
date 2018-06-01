@@ -32,7 +32,7 @@
                     <img style="width:30px;height:30px;" src="@item.Img"/>
                 </td>
                 <td>
-                    <a href=""><input value="修改" accesskey="S" class="btn btn-info" data-toggle="modal" data-target="#myModalAdd" onclick="GetFastPayWay(@item.Id)" style="width:54px" /></a>
+                    <a href="~/Default/Configuration?Id=@item.Id"><input value="修改" accesskey="S" class="btn btn-info" style="width:54px" /></a>
                     <input value="删除" class="btn btn-danger" onclick="DeleteFastPayWay(@item.Id)" style="width:54px" />
             </tr>
         }

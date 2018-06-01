@@ -35,11 +35,9 @@ namespace SuperBodyInfomation.Alipay
                 Core.LogResult("支付宝测试log：sPara" + sPara);
                 if (sPara.Count > 0)//判断是否有带返回参数
                 {
-                    Core.LogResult("有返回参数");
+                   
                     Notify aliNotify = new Notify();
-                    Core.LogResult("有返回参数1"+aliNotify);
                     bool verifyResult = aliNotify.Verify(sPara, Request.Form["notify_id"], Request.Form["sign"]);
-                    Core.LogResult("验证值：" + verifyResult);
                     if (verifyResult)//验证成功
                     {
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,11 +50,9 @@ namespace SuperBodyInfomation.Alipay
                         //商户订单号
 
                         string out_trade_no = Request.Form["out_trade_no"];
-                        Core.LogResult("商户订单号：" + out_trade_no);
                         //支付宝交易号
 
                         string trade_no = Request.Form["trade_no"];
-                        Core.LogResult("商户订单号：" + trade_no);
                         //交易状态
                         string trade_status = Request.Form["trade_status"];
                         string ID = trade_no;
@@ -124,7 +120,7 @@ namespace SuperBodyInfomation.Alipay
                         }
 
                         //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
+                         
                         Response.Write("success");  //请不要修改或删除
 
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -26,3 +26,17 @@ E:\Code\YKLMCode\SuperBodyInfomation\MvcPager\obj\Release\zh-CHT\Webdiyer.MvcPag
 E:\Code\YKLMCode\SuperBodyInfomation\MvcPager\obj\Release\zh-CHS\Webdiyer.MvcPager.resources.dll
 E:\Code\YKLMCode\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.MvcPager.dll
 E:\Code\YKLMCode\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.MvcPager.pdb
+E:\Code\SuperBodyInfomation\MvcPager\bin\Release\Webdiyer.MvcPager.XML
+E:\Code\SuperBodyInfomation\MvcPager\bin\Release\Webdiyer.MvcPager.dll
+E:\Code\SuperBodyInfomation\MvcPager\bin\Release\Webdiyer.MvcPager.pdb
+E:\Code\SuperBodyInfomation\MvcPager\bin\Release\zh-CHT\Webdiyer.MvcPager.resources.dll
+E:\Code\SuperBodyInfomation\MvcPager\bin\Release\zh-CHS\Webdiyer.MvcPager.resources.dll
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\MvcPager.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.WebControls.Mvc.MvcPagerResources.resources
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.WebControls.Mvc.MvcPagerResources.zh-CHT.resources
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.WebControls.Mvc.MvcPagerResources.zh-CHS.resources
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\MvcPager.csproj.GenerateResource.Cache
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\zh-CHT\Webdiyer.MvcPager.resources.dll
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\zh-CHS\Webdiyer.MvcPager.resources.dll
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.MvcPager.dll
+E:\Code\SuperBodyInfomation\MvcPager\obj\Release\Webdiyer.MvcPager.pdb

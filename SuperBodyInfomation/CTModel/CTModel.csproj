@@ -82,6 +82,7 @@
     <Compile Include="BasicMobile.cs" />
     <Compile Include="BasicProvince.cs" />
     <Compile Include="BusinessInfo.cs" />
+    <Compile Include="BusinessShareProfit.cs" />
     <Compile Include="BusinessUsers.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CheckResult.cs" />

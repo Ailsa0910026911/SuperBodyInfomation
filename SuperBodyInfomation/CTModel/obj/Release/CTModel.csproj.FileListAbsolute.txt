@@ -10,3 +10,15 @@ E:\Code\YKLMCode\SuperBodyInfomation\CTModel\bin\Release\zh-Hans\EntityFramework
 E:\Code\YKLMCode\SuperBodyInfomation\CTModel\obj\Release\CTModel.csprojResolveAssemblyReference.cache
 E:\Code\YKLMCode\SuperBodyInfomation\CTModel\obj\Release\CTModel.dll
 E:\Code\YKLMCode\SuperBodyInfomation\CTModel\obj\Release\CTModel.pdb
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\CTModel.dll.config
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\CTModel.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\CTModel.pdb
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\EntityFramework.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\EntityFramework.SqlServer.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\EntityFramework.xml
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\EntityFramework.SqlServer.xml
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\zh-Hans\EntityFramework.resources.dll
+E:\Code\SuperBodyInfomation\CTModel\bin\Release\zh-Hans\EntityFramework.SqlServer.resources.dll
+E:\Code\SuperBodyInfomation\CTModel\obj\Release\CTModel.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\CTModel\obj\Release\CTModel.dll
+E:\Code\SuperBodyInfomation\CTModel\obj\Release\CTModel.pdb

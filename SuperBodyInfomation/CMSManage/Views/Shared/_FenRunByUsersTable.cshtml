@@ -1,0 +1,31 @@
+﻿@using CTCommon.Extended
+@using Webdiyer.WebControls.Mvc
+@model PagedList<CTModel.Users>
+<table class="table table-condensed table-hover" id="table">
+    <thead>
+        <tr style="background-color:#EBF3FA">
+            <th>名字</th>
+            <th>手机号</th>
+            <th>身份证</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="tooltip-test" data-toggle="tooltip" data-placement="top">
+                <td>@item.TrueName</td>
+                <td>@item.UserName</td>
+                <td>@item.CardId</td>
+                <td>
+                    <input value="分润" onclick="DistributionFenRun(@item.Id)" accesskey="S" class="btn btn-info" style="width:54px" />
+                    @*<input value="删除" class="btn btn-danger" onclick="DeleteFastPayWay(@item.Id)" style="width:54px" />*@
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="text-center">
+    @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "id", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+</div>
+
+

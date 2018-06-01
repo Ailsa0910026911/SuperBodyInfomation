@@ -88,5 +88,7 @@ namespace CTModel
         public string Phone { get; set; }
         [StringLength(50)]
         public string AuthorizatonReason { get; set; }
+        [StringLength(50)]
+        public string Edit { get; set; }
     }
 }

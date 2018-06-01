@@ -22,3 +22,15 @@ E:\Code\YKLMCode\SuperBodyInfomation\SBIModel\bin\Debug\EntityFramework.SqlServe
 E:\Code\YKLMCode\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.csprojResolveAssemblyReference.cache
 E:\Code\YKLMCode\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.dll
 E:\Code\YKLMCode\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.pdb
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\SBIModel.dll.config
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\SBIModel.dll
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\SBIModel.pdb
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\EntityFramework.dll
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\EntityFramework.SqlServer.dll
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\MySql.Data.dll
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\MySql.Data.Entity.EF6.dll
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\EntityFramework.xml
+E:\Code\SuperBodyInfomation\SBIModel\bin\Debug\EntityFramework.SqlServer.xml
+E:\Code\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.dll
+E:\Code\SuperBodyInfomation\SBIModel\obj\Debug\SBIModel.pdb

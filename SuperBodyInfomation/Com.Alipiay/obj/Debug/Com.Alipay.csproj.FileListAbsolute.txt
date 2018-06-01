@@ -8,3 +8,8 @@ E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\bin\Debug\Com.Alipiay.pdb
 E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipay.csprojResolveAssemblyReference.cache
 E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipiay.dll
 E:\Code\YKLMCode\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipiay.pdb
+E:\Code\SuperBodyInfomation\Com.Alipiay\bin\Debug\Com.Alipiay.dll
+E:\Code\SuperBodyInfomation\Com.Alipiay\bin\Debug\Com.Alipiay.pdb
+E:\Code\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipay.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipiay.dll
+E:\Code\SuperBodyInfomation\Com.Alipiay\obj\Debug\Com.Alipiay.pdb

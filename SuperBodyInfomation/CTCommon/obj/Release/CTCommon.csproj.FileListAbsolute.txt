@@ -9,3 +9,14 @@ E:\Code\YKLMCode\SuperBodyInfomation\CTCommon\bin\Release\NPOI.xml
 E:\Code\YKLMCode\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.csprojResolveAssemblyReference.cache
 E:\Code\YKLMCode\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.dll
 E:\Code\YKLMCode\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.pdb
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\CTCommon.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\CTCommon.pdb
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\ICSharpCode.SharpZipLib.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\NPOI.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\NPOI.OOXML.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\NPOI.OpenXml4Net.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\NPOI.OpenXmlFormats.dll
+E:\Code\SuperBodyInfomation\CTCommon\bin\Release\NPOI.xml
+E:\Code\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.csprojResolveAssemblyReference.cache
+E:\Code\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.dll
+E:\Code\SuperBodyInfomation\CTCommon\obj\Release\CTCommon.pdb

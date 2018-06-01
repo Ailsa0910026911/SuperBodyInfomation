@@ -158,6 +158,7 @@ namespace CTModel
         public virtual DbSet<YYDaily> YYDaily { get; set; }
         public virtual DbSet<YYDevice> YYDevice { get; set; }
         public virtual DbSet<YYPage> YYPage { get; set; }
+        public virtual DbSet<BusinessShareProfit> BusinessShareProfit { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1632,6 +1633,41 @@ namespace CTModel
             modelBuilder.Entity<VIPOrder>()
                 .Property(e => e.SameGet)
                 .HasPrecision(19, 4);
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S1_4)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S1_5)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S1_6)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S1_1)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S0_0)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S2_6_5)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S2_6_4)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S2_5_4)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<BusinessShareProfit>()
+                .Property(e => e.S3_6_5_4)
+                .HasPrecision(18, 4);
         }
     }
 }

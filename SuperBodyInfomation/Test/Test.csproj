@@ -59,14 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessInfo.cs" />
-    <Compile Include="BusinessUsers.cs" />
     <Compile Include="Class1.cs" />
-    <Compile Include="CTContext.cs" />
-    <Compile Include="goods.cs" />
-    <Compile Include="ordersinfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SBIContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -130,26 +130,77 @@ namespace CMSManage.Controllers
             return RedirectToAction("Login", "Default");
         }
         #endregion
+        #region 分销中心设置
         //分销配置
         [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult Configuration(BusinessInfo bi)
         {
-            if (bi.Name != "" && bi.Name != null)
+            ViewBag.Configuration = "添加";
+            var id = Request["Id"];
+            if (id != "" && id != null)
             {
-                try
+
+                int num = int.Parse(id);
+                var model = ct.BusinessInfo.Where(o => o.Id == num).FirstOrDefault();
+                if (bi.Edit == "" || bi.Edit == null)
                 {
-                    ct.BusinessInfo.Add(bi);
-                    ct.SaveChanges();
-                    return Content("<script>alert('添加成功！');history.go(-1);</script>");
+                    model.Edit = "0";
+                    ViewBag.BusinessInfo = model;
+                    ViewBag.Configuration = "修改";
+                    return View();
                 }
-                catch (Exception e)
+                else
                 {
-                    return Content("<script>alert('添加失败！原因：'" + e.Message + ");history.go(-1);</script>");
+                    model.Name = bi.Name;
+                    model.Url = bi.Url;
+                    model.Type = bi.Type;
+                    model.Img = bi.Img;
+                    model.OneDescribe = bi.OneDescribe;
+                    model.Describe = bi.Describe;
+                    model.Limit = bi.Limit;
+                    model.SuccessRate = bi.SuccessRate;
+                    model.CompanyName = bi.CompanyName;
+                    model.InterestRate = bi.InterestRate;
+                    model.ServiceCharge = bi.ServiceCharge;
+                    model.Age = bi.Age;
+                    model.ApplicationMaterial = bi.ApplicationMaterial;
+                    model.AuthorizatonReason = bi.AuthorizatonReason;
+                    model.HandlingTime = bi.HandlingTime;
+                    model.LengthOfMaturity = bi.LengthOfMaturity;
+                    model.ModeOfRepayment = bi.ModeOfRepayment;
+                    model.Prepayment = bi.Prepayment;
+                    model.ReviewTheWay = bi.ReviewTheWay;
+                    model.CallBack = bi.CallBack;
+                    model.MoneyWay = bi.MoneyWay;
+                    model.MoneyDelete = bi.MoneyDelete;
+                    model.SelectCredit = bi.SelectCredit;
+                    model.DownloadAPP = bi.DownloadAPP;
+                    model.ApplicationProcedure = bi.ApplicationProcedure;
+                    model.Adress = bi.Adress;
+                    model.Phone = bi.Phone;
+                    ct.SaveChanges();
+                    return RedirectToAction("ConfigurationList", "Default");
                 }
             }
             else
             {
-                return View();
+                if (bi.Name != "" && bi.Name != null)
+                {
+                    try
+                    {
+                        ct.BusinessInfo.Add(bi);
+                        ct.SaveChanges();
+                        return Content("<script>alert('添加成功！');history.go(-1);</script>");
+                    }
+                    catch (Exception e)
+                    {
+                        return Content("<script>alert('添加失败！原因：'" + e.Message + ");history.go(-1);</script>");
+                    }
+                }
+                else
+                {
+                    return View();
+                }
             }
         }
         public ActionResult ConfigurationList(int id = 0)
@@ -160,6 +211,7 @@ namespace CMSManage.Controllers
             return View(model);
         }
 
+        #endregion
         #region 直通车支付配置（ThroughTrain）
         //直通车支付配置
         [LoginCheckFilterAttribute(IsCheck = true)]
@@ -251,5 +303,87 @@ namespace CMSManage.Controllers
 
         }
         #endregion
+        //分销分润百分比配置
+        public ActionResult DistributionFenRunList(int id = 1)
+        {
+            var model = ct.BusinessShareProfit.OrderByDescending(o => o.Id).ToPagedList(id, 10);
+            if (Request.IsAjaxRequest())
+                return PartialView("_DistributionFenRunListTable", model);
+            return View(model);
+        }
+
+        //添加/修改 BusinessShareProfit
+        public ActionResult DistributionFenRun(BusinessShareProfit bs)
+        {
+            ViewBag.BSTitle = "添加";
+            var model = ct.BusinessShareProfit.Where(o => o.Id == bs.Id).FirstOrDefault();
+            if (model != null)
+            {
+                if (bs.Extention == "" || bs.Extention == null)
+                {
+                    ViewBag.BSTitle = "修改";
+                    model.Extention = "0";
+                    ViewBag.BusinessShareProfit = model;
+                    return View();
+                }
+                else
+                {
+                    model.S0_0 = bs.S0_0;
+                    model.S1_1 = bs.S1_1;
+                    model.S1_4 = bs.S1_4;
+                    model.S1_5 = bs.S1_5;
+                    model.S1_6 = bs.S1_6;
+                    model.S2_5_4 = bs.S2_5_4;
+                    model.S2_6_4 = bs.S2_6_4;
+                    model.S2_6_5 = bs.S2_6_5;
+                    model.S3_6_5_4 = bs.S3_6_5_4;
+                    try
+                    {
+                        ct.SaveChanges();
+                        return Content("<script>alert('修改成功！');</script>");
+                    }
+                    catch
+                    {
+                        return Content("<script>alert('修改失败！');</script>");
+                    }
+                }
+            }
+            else
+            {
+                if (bs.S0_0 != null)
+                {
+                    try
+                    {
+                        ct.BusinessShareProfit.Add(bs);
+                        ct.SaveChanges();
+                        return Content("<script>alert('添加成功！');</script>");
+                    }
+                    catch
+                    {
+                        return Content("<script>alert('添加失败！');</script>");
+                    }
+                }
+                else
+                {
+                    return View();
+                }
+            }
+        }
+        public ActionResult FenRunByUsers(string Name = "", string Phone = "", int id = 1)
+        {
+            var model = ct.Users.OrderByDescending(o => o.AddTime).ToList();
+            if (!string.IsNullOrWhiteSpace(Phone))
+            {
+                model = model.Where(o => o.UserName == Phone).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                model = model.Where(o => o.TrueName == Name).ToList();
+            }
+            model = model.ToPagedList(id, 10);
+            if (Request.IsAjaxRequest())
+                return PartialView("_FenRunByUsersTable", model);
+            return View(model);
+        }
     }
 }

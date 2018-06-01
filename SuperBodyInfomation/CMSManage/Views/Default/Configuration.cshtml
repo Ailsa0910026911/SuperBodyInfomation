@@ -1,167 +1,198 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "分销模块操作";
     Layout = "~/Views/_LayoutPage.cshtml";
+    CTModel.BusinessInfo item = new CTModel.BusinessInfo();
+    if (ViewBag.BusinessInfo != null)
+    {
+        item = ViewBag.BusinessInfo;
+    }
+
 }
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                添加相关分销信息
+                <span>@ViewBag.Configuration</span>相关分销信息
             </header>
             <div class="panel-body">
                 <form class="form-horizontal adminex-form" action="Configuration" method="post">
+                    <div class="form-group" style="display:none">
+                        <label class="col-sm-2 col-sm-2 control-label">ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="Id" id="Id" class="form-control" value="@item.Id">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <label class="col-sm-2 col-sm-2 control-label">Edit</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="Edit" id="Edit" class="form-control" value="@item.Edit" >
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">名称</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Name" id="Name" class="form-control" placeholder="例如：空投">
+                            <input type="text" name="Name" id="Name" class="form-control" value="@item.Name" placeholder="例如：空投">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">产品链接</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Url" id="Url" class="form-control" placeholder="例如：https://12i.cn/AyyhSh">
+                            <input type="text" name="Url" id="Url" class="form-control" value="@item.Url" placeholder="例如：https://12i.cn/AyyhSh">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">类型</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="Type" readonly="true" id="Type">
-                                <option value="0">信用卡</option>
-                                <option value="1">贷款</option>
+                                @if (item.Type == 0)
+                                {
+                                    <option value="0" selected>信用卡</option>
+                                    <option value="1">贷款</option>
+                                }
+                                else
+                                {
+                                    <option value="0">信用卡</option>
+                                    <option value="1" selected>贷款</option>
+                                }
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">产品logo</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Img" id="Img" class="form-control" value="http://cms.yikalianmeng.com/Images/.png" placeholder="例如：http://cts.slyklm.com/images/%E6%99%AE%E6%B4%B1%E8%8C%B6.png">
+                            @if (item.Url != null && item.Url != "")
+                            {
+                                <input type="text" name="Img" id="Img" class="form-control" value="@item.Img" placeholder="例如：http://cts.slyklm.com/images/%E6%99%AE%E6%B4%B1%E8%8C%B6.png">
+                            }
+                            else
+                            { <input type="text" name="Img" id="Img" class="form-control" value="http://cms.yikalianmeng.com/Images/.png" placeholder="例如：http://cts.slyklm.com/images/%E6%99%AE%E6%B4%B1%E8%8C%B6.png">
+                            }
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">一句话描述</label>
                         <div class="col-sm-10">
-                            <input type="text" name="OneDescribe" id="OneDescribe" class="form-control" placeholder="例如：申请方便 纯信用贷 放款快！">
+                            <input type="text" name="OneDescribe" id="OneDescribe" value="@item.OneDescribe" class="form-control" placeholder="例如：申请方便 纯信用贷 放款快！">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">产品详细描述</label>
                         <div class="col-sm-10">
-                            <textarea rows="6" name="Describe" id="Describe" class="form-control" placeholder="例如：1.xxx#2.xxx#3.xxx（多条介绍请用#隔开）"></textarea>
+                            <textarea rows="6" name="Describe" id="Describe" value="@item.Describe" class="form-control" placeholder="例如：1.xxx#2.xxx#3.xxx（多条介绍请用#隔开）"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">产品额度</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Limit" id="Limit" class="form-control" placeholder="例如：1000-5000">
+                            <input type="text" name="Limit" id="Limit" value="@item.Limit" class="form-control" placeholder="例如：1000-5000">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">成功率</label>
                         <div class="col-sm-10">
-                            <input type="text" name="SuccessRate" id="SuccessRate" class="form-control" placeholder="例如：10-20%">
+                            <input type="text" name="SuccessRate" id="SuccessRate" value="@item.SuccessRate" class="form-control" placeholder="例如：10-20%">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">公司名称</label>
                         <div class="col-sm-10">
-                            <input type="text" name="CompanyName" id="CompanyName" class="form-control" placeholder="例如：超体信息技术（上海）有限公司">
+                            <input type="text" name="CompanyName" id="CompanyName" value="@item.CompanyName" class="form-control" placeholder="例如：超体信息技术（上海）有限公司">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">利率</label>
                         <div class="col-sm-10">
-                            <input type="text" name="InterestRate" id="InterestRate" class="form-control" placeholder="例如：0.02%(日)，3%(月)">
+                            <input type="text" name="InterestRate" id="InterestRate" value="@item.InterestRate" class="form-control" placeholder="例如：0.02%(日)，3%(月)">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">服务费</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ServiceCharge" id="ServiceCharge" class="form-control" placeholder="例如：0">
+                            <input type="text" name="ServiceCharge" id="ServiceCharge" value="@item.ServiceCharge" class="form-control" placeholder="例如：0">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">申请要求</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Age" id="Age" class="form-control" placeholder="例如：18-45周岁">
+                            <input type="text" name="Age" id="Age" class="form-control" value="@item.Age" placeholder="例如：18-45周岁">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">申请资料</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ApplicationMaterial" id="ApplicationMaterial" class="form-control" placeholder="例如：身份证照片/运营商/通讯录/银行卡/支付宝/芝麻信用">
+                            <input type="text" name="ApplicationMaterial" id="ApplicationMaterial" value="@item.ApplicationMaterial" class="form-control" placeholder="例如：身份证照片/运营商/通讯录/银行卡/支付宝/芝麻信用">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">授权认证</label>
                         <div class="col-sm-10">
-                            <input type="text" name="AuthorizatonReason" id="AuthorizatonReason" class="form-control" placeholder="例如：身份认证 运营商认证花呗认证银行卡认证">
+                            <input type="text" name="AuthorizatonReason" id="AuthorizatonReason" value="@item.AuthorizatonReason" class="form-control" placeholder="例如：身份认证 运营商认证花呗认证银行卡认证">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">办理时间</label>
                         <div class="col-sm-10">
-                            <input type="text" name="HandlingTime" id="HandlingTime" class="form-control" placeholder="例如：最快半小时，最长1个工作日">
+                            <input type="text" name="HandlingTime" id="HandlingTime" value="@item.HandlingTime" class="form-control" placeholder="例如：最快半小时，最长1个工作日">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">贷款期限</label>
                         <div class="col-sm-10">
-                            <input type="text" name="LengthOfMaturity" id="LengthOfMaturity" class="form-control" placeholder="例如：7天（可续期）">
+                            <input type="text" name="LengthOfMaturity" id="LengthOfMaturity" value="@item.LengthOfMaturity" class="form-control" placeholder="例如：7天（可续期）">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">还款方式</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ModeOfRepayment" id="ModeOfRepayment" class="form-control" placeholder="例如：APP还款/银行卡代扣/支付宝还款/微信还款">
+                            <input type="text" name="ModeOfRepayment" id="ModeOfRepayment" value="@item.ModeOfRepayment" class="form-control" placeholder="例如：APP还款/银行卡代扣/支付宝还款/微信还款">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">是否支持提前还款</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Prepayment" id="Prepayment" class="form-control" placeholder="例如：可以提前还款">
+                            <input type="text" name="Prepayment" id="Prepayment" value="@item.Prepayment" class="form-control" placeholder="例如：可以提前还款">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">审核方式</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ReviewTheWay" id="ReviewTheWay" class="form-control" placeholder="例如：系统+人工审核">
+                            <input type="text" name="ReviewTheWay" id="ReviewTheWay" value="@item.ReviewTheWay" class="form-control" placeholder="例如：系统+人工审核">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">是否电话回访</label>
                         <div class="col-sm-10">
-                            <input type="text" name="CallBack" id="CallBack" class="form-control" placeholder="例如：回访本人和联系人">
+                            <input type="text" name="CallBack" id="CallBack" value="@item.CallBack" class="form-control" placeholder="例如：回访本人和联系人">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">到账方式</label>
                         <div class="col-sm-10">
-                            <input type="text" name="MoneyWay" id="MoneyWay" class="form-control" placeholder="例如：银行卡到账">
+                            <input type="text" name="MoneyWay" id="MoneyWay" value="@item.MoneyWay" class="form-control" placeholder="例如：银行卡到账">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">是否提前扣除综合费用</label>
                         <div class="col-sm-10">
-                            <input type="text" name="MoneyDelete" id="MoneyDelete" class="form-control" placeholder="例如：提前扣除">
+                            <input type="text" name="MoneyDelete" id="MoneyDelete" value="@item.MoneyDelete" class="form-control" placeholder="例如：提前扣除">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">是否查询个人征信</label>
                         <div class="col-sm-10">
-                            <input type="text" name="SelectCredit" id="SelectCredit" class="form-control" placeholder="例如：不查个人征信">
+                            <input type="text" name="SelectCredit" id="SelectCredit" value="@item.SelectCredit" class="form-control" placeholder="例如：不查个人征信">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">是否需下载APP才能申请</label>
                         <div class="col-sm-10">
-                            <input type="text" name="DownloadAPP" id="DownloadAPP" class="form-control" placeholder="例如：是">
+                            <input type="text" name="DownloadAPP" id="DownloadAPP" value="@item.DownloadAPP" class="form-control" placeholder="例如：是">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 col-sm-2 control-label">申请流程</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ApplicationProcedure" id="ApplicationProcedure" class="form-control" placeholder="例如：注册--下载app--绑定银行卡--身份证信息---工作信息-等待审核">
+                            <input type="text" name="ApplicationProcedure" id="ApplicationProcedure" value="@item.ApplicationProcedure" class="form-control" placeholder="例如：注册--下载app--绑定银行卡--身份证信息---工作信息-等待审核">
                         </div>
                     </div>
                     <div class="form-group">
@@ -178,7 +209,7 @@
                     </div>
                     <div class="form-actions fluid">
                         <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary">添加</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
                         </div>
                     </div>
                 </form>
@@ -186,6 +217,8 @@
         </section>
     </div>
 </div>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+</script>
 <script type="text/javascript">
     $(function () {
         $("#M1").addClass("active");
