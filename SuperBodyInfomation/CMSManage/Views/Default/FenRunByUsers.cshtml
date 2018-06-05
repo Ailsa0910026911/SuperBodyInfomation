@@ -10,9 +10,14 @@
         <fieldset>
             @using (Ajax.BeginForm("FenRunByUsers", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "articles", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" }, { "class", "form-inline well" } }))
             {
-                <span style="text-align:center">姓名：</span><input type="text" name="Name" id="Name" style="width:120px" class="form-control" />
-                <span>手机号：</span><input type="text" name="Phone" id="Phone" style="width:120px" class="form-control" />
-                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />            }
+                <span style="text-align:center">姓名：</span>
+                <input type="text" name="Name" id="Name1" style="width:120px" class="form-control" />
+                <span>手机号：</span>
+                <input type="text" name="Phone" id="Phone" style="width:120px" class="form-control" />
+                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
+                <span>分润金额：</span><input type="text" name="Money" id="Money" style="width:120px" class="form-control" />
+                <input type="button" value="一键清空" onclick="Clear()" id="ClearInput" accesskey="S" class="btn btn-search" />
+            }
         </fieldset>
         <div id="articles">
             @Html.Partial("_FenRunByUsersTable", Model)
@@ -26,8 +31,23 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $("#M1").addClass("active");
-        $("#M1").children("ul").children("li").eq(0).addClass("active");
+        $("#M3").addClass("active");
+        $("#M3").children("ul").children("li").eq(0).addClass("active");
     });
+    function FenRunByUsers(id) {
+        var money = $("#Money").val();
+        $.ajax({
+            type: 'post',
+            url: '/Methods/ShareProfit',
+            data: { "id": id, "money": money },
+            success: function (msg) {
+                alert(msg);
+            }
+        });
+    }
+    function Clear() {
+        $("#Name1").val(null);
+        $("#Phone").val(null);
+        $("#Money").val(null);
+    }
 </script>
-

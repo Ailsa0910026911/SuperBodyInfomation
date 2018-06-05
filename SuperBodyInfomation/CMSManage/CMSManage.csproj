@@ -989,6 +989,10 @@
       <Project>{eb54aa5a-1f91-4fdd-8e36-75ea8be6ce7d}</Project>
       <Name>MvcPager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SuperBodyInfomation\SuperBodyInfomation.csproj">
+      <Project>{F2755E97-2C12-4CC3-A870-542ADE6C8D72}</Project>
+      <Name>SuperBodyInfomation</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

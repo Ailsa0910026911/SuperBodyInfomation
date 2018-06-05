@@ -15,14 +15,13 @@
                     <input class="btn btn-primary" name="Export" onclick="ExportOrder()" type="button" value="导出" />
                 *@
                 <span>开始时间：</span>
-                    <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
-                    <span>结束时间：</span>
-                    <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
-
-                    <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
-                    <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
-                    <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
-                    <input type="button" value="批量更改" class="btn btn-danger" onclick="ChangeAllState(); return false;" />
+                <input type="date" name="startTime" data-toggle="tooltip" id="startTime" style="width:220px" class="form-control" />
+                <span>结束时间：</span>
+                <input type="date" name="endTime" data-toggle="tooltip" id="endTime" style="width:220px" class="form-control" />
+                <span>订单号：</span><input type="text" name="TNum" id="TNum" style="width:120px" class="form-control" />
+                <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
+                <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />
+                <input type="button" value="批量更改" class="btn btn-danger" onclick="ChangeAllState(); return false;" />
             }
         </fieldset>
         <div id="articles">

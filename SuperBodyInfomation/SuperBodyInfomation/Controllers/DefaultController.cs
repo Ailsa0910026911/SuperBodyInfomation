@@ -130,7 +130,7 @@ namespace SuperBodyInfomation.Control
                                 os.Phone = Phone;
                                 os.Adress = Adress;
                                 os.DateTime = DateTime.Now;
-                                os.Money = 20.00;
+                                os.Money = 0.01;
                                 os.OExtension = "茶叶运送邮费";
                                 var obj = JsonConvert.SerializeObject(os);
                                 Session["OrderInfo"] = obj;

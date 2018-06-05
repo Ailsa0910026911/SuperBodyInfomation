@@ -3,7 +3,7 @@
 @using Webdiyer.WebControls.Mvc
 @{
     CTModel.BusinessShareProfit bs = new CTModel.BusinessShareProfit();
-    if(ViewBag.BusinessShareProfit!=null&& ViewBag.BusinessShareProfit!="")
+    if (ViewBag.BusinessShareProfit != null && ViewBag.BusinessShareProfit != "")
     {
         bs = ViewBag.BusinessShareProfit;
     }
@@ -12,10 +12,8 @@
 }
 <div class="panel panel-default">
     <div class="panel-body">
-        <fieldset>
-            @using (Ajax.BeginForm("DistributionFenRun", new RouteValueDictionary { { "id", "" } }, new AjaxOptions { UpdateTargetId = "articles", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }, new RouteValueDictionary { { "id", "searchForm" }, { "class", "form-inline well" } }))
-            {
-                <input type="submit" value="添加" accesskey="S" class="btn btn-search" />            }
+        <fieldset class="form-inline well">
+            <a href="/Default/DistributionFenRun"><input type="button" value="添加" accesskey="S" class="btn btn-search" /></a>
         </fieldset>
         <div id="articles">
             @Html.Partial("_DistributionFenRunTableList", Model)
@@ -28,115 +26,115 @@
     </div>
 </div>
 @*<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="form-horizontal" action="SaveFastPayWay" method="post" role="form">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        <span>@ViewBag.BSTitle</span>分润百分比配置
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group" style="display:none">
-                        <label for="firstname" class="col-sm-3 control-label">Id：</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="Id" id="Id" value="@bs.Id">
-                        </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" action="SaveFastPayWay" method="post" role="form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            <span>@ViewBag.BSTitle</span>分润百分比配置
+                        </h4>
                     </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-4）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S1_4" id="S1_4" value="@bs.S1_4" placeholder="请输入需要修改的经销商一级分润（VIP-4）" required />
+                    <div class="modal-body">
+                        <div class="form-group" style="display:none">
+                            <label for="firstname" class="col-sm-3 control-label">Id：</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="Id" id="Id" value="@bs.Id">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-5）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S1_5" id="S1_5" value="@bs.S1_5" placeholder="请输入需要修改的经销商一级分润（VIP-5）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-4）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S1_4" id="S1_4" value="@bs.S1_4" placeholder="请输入需要修改的经销商一级分润（VIP-4）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-6）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S1_6" id="S1_6" value="@bs.S1_6" placeholder="请输入需要修改的经销商一级分润（VIP-6）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-5）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S1_5" id="S1_5" value="@bs.S1_5" placeholder="请输入需要修改的经销商一级分润（VIP-5）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">VIP用户一级分润（VIP-VIP）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S1_1" id="S1_1" value="@bs.S1_1" placeholder="请输入需要修改的VIP用户一级分润（VIP-VIP）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商一级分润（VIP-6）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S1_6" id="S1_6" value="@bs.S1_6" placeholder="请输入需要修改的经销商一级分润（VIP-6）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">VIP用户分润：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S0_0" id="S0_0" value="@bs.S0_0" placeholder="请输入需要修改的VIP用户分润" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">VIP用户一级分润（VIP-VIP）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S1_1" id="S1_1" value="@bs.S1_1" placeholder="请输入需要修改的VIP用户一级分润（VIP-VIP）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-6-5）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S2_6_5" id="S2_6_5" value="@bs.S2_6_5" placeholder="请输入需要修改的经销商二级分润（VIP-6-5）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">VIP用户分润：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S0_0" id="S0_0" value="@bs.S0_0" placeholder="请输入需要修改的VIP用户分润" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-6-4）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S2_6_4" id="S2_6_4" value="@bs.S2_6_4" placeholder="请输入需要修改的经销商二级分润（VIP-6-4）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-6-5）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S2_6_5" id="S2_6_5" value="@bs.S2_6_5" placeholder="请输入需要修改的经销商二级分润（VIP-6-5）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-5-4）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S2_5_4" id="S2_5_4" value="@bs.S2_5_4" placeholder="请输入需要修改的经销商二级分润（VIP-5-4）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-6-4）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S2_6_4" id="S2_6_4" value="@bs.S2_6_4" placeholder="请输入需要修改的经销商二级分润（VIP-6-4）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">经销商三级分润（VIP-6-5-4）：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="S3_6_5_4" id="S3_6_5_4" value="@bs.S3_6_5_4" placeholder="请输入需要修改的经销商三级分润（VIP-6-5-4）" required />
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商二级分润（VIP-5-4）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S2_5_4" id="S2_5_4" value="@bs.S2_5_4" placeholder="请输入需要修改的经销商二级分润（VIP-5-4）" required />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname" class="col-sm-3 control-label">类型：<span class="required"> * </span></label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="Type" readonly="true" id="Type">
-                                @if (bs.Type == 0)
-                                {
-                                    <option value="0" selected>信用卡</option>
-                                    <option value="1">贷款</option>
-                                }
-                                else
-                                {
-                                    <option value="0">信用卡</option>
-                                    <option value="1" selected>贷款</option>
-                                }
-                            </select>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">经销商三级分润（VIP-6-5-4）：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="S3_6_5_4" id="S3_6_5_4" value="@bs.S3_6_5_4" placeholder="请输入需要修改的经销商三级分润（VIP-6-5-4）" required />
+                            </div>
                         </div>
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-3 control-label">类型：<span class="required"> * </span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="Type" readonly="true" id="Type">
+                                    @if (bs.Type == 0)
+                                    {
+                                        <option value="0" selected>信用卡</option>
+                                        <option value="1">贷款</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="0">信用卡</option>
+                                        <option value="1" selected>贷款</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
                     </div>
-                    
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        关闭
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>*@
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>*@
 <script type="text/javascript">
     $(function () {
-        $("#M1").addClass("active");
-        $("#M1").children("ul").children("li").eq(0).addClass("active");
+        $("#M3").addClass("active");
+        $("#M3").children("ul").children("li").eq(2).addClass("active");
     });
-   
+
 </script>
 

@@ -239,3 +239,13 @@ E:\Code\SuperBodyInfomation\CMSManage\bin\zh-Hans\System.Web.Http.WebHost.resour
 E:\Code\SuperBodyInfomation\CMSManage\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
 E:\Code\SuperBodyInfomation\CMSManage\obj\Debug\CMSManage.dll
 E:\Code\SuperBodyInfomation\CMSManage\obj\Debug\CMSManage.pdb
+E:\Code\SuperBodyInfomation\CMSManage\bin\SuperBodyInfomation.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\System.Web.Optimization.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\NPOI.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\SBIModel.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\Com.Alipiay.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\ICSharpCode.SharpZipLib.dll
+E:\Code\SuperBodyInfomation\CMSManage\bin\SuperBodyInfomation.pdb
+E:\Code\SuperBodyInfomation\CMSManage\bin\System.Web.Optimization.xml
+E:\Code\SuperBodyInfomation\CMSManage\bin\NPOI.xml
+E:\Code\SuperBodyInfomation\CMSManage\bin\Com.Alipiay.pdb

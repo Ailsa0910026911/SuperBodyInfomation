@@ -7,6 +7,7 @@
             <th>名字</th>
             <th>手机号</th>
             <th>身份证</th>
+            <th>账户余额</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -17,8 +18,9 @@
                 <td>@item.TrueName</td>
                 <td>@item.UserName</td>
                 <td>@item.CardId</td>
+                <td>@item.Amount</td>
                 <td>
-                    <input value="分润" onclick="DistributionFenRun(@item.Id)" accesskey="S" class="btn btn-info" style="width:54px" />
+                    <input value="分润" onclick="FenRunByUsers(@item.Id)" accesskey="S" class="btn btn-info" style="width:54px" />
                     @*<input value="删除" class="btn btn-danger" onclick="DeleteFastPayWay(@item.Id)" style="width:54px" />*@
             </tr>
         }

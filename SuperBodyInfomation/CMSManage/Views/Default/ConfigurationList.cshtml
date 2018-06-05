@@ -24,14 +24,16 @@
                     <input type="submit" value="搜索" accesskey="S" class="btn btn-search" />
                     <input id="quanxuan" type="button" value="全选" class="btn btn-info" onclick="selectBox('all');return false;" />*@
                 <span>操作：</span>
-                <input value="添加" accesskey="S" class="btn btn-search" data-toggle="modal" data-target="#myModalAdd" onclick="GetmyModalLabel()" style="width:54px" />
+                <a href="/Default/Configuration">
+                    <input type="button" value="添加" accesskey="S" class="btn btn-search" />
+                </a>
             }
         </fieldset>
         <div id="articles">
             @Html.Partial("_ConfigurationListTable", Model)
         </div>
         @section scripts
-{
+        {
             @{Html.RegisterMvcPagerScriptResource();}
             <script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
         }

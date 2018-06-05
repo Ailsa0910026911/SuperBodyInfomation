@@ -26,6 +26,12 @@
                                 <input type="text" class="form-control" name="Id" id="Id" value="@bs.Id">
                             </div>
                         </div>
+                        <div class="form-group" style="display:none">
+                            <label for="firstname" class="col-sm-2 control-label">Extention：</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="Extention" id="Extention" value="@bs.Extention">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="firstname" class="col-sm-2 control-label">经销商一级分润（VIP-4）：<span class="required"> * </span></label>
                             <div class="col-sm-10">
@@ -85,15 +91,15 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="Type" readonly="true" id="Type">
                                     @if (bs.Type == 0)
-                                {
-                                <option value="0" selected>信用卡</option>
-                                    <option value="1">贷款</option>
-                                }
-                                else
-                                {
-                                <option value="0">信用卡</option>
-                                    <option value="1" selected>贷款</option>
-                                }
+                                    {
+                                        <option value="0" selected>信用卡</option>
+                                        <option value="1">贷款</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="0">信用卡</option>
+                                        <option value="1" selected>贷款</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -114,8 +120,8 @@
 </script>
 <script type="text/javascript">
     $(function () {
-        $("#M1").addClass("active");
-        $("#M1").children("ul").children("li").eq(1).addClass("active");
+        $("#M3").addClass("active");
+        $("#M3").children("ul").children("li").eq(1).addClass("active");
     });
 </script>
 

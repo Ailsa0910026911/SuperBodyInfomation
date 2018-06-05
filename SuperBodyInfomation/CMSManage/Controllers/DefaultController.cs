@@ -6,7 +6,7 @@ using LokFu.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -21,22 +21,22 @@ namespace CMSManage.Controllers
 
         public ActionResult Test()
         {
-            var num = "17638836608";
-            //电信手机号码正则        
-            string dianxin = @"^1[3578][01379]\d{8}$";
-            Regex dReg = new Regex(dianxin);
-            //联通手机号正则        
-            string liantong = @"^1[34578][01256]\d{8}$";
-            Regex tReg = new Regex(liantong);
-            //移动手机号正则        
-            string yidong = @"^(134[012345678]\d{7}|1[34578][012356789]\d{8})$";
-            Regex yReg = new Regex(yidong);
+            //var num = "17638836608";
+            ////电信手机号码正则        
+            //string dianxin = @"^1[3578][01379]\d{8}$";
+            //Regex dReg = new Regex(dianxin);
+            ////联通手机号正则        
+            //string liantong = @"^1[34578][01256]\d{8}$";
+            //Regex tReg = new Regex(liantong);
+            ////移动手机号正则        
+            //string yidong = @"^(134[012345678]\d{7}|1[34578][012356789]\d{8})$";
+            //Regex yReg = new Regex(yidong);
 
-            if (!dReg.IsMatch(num) && !tReg.IsMatch(num) && !yReg.IsMatch(num))
-            {
-                ViewBag.ErrorMsg = "请正确填写联系手机号格式";
-                return View("Error");
-            }
+            //if (!dReg.IsMatch(num) && !tReg.IsMatch(num) && !yReg.IsMatch(num))
+            //{
+            //    ViewBag.ErrorMsg = "请正确填写联系手机号格式";
+            //    return View("Error");
+            //}
             return View();
         }
         // GET: Default
@@ -203,6 +203,7 @@ namespace CMSManage.Controllers
                 }
             }
         }
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult ConfigurationList(int id = 0)
         {
             var model = ct.BusinessInfo.OrderByDescending(o => o.Id).ToPagedList(id, 10);
@@ -232,6 +233,7 @@ namespace CMSManage.Controllers
             return obj;
         }
         //添加和修改操作
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult SaveFastPayWay(FastPayWay FastPayWay)
         {
             FastPayWay.Cost = FastPayWay.Cost / 100;
@@ -304,6 +306,7 @@ namespace CMSManage.Controllers
         }
         #endregion
         //分销分润百分比配置
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult DistributionFenRunList(int id = 1)
         {
             var model = ct.BusinessShareProfit.OrderByDescending(o => o.Id).ToPagedList(id, 10);
@@ -313,6 +316,7 @@ namespace CMSManage.Controllers
         }
 
         //添加/修改 BusinessShareProfit
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult DistributionFenRun(BusinessShareProfit bs)
         {
             ViewBag.BSTitle = "添加";
@@ -340,11 +344,11 @@ namespace CMSManage.Controllers
                     try
                     {
                         ct.SaveChanges();
-                        return Content("<script>alert('修改成功！');</script>");
+                        return RedirectToAction("DistributionFenRunList", "Default");
                     }
                     catch
                     {
-                        return Content("<script>alert('修改失败！');</script>");
+                        return Content("<script>alert('修改失败！');history.go(-1);</script>");
                     }
                 }
             }
@@ -354,13 +358,20 @@ namespace CMSManage.Controllers
                 {
                     try
                     {
-                        ct.BusinessShareProfit.Add(bs);
-                        ct.SaveChanges();
-                        return Content("<script>alert('添加成功！');</script>");
+                        if (bs.S0_0 >= 0 && bs.S0_0 <= 1 && bs.S1_1 >= 0 && bs.S1_1 <= 1 && bs.S1_4 >= 0 && bs.S1_4 <= 1 && bs.S1_5 >= 0 && bs.S1_5 <= 1 && bs.S1_6 >= 0 && bs.S1_6 <= 1 && bs.S2_5_4 >= 0 && bs.S2_5_4 <= 1 && bs.S2_6_4 >= 0 && bs.S2_6_4 <= 1 && bs.S2_6_5 >= 0 && bs.S2_6_5 <= 1 && bs.S3_6_5_4 >= 0 && bs.S3_6_5_4 <= 1)
+                        {
+                            ct.BusinessShareProfit.Add(bs);
+                            ct.SaveChanges();
+                            return Content("<script>alert('添加成功！');history.go(-1);</script>");
+                        }
+                        else
+                        {
+                            return Content("<script>alert('百分比参数应在0-1之间！');history.go(-1);</script>");
+                        }
                     }
                     catch
                     {
-                        return Content("<script>alert('添加失败！');</script>");
+                        return Content("<script>alert('添加失败！');history.go(-1);</script>");
                     }
                 }
                 else
@@ -369,6 +380,7 @@ namespace CMSManage.Controllers
                 }
             }
         }
+        [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult FenRunByUsers(string Name = "", string Phone = "", int id = 1)
         {
             var model = ct.Users.OrderByDescending(o => o.AddTime).ToList();

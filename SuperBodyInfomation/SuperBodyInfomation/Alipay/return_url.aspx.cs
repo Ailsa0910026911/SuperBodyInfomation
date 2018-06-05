@@ -42,7 +42,6 @@ namespace SuperBodyInfomation.Alipay
                         //支付宝交易号
 
                         string trade_no = Request.QueryString["trade_no"];
-                        Core.LogResult("return:商户订单号：" + out_trade_no);
                         //交易状态
                         string trade_status = Request.QueryString["trade_status"];
                         string ID = out_trade_no;
@@ -59,7 +58,7 @@ namespace SuperBodyInfomation.Alipay
                                 DateTime now = DateTime.Now;
                                 if (now > endtime)
                                 {
-                                    os.Remark = "支付超时";
+                                    os.Remark = "支付宝异步支付超时->支付失败->跳转到支付失败页面！";
                                     sc.SaveChanges();
                                     Core.LogResult("return:支付宝异步支付超时->支付失败->跳转到支付失败页面！");
                                     Response.Write("fail");

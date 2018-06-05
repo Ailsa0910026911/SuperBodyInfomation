@@ -4,4 +4,15 @@
 }
 
 <h2>Test</h2>
-
+<script src="~/scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'post',
+            url: '/Methods/ShareProfit',
+            success: function (result) {
+                alert(result);
+            }
+        });
+    });
+</script>
