@@ -1,0 +1,237 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin Admin = Entity.SysAdmin.FirstOrNew(n => n.Id == Users.AId);
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+    string tabname = Request.QueryString["tabname"];
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    SysSet BasicSet = ViewBag.BasicSet;
+    IList<UserPay> UserPayList = ViewBag.UserPayList;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    bool IsUserPayChangeEdit = ViewBag.IsUserPayChangeEdit;
+}
+
+<div id="twitter-bootstrap-container" style="width: 850px; margin:8px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">商户信息</a></li>
+       @* <li><a href="/Agent/Users/IndexUserFrozenLog.html?id=@(Users.Id) #UserFrozenLog" data-target="#UserFrozenLogDiv">止付记录</a></li>
+        <li><a href="/Agent/Users/IndexUsersMoveLog.html?id=@(Users.Id) #UsersMoveLog" data-target="#UsersMoveLogDiv">调动记录</a></li>*@
+        
+    </ul>
+    <div id="base" style="width:99%;">
+        <div class="row" style="overflow-x: hidden;overflow-y:auto; margin: 0px;">
+            <div class="portlet-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">注册卡号</td>
+                            <td class="active">@(Users.CardNum)</td>
+                            <td class="success">姓名</td>
+                            <td class="active">@(Users.TrueName)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">商户</td>
+                            <td class="active">@(Users.NeekName)</td>
+                            <td class="success">手机号</td>
+                            <td class="active">@(Users.Mobile.HideMobile())</td>
+                        </tr>
+                        <tr>
+                            <td class="success">地址</td>
+                            <td class="active">@(Users.Address)</td>
+                            <td class="success">QQ号</td>
+                            <td class="active">@(Users.QQ)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">状态</td>
+                            <td class="active">@if (Users.State == 1)
+                                                {
+                                <i class="fa fa-check color-green">正常</i>
+                                                }
+                                                else
+                                                {
+                                <i class="fa fa-times color-red">锁定</i>
+                                                }</td>
+                            <td class="success">身份认证</td>
+                            <td class="active">@if (Users.CardStae == 2)
+                                                {
+                                <i class="fa fa-check color-green">已认证</i>
+                                                }
+                                                else if (Users.CardStae == 1)
+                                                {
+                                <i class="fa fa-check color-green">已申请</i>
+                                                }
+                                                else if (Users.CardStae == 3)
+                                                {
+                                <i class="fa fa-check color-red">认证失败</i>
+                                                }
+                                                else
+                                                {
+                                <i class="fa fa-times color-red">未认证</i>
+                                                }</td>
+                        </tr>
+                        <tr>
+                            <td class="success">支付状态</td>
+                            <td class="active" colspan="3">
+                                @if (Users.StopPayState == 0)
+                                {
+                                    @("正常")
+                                }
+                                else if (Users.StopPayState == 1)
+                                {
+                                    @("部分止付")
+                                }
+                                else if (Users.StopPayState == 2)
+                                {
+                                    @("止付")
+                                }
+                            </td>
+                        </tr>
+                        @if (Users.CardStae == 3)
+                        {
+                            <tr>
+                                <td class="success">失败原因</td>
+                                <td class="active" colspan="3">@(Users.CardRemark)</td>
+                            </tr>
+                        }
+                    </tbody>
+                @if (Users.CardStae > 0)
+                {
+                        <thead>
+                            <tr>
+                                <th colspan="4"><i class="fa fa-globe"></i>身份认证信息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="success">真实姓名</td>
+                                <td class="active">@(Users.TrueName)</td>
+                                <td class="success">身份证号码</td>
+                                <td class="active">@(Users.CardId.HideCardId())</td>
+                            </tr>
+                        </tbody>
+                }
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>帐户信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">帐户余额</td>
+                            <td class="active price">@(Users.Amount.ToString("F2"))</td>
+                            <td class="success">@*不可用金额*@</td>
+                            <td class="active price">@*@(Users.Frozen.ToString("F2"))*@</td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>归属信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">所属业务员</td>
+                            <td class="active">@(Admin.TrueName)</td>
+                            <td class="success">&nbsp;</td>
+                            <td class="active">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                <i class="fa fa-globe"></i>支付配置
+                                @if (Users.CardStae == 2 && IsUserPayChangeEdit)
+                                {
+                                    <a style="text-align:right;float:right;" class="label label-sm label-success Ajax" href="/Agent/UserPayChange/Edit.html?UId=@(Users.Id)" awidth="750px" aheight="650px" title="变更费率">变更费率</a>
+                                }
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        <tr>
+                            <td class="success">T0提现费</td>
+                            <td class="active"><span class="price">@((Users.ECash0).ToString("F2"))</span>元/笔+<span class="price">@((Users.Cash0*1000).ToString("F2"))‰</span> @if (Users.Cash0 >= SysAgent.Cash0 && Users.ECash0 >= SysAgent.ECash0)
+                            {
+                                <i class="fa fa-check color-green">设置正确</i>
+                            }else{
+                                <i class="fa fa-times color-red">设置有误</i>
+                            }</td>
+                            <td class="success">T1提现费</td>
+                            <td class="active"><span class="price">@((Users.ECash1).ToString("F2"))</span>元/笔+<span class="price">@((Users.Cash1*1000).ToString("F2"))‰</span> @if (Users.Cash1 >= SysAgent.Cash1 && Users.ECash1 >= SysAgent.ECash1)
+                            {
+                                <i class="fa fa-check color-green">设置正确</i>
+                            }else{
+                                <i class="fa fa-times color-red">设置有误</i>
+                            }</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table class="table table-striped table-bordered table-advance table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td class="success center">通道名称 </td>
+                                            <td class="success center">费率 </td>
+                                            <td class="success center">配置结果 </td>
+                                        </tr>
+                                        @foreach (var p in UserPayList)
+                                        {
+                                            PayConfig PayConfig = PayConfigList.FirstOrDefault(n => n.Id == p.PId);
+                                            if (PayConfig!=null){
+                                            <tr class="odd gradeX">
+                                                <td class="center">@(PayConfig.Name) </td>
+                                                <td class="center"><span class="permillage">@(p.Cost * 1000)</span>‰ </td>
+                                                <td class="center">@if (p.Cost >= PayConfig.Cost)
+                                                                                 {
+                                                <i class="fa fa-check color-green">设置正确</i>
+                                                                                 }else{
+                                                <i class="fa fa-times color-red">设置有误</i>
+                                                                                 } </td>
+                                            </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="UserFrozenLogDiv" ></div>
+    <div id="UsersMoveLogDiv" ></div>
+</div>
+@section FooterScripts
+{
+    @{
+        <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+        <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+        <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+        <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //ajax请求完成执行
+            tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                //console.log(event); console.log($clicked); console.log($targetPanel); console.log(settings);
+                if ($clicked.attr("data-target") == "#UserFrozenLogDiv")
+                {
+                    var table = TableIni("UserFrozenLog");
+                }
+                if ($clicked.attr("data-target") == "#UsersMoveLogDiv") {
+                    var table = TableIni("UsersMoveLog");
+                }
+                
+            });
+        });
+    </script>
+}

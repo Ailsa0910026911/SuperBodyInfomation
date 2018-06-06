@@ -1,0 +1,56 @@
+﻿*{ font-family:"微软雅黑"; margin:0; padding:0; text-decoration:none; -webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{ background-color:#f1f1f1; position: relative;}
+input[type=button],input[type=submit]{-webkit-appearance:none;outline:none} 
+/*无银行卡css*/
+.dabox{ width:100%; height:100%;}
+.dabox .onebox{ text-align:center; background-color:#5ca3d9; color:#fff; padding:2% 0 2% 0;}
+.dabox .onebox span{ display:block;}
+.dabox .onebox .sp01{ font-size:1rem; margin-top:8%;}
+.dabox .onebox .sp02{ font-size:4rem; margin-bottom:2%;}
+.dabox .onebox .sp03{ font-size:0.9rem; margin-bottom:4%;}
+.twobox{ width:100%; height:auto; background-color:#fff; padding:3% 0; margin-top:2%; overflow:hidden; font-size:1rem;}
+.twobox .sp01{ width:10%; height:auto; text-align:left; display:block; float:left; color:#b8b7b7; margin-left:4%;}
+.twobox .sp02{ width:75%; height:auto; text-align:left; display:block; float:left; margin-left:2%;}
+.threebox{ width:100%; height:auto; background-color:#fff; padding:4% 0; margin-top:2%; overflow:hidden; font-size:0.8rem; border-bottom:1px solid #e5e5e5;}
+.threebox .sp01{ display:block; float:left; background:url(../images/zhifang.png) no-repeat center left; background-size:5%; padding-left:2%; margin-left:4%;}
+.threebox .sp02{ display:block; float:right; margin-right:4%; color:#5ca3d9; display:none;}
+.fourbox{ width:100%; height:auto; padding:10% 0; background-color:#fff;}
+.fourbox .on_ka{ display:block; width:70%; height:100px; background-color:#000; margin:0 auto; background:url(../images/kzhi.png) no-repeat left center; background-size:100% auto;}
+.fivebox{ width:100%; margin-top:2%; padding-top:6%;}
+.fivebox a{ width:70%; height:auto; padding:3% 0; background-color:#d5d5d5; color:#fff; text-align:center; display:block; border-radius:4px; margin:0 auto; }
+.fivebox .ljzf { margin-bottom:10%;}
+/*有银行卡css*/
+.threebox .sp02_1{ display:block;}
+.fourbox .ihk{ width:100%; height:auto; padding:2% 0 1%; overflow:hidden; position:relative;}
+.fourbox .ihk .sp01{ width:auto; height:100%; background:url(../images/hangka_01.png) no-repeat center left; background-size:auto 100%; padding:1% 0 1% 10%; margin-left:4%; float:left;}
+.fourbox .ihk .sp02{ color:#b8b7b7; float:left; padding:1% 0; margin-left:2%;}
+.fourbox .ihk .sp03{ width:10%; height:100%; color:#fff; float:right; margin-right:4%; background:url(../images/dui_01.png) center right no-repeat; background-size:auto 100%; padding:1% 5% 1% 0; text-indent:-1em;}
+.fourbox .ihk .sp04{ width:96%; height:1px; background-color:#e5e5e5; display:block; float:right; margin-top:3%;}
+.fourbox2{ padding:1% 0 0;}
+.fourbox .ihk2{ padding-bottom:3%; display: block;}
+.fourbox .ihk2 .sp02{ background:url(../images/right_01.png) no-repeat center right; background-size:auto 50%; float:right; margin-right:4%; padding-right:3%;}
+.fourbox .ihk .sc{ width:auto; height:100%; float:right; background-color:#f24747; color:#fff; padding:1% 2%; display:none; margin-right:4%; border-radius:4px;}
+.fivebox .wcll{ display:block; width:70%; height:auto; padding:3% 0; background-color:#5ca3d9; color:#fff; text-align:center; display:block; border-radius:4px; margin:0 auto; display:none;}
+/*弹层CSS*/
+.cm_01{ width:100%; height:100%; background-color:#000; opacity:0.4; position:fixed; top:0; left:0; z-index:9998; display:none;}
+.qrk{ width:60%; height:auto; background-color:#fff;  position:fixed; top:50%; left:50%; z-index:9998; border-radius:4px; margin-top:-20%; margin-left:-30%; overflow:hidden; display:none;}
+.qrk .scwb{ display:block; width:100%; height:auto; text-align:center; margin:18% 0;}
+.qrk .fsc{ overflow:hidden; display:block; width:100%; height:100%; border-top:1px solid #e5e5e5; background:url(../images/sxsc.png) no-repeat center center;}
+.qrk .fsc .sp01{ display:block; float:left; width:50%; height:auto; text-align:center; padding:5% 0;}
+.qrk .fsc .sp02{ display:block; float:left; width:50%; height:auto; text-align:center; color:#5ca3d9; padding:5% 0;}
+.qrk .fsc .sp01:hover{ background-color:#5ca3d9; color:#fff;}
+.qrk .fsc .sp02:hover{ background-color:#5ca3d9; color:#fff;}
+/*添加银行*/
+.banck_box{ width: 100%; height: auto; background-color: #5ca3d9; padding: 8% 0;}
+.banck_box img{ display: block; margin: 0 auto; width: 30%;}
+.bdbn{ padding: 3% 0; width: 97%; padding-left: 3%; color: #b9b9b9; font-size: 0.8rem;}
+.forma_box{ background-color: #fff; width: 97%; padding-left: 3%; overflow: hidden; border-bottom: 1px solid #e5e5e5;}
+.forma_box .sp01{ padding: 3% 0; display: block; float: left; width: 20%;}
+.forma_box .sp02{ padding: 3% 0; display: block; float: left;}
+.forma_box .puin{ padding: 3% 0; border: 0; width: 60%;font-size:1rem;}
+.bandz{ display: block; margin: 8% auto 0; color: #fff; width: 70%; border: 0; background-color: #5ca3d9; padding: 3% 0; text-align: center; border-radius: 4px; font-size:1rem;}
+.forma_box .zm_tx{ width: 20%; height: 100%; display: block; float: right;}
+
+#Info{color:red;text-align:center; height:58px; line-height:58px;display:none;}
+
+@media only screen and (min-width: 681px) {body {width: 681px;margin: 0 auto;}.qrk {width: 80%; height: 40%; margin: 0 auto; position: absolute; top: 30%; left: 0; right: 0; bottom:0;}}

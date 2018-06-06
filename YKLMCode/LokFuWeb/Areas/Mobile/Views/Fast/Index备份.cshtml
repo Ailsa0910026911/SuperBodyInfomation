@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    bool IsAlipayBrowser = ViewBag.IsAlipayBrowser;
+    bool IsLokFu = ViewBag.IsLokFu;
+    Users Users = ViewBag.Users;
+}
+<!DOCTYPE >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>收付直通车</title>
+    <link href="/Content/Mobile/Fast/css/index.css" rel="stylesheet" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body class="@(IsLokFu?"lokfu":"")@(IsWeiXinBrowser?"weixin":"")@(IsAlipayBrowser?"alipay":"")">
+    <form action="/mobile/Fast/GoPay.html" method="post" name="PayForm" id="PayForm">
+        <input type="hidden" name="shopid" value="@(Users.Id)" />
+        <input type="hidden" id="UsersAmount" name="Amount" />
+        <input type="hidden" name="payway" value="@(IsLokFu?"0":"")@(IsWeiXinBrowser?"2":"")@(IsAlipayBrowser?"1":"")" id="payway" />
+    <div id="wrap">
+        <div id="front">
+            <header>
+                <div class="shop-prompt">
+                    <img src="/Content/Mobile/Fast/images/gantanhao1.png" alt="警告" />
+                </div>
+                @if(IsLokFu){
+                <div class="dxe">
+                    <div class="dxe2" id="setPayWay">
+                        <span data-payway="2" data-name="weixin">微信</span>
+                        <span data-payway="1" data-name="alipay">支付宝</span>
+                    </div>
+                </div>
+                }
+                <span class="kz_bank"></span>
+                <span class="shop-title">@(Users.NeekName)</span>
+                <section>
+                    <div class="amount">
+                        <span>金额</span>
+                        <p>¥ <span id="amount"></span></p>
+                    </div>
+                </section>
+            </header>
+            <div class="tishi"><span class="sp02">@(IsLokFu?"请输入金额并生成支付二维码":"请和店员确认金额,并买单!")</span></div>
+            <div class="ad" id="ad"><div><!--这里放广告--></div></div>
+            <footer class="keybo">
+                <div class="show-trans" id="keyBoard">
+                    <div class="left_box">
+                        <i data-str="1"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_1.png);"></span></i>
+                        <i data-str="2"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_2.png);"></span></i>
+                        <i data-str="3"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_3.png);"></span></i>
+                        <i data-str="4"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_4.png);"></span></i>
+                        <i data-str="5"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_5.png);"></span></i>
+                        <i data-str="6"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_6.png);"></span></i>
+                        <i data-str="7"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_7.png);"></span></i>
+                        <i data-str="8"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_8.png);"></span></i>
+                        <i data-str="9"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_9.png);"></span></i>
+                        <i data-str="hide" class="on_back" id="jianpan"><span class="jp"></span></i>
+                        <i data-str="0" class="on_back"><span class="shu" style="background-image: url(/Content/Mobile/Fast/images/shu_0.png);"></span></i>
+                        <i data-str="." class="on_back"><span class="dian"></span></i>
+                    </div>
+                    <div class="right_box">
+                        <i data-str="del" class="sp01"><span class="no-right"></span></i>
+                        <i id="goPay" data-str="submit" class="sp02 nohover"><span>@(IsLokFu?"请选择通道":"")@(IsWeiXinBrowser?"微信支付":"")@(IsAlipayBrowser?"支付宝支付":"")</span></i>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
+<script src="/Content/Mobile/Fast/js/flexible.js"></script>
+<script src="/Content/Mobile/Fast/js/dist.js"></script>
+<script>
+    $(function () {
+        $("#goPay").on("touchstart", function () {
+            var value = $("#amount").html();
+            var num = /^[0-9]+([.][0-9]+){0,1}$/;
+            if (num.test(value)) {
+                if (value > 0) {
+                    var payway = parseInt($("#payway").val());
+                    if (payway > 0) {
+                        return true;
+                    }else{
+                        alert("请选择支付方式！");
+                        return false;
+                    }
+                }
+            }
+            return false;
+        });
+
+        $("#setPayWay span").on("touchstart", function () {
+            var obj = $(this);
+            if (obj.hasClass("on")) {
+                return false;
+            }
+            obj.addClass("on").siblings().removeClass("on");
+            var name = obj.data("name");
+            $("body").attr("class", name);
+            var payway = obj.data("payway");
+            $("#payway").val(payway);
+            var txt = obj.text();
+            $("#goPay").find("span").text(txt + "支付");
+            setCenter();
+        });
+        setTimeout('setCenter();', 1000);
+    });
+    var setCenter = function () {
+        var obj = $("#goPay");
+        var h = obj.height();
+        var s = obj.find("span");
+        var sh = s.height();
+        s.css("margin-top", (h - sh) / 2);
+    }
+     
+</script>
+

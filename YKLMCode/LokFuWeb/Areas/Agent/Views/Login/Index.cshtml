@@ -1,0 +1,130 @@
+﻿@{
+    Boolean IsError = Request.QueryString["IsError"] == null ? false : true;
+    Layout = "";
+    SysSet BasicSet = ViewBag.BasicSet;
+    string error = Request.QueryString["IsError"] == null ? string.Empty : Request.QueryString["IsError"].ToString();
+    string errorMessage = string.Empty;
+    if (error == "1")
+    {
+        errorMessage = "您输入的登录帐户或密码有误，请重新输入！";
+    }
+    if (error == "4")
+    {
+        errorMessage = "此代理商已停止合作，如有疑问请与客服人员联系！";
+    }
+    if (error == "2")
+    {
+        errorMessage = "此账户已被锁定，请联系管理员！";
+    }
+    if (error == "3")
+    {
+        errorMessage = "此账户没有权限登录，请联系管理员";
+    }
+    if (error == "4")
+    {
+        errorMessage = "因合同款未支付完成，试用期已结束！";
+    }
+    bool IsLowerIe = ViewBag.IsLowerIe;
+    string userName = this.Request.Cookies["saveUsername"] != null ? (string)this.Request.Cookies["saveUsername"]["saveUsername"] : "";
+}
+<!DOCTYPE html>
+<html lang="cn">
+	<head>
+		<meta charset="UTF-8">	
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <meta name="renderer" content="webkit">	
+		<link rel="stylesheet" href="/Content/HaoFu/css/normalize.css" />
+		<link rel="stylesheet" href="/Content/HaoFu/css/style.css" />
+        <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+		<title>登陆-@(BasicSet.AgentName)商户管理系统</title>
+	</head>
+	<body class="login-body">
+		<div class="content">
+			<div class="login-title">
+					<h1><i>@(BasicSet.AgentName)商户管理系统</i></h1>
+					<p><i>Background   management   system</i></p>
+				</div>
+			<div class="content-login">
+				<form class="login-form" action="/Agent/login/chklogin.html" method="post" >
+                @if (IsLowerIe)
+                {
+                    <style>.content-login{padding-top:0;}</style>
+                    <div class="forget-password" style="width:400px; margin:auto; color:#FFF; text-align:center;">
+                        <h4>温馨提示：</h4>
+                        <p>您当前使用浏览器版本过低，建议使用推荐浏览器或升级浏览器~ </p>
+                        <p>推荐使用以下浏览器： </p>
+                        <div>
+                            <table style="text-align:center; width:100%;">
+                              <tr>
+                                <td style="padding-right: 30px"><a href="http://www.firefox.com.cn/" target="_blank"><img src="/Content/Metronic/img/ff.png" /></a></td>
+                                <td style="padding-right: 30px"><a href="http://dl.pconline.com.cn/download/51614.html" target="_blank"><img src="/Content/Metronic/img/gg.png" /></a></td>
+                                <td style="padding-right: 30px"><a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank"><img src="/Content/Metronic/img/ie.png" /></a></td>
+                              </tr>
+                              <tr>
+                                <td style="padding-right: 30px"><a style="color: #fff" href="http://www.firefox.com.cn/" target="_blank">火狐浏览器</a><SUP style="color:yellow;font-size:12px;">推荐</SUP></td>
+                                <td style="padding-right: 30px"><a style="color: #fff" href="http://dl.pconline.com.cn/download/51614.html" target="_blank">谷歌浏览器</a><SUP style="color:yellow;font-size:12px;">推荐</SUP></td>
+                                <td style="padding-right: 30px"><a style="color: #fff" href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" target="_blank">IE浏览器</a><SUP style="color: #00ff90;font-size:12px;">升级</SUP></td>
+                              </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+                else
+                {
+					<div class="login">
+						<ul class="list-unstyled">
+							<li>
+								<div class="usname">
+									<span><img src="/Content/HaoFu/image/usname.png" alt="" /></span>
+									<input class="input-name validate[required]" placeholder="登录账户" 
+                                        type="text" name="username" id="username" value="@userName" />
+								</div>
+							</li>
+							<li>
+								<div class="password">
+									<span><img src="/Content/HaoFu/image/password.png" alt="" /></span>
+									<input class="input-name validate[required]" placeholder="账户密码" type="password" name="password" id="password"/>
+								</div>
+							</li>
+							<li>
+								<div class="phone clearfix">
+									<label class="pull-left"> <input class="check" type="checkbox" id="saveUsername" name="saveUsername" value="saveUsername" @(userName.IsNullOrEmpty()? "" : "checked") />  <span>记住手机号码</span> </label>
+									@*<label class="forget pull-right"><a href="#">忘记密码？</a></label>*@
+								</div>
+							</li>
+							<li>
+								<button class="but block" type="submit" href="#">登  录</button>
+							</li>
+						</ul>
+					</div>
+                }
+				</form>
+			</div>
+		</div>
+	</body>
+    <script src="/Content/HaoFu/js/jquery.min.js" type="text/javascript"></script>
+    <link href="/Content/HaoFu/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js" type="text/javascript"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            $(".login-form").validationEngine();
+            @if (IsError)
+            {
+                @:errordialog();
+            }
+        });
+        var errordialog = function () {
+            var baseerrordialog = art.dialog({
+                title: '温馨提示',
+                content: '对不起，@(errorMessage)',
+                icon: 'error',
+                lock: true,
+                ok: function () {
+                    baseerrordialog.close();
+                }
+            });
+        }
+    </script>
+</html>

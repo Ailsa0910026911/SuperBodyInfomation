@@ -1,0 +1,111 @@
+﻿@{
+    List<UserFrozenLog> UserFrozenLog = ViewBag.UserFrozenLog;
+    this.Layout = null;
+}
+    <table class="table table-striped table-bordered table-hover" id="UserFrozenLog">
+        <thead>
+            <tr>
+                <th>操作平台 </th>
+                <th>操作 </th>
+                <th>金额 </th>
+                <th>状态 </th>
+                <th>凭证 </th>
+                <th>备注 </th>
+                <th>操作人 </th>
+                <th>添加时间 </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in UserFrozenLog)
+            {
+            <tr class="odd gradeX">
+                <td>
+                    @switch (item.Platform)
+                    {
+                        case 1: 
+                            @("代理平台")
+                            break;
+                        case 2: 
+                            @("管理后台")
+                            break;
+                    }
+                </td>
+                <td>
+                    @switch (item.OpType)
+                    {
+                        case 1: 
+                            @("止付")
+                            break;
+                        case 2: 
+                            @("解除止付")
+                            break;
+                        case 3: 
+                            @("部分止付")
+                            break;
+                    }
+                </td>
+                <td>
+                    @switch (item.OpType)
+                    {
+                        case 1: 
+                            @("全额")
+                            break;
+                        case 2: 
+                            @("全额")
+                            break;
+                        case 3: 
+                            @(item.StopPayMoney.ToMoney())
+                            break;
+                    }
+                </td>
+                <td>
+                    @if (item.OpType == 2)
+                    {
+                        switch (item.LogType)
+                        {
+                            case 1: 
+                                @("发起")
+                                break;
+                            case 2: 
+                                @("审核通过")
+                                break;
+                            case 3: 
+                                @("审核失败")
+                                break;
+                            case 4: 
+                                @("重新提交")
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (item.LogType)
+                        {
+                            case 2: 
+                                @("成功")
+                                break;
+                        }
+                    }
+                </td>
+                <td >
+                    @if (!item.Img.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("StopPayAudit", item.Img))" target="_blank" >凭证</a>
+                    }
+                </td>
+                <td style="min-width:320px;word-wrap: break-word; word-break:break-all;white-space:pre-wrap;">@(item.Remark)</td>
+                <td>
+                    @if (item.Platform == 2)
+                    { 
+                        @("管理员")
+                    }
+                    else
+                    {
+                        @(item.OpName)
+                    }
+                </td>
+                <td>@(item.AddTime.ToString("yyyy-MM-dd HH:mm"))</td>
+            </tr>
+            }
+        </tbody>
+    </table>

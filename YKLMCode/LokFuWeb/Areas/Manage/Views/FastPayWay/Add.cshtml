@@ -1,0 +1,258 @@
+﻿@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 820px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">接口名称 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" name="Title" id="Title" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">APP显示名称 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" name="ShowName" id="ShowName" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">通道设置 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input disabled="disabled" class="inline" type="checkbox" name="NeekReg" id="NeekReg" value="1" /><a>需要注商户</a>
+                                <input disabled="disabled" class="inline" type="checkbox" name="NeekCard" id="NeekCard" value="1" /><a>需要绑定结算卡</a>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">时间限制 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <select class="inline bs-select form-control input-small" name="TimeType" id="TimeType">
+                                    <option value="0" )>不限制</option>
+                                    <option value="1" )>按每天时段</option>
+                                </select>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">限制时间段 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <select class="inline bs-select form-control input-xsmall input-inline" name="STimeHH" id="STimeHH">
+                                    @for (var i = 0; i <= 23; i++)
+                                    {
+                                        <option value="@(i)">@(i < 10 ? "0" : "")@(i)</option>
+                                    }
+                                </select>:
+                                <select class="inline bs-select form-control input-xsmall input-inline" name="STimemm" id="STimemm">
+                                    @for (var i = 0; i <= 59; i++)
+                                    {
+                                        <option value="@(i)" )>@(i < 10 ? "0" : "")@(i)</option>
+                                    }
+                                </select>
+                                至
+                                <select class="bs-select form-control input-xsmall input-inline" name="ETimeHH" id="ETimeHH">
+                                    @for (var i = 0; i <= 23; i++)
+                                    {
+                                        <option value="@(i)">@(i < 10 ? "0" : "")@(i)</option>
+                                    }
+                                </select>:
+                                <select class="bs-select form-control input-xsmall input-inline" name="ETimemm" id="ETimemm">
+                                    @for (var i = 0; i <= 59; i++)
+                                    {
+                                        <option value="@(i)">@(i < 10 ? "0" : "")@(i)</option>
+                                    }
+                                </select>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <label class="control-label col-md-3">支付宝设置 <span class="required"> * </span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    启用:<input class="inline has-checkbox" type="checkbox" name="HasAliPay" id="HasAliPay" value="1" />
+                                    <div style="margin-top: 8px;">
+                                        入网费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="InCost2" id="InCost2" />‰
+                                        代理商费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="Cost2" id="Cost2" value="@((FastPayWay.Cost2 * 1000).ToMoney())" />‰
+                                        成本费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="BankCost2" id="BankCost2" />‰
+                                    </div>
+                                    <div style="margin-top: 8px;">
+                                        手续费:
+                                        <input style=" width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MinCost2" id="MinCost2" />
+                                        -
+                                        <input style=" width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MaxCost2" id="MaxCost2" />
+                                        限额:
+                                        <input style=" width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="SNum2" id="SNum2" />
+                                        -
+                                        <input style=" width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="ENum2" id="ENum2" />
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                    @*<div class="form-group">
+                            <label class="control-label col-md-3">微信设置 <span class="required"> * </span></label>
+                            <div class="col-md-9">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    启用:<input class="inline has-checkbox" type="checkbox" name="HasWeiXin" id="HasWeiXin" value="1" />
+                                    <div style="margin-top: 8px;">
+                                        入网费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="InCost" id="InCost"/>‰
+                                         代理商费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="Cost" id="Cost" value="@((FastPayWay.Cost * 1000).ToMoney())" />‰
+                                        成本费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="BankCost" id="BankCost"/>‰
+                                    </div>
+                                    <div style="margin-top: 8px;">
+                                        手续费:
+                                        <input style=" width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MinCost" id="MinCost"/>
+                                        -
+                                        <input style=" width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MaxCost" id="MaxCost"/>
+                                        限额:
+                                        <input style=" width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="SNum" id="SNum" />
+                                        -
+                                        <input style=" width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="ENum" id="ENum"/>
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3">银联设置 <span class="required"> * </span></label>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                启用:<input class="inline has-checkbox" type="checkbox" name="HasBank" id="HasBank" value="1" />
+                                <div style="margin-top: 8px;">
+
+                                    入网费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="InCost3" id="InCost3" />‰
+                                    @* 代理商费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="Cost3" id="Cost3" value="@((FastPayWay.Cost3 * 1000).ToMoney())" />‰*@
+                                    成本费率:<input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="BankCost3" id="BankCost3" />‰
+                                </div>
+                                <div style="margin-top: 8px;">
+                                    手续费:
+                                    <input style="width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MinCost3" id="MinCost3" />
+                                    -
+                                    <input style="width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="MaxCost3" id="MaxCost3" />
+                                    限额:
+                                    <input style="width: 80px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="BankSNum" id="BankSNum" />
+                                    -
+                                    <input style="width: 100px !important;" type="text" class="form-control validate[required] input-medium input-inline" name="BankENum" id="BankENum" />
+                                </div>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">结算成本 <span class="required"> * </span></label>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control inline input-xsmall input-inline validate[required,custom[money]]" name="Cash" id="Cash" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">排序 <span class="required"> * </span></label>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-xsmall validate[required,custom[int],min[0],max[1000]]" name="Sort" id="Sort" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">状态 <span class="required"> * </span></label>
+                        <div class="col-md-9">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1">显示</option>
+                                    <option value="0">隐藏</option>
+                                </select>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户号，密钥，通道 <span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" placeholder="请分别输入并用英文,隔开" name="QueryArray" id="QueryArray" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">通道类型<span class="required"> * </span></label>
+                        <div class="col-md-7">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" name="Type" id="Type" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9" style="text-align:center;">
+                        <button type="submit" class="btn green">确认</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script type="text/ecmascript">
+        function start(me) {
+            if ($(me).attr('checked')) {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", false);
+            }
+            else {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", true);
+            }
+        }
+
+        $(function () {
+
+            $.each($(".has-checkbox"), function (i, n) {
+                start(n);
+            });
+            $(".has-checkbox").change(function () {
+                start(this);
+            });
+        });
+    </script>
+}

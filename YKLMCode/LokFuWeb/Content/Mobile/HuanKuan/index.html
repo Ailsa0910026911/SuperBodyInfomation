@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+<meta name="format-detection" content="telephone=no" />
+<title>帮你还信用卡</title>
+<link href="css/xin.css" rel="stylesheet" type="text/css">
+<script src="http://sys.goodpay.net.cn/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+		<div><img src="images/topbutu.png" width="100%" height="atuo" /></div>
+        <div class="wz01">
+        	<span>只需两步就可轻松还信用卡：</span>
+			<span>1.填写你需要还款的金额</span>
+        </div>
+        <form action="http://www.baidu.com" id="chkForm" name="chkForm" class="chkForm" method="post">
+        <div class="dabox">
+        			<div class="zjx"></div>
+                    <div class="sxt"></div>
+                    <div class="yzmtp"><img src="http://sys.goodpay.net.cn/Content/Metronic/img/none.gif" id="img" style=" cursor: pointer; width: 100%; height:100%;" title="点击更换验证码" align="absmiddle" /></div>
+                    <div class="srcq"><input id="Linker" name="Linker" class="validate[required]" placeholder="填写你需要还款金额" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="10" /></div>
+                    <div class="srcq2"><input name="code" id="code" class="validate[required]" placeholder="获取验证码" maxlength="4" alert="请填写验证码" /></div>
+                    <div class="tjbox"><input type="submit" value="提交" /></div>
+        </div>
+        </form>
+    <script src="http://sys.goodpay.net.cn/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <script>
+        var selects;
+        $(function () {
+            selects = $("#City").clone();
+            $("#City option:gt(0)").remove();
+            $("#Province").change(function () {
+                $("#City").val("");
+                $("#City option:gt(0)").remove();
+                if ($(this).val() != "") {
+                    var rev = selects.find("option:[rev=" + $(this).val() + "]").clone();
+                    $("#City").append(rev);
+                }
+            });
+            $("#img").click(function () {
+                $(this).fadeOut(0).attr("src", "http://sys.goodpay.net.cn/Content/Metronic/img/none.gif").attr("src", "http://sys.goodpay.net.cn/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+            });
+            $("#code").focus(function () {
+                if ($("#img").attr("src") == "http://sys.goodpay.net.cn/Content/Metronic/img/none.gif") {
+                    $("#img").fadeOut(0).attr("src", "http://sys.goodpay.net.cn/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+                    $(this).val("");
+                }
+            });
+            $("#submit").click(function () {
+                var ret = true;
+                if ($("#chkForm").validationEngine("validate")) {
+                    var code = $("#code").val();
+                    var data = $.ajax({ url: "http://sys.goodpay.net.cn/home/CheckCode.html?code=" + code, async: false }).responseText;
+                    if (data != "1") {
+                        $("#code").validationEngine('showPrompt', '验证码错误', 'error')
+                        ret = false;
+                    } else {
+                        ret = true;
+                    }
+                } else {
+                    ret = false;
+                }
+                return ret;
+            });
+        });
+    </script>
+        <div class="lxn">提交成功后，我方工作人员第一时间联系您。</div>
+        <div class="wz01" style="margin-top:4%;">
+        	<span>2.等待我方工作人员的电话</span>
+        </div>
+        <div class="stb"><img src="images/santubiao.png" width="100%" height="auto" /></div>
+        <div class="hflogo"><img src="images/haofulogo.png" width="100%" height="auto" /></div>
+<!--提交成功弹层已隐藏-->       
+<!-- <div class="tmc"></div>
+ <div class="wzdl">
+ 	<span class="xxn">恭喜您！您已成功提交“帮你还信用卡”申请，我方工作人员将会在第一时间联系您！</span>
+    <span class="wzdok">我知道了</span>
+ </div>  -->     
+</body>
+</html>

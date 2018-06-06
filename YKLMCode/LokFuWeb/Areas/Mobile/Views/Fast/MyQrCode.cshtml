@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+    IList<UserCard> UserCardList = ViewBag.UserCardList;
+    FastUser FastUser = ViewBag.FastUser;
+    
+    FastConfig FastConfig = ViewBag.FastConfig;
+
+    if (FastUser.Card.IsNullOrEmpty())
+    {
+        FastUser.Card = string.Empty;
+    }
+    string Card = FastUser.Card;
+    if (FastUser.Card.Length > 10)
+    {
+        Card = FastUser.Card.Substring(0, 4) + " **** " + FastUser.Card.Substring(FastUser.Card.Length - 4, 4);
+    }
+    string Code = ViewBag.Code;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>收付直通车</title>
+    <link href="~/Content/Mobile/Fast/css/main.css?2017011901" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body>
+    <div class="sk_box">
+        <span class="sp01">收款后到账银行：</span>
+        <div class="sk_bank">
+            <span class="sp02">@(FastUser.Bank)</span>
+            <span class="sp03">@(Card)</span>
+            <a class="sp04" href="?act=setbank">更换</a>
+        </div>
+    </div>
+    <div class="sk_qr"><img src="@(Code)" /></div>
+    <span class="sk_text01">请使用微信或支付宝扫一扫</span>
+    <div class="sk_sm">使用说明</div>
+    <span class="sk_text02">使用收付直通车直接结算到银行卡，不需要提现。</span>
+    <span class="trips">交易时间：(09:00-21:00实时到账)</span>
+    <span class="trips">21:00-次日09:00的交易T+1到账(T为工作日)</span>
+    <div class="sk_null"></div>
+    <div class="sk_cz"><a href="myorders.html" class="a01">交易明细</a><a href="index-@(FastUser.UId).html" class="a02">设置金额</a></div>
+</body>
+</html>
+
+
+

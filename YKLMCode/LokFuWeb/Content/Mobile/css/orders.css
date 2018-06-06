@@ -1,0 +1,55 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body { font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial, san-serif; margin:0; }
+@media screen and (max-width: 320px) {
+ html {
+ font-size: 62.5%!important;
+  /* 10÷16=71.5% */
+  -webkit-text-size-adjust: none;
+}
+}
+@media only screen and (min-width: 321px) {
+ html {
+ font-size: 71.5%!important;
+  /* 11.4÷16=71.5% */
+  -webkit-text-size-adjust: none;
+}
+}
+@media only screen and (min-width: 481px) {
+ html {
+ font-size: 94%!important;
+/* 15.04÷16=94% */
+}
+}
+@media only screen and (min-width: 561px) {
+ html {
+ font-size: 109%!important;
+/* 17.44÷16=109% */
+}
+}
+@media only screen and (min-width: 641px) {
+ body {
+width:641px;
+margin:0 auto;
+}
+ .homeheader {
+width:641px !important;
+left:50%;
+margin-left:-320.10px;
+}
+ html {
+font-size: 125%!important;
+/* 20÷16=125% */ 
+  }
+}
+.dabox { width:100%; height:70px; border-bottom:1px solid #f4f4f4; overflow:hidden; }
+.dabox .tx { width:50px; height:50px; display:block; float:left; margin-left:12px; margin-top:10px; }
+.dabox .xm { display:block; height:80px; line-height:80px; float:left; margin-left:10px; font-size:24px; font-weight:500; }
+.lxxm { width:100%; height:40px; border-bottom:1px solid #f4f4f4; overflow:hidden; }
+.lxxm .left { float:left; margin-left:12px; display:block; line-height:40px; font-size:16px; color:#7f7f7f; }
+.lxxm .right { float:right; margin-right:12px; display:block; line-height:40px; font-size:16px; }
+.dzzt { width:100px; height:100px; display:block; margin:40px auto; background:url(../images/jxz.jpg) no-repeat center center; background-size:100px 100px; position:relative; text-decoration:none; }
+.dzzt span { width:100%; display:block; text-align:center; color:#fff; font-size:16px; position:absolute; bottom:24px; left:0px; }
+.whfs { width:100px; height:100px; display:block; margin:40px auto; }
+.payment {margin-top:20px;}
+.payment a { display:block; width:80%; height:40px; background-color:#d59305; text-align:center; color:#fff; line-height:40px; font-size:16px; border-radius:8px; margin:0 auto; text-decoration:none; font-family:'微软雅黑'; }

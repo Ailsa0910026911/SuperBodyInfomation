@@ -1,0 +1,134 @@
+﻿@{
+    SysMoneySet SysMoneySet = ViewBag.SysMoneySet;
+    ViewBag.SMUid = 287;
+    ViewBag.Title = "直通车分润设置";
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .control_label {
+        text-align: right;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="PaySplitSetSave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysMoneySet.Id)" />
+                    <div class="form-body">
+                      
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易一级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA1" id="PaySplitA1" value="@((SysMoneySet.PaySplitA1*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易二级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA2" id="PaySplitA2" value="@((SysMoneySet.PaySplitA2*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易三级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA3" id="PaySplitA3" value="@((SysMoneySet.PaySplitA3*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易四级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA4" id="PaySplitA4" value="@((SysMoneySet.PaySplitA4*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易五级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA5" id="PaySplitA5" value="@((SysMoneySet.PaySplitA5*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">交易六级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitA6" id="PaySplitA6" value="@((SysMoneySet.PaySplitA6*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                           <div class="form-group">
+                            <label class="control-label col-md-3">交易一级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitU0" id="PaySplitU0" value="@((SysMoneySet.PaySplitU0*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="control-label col-md-3">交易二级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitU1" id="PaySplitU1" value="@((SysMoneySet.PaySplitU1*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="control-label col-md-3">交易三级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float1],min[0],max[10000]]" name="PaySplitU2" id="PaySplitU2" value="@((SysMoneySet.PaySplitU2*10000).ToString("F1"))" /> ‱
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.PaySplitSetSave)
+                            {
+                                <button type="submit" class="btn green" id="btnUpdata">确认修改</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+}
+

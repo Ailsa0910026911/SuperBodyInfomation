@@ -1,0 +1,154 @@
+﻿@{
+    Layout = null;
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    bool IsAlipayBrowser = ViewBag.IsAlipayBrowser;
+    Users Users = ViewBag.Users;
+    IList<UserPic> UserPicList = ViewBag.UserPicList;
+    AdInfo AdInfo = ViewBag.AdInfo;
+    string BtnColor="#F47275";
+    string FColor = "#b94446";
+    if (IsWeiXinBrowser)
+    {
+        BtnColor = "#1aad19";
+    }
+    else if (IsAlipayBrowser)
+    {
+        BtnColor = "#0AE";
+        FColor = "#00658d";
+    }
+    string ADUrl = ViewBag.ADUrl;
+
+    List<SysControl> SysControlList = ViewBag.SysControlList;
+
+    int PayWay = ViewBag.PayWay == null ? 0 : ViewBag.PayWay;
+}
+<!DOCTYPE >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    @*  <meta name="viewport" content="width=device-width; initial-scale=1.0;minimum-scale=1.0; maximum-scale=1.0"/>*@
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>收银台</title>
+    <script type="text/javascript" src="/Content/Mobile/Shop/js/flexible.js"></script>
+    <link rel="stylesheet" href="/Content/Mobile/css/normalize.css" />
+    <link rel="stylesheet" href="/Content/Mobile/Shop/css/style2.css?20161231" />
+    <script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js"></script>
+    <script>var PayWay = "@(PayWay)"; var UsersId = "@(Users.Id)";</script>
+    <script type="text/javascript" src="/Content/Mobile/Shop/js/index.js?201706081057"></script>
+    @if (SysControlList.Count() > 1 && !IsWeiXinBrowser)
+    { 
+    <style>
+        .right_box .sp01{height:25%;}
+        .right_box .sp02{height:@(75.00/SysControlList.Count())%;}
+        .right_box .sp02:not(:last-child){border-bottom: 1px solid #fff;}
+        .right_box .sp02 span{width:100%; font-size:0.4rem;}
+        .right_box .sp02 em{width:100%; font-size:0.3rem; display:block;color:@(FColor); margin-top:3px;}
+    </style>
+    }
+</head>
+<body style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; -khtml-user-select: none; user-select: none;">
+    <form action="/mobile/Shop/GoPay.html" method="post" name="GoPay" id="GoPay">
+        <input type="hidden" name="shopid" value="@(Users.Id)" />
+        <input type="hidden" id="UsersAmount" name="Amount" />
+        @if (!IsWeiXinBrowser){
+        <input type="hidden" name="payway" value="" id="payway" />
+        }
+        <div id="wrap">
+            <div id="front">
+                <header>
+                    <div class="shop-prompt">
+                        <img src="/Content/Mobile/Shop/image/gantanhao1.png" alt="警告" />
+                    </div>
+					@if (IsWeiXinBrowser && SysControlList.Count() > 1){
+                     <style>
+                        .dxe{width:@(SysControlList.Count()>2?"72":"46")%;}
+                    </style>
+					<div class="dxe">
+						<div class="dxe2" id="WeiXinChang">
+                            @foreach(var p in SysControlList){
+                                <span data-payway="@(p.PayWay)" data-snum="@(p.SNum)" data-enum="@(p.ENum)">
+                                    @(p.CName.Replace("收款","").Replace("支付","").Replace("·",""))
+                                    <a>@(p.SNum.ToString("F0"))-@(p.ENum.ToString("F0"))元</a>
+                                </span>
+                            }
+						</div>
+					</div>
+                    }
+					<div class="shop-title">
+                        <a href="/mobile/Shop/info-@(Users.Id).html"><i class="iconfont">&#xe60e;</i></a>
+                        <span>@(Users.NeekName)</span>
+                    </div>
+                    <section>
+                        <div class="amount">
+                            <span>金额</span>
+                            <p>¥ <span id="amount"></span></p>
+                        </div>
+                    </section>
+                    <div class="tishi"><span class="sp02">和店员已经确认,立即买单!</span></div>
+                    <div class="ad" id="ad">
+                        @if (AdInfo.Pic.IsNullOrEmpty())
+                        {
+                            <div></div>
+                        }
+                        else
+                        { 
+                            <a href="@(AdInfo.ModuleType == 2 ? (AdInfo.Url.IsNullOrEmpty() ? "javascript:" : AdInfo.Url) : "javascript:")"><img src="@(Utils.ImageUrl("AdInfo", AdInfo.Pic))" style="width:90%" alt=""  /></a>
+                        }
+                    </div>
+                    @* <p class="push">好付用户专线入口，了解最新推送活动</p>*@
+                </header>
+                <footer class="keybo">
+                    <div class="show-trans" id="keyBoard">
+                        <div class="left_box">
+                            <i data-str="1"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_1.png);"></span></i>
+                            <i data-str="2"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_2.png);"></span></i>
+                            <i data-str="3"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_3.png);"></span></i>
+                            <i data-str="4"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_4.png);"></span></i>
+                            <i data-str="5"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_5.png);"></span></i>
+                            <i data-str="6"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_6.png);"></span></i>
+                            <i data-str="7"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_7.png);"></span></i>
+                            <i data-str="8"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_8.png);"></span></i>
+                            <i data-str="9"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_9.png);"></span></i>
+                            <i data-str="hide" class="on_back" id="jianpan"><span class="jp"></span></i>
+                            <i data-str="0" class="on_back"><span class="shu" style="background-image: url(/Content/Mobile/Shop/image/shu_0.png);"></span></i>
+                            <i data-str="." class="on_back"><span class="dian"></span></i>
+                        </div>
+                        <div class="right_box">
+                            <i data-str="del" class="sp01"><span class="no-right"></span></i>
+                            @if (!IsWeiXinBrowser){
+                                foreach (var p in SysControlList){
+                                <i data-str="submit" class="sp02 GoPay" style="background-color:@(BtnColor);" data-payway="@(p.PayWay)" data-snum="@(p.SNum)" data-enum="@(p.ENum)">
+                                    <span>
+                                        @(p.CName)
+                                        @if(SysControlList.Count()>1){
+                                            <em>@(p.SNum.ToString("F0"))~@(p.ENum.ToString("F0"))元</em>
+                                        }
+                                    </span>
+                                </i>
+                                }
+                            }else{
+                                if (SysControlList.Count()==1){
+                                    var sysc = SysControlList.FirstOrNew();
+                                    <i id="goPay" data-str="submit" class="sp02" style="background-color:@(BtnColor);"  data-payway="@(sysc.PayWay)" data-snum="@(sysc.SNum)" data-enum="@(sysc.ENum)"><span>@(sysc.CName)</span></i>
+                                }else{
+                                    <i id="goPayMore" data-str="submit" class="sp02" style="background-color:@(BtnColor);"><span>微信支付</span></i>
+                                }
+                            }
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <script type="text/javascript" src="/Content/Mobile/Shop/js/dist.js?20161231002"></script>
+        </div>
+    </form>
+</body>
+</html>
+

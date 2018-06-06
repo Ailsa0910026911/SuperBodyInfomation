@@ -1,0 +1,98 @@
+﻿@{
+    String Title = ViewBag.Title;
+    List<String> Content = ViewBag.Content;
+  
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@(Title)</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: "Microsoft YaHei", Arial;
+        }
+
+        body {
+            background: #efefef;
+        }
+
+        .errorwarp {
+            width: 660px;
+            height: 340px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -330px;
+            margin-top: -170px;
+        }
+
+        .pull-left {
+            float: left;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .clearfix:before, .clearfix:after {
+            content: " ";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .errorwarp .right {
+            margin-left: 20px;
+        }
+
+            .errorwarp .right h2 {
+                font-weight: normal;
+                font-size: 30px;
+                color: #d35f30;
+                margin: 10px 0 0;
+            }
+
+            .errorwarp .right p {
+                margin: 10px 0 0;
+                font-size: 26px;
+            }
+
+        .errorwarp .error-bottom {
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="errorwarp">
+        <div class="errorcont">
+            <div class="error-top clearfix">
+                <div class="left pull-left">
+                    <img src="~/Content/Metronic/img/kafei.jpg" /></div>
+                <div class="right pull-left">
+                    <h2>您的访问出错了!</h2>
+                    <p>@(Title)</p>
+                </div>
+            </div>
+            <div class="error-bottom">
+                <ul class="list-unstyled">
+                  @for (int i = 0; i < Content.Count; i++)
+                  {
+                       <li>@(Content[i])</li>
+                  }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

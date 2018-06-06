@@ -1,0 +1,84 @@
+﻿@{
+    string QRCodePicUrl = ViewBag.QRCodePicUrl == null ? string.Empty : ViewBag.QRCodePicUrl;
+    string Sceneid = ViewBag.Sceneid == null ? "000000" : ViewBag.Sceneid;
+    Page.Name = "请登录~！";
+}
+@Html.Partial("Header")
+<div class="center">
+    <div class="login">
+        <div class="login-main code">
+            @*<span style="padding: 0px 20px; line-height: 100px;">功能正在维护升级中,敬请期待！</span>*@
+            
+            <div class="warp scan">
+                <div class="login-top clearfix">
+                    <div class="pull-right poitr">
+                        <img src="/Content/Shop/img/poite-2.png" alt="" />
+                        <a class="pc" href="javascript:">
+                            <img src="/Content/Shop/img/pc.png" alt="" /></a>
+                    </div>
+                </div>
+                <div class="main-con">
+                    <p class="title text-center" id="CodeTip">手机扫码，安全登录</p>
+                    <div class="er text-center">
+                        <img src="@(QRCodePicUrl)" alt="使用钱包扫描登录平台" />
+                    </div>
+                    <div class="sao clearfix">
+                        <img class="pull-left" src="/Content/Shop/img/sao.png" alt="" />
+                        <div class="pull-left">
+                            <p>打开手机<span class="blue">客户端</span></p>
+                            <p>点击扫一扫登录</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="warp userlogin hide">
+                <div class="login-top clearfix">
+                    <div class="pull-right poitr">
+                        <img class="user" src="/Content/Shop/img/poite.png" alt="" />
+                        <a class="shao" href="javascript:">
+                            <img src="/Content/Shop/img/sao-2.png" alt="" /></a>
+                    </div>
+                </div>
+                <div class="main-con">
+                    <form id="Login">
+                        <p class="title usname-port text-center" id="LoginTip">账号登录</p>
+                        <p class="title error-port hide">
+                            <img src="/Content/Shop/img/errow.png" alt="" />您输入的账号或密码不正确
+                        </p>
+                        <div class="usname-warp">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <span class="name span"></span>
+                                    <input id="un" class="usname" type="text" placeholder="手机号" />
+                                </li>
+                                <li>
+                                    <span class="pass span"></span>
+                                    <input id="pwd" class="pasword" type="password" placeholder="密码" />
+                                </li>
+                                <li>
+                                    <span>验证码  </span>
+                                    <input id="code" class="codes" type="text" placeholder="点击获取" />
+                                    <img src="/Content/Metronic/img/none.gif" id="img" title="点击更换验证码" />
+                                </li>
+                            </ul>
+                            <button class="sub" type="button" id="Submit">登 录 </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+@Html.Partial("Footer")
+@section HeaderScripts
+{
+    <script> var Interval; Sceneid = "@(Sceneid)"; key = "@(Sceneid.GetMD5())";</script>
+}
+@section FooterScripts
+{
+    <script src="/Content/Shop/js/xxcode.min.js"></script>
+    <script src="/Content/Shop/js/login.min.js"></script>
+}
+
+

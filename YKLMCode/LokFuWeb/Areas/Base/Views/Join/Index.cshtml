@@ -1,0 +1,163 @@
+﻿@{
+    Layout = null;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    string comeurl = ViewBag.ComeUrl;
+}
+<link rel="stylesheet" href="/Content/HaoFu/css/normalize.min.css" />
+<style>
+.list-unstyled {
+  list-style: outside none none;
+  margin: 0;
+  padding-left: 0;
+}
+li {
+  margin-bottom: 28px;
+}
+span {
+  display: inline-block;
+  font-size: 16px;
+  text-align: right;
+  width: 180px;
+}
+.input {
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  font-size: 16px;
+  height: 50px;
+  padding-left: 20px;
+  width: 280px;
+}
+b {
+  font-size: 16px;
+}
+.text-red {
+  color: #c82626;
+}
+a, input, btn, textarea {
+  outline: medium none;
+}
+.btn-warging {
+  background: #fa852b none repeat scroll 0 0;
+  color: #fff;
+}
+li button {
+  border: medium none;
+  border-radius: 10px;
+  font-size: 16px;
+  height: 40px;
+  outline: medium none;
+  width: 260px;
+}
+.min-input {
+  width: 170px;
+}
+    /*验证插件*/
+        .inputContainer { position: relative; float: left; }
+        .formError { position: absolute; top: 300px; left: 300px; display: block; z-index: 5000; cursor: pointer; }
+        .ajaxSubmit { padding: 20px; background: #55ea55; border: 1px solid #999; display: none; }
+        .formError .formErrorContent { width: 100%; background: #ee0101; position:relative; z-index:5001; color: #fff; width: 150px; font-size: 12px; border: 2px solid #ddd; box-shadow: 0 0 6px #000; -moz-box-shadow: 0 0 6px #000; -webkit-box-shadow: 0 0 6px #000; padding: 4px 10px 4px 10px; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
+        .greenPopup .formErrorContent { background: #33be40; }
+        .blackPopup .formErrorContent { background: #393939; color: #FFF; }
+        .formError .formErrorArrow { width: 15px; margin: -2px 0 0 13px; position:relative; z-index: 5006; }
+        .formError .formErrorArrowBottom { box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; margin: 0px 0 0 12px; top:2px; }
+        .formError .formErrorArrow div { border-left: 2px solid #ddd; border-right: 2px solid #ddd; box-shadow: 0 2px 3px #444; -moz-box-shadow: 0 2px 3px #444; -webkit-box-shadow: 0 2px 3px #444; font-size: 0px; height: 1px; background: #ee0101; margin: 0 auto; line-height: 0; font-size: 0; display: block; }
+        .formError .formErrorArrowBottom div { box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; }
+        .greenPopup .formErrorArrow div { background: #33be40; }
+        .blackPopup .formErrorArrow div { background: #393939; color: #FFF; }
+        .formError .formErrorArrow .line10 { width: 15px; border: none; }
+        .formError .formErrorArrow .line9 { width: 13px; border: none; }
+        .formError .formErrorArrow .line8 { width: 11px; }
+        .formError .formErrorArrow .line7 { width: 9px; }
+        .formError .formErrorArrow .line6 { width: 7px; }
+        .formError .formErrorArrow .line5 { width: 5px; }
+        .formError .formErrorArrow .line4 { width: 3px; }
+        .formError .formErrorArrow .line3 { width: 1px; border-left: 2px solid #ddd; border-right: 2px solid #ddd; border-bottom: 0 solid #ddd; }
+        .formError .formErrorArrow .line2 { width: 3px; border: none; background: #ddd; }
+        .formError .formErrorArrow .line1 { width: 1px; border: none; background: #ddd; }
+</style>
+<form action="Add.html" id="chkForm" name="chkForm" class="chkForm" method="post">
+	<ul class="list-unstyled">
+		<li>
+			<span> 姓名 :</span>
+			<input class="input validate[required]" type="text" id="Linker" name="Linker" maxlength="4" placeholder="请输入联系人姓名" /> <b class="text-red"> * </b>
+		</li>
+		<li>
+			<span> 手机 :</span>
+			<input class="input validate[required]" type="text" id="Mobile" name="Mobile" maxlength="11" placeholder="请输入11位手机号" /> <b class="text-red"> * </b>
+		</li>
+		<li>
+			<span> 公司名称 :</span>
+			<input class="input validate[required]" type="text" placeholder="请输入公司名称或商铺名称" name="ComName" id="ComName" /> <b class="text-red"> * </b>
+		</li>
+		<li>
+			<span> 地区 :</span>
+			<select name="Province" id="Province" class="validate[required]" type="select-one" alert="请选择省" style="width:98px; height:40px;">
+                <option value="">请选择</option>
+                @foreach (var p in BasicProvinceList)
+                {
+                    <option value="@(p.Id)">@(p.Name)</option>
+                }
+            </select>
+            <select name="City" id="City" class="validate[required]" type="select-one" alert="请选择城市" style="width:98px;height:40px; margin-left:0px;">
+                <option value="">请选择</option>
+                @foreach (var p in BasicCityList)
+                {
+                    <option value="@(p.Id)" rev="@(p.PId)">@(p.Name)</option>
+                }
+            </select>
+		</li>
+		<li>
+			<span> 验证码 :</span>
+			<input class="input min-input validate[required]" type="text" placeholder="4位验证码" name="code" id="code" /> 
+			<img src="/Content/Metronic/img/none.gif" id="img" style="cursor: pointer; width: 73px; height: 42px; margin-left: 10px;" title="点击更换验证码" align="absmiddle">
+			<b class="text-red"> * </b>
+		</li>
+		<li>
+			<span></span>
+			<button class="btn-warging" type="submit" id="submit"> 提交信息 </button>							
+		</li>
+	</ul>
+</form>
+<script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+<script>
+    var selects;
+    $(function () {
+        selects = $("#City").clone();
+        $("#City option:gt(0)").remove();
+        $("#Province").change(function () {
+            $("#City").val("");
+            $("#City option:gt(0)").remove();
+            if ($(this).val() != "") {
+                var rev = selects.find("option:[rev=" + $(this).val() + "]").clone();
+                $("#City").append(rev);
+            }
+        });
+        $("#img").click(function () {
+            $(this).fadeOut(0).attr("src", "/Content/Metronic/img/none.gif").attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+        });
+        $("#code").focus(function () {
+            if ($("#img").attr("src") == "/Content/Metronic/img/none.gif") {
+                $("#img").fadeOut(0).attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+                $(this).val("");
+            }
+        });
+        $("#submit").click(function () {
+            var ret = true;
+            if ($("#chkForm").validationEngine("validate")) {
+                var code = $("#code").val();
+                var data = $.ajax({ url: "/home/CheckCode.html?code=" + code, async: false }).responseText;
+                if (data != "1") {
+                    $("#code").validationEngine('showPrompt', '验证码错误！', 'error')
+                    ret = false;
+                } else {
+                    ret = true;
+                }
+            } else {
+                ret = false;
+            }
+            return ret;
+        });
+    });
+</script>

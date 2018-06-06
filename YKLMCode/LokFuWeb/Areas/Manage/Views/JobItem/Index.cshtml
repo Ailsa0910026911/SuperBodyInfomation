@@ -1,0 +1,191 @@
+﻿@{
+    IList<JobItem> JobItemList = ViewBag.JobItemList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<JobPayWay> JobPayWayList = ViewBag.JobPayWayList;
+    List<UserCard> UsersCardList = ViewBag.UsersCardList;
+    JobItem JobItem = ViewBag.JobItem;
+    ViewBag.NoShowDel = true;
+    ViewBag.SMUid = 290;
+    LokFuEntity Entity = ViewBag.Entity;
+    bool Edit = ViewBag.Edit;
+    bool ExcelExport = ViewBag.ExcelExport;
+    DateTime? STime = ViewBag.STime;
+    DateTime? ETime = ViewBag.ETime;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div id="Stats"></div>
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="UId" class="form-control input-small input-inline input-sm" style="width: 90px !important">
+            <option value="1" @(JobItem.UId == 1 ? "selected" : "")>订单号</option>
+            <option value="2" @(JobItem.UId == 2 ? "selected" : "")>交易号</option>
+        </select>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-medium" name="TNum" value="@(JobItem.TNum)"  />
+        <span class="seperator">|</span>
+        <select name="RunSort" class="form-control input-small input-inline input-sm">
+            <option value="2" @(JobItem.RunSort == 2 ? "selected" : "")>执行时间</option>
+            <option value="1" @(JobItem.RunSort == 1 ? "selected" : "")>创建时间</option>
+        </select>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text"  name="STime" id="STime" value="@(STime.HasValue ? STime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")" >
+        ~<input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="ETime" id="ETime" value="@(ETime.HasValue ? ETime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")" >
+         <span class="seperator">|</span>
+        <select name="RunType" class="form-control input-small input-inline input-sm" id="RunType">
+            <option value="">订单类型</option>
+            <option value="1" @(JobItem.RunType == 1 ? "selected" : "")>消费</option>
+            <option value="2" @(JobItem.RunType == 2 ? "selected" : "")>还款</option>
+
+        </select>
+        <span class="seperator">|</span>
+        <select name="State" class="form-control input-small input-inline input-sm" id="State">
+            <option value="99">订单状态</option>
+            <option value="0" @(JobItem.State == 0 ? "selected" : "")>交易取消</option>
+            <option value="1" @(JobItem.State == 1 ? "selected" : "")>待执行</option>
+            <option value="2" @(JobItem.State == 2 ? "selected" : "")>执行中</option>
+            <option value="3" @(JobItem.State == 3 ? "selected" : "")>执行完成</option>
+            <option value="4" @(JobItem.State == 4 ? "selected" : "")>执行失败</option>
+
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+        @if (ExcelExport)
+        {
+            <button class="btn btn-sm green table-group-action-submit" type="button" id="Export"><i class="fa fa-share"></i>导出</button>
+        }
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="btn-group">
+                    <a href="javascript:void(0);" class="btn green" id="count"><i class="fa fa-bar-chart-o"></i>统计</a>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>订单号 </th>
+                                <th>交易号</th>
+                                <th>商户</th>
+                                <th>执行金额</th>
+                                <th>执行时间</th>
+                                <th>手续费</th>
+                                <th>利润</th>
+                                <th>成本</th>
+                                <th>分润</th>
+                                <th>状态</th>
+                                <th>类型</th>
+                                <th>支付方式</th>
+                                <th>支付卡号</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (JobItemList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in JobItemList)
+                                {
+                                    Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                                    var MerName = Users.NeekName;
+                                    string State = "";
+                                    string color = "";
+                                    string Title = "";
+                                    switch (p.State)
+                                    {
+                                        case 0:
+                                            State = "取消";
+                                            color = "color:gray;";
+                                            break;
+                                        case 1:
+                                            State = "待执行";
+                                            break;
+                                        case 2:
+                                            State = "执行中";
+                                            break;
+                                        case 3:
+                                            State = "执行完成";
+                                            color = "color:green;";
+                                            break;
+                                        case 4:
+                                            State = "执行失败";
+                                            color = "color:red;";
+                                            break;
+                                    }
+                                    if (!p.Remark.IsNullOrEmpty())
+                                    {
+                                        color += "background:url(/Content/Manage/images/abg.png) no-repeat top left; cursor:pointer;";
+                                        Title = " title=\"" + p.Remark + "\"";
+                                    }
+                                <tr class="odd gradeX">
+                                    <td class="center">
+                                        @(p.TNum)
+                                    </td>
+                                    <td class="center">
+                                        @(p.RunNum)
+                                    </td>
+                                    <td class="center">@(MerName)[@(Users.TrueName)]</td>
+                                    <td class="center">@(p.RunMoney.ToString("F2"))</td>
+                                    <td class="center">@(p.RunTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                                    <td class="center">@(p.Poundage.ToString("F2"))</td>
+                                    <td class="center">@(p.HFGet.ToString("F2"))</td>
+                                    <td class="center">@(p.RunGet.ToString("F2"))</td>
+                                    <td class="center">@(p.AgentGet.ToString("F2"))</td>
+                                    <td style="text-align:center;@(color)" @Html.Raw(Title)>
+                                        @(State)
+                                    </td>
+                                    <td style="center @(p.RunType == 2 ? "color:red" : "")">
+                                        @if (p.RunType == 1)
+                                        { @("消费")}
+                                        else if (p.RunType == 2)
+                                        {
+                                            @("还款")
+                                        }
+                                    </td>
+                                    <td class="center">@(JobPayWayList.Where(o => o.Id == p.PayWay).FirstOrNew().Name)</td>
+                                    <td class="center">@(UsersCardList.Where(o => o.Id == p.UserCardId).FirstOrNew().Card)</td>
+                                    <td class="center">
+                                        @if (Edit)
+                                        {
+                                            <a href="/Manage/JobOrders/Edit.html?Tnum=@(p.TNum)" aheight="700px" awidth="1000px" class="label label-sm label-success Ajax" title="查看">@("查看")</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", JobItemList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@Html.Partial("Stats", new StatsModel { ButtonId = "count", ShowId = "Stats", Url = "/Manage/JobItem/IndexStats.html", FormId = "ListForm" })
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            $("#Export").on("click", function () {
+                $("#ListForm").attr("action", "/Manage/JobItem/ExcelExport.html");
+                $("#ListForm").submit();
+                $("#ListForm").attr("action", "");
+            });
+        });
+    </script>
+}

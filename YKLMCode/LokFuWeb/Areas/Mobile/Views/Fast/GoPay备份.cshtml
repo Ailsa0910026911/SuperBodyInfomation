@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+    FastOrder FastOrder = ViewBag.FastOrder;
+    Users Users = ViewBag.Users;
+    
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    bool IsAlipayBrowser = ViewBag.IsAlipayBrowser;
+    bool IsLokFu = ViewBag.IsLokFu;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>请使用扫一扫付款</title>
+    <link href="/Content/Mobile/Fast/css/main.css?201706071226" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body>
+    <span class="ewm_name">@(Users.NeekName)</span>
+    @if (FastOrder.State == 1 && FastOrder.PayState==0 && !FastOrder.PayId.IsNullOrEmpty()){
+    <div class="sk_qr"><img src="@(FastOrder.QRCode())" /></div>
+    }
+    @if (IsLokFu){
+    <span class="ewm_text01">请使用@(FastOrder.OType==1?"支付宝":"")@(FastOrder.OType==2?"微信":"")扫一扫进行付款</span>
+    }
+    @if (IsWeiXinBrowser)
+    {
+    <span class="ewm_text01">请使用微信扫描二维码。</span>
+    }
+    @if (IsAlipayBrowser)
+    {
+    <span class="ewm_text01">自动跳转到支付界面！</span>
+    }
+    <div class="ewm_xian"></div>
+    <span class="ewm_je"><span class="sp01">￥</span><span class="sp02">@(FastOrder.Amoney.ToMoney())</span></span>
+    <a href="index-@(FastOrder.UId).html" class="clear_je">清除金额</a>
+</body>
+</html>
+@if (FastOrder.State == 1 && FastOrder.PayState == 0 && !FastOrder.PayId.IsNullOrEmpty())
+{
+    <script>
+        var Interval;
+        $(function () {
+            Interval = setInterval("Get()", 5000);
+        });
+        var Get = function () {
+            $.get("PayState.html?code=@(LokFu.Infrastructure.LokFuEncode.Base64Encode(FastOrder.TNum))", function (data) {
+                if (data == "S") {
+                    location.href = "Success.html?code=@(LokFu.Infrastructure.LokFuEncode.Base64Encode(FastOrder.TNum))";
+                } else if (data == "G") {
+                    //继续查
+                }else{
+                    clearInterval(Interval);
+                }
+            });
+        }
+    </script>
+}

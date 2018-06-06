@@ -1,0 +1,288 @@
+﻿@{
+    Orders Orders = ViewBag.Orders;
+    string ActionName = ViewBag.ActionName;
+    string AppImgPath = ViewBag.AppImgPath;
+    LokFuEntity Entity = ViewBag.Entity;
+    var Users = Entity.Users.FirstOrNew(o => o.Id == Orders.UId);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+
+<div id="twitter-bootstrap-container" class="row" style="width: 650px; height: auto; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">调单信息</a></li>
+        <li><a href="/Manage/Orders/IndexDDLog.html?TNum=@(Orders.TNum) #IndexDDLog" data-target="#IndexDDLogDiv">操作记录</a></li>
+    </ul>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base">
+        <div class="table-responsive">
+            <form action="@(ActionName).html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(Orders.Id)" />
+                <input type="hidden" name="TNum" value="@(Orders.TNum)" />
+                <input type="hidden" name="IdCardState" id="IdCardState" />
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>调单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">交易号</td>
+                            <td class="active" colspan="3">@(Orders.TNum)</td>
+                        </tr>
+                        <tr>
+                            <td class="success" style="width: 120px">交易商户</td>
+                            <td class="active">@(Users.TrueName)</td>
+                            <td class="success" style="width: 120px">登录账号</td>
+                            <td class="active">@(Users.UserName)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">交易类型</td>
+                            <td class="active">[<span>@(Orders.GetTTName())</span>]【
+                            @if (Orders.TType == 2 || Orders.TType == 5)
+                            {
+                                <span>T+@(Orders.TrunType)出款</span>
+                            }
+                                @if (Orders.TType == 1 || Orders.TType == 7 || Orders.TType == 8 || Orders.TType == 9)
+                                {
+                                    <span>T+@(Orders.LagEntryDay)入帐</span>
+                                }】
+                            </td>
+                            <td class="success">交易金额</td>
+                            <td class="active price">@(Orders.Amoney.ToMoney())</td>
+                        </tr>
+
+                        <tr>
+                            <td class="success">调单类型</td>
+                            <td class="active">
+                                @switch (Orders.DDAuto)
+                                {
+                                    case 1:
+                                    @:自动调单
+                                    break;
+                                    case 2:
+                                    @:手动调单
+                                    break;
+                                }
+                            </td>
+                            <td class="success">调单状态</td>
+                            <td class="active">
+                                @switch (Orders.IdCardState)
+                                {
+                                    case 0:
+                                    @:无风险
+                                    break;
+                                    case 1:
+                                    @:调单协查
+                                    break;
+                                    case 2:
+                                    @:审核中
+                                    break;
+                                    case 3:
+                                    @:审核通过
+                                    break;
+                                    case 4:
+                                    @:审核失败
+                                    break;
+                                    case 5:
+                                    @:终止调单
+                                    break;
+                                    case 6:
+                                    @:强制退款
+                                    break;
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success">发起时间</td>
+                            <td class="active">@(Orders.CardAddTime.HasValue ? Orders.CardAddTime.Value.ToString() : "--")</td>
+                            <td class="success">过期时间</td>
+                            <td class="active">@(Orders.DDLastTime.HasValue ? Orders.DDLastTime.Value.ToString() : "--")</td>
+                        </tr>
+                        <tr>
+                            <td class="success">发起备注</td>
+                            <td class="active" colspan="3">@(Orders.Remark)</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>协查信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">协查类型</td>
+                            <td class="active">
+                                @switch (Orders.CardUpType)
+                                {
+                                    case 0:
+                                    @:自传凭证
+                                    break;
+                                    case 1:
+                                    @:代传凭证
+                                    break;
+                                    case 2:
+                                    @:担保
+                                    break;
+                                }
+                            </td>
+                            <td class="success">协查时间</td>
+                            <td class="active">@(Orders.CardUpdateTime.HasValue ? Orders.CardUpdateTime.Value.ToString() : "--")</td>
+                        </tr>
+                        <tr>
+                                @* 如果是商户自传，订单信息加入姓名UserCardName*@
+                                <td class="success" style="width: 120px;">姓名</td>
+                                <td class="active">@(Orders.UserCardName)</td>
+                                <td class="success" style="width: 120px">身份证号码</td>
+                                <td class="active">@(Orders.UserCardId)</td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">银行卡号</td>
+                                <td class="active">@(Orders.BankCardId)</td>
+                            </tr>
+                        <tr>
+                            <td class="success">凭证照片</td>
+                             <td colspan="4">
+                                @if (!Orders.UserCardPic.IsNullOrEmpty())
+                                {
+                                    string[] UserCardPicSplit = Orders.UserCardPic.Split(',');
+
+                                    if (UserCardPicSplit != null)
+                                    {
+                                        int i = 1;
+                                        foreach (string UserCardPicItem in UserCardPicSplit)
+                                        {
+                                            if (i > 3)
+                                            {
+                                                i = 1;
+                                                <br>
+                                            }
+
+                                            if (!UserCardPicItem.IsNullOrEmpty())
+                                            {
+                                                if (Orders.CardUpType == 0)
+                                                {
+                                                <a class="example-image-link" data-lightbox="example-set" href="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)">
+                                                    <img src="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)" width="126" height="80">
+                                                </a>
+                                                }
+                                                else if (Orders.CardUpType == 1 || Orders.CardUpType == 2)
+                                                { 
+                                                    <a class="example-image-link" data-lightbox="example-set" href="@Utils.ImageUrl("Orders", UserCardPicItem)">
+                                                    <img src="@Utils.ImageUrl("Orders", UserCardPicItem)" width="126" height="80">
+                                                </a>
+                                                }
+                                            }
+                                            i++;
+
+                                        }
+                                    }
+                                }
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success">凭证说明</td>
+                            <td class="active" colspan="3">
+                                @(Orders.DDUserRm)
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>审核信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ActionName == "DiaoDanAudit" || ActionName == "ForceRefund")
+                        {
+                            <tr>
+                                <td class="success">审核备注</td>
+                                <td class="active" colspan="3">
+                                    <textarea class="form-control input-xmlarge validate[required,maxSize[1000]]" name="DDAuditRemark" id="DDAuditRemark" rows="3"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="success">内部备注</td>
+                                <td class="active" colspan="3">
+                                    <textarea class="form-control input-xmlarge validate[maxSize[1000]]" name="InternalRm" id="InternalRm" rows="3"></textarea>
+                                    <p style="color: grey"><span style="color: red">*</span>该备注内容商户不可见、管理平台可见</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center" colspan="4">
+                                    @if (Orders.IdCardState == 2)
+                                    {
+                                        <button type="button" class="btn green" onclick="javascript:Audit(3)">审核通过</button>
+                                        <button type="button" class="btn red" onclick="javascript:Audit(4)">审核失败</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn green" onclick="javascript:Audit(6)">强制退款</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="success">审核备注</td>
+                                <td class="active" colspan="3">@(Orders.DDAuditRemark)</td>
+                            </tr>
+                            <tr>
+                                <td class="success">内部备注</td>
+                                <td class="active" colspan="3">@(Orders.InternalRm)</td>
+                            </tr>
+                            <tr>
+                                <td class="success">审核时间</td>
+                                <td class="active" colspan="3">@(Orders.CardUpdateTime.HasValue ? Orders.CardUpdateTime.Value.ToString() : "--")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <div id="IndexDDLogDiv"></div>
+</div>
+
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+    <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+    <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox2/css/lightbox.min.css" />
+    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox.min.js"></script>
+    <script>
+        function Audit(type) {
+            $("#IdCardState").val(type);
+            var value = $("#IdCardState").val();
+            $('#chkForm').validationEngine('detach');
+            $('#chkForm').validationEngine('hideAll');
+            if (value == "3") {
+                $("#DDAuditRemark").removeClass("validate[required,maxSize[1000]]");
+                $("#DDAuditRemark").addClass("validate[maxSize[1000]]");
+            }
+            else {
+                $("#DDAuditRemark").removeClass("validate[maxSize[1000]]");
+                $("#DDAuditRemark").addClass("validate[required,maxSize[1000]]");
+            }
+            $('#chkForm').validationEngine('attach');
+            $("#chkForm").submit();
+        }
+
+        $(document).ready(function () {
+            //ajax请求完成执行
+            tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                if ($clicked.attr("data-target") == "#IndexDDLogDiv") {
+                    var table = TableIni("IndexDDLog");
+                }
+            });
+        });
+    </script>
+}

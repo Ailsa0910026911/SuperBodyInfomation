@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.SMUid = 153;
+    SysAdmin SysAdmin = ViewBag.AdminUser;
+}
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix" style="display: block;">
+		<div class="information">
+			<div class="proxy-top inform">
+				<ul class="list-unstyled inform-porp">
+					<li>定期更换密码可以让你的账户更加安全.<i class="iconfont text-blue"></i></li>
+					<li>请确保新密码与原密码不同!</li>
+					<li>建议密码采用字母与数字混合,并且不短于6位.</li>
+				</ul>
+				<hr>
+			</div>	
+			<div class="proxy-con inquiry-cont">
+				<form action="PassSave.html?@(Request.QueryString["IsAjax"].IsNullOrEmpty()?"":"IsAjax=1")" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+					<input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                    <ul class="list-unstyled inform-list">
+						<li>
+							<span class="left-span"> 账户名 </span> <span class="text-warning">@(SysAdmin.UserName)</span>
+						</li>
+						<li>
+							<span class="left-span"> 当前登录密码 </span> 
+                            <input name="PassWord" id="p0" type="password" placeholder="请输入当前登录密码" class="input-text input-max validate[required,custom[pwd]]">
+						</li>
+						<li>
+							<span class="left-span"> 新登录密码 </span> 
+                            <input name="PassWord1" id="p1" type="password" placeholder="请输入新登录密码" class="input-text input-max validate[required,custom[pwd]]">
+							<p>必须是6-20个英文字母、数字</p>
+						</li>
+						<li>
+							<span class="left-span"> 确认新登录密码 </span> 
+                            <input name="PassWord2" id="p2" type="password" placeholder="确认新密码" class="input-text input-max validate[required,custom[pwd],equals[p1]]">
+						</li>
+					</ul>
+					<br>
+					<div class="text-center"><button type="submit" class="sub">确认并修改密码</button></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+@*<div class="row" style="width:400px; height:400px; padding-top:15px;padding-left:15px; margin:0 auto;">
+  <div class="">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+        <form action="PassSave.html?@(Request.QueryString["IsAjax"].IsNullOrEmpty()?"":"IsAjax=1")" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+          <div class="form-group">
+            <label>请输入原密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd]]" name="PassWord" id="p0" alert="请输入原密码">
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label>请输入新密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd]]" name="PassWord1" id="p1" alert="请输入新密码">
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label>请重复输入新密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd],equals[p1]]" name="PassWord2" id="p2" alert="重复密码与新密码不同">
+            <p class="help-block"></p>
+          </div>
+          <div class="margin-top-10"> <button class="btn green" type="submit"> 确认并修改密码 </button> </div>
+        </form>
+    </div>
+  </div>
+</div>*@
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js?v=20170629"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604251426"></script>
+}

@@ -1,0 +1,68 @@
+﻿@{
+    BasicCity BasicCity = ViewBag.BasicCity;
+    ViewBag.SMUid = 14;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(BasicCity.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BasicCity.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属省 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-large validate[required]" name="PId" id="PId" type="select-one" alert="请选择省">
+                    <option value="0">请选择</option>
+                    @foreach (var p in BasicProvinceList){
+                    <option value="@(p.Id)"@(BasicCity.PId==p.Id?" selected":"")>@(p.Name)</option>
+                    }
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">城市名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-large validate[required]" name="Name" id="Name" value="@(BasicCity.Name)" alert="请填写城市名称" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(BasicCity.State==1?" selected":"")>显示</option>
+                    <option value="0"@(BasicCity.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(BasicCity.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

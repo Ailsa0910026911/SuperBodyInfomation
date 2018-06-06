@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "";
+    int TId = 1;
+    TaskTimeSet TaskTimeSet = ViewBag.TaskTimeSet;
+    if (TaskTimeSet == null)
+    {
+        TaskTimeSet = new TaskTimeSet();
+        TaskTimeSet.ODate = DateTime.Now;
+    }
+    int Month = TaskTimeSet.ODate.Month;
+    int Year = TaskTimeSet.ODate.Year;
+    if (Year == DateTime.Now.Year)
+    {
+        Month = DateTime.Now.Month > Month ? DateTime.Now.Month : Month;
+    }
+    else if (Year < DateTime.Now.Year)
+    {
+        Year = DateTime.Now.Year;
+        Month = DateTime.Now.Month;
+    }
+    Year = ViewBag.Year == null ? Year : ViewBag.Year;
+    Month = ViewBag.Month == null ? Month : ViewBag.Month;
+    DateTime StartDate = new DateTime(Year, Month, 1);
+    DateTime EndDate = StartDate.AddMonths(1);
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<TaskTimeSet> TaskTimeSetList = Entity.TaskTimeSet.Where(n => n.TId == TId && n.STime >= StartDate && n.ETime < EndDate).ToList();
+}
+<div class="c_box_3 ">
+    <div class="content-box">
+        <div class="ui-box-header">
+            <select id="selYear" class="select">
+                @for (int i = DateTime.Now.Year; i <= (DateTime.Now.Year + 10); i++)
+                {
+                    <option value="@(i)" @(i == Year ? "selected" : "")>@(i)</option>  
+                }
+            </select>年 
+            <select class="select" id="selMonth">
+                @for (int i = (Year == DateTime.Now.Year ? DateTime.Now.Month : 1); i <= 12; i++)
+                {
+                    <option value="@(i)" @(i == Month ? "selected" : "")>@(i)</option>
+                }
+            </select>月 
+        </div>
+        <div class="content-box-wrapper">
+            <table cellpadding="0" cellspacing="0" width="100%" class="bcc lh24 edit_date" id="edit_date">
+                <tr>
+                    <th>星期一</th>
+                    <th>星期二</th>
+                    <th>星期三</th>
+                    <th>星期四</th>
+                    <th>星期五</th>
+                    <th>星期六</th>
+                    <th>星期日</th>
+                </tr>
+                @{
+                    int StartDay = new DateTime(Year, Month, 1).DayOfWeek.GetHashCode();
+                    StartDay = StartDay == 0 ? 7 : StartDay;
+                    StartDay--;
+                    int Day = DateTime.DaysInMonth(Year, Month) + StartDay;
+                }
+                <tr>
+                    @for (int j = 0; j < Day; j++)
+                    {
+                        int temp = j - StartDay;
+                        if (j < StartDay)
+                        {//空白格子
+                            <td class="date_box lh16"><br /><span class="price">&nbsp;</span></td>
+                        }
+                        else
+                        {
+                            DateTime nowDay = new DateTime(Year, Month, temp + 1);
+                            DateTime BaseDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                            TaskTimeSet TTS = TaskTimeSetList.FirstOrDefault(n => n.ODate == nowDay);
+                            string str = new LokFu.Base.Extensions.ChineseCalendar(nowDay).DateHoliday;
+                            if (str.IsNullOrEmpty())
+                            {
+                                str = new LokFu.Base.Extensions.ChineseCalendar(nowDay).ChineseCalendarHoliday;
+                            }
+                            if (str.IsNullOrEmpty())
+                            {
+                                str = new LokFu.Base.Extensions.ChineseCalendar(nowDay).ChineseDayString;
+                            }else{
+                                str = "<font color='Red'>" + str + "</font>";
+                            }
+                            if (j % 7 == 0)
+                            {
+                                @Html.Raw("</tr><tr>")
+                            }
+                            if (BaseDate <= nowDay)
+                            {
+                                if (DateTime.Now.Month == Month && DateTime.Now.Day == temp + 1)
+                                {
+                                    str = "<font color='Green'>今天</font>";
+                                }
+                                if (TTS != null)
+                                {
+                                    <td title="双击编辑配置" class="edit_date_in date_box lh16" data-date="@(nowDay.ToString("yyyy-MM-dd"))" data-stime="@(TTS.STime.ToString("yyyy-MM-dd HH:mm:ss"))" data-etime="@(TTS.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" data-money="@((double)TTS.AllMoney)" data-used="@((double)TTS.UsedMoney)">
+                                        @(Html.Raw(str)) <b>@(temp + 1)</b><br />
+                                        <span class="text">余：</span><span class="price">@((double)(TTS.AllMoney-TTS.UsedMoney))元</span>
+                                        <a rev="@(nowDay.ToString("yyyy-MM-dd"))" title="单击删除此计划" class="deleteItem">Del</a>
+                                    </td>
+                                }
+                                else
+                                {//未配置
+                                    <td title="双击添加配置" class="date_box lh16" data-date="@(nowDay.ToString("yyyy-MM-dd"))">
+                                        @(Html.Raw(str)) <b>@(temp + 1)</b><br />
+                                        <span class="price">&nbsp;</span>
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                //过去时间
+                                <td class="lost lh16">@(Html.Raw(str)) <b>@(temp + 1)</b><br /><span class="price">&nbsp;</span></td>
+                            }
+                        }
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="position: absolute; z-index: 999;" id="LinesDaysPrice" class="price_open_edit"></div>
+    <div class="cl"></div>
+</div>

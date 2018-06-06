@@ -1,0 +1,822 @@
+﻿@{
+    Orders Orders = ViewBag.Orders;
+    ViewBag.SMUid = 60;
+    Users Users = ViewBag.Users;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    SysAdmin FinAdmin = ViewBag.FinAdmin;
+    IList<BasicDesc> BasicDescList1 = ViewBag.BasicDescList1;
+    IList<BasicDesc> BasicDescList2 = ViewBag.BasicDescList2;
+    LokFuEntity Entity = ViewBag.Entity;
+    string PayWay = "--";
+    if (Orders.PayWay > 0 && Orders.PayState == 1)
+    {
+        PayWay = Entity.PayConfig.FirstOrNew(n => n.Id == Orders.PayWay).Name;
+    }
+    else if (Orders.PayWay == 0 && Orders.PayState == 1) 
+    {
+        PayWay = "支付宝";
+    }
+    string AppImgPath = ViewBag.AppImgPath;
+    var parentAgents = SysAgent.GetAgentsById(Entity);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div id="twitter-bootstrap-container" class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">交易信息</a></li>
+        <li><a href="/Manage/Orders/IndexUserLog.html?TNum=@(Orders.TNum) #UserLog" data-target="#UserLogDiv">结算记录</a></li>
+        @*<li><a href="/Manage/Orders/IndexDDLog.html?TNum=@(Orders.TNum) #IndexDDLog" data-target="#IndexDDLogDiv">调单记录</a></li>*@
+        @if (Orders.AgentPayGet > 0 && Orders.PayState == 1)
+        {
+            <li><a href="/Manage/Orders/IndexOrderProfitLog.html?TNum=@(Orders.TNum) #IndexOrderProfitLog" data-target="#OrderProfitLogDiv">分润记录</a></li>
+        }
+    </ul>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base" style="height: 600px">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易号</td>
+                        <td class="active" colspan="3">@(Orders.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易内容</td>
+                        <td class="active" colspan="3">@(Orders.GetPayNameWithTName())</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易类型</td>
+                        <td class="active">[<span>@(Orders.GetTTName())</span>]【
+                            @if (Orders.TType == 2 || Orders.TType == 5)
+                            {
+                                <span>T+@(Orders.TrunType)出款</span>
+                            }
+                            @if (Orders.TType == 1 || Orders.TType == 7 || Orders.TType == 8 || Orders.TType == 9)
+                            {
+                                <span>T+@(Orders.LagEntryDay)入帐</span>
+                            }】</td>
+                        <td class="success">交易金额</td>
+                        <td class="active price">@(Orders.Amoney.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易状态</td>
+                        <td class="active">
+                            @(Orders.GetState())
+                        </td>
+                        <td class="success">交易时间</td>
+                        <td class="active">@(Orders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">入账时间</td>
+                        <td class="active">@(Orders.InTimed != null ? Convert.ToDateTime(Orders.InTimed).ToString("yyyy-MM-dd HH:mm:ss") : "")</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易备注</td>
+                        <td class="active" colspan="3">@(Orders.Remark)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>付款信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">支付状态</td>
+                        <td class="active">@if (Orders.PayState == 0)
+                                           {
+                            <span>未付款</span>
+                                           }
+                                           else
+                                           {
+                            <span>已付款</span>
+                                           }</td>
+                        <td class="success">支付时间</td>
+                        <td class="active">@(Orders.PayTime.HasValue?Orders.PayTime.Value.ToString("yyyy-MM-dd HH:mm:ss"):"--")</td>
+                    </tr>
+                    <tr>
+                        <td class="success">支付方式</td>
+                        <td class="active">@(PayWay)</td>
+                        <td class="success">@(Orders.TType == 2 ? "提现时间" : " ")</td>
+                        <td class="active">@(Orders.TrunTime.HasValue?Orders.TrunTime.Value.ToString("yyyy-MM-dd HH:mm:ss"):"--")</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>机构信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">机构名称</td>
+                        <td class="active">
+                            @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                        </td>
+                        <td class="success">业务员</td>
+                        <td class="active">@(SysAdmin.TrueName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">机构结算</td>
+                        <td class="active">@if (Orders.AgentState == 0){
+                                            <span>未结算</span>
+                                        }else{
+                                            <span>已结算</span>
+                                        }</td>
+                        <td class="success">@(Orders.AgentState==1?"结算时间":" ")</td>
+                        <td class="active">@(Orders.AgentTime)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>定位信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易地点</td>
+                        <td class="active" colspan="3">
+                            @if (Orders.OrderAddress != "INVALID_USER_KEY") 
+                            {<a href="/Manage/Map/Orders.html?Id=@(Orders.Id)" class="Ajax">@(Orders.OrderAddress)</a>
+                            }
+                            @if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"] != null)
+                            {
+                                if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"].ToString().Equals("ON") && ViewBag.UserTrailIndex)
+                                {
+                                <a class="label label-sm label-success Ajax" href="/Manage/UserTrail/Index.html?UId=@(Orders.UId)"><i class="fa fa-anchor"></i>轨迹</a>  
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (Orders.TType == 1)
+            { //银联卡支付订单
+                OrderRecharge OrderRecharge = Entity.OrderRecharge.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>银联卡支付订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">总金额</td>
+                            <td class="active price">@(OrderRecharge.Amoney.ToString("F2"))</td>
+                            <td class="success" style="width: 120px">到帐金额</td>
+                            <td class="active price">@(OrderRecharge.PayMoney.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">商户费率</td>
+                            <td class="active"><span class="permillage">@(OrderRecharge.UserRate * 1000)</span>‰</td>
+                            <td class="success">手续费</td>
+                            <td class="active price">@(OrderRecharge.Poundage.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">第三方费率</td>
+                            <td class="active"><span class="permillage">@(OrderRecharge.SysRate * 1000)</span>‰</td>
+                            <td class="success">第三方手续费</td>
+                            <td class="active price">@(((decimal)OrderRecharge.SysRate * OrderRecharge.Amoney).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(OrderRecharge.AgentPayGet.ToString("F2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@((OrderRecharge.Poundage - (decimal)OrderRecharge.SysRate * OrderRecharge.Amoney - (decimal)OrderRecharge.AgentPayGet).ToString("F2"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 2)
+            { //提现订单
+                OrderCash OrderCash = Entity.OrderCash.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>提现订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">提现金额</td>
+                            <td class="active price">@(OrderCash.Amoney.ToString("F2"))</td>
+                            <td class="success" style="width: 120px">到帐金额</td>
+                            <td class="active price">@((OrderCash.Amoney - (decimal)OrderCash.UserRate).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">提现服务费</td>
+                            <td class="active"><span class="price">@(OrderCash.UserRate.ToString("F2"))</span>元</td>
+                            <td class="success">平台手续费</td>
+                            <td class="active"><span class="price">@(OrderCash.CashRate.ToString("F2"))</span>元</td>
+                        </tr>
+                        <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(OrderCash.AgentCashGet.ToString("F2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@((OrderCash.UserRate - (double)OrderCash.CashRate - OrderCash.AgentCashGet).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">提现服务费</td>
+                            <td class="active"><span class="price">@(OrderCash.ECash.ToString("F2"))</span>元/笔+<span class="price">@((OrderCash.Cash * 1000).ToString("F2"))‰</span></td>
+                            <td class="success">提成方式</td>
+                            <td class="active price">T+@(OrderCash.TrunType)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>银行卡信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">银行</td>
+                            <td class="active">@(OrderCash.Bank)</td>
+                            <td class="success" style="width: 120px">开户行</td>
+                            <td class="active">@(OrderCash.Deposit)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">开户名</td>
+                            <td class="active">@(OrderCash.Owner)</td>
+                            <td class="success">卡号</td>
+                            <td class="active">@(OrderCash.CardNum)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">手机</td>
+                            <td class="active">@(OrderCash.Mobile)</td>
+                            <td class="success">&nbsp;</td>
+                            <td class="active">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 3)
+            { //转帐订单
+                OrderTransfer OrderTransfer = Entity.OrderTransfer.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>转帐订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">转款人</td>
+                            <td class="active">@(Entity.Users.FirstOrNew(n => n.Id == OrderTransfer.UId).TrueName)</td>
+                            <td class="success" style="width: 120px">收款人</td>
+                            <td class="active">@(Entity.Users.FirstOrNew(n => n.Id == OrderTransfer.RUId).TrueName)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">转款金额</td>
+                            <td class="active price">@(OrderTransfer.PayMoney.ToString("F2"))</td>
+                            <td class="success">总金额</td>
+                            <td class="active price">@(OrderTransfer.Amoney.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">商户费率</td>
+                            <td class="active"><span class="permillage">@(OrderTransfer.UserRate * 1000)</span>‰</td>
+                            <td class="success">手续费</td>
+                            <td class="active price">@(OrderTransfer.Poundage.ToString("F2"))【@(OrderTransfer.IsMe == 1 ? "付方" : "收方")】</td>
+                        </tr>
+                        <tr>
+                            <td class="success">支付通道费率</td>
+                            <td class="active"><span class="permillage">@(OrderTransfer.SysRate * 1000)</span>‰</td>
+                            <td class="success">支付通道手续费</td>
+                            <td class="active price">@(((decimal)OrderTransfer.SysRate * OrderTransfer.Amoney).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(OrderTransfer.AgentPayGet.ToString("F2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@((OrderTransfer.Amoney - OrderTransfer.PayMoney - (decimal)OrderTransfer.SysRate * OrderTransfer.Amoney - (decimal)OrderTransfer.AgentPayGet).ToString("F2"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 5)
+            { //付房租订单
+                OrderHouse OrderHouse = Entity.OrderHouse.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>付房租订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">总金额</td>
+                            <td class="active price">@(OrderHouse.Amoney.ToString("F2"))</td>
+                            <td class="success" style="width: 120px">应付房租</td>
+                            <td class="active price">@((OrderHouse.PayMoney).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">每月租金</td>
+                            <td class="active price">@OrderHouse.MonthRent.ToString("F2")</td>
+                            <td class="success">付款月数</td>
+                            <td class="active">@(OrderHouse.PayMonth)个月</td>
+                        </tr>
+                        <tr>
+                            <td class="success">押金</td>
+                            <td class="active price">@(OrderHouse.SecurityMoney.ToString("F2"))</td>
+                            <td class="success">租金周期</td>
+                            <td class="active">@(OrderHouse.StartTime.IsNullOrEmpty() ? "--" : ((DateTime)OrderHouse.StartTime).ToString("yyyy-MM-dd"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">支付通道费率</td>
+                            <td class="active"><span class="permillage">@(OrderHouse.SysRate * 1000)</span>‰</td>
+                            <td class="success">支付通道手续费</td>
+                            <td class="active price">@(((decimal)OrderHouse.SysRate * OrderHouse.Amoney).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">商户费率</td>
+                            <td class="active"><span class="permillage">@(OrderHouse.UserRate * 1000)</span>‰</td>
+                            <td class="success">加急费率</td>
+                            <td class="active price">@((double)OrderHouse.CashRate * 1000)‰</td>
+                        </tr>
+                        <tr>
+                            <td class="success">手续费</td>
+                            <td class="active price">@(OrderHouse.Poundage.ToString("F2"))</td>
+                            <td class="success">&nbsp;</td>
+                            <td class="active">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(OrderHouse.AgentPayGet.ToString("F2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@((OrderHouse.Amoney - OrderHouse.PayMoney - OrderHouse.CashRate - (decimal)OrderHouse.SysRate * OrderHouse.Amoney - (decimal)OrderHouse.AgentPayGet).ToString("F2"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>房东信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">姓名</td>
+                            <td class="active">@(OrderHouse.HouseOwner)</td>
+                            <td class="success" style="width: 120px">银行</td>
+                            <td class="active">@(OrderHouse.Bank)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">开户行</td>
+                            <td class="active">@(OrderHouse.Deposit)</td>
+                            <td class="success">卡号</td>
+                            <td class="active">@(OrderHouse.CardNum)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">手机</td>
+                            <td class="active">@(OrderHouse.Mobile)</td>
+                            <td class="success">&nbsp;</td>
+                            <td class="active">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 6)
+            { //升级订单
+                VIPOrder VIPOrder = Entity.VIPOrder.FirstOrNew(n => n.TNum == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>VIP升级</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">升级价格</td>
+                            <td class="active price">@(VIPOrder.Amoney.ToString("F2"))</td>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(VIPOrder.SplitMoney.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">利润</td>
+                            <td class="active price">@((VIPOrder.Amoney-VIPOrder.SplitMoney).ToString("F2"))</td>
+                            <td class="success"></td>
+                            <td class="active price"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 7 || Orders.TType == 8 || Orders.TType == 9)
+            { //订单
+                OrderF2F OrderF2F = Entity.OrderF2F.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">总金额</td>
+                            <td class="active price">@(OrderF2F.Amoney.ToString("F2"))</td>
+                            <td class="success" style="width: 120px">到帐金额</td>
+                            <td class="active price">@(OrderF2F.PayMoney.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">商户费率</td>
+                            <td class="active"><span class="permillage">@(OrderF2F.UserRate * 1000)</span>‰</td>
+                            <td class="success">手续费</td>
+                            <td class="active price">@(OrderF2F.Poundage.ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">第三方费率</td>
+                            <td class="active"><span class="permillage">@(OrderF2F.SysRate * 1000)</span>‰</td>
+                            <td class="success">第三方手续费</td>
+                            <td class="active price">@(((decimal)OrderF2F.SysRate * OrderF2F.Amoney).ToString("F2"))</td>
+                        </tr>
+                        <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(OrderF2F.AgentPayGet.ToString("F2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@((OrderF2F.Poundage - (decimal)OrderF2F.SysRate * OrderF2F.Amoney - (decimal)OrderF2F.AgentPayGet).ToString("F2"))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            @if (Orders.TType == 10)
+            { //代理订单
+                DaiLiOrder DaiLiOrder = Entity.DaiLiOrder.FirstOrNew(n => n.OId == Orders.TNum);
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>代理开通订单信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">用户名</td>
+                            <td class="active">@(DaiLiOrder.UserName)</td>
+                            <td class="success" style="width: 120px">姓名</td>
+                            <td class="active">@(DaiLiOrder.TureName)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">开通价格</td>
+                            <td class="active price">@(DaiLiOrder.Amoney.ToString("n2"))</td>
+                            <td class="success">代理等级</td>
+                            <td class="active">@if (DaiLiOrder.Tier == 5)
+                                               { 
+                                                 @("渠道商")
+                                               }
+                                               else if (DaiLiOrder.Tier == 6)
+                                               { 
+                                                @("分销商")
+                                               }
+                                else
+                                { 
+                                                   @(DaiLiOrder.Tier+"级");
+                                }
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="success">分支机构提成</td>
+                            <td class="active price">@(DaiLiOrder.AgentGet.ToString("n2"))</td>
+                            <td class="success">利润</td>
+                            <td class="active price">@(((Double)(DaiLiOrder.Amoney)-DaiLiOrder.AgentGet).ToString("n2"))</td>
+                        </tr>
+                        @if (!DaiLiOrder.SameGet.IsNullOrEmpty()) 
+                        {
+                            <tr>
+                            <td class="success">同级机构提成</td>
+                            <td class="active price">@(DaiLiOrder.SameGet.ToString("n2"))</td>
+                            <td class="success"></td>
+                            <td class="active price"></td>
+                        </tr>
+                        }
+                       @* <tr>
+                            <td class="success">开通费率</td>
+                            <td class="active price">@((AgentType.RegisterPayGet * 100).ToString())%</td>
+                            <td class="success">&nbsp;</td>
+                            <td class="active price">&nbsp;</td>
+                        </tr>*@
+                    </tbody>
+                </table>
+            }
+            @if (Orders.IdCardState > 0)
+            {
+                if (Orders.IdCardState == 1)
+                {
+                <div style="line-height: 40px; text-align: center; font-size: 18px; color: red;">暂时不能审核，等待用户上传信息</div>
+                }
+                else
+                {
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                <i class="fa fa-globe"></i>审核信息
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px">操作类型</td>
+                            <td class="active">
+                                @{
+                    string oName = string.Empty;
+                    if (Orders.IdCardState >= 1)
+                    {
+                        switch (Orders.CardUpType)
+                        {
+                            case 0:
+                                oName = "自传凭证";
+                                break;
+                            case 1:
+                                oName = "代传凭证";
+                                break;
+                            case 2:
+                                oName = "担保";
+                                break;
+                        }
+                    }
+                                }
+                                @(oName)
+                            </td>
+                            <td class="success" style="width: 120px">操作时间</td>
+                            <td class="active">@(Orders.CardUpdateTime)</td>
+                        </tr>
+
+
+                        @if (Orders.CardUpType == 0)
+                        {
+                            <tr>
+                                @* 如果是商户自传，订单信息加入姓名UserCardName*@
+                                <td class="success" style="width: 120px;">姓名</td>
+                                <td class="active">@(Orders.UserCardName)</td>
+                                <td class="success" style="width: 120px">身份证号码</td>
+                                <td class="active">@(Orders.UserCardId)</td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">银行卡号</td>
+                                <td class="active">@(Orders.BankCardId)</td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">凭证</td>
+                                <td colspan="3" >
+                                    @if (!Orders.UserCardPic.IsNullOrEmpty())
+                                    {
+                                        string[] UserCardPicSplit = Orders.UserCardPic.Split(',');
+                                        if (UserCardPicSplit != null)
+                                        {
+                                            int i = 1;
+                                            foreach (string UserCardPicItem in UserCardPicSplit)
+                                            {
+                                                if (i > 3)
+                                                {
+                                                    i = 1;
+                                                    <br>
+                                                }
+                                                
+                                                if (!UserCardPicItem.IsNullOrEmpty())
+                                                {
+                                                    <a class="example-image-link" data-lightbox="example-set" href="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)">
+                                                        <img src="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)" width="126" height="80">
+                                                    </a>
+                                                }
+                                                i++;
+
+                                            }
+                                        }
+
+                                    }
+
+
+                                </td>
+                            </tr>
+                        }
+                        else if (Orders.CardUpType == 1||Orders.CardUpType == 2)
+                        {
+                            <tr>
+                                 <td class="success" style="width: 120px">凭证</td>
+                                <td colspan="3" >
+                                    @if (!Orders.UserCardPic.IsNullOrEmpty())
+                                    {
+                                        string[] UserCardPicSplit = Orders.UserCardPic.Split(',');
+                                        if (UserCardPicSplit != null)
+                                        {
+                                            int i = 1;
+                                            foreach (string UserCardPicItem in UserCardPicSplit)
+                                            {
+                                                if (i > 3)
+                                                {
+                                                    i = 1;
+                                                    <br>
+                                                }
+
+                                                if (!UserCardPicItem.IsNullOrEmpty())
+                                                {
+                                                    <a data-lightbox="example-set" href="@Utils.ImageUrl("Orders", UserCardPicItem)">
+                                                        <img src="@Utils.ImageUrl("Orders", UserCardPicItem)" width="126" height="80">
+                                                    </a>
+                                                }
+                                                i++;
+
+                                            }
+                                        }
+
+                                    }
+
+
+                                </td>
+                            </tr>
+                        }
+                        else if (Orders.CardUpType == 2)
+                        {
+                            <tr>
+                                <td colspan="4" style="text-align: center;">
+                                    <a href="@Utils.ImageUrl("Orders", Orders.UserCardPic)" target="_blank">凭证</a>
+                                </td>
+                            </tr>
+                        }
+
+                        <tr>
+                            <td class="success" style="width: 120px">说明</td>
+                            <td class="active" colspan="3">@(Orders.DDUserRm)</td>
+                        </tr>
+
+                        <tr>
+                            <td class="success">状态</td>
+                            <td class="active" colspan="3">
+                                @switch (Orders.IdCardState)
+                                {
+                                    case 2:
+                                    @:等待审核
+                                        break;
+                                    case 3:
+                                    @:审核通过
+                                        break;
+                                    case 4:
+                                    @:审核失败
+                                        break;
+                                    case 5:
+                                    @:终于调单
+                                        break;
+                                    case 6:
+                                    @:强制退款
+                                        break;
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                }
+            }
+            @if ((Orders.TType == 2 && Orders.TState == 1 && (Orders.IdCardState == 2 || Orders.IdCardState == 0)))
+            {//进行中的交易可用
+                <div class="form-actions fluid" style="margin-top: 0px;">
+                    <div class="col-md-offset-3 col-md-9">
+                        <div class="col-md-9">
+                            失败原因：
+                            <select style="width: 180px" class="form-control input-inline input-sm" id="CharCode1" name="CharCode1">
+                                <option value="0">--请选择--</option>
+                                @if (BasicDescList1 != null)
+                                {
+                                    foreach (var item in BasicDescList1)
+                                    {  
+                                    <option value="@item.Id">@item.TitleCode</option>
+                                    }
+                                }
+                            </select>
+                            内部备注：
+                            <select style="width: 180px" class="form-control input-inline input-sm" id="CharCode2" name="CharCode2">
+                                <option value="0">--请选择--</option>
+                                @if (BasicDescList1 != null)
+                                {
+                                    foreach (var item in BasicDescList2)
+                                    {  
+                                    <option value="@item.Id">@item.TitleCode</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6" style="height: 120px;">
+                            <form action="Save.html?IsAjax=1" method="post" id="chkForm" name="chkForm">
+                                <input type="hidden" name="Id" value="@(Orders.Id)" />
+                                <input type="hidden" id="TState" name="TState" />
+                                <input type="hidden" id="IdCardState" name="IdCardState" />
+                                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                                <textarea placeholder="交易备注：请输入失败原因" class="form-control input-medium input-inline" name="Remark" id="Remark" style="width: 250px !important">@(Orders.Remark)</textarea>
+                                <textarea placeholder="交易备注：内部备注" class="form-control input-medium input-inline" name="InternalRm" id="InternalRm" style="width: 250px !important">@(Orders.InternalRm)</textarea>
+                                <div style="margin-top: 10px;">
+                                    @if (ViewBag.Save)
+                                    {
+                                        <button type="button" class="btn green" style="margin-right: 10px;" id="succeed">确认并审核</button>
+                                        <button type="button" class="btn red" style="margin-right: 10px;" id="defeated">审核失败</button>
+                                    }
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>       
+            }
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+
+    <div id="UserLogDiv"></div>
+    <div id="IndexDDLogDiv"></div>
+    <div id="OrderProfitLogDiv"></div>
+</div>
+@{
+    if (BasicDescList1 != null)
+    {
+        foreach (var item in BasicDescList1)
+        {
+    <input type="hidden" id="hi1_@item.Id" value="@item.DescText" />
+        }
+    }
+    if (BasicDescList2 != null)
+    {
+        foreach (var item in BasicDescList2)
+        {
+    <input type="hidden" id="hi2_@item.Id" value="@item.DescText" />
+        }
+    }
+}
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox2/css/lightbox.min.css" />
+    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox.min.js"></script>
+    <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+    <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+    <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+        
+    <script type="text/ecmascript">
+        $("#CharCode1").change(function () {
+            var checkValue = $(this).val();
+            if (checkValue == "0") {
+                $("#Remark").val("");
+            } else {
+                $("#Remark").val($("#hi1_" + checkValue).val());
+            }
+        });
+        $("#CharCode2").change(function () {
+            var checkValue = $(this).val();
+            if (checkValue == "0") {
+                $("#InternalRm").val("");
+            } else {
+                $("#InternalRm").val($("#hi2_" + checkValue).val());
+            }
+        });
+        $("#succeed").on("click", function () {
+            $("#TState").val("2");
+            $("#IdCardState").val("@(Orders.IdCardState == 0 ? 0 : 3)");
+            $("#chkForm").submit();
+        });
+        $("#defeated").on("click", function () {
+            $("#TState").val("3");
+            $("#IdCardState").val("@(Orders.IdCardState == 0 ? 0 : 4)");
+            $("#chkForm").submit();
+        });
+        $(document).ready(function () {
+            //ajax请求完成执行
+            tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                if ($clicked.attr("data-target") == "#UserLogDiv") {
+                    var table = TableIni("UserLog");
+                }
+                if ($clicked.attr("data-target") == "#IndexDDLogDiv") {
+                    var table = TableIni("IndexDDLog");
+                }
+                if ($clicked.attr("data-target") == "#OrderProfitLogDiv") {
+                    var table = TableIni("IndexOrderProfitLog");
+                    InitIsAjax();
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,220 @@
+﻿@{
+    AdInfo AdInfo = ViewBag.AdInfo;
+    ViewBag.SMUid = 10;
+    IList<AdTag> AdTagList = ViewBag.AdTagList;
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    LokFuEntity Entity = ViewBag.Entity;
+    var sysAgents = Entity.SysAgent.Where(o => o.Tier == 1 && o.IsTeiPai == 1).ToList();
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(AdInfo.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(AdInfo.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">广告名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large validate[required]" name="Name" id="Name" value="@(AdInfo.Name)" alert="请填写广告名称" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">图片地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "Pic", FilePath = "AdInfo", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!AdInfo.Pic.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("AdInfo", AdInfo.Pic))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("AdInfo", AdInfo.Pic))" height="25" id="Img_Pic"/>
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">链接类型 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall validate[required]" name="ModuleType" id="ModuleType">
+                                    <option value="0"@(AdInfo.ModuleType == 0 ? " selected" : "")>-无-</option>
+                                    <option value="1"@(AdInfo.ModuleType == 1 ? " selected" : "")>内置</option>
+                                    <option value="2"@(AdInfo.ModuleType == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                <p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p>
+                            </div>
+                        </div>
+                        <div class="form-group" @(AdInfo.ModuleType == 1 ? "" : "style=display:none;")  id="selectValue">
+                            <label class="control-label col-md-3">链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select id="SelectValueSelect"@(AdInfo.ModuleType == 1 ? " name=Url" : "")
+                        class="bs-select form-control  validate[required] input-md">
+                                        @foreach (var item in ModuleTypeSelectList)
+                                        {
+                                            <option value="@(item.Value)" @(item.Value == AdInfo.Url ? "selected" : "") >@(item.Key)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group"  @(AdInfo.ModuleType == 2 ? "" : "style=display:none;") id="fillValue" >
+                            <label class="control-label col-md-3">链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillValueInput"@(AdInfo.ModuleType == 2 ? " name=Url" : "") value="@(AdInfo.Url)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">广告位 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <select name="TId" id="TId" class="form-control input-small input-inline input-sm  validate[required]" type="select-one" alert="请选择广告位">
+                                        <option value="" data-tag="">请选择</option>
+                                        @foreach (var p in AdTagList)
+                                        {
+                                            <option value="@(p.Id)" @(p.Id == AdInfo.TId ? "selected" : "") data-tag="@(p.Tag)">@(p.Name)</option>
+                                        }
+                                    </select>
+                                    <input type="hidden" name="Tag" id="Tag" value="@(AdInfo.Tag)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                     @*   <div class="form-group">
+                            <label class="control-label col-md-3">贴牌 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <select name="AgentId" id="AgentId" class="form-control input-small input-inline input-sm validate[required]">
+                                        <option value="0" selected>亿卡联盟</option>
+                                        @foreach (var p in sysAgents)
+                                        {
+                                            <option value="@(p.Id)" @(p.Id == AdInfo.AgentId ? "selected" : "")>@(p.Name)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">广告状态 </label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1"@(AdInfo.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0"@(AdInfo.State != 1 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">生效时间</label>
+                            <div class="col-md-4">
+                                <input  type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="height:30px;" placeholder="生效时间"  name="StartTime" id="WSTime" value="@(AdInfo.StartTime.HasValue ? Convert.ToDateTime(AdInfo.StartTime).ToString("yyyy-MM-dd HH:mm:ss") : "")" />
+                                @*<div class="input-icon right input-medium"> <i class="fa"></i>
+                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                        <input type="text" class="form-control form-filter input-sm" readonly="readonly" placeholder="生效时间" name="StartTime" id="StartTime" value="@(AdInfo.StartTime)">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm default" type="button"><em class="fa fa-calendar"></em></button>
+                        </span>
+                    </div>
+                </div>*@
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">结束时间</label>
+                            <div class="col-md-4">
+                                <input  type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="height:30px;" placeholder="结束时间"  name="EndTime" id="WETime" value="@(AdInfo.EndTime.HasValue ? Convert.ToDateTime(AdInfo.EndTime).ToString("yyyy-MM-dd HH:mm:ss") : "")" />
+                                @*<div class="input-icon right input-medium"> <i class="fa"></i>
+                    <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+                        <input type="text" class="form-control form-filter input-sm" readonly="readonly" placeholder="结束时间" name="EndTime" id="EndTime" value="@(AdInfo.EndTime)" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm default" type="button"><em class="fa fa-calendar"></em></button>
+                        </span>
+                    </div>
+                </div>*@
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="button" id="Submit" class="btn green">@(AdInfo.Id.IsNullOrEmpty()? "确认添加":"确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+@*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" /> 
+        <script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+        <script>
+            $(function () {
+                $("#Submit").click(function () {
+
+                    var file = $("input[type='file'][name='Pic']");
+                    var imgsrc = $("#Img_Pic").attr("src");
+                    if ($(file).val() == "" && imgsrc == undefined) {
+                        showdialog("请选择图片");
+                    }
+                    else {
+                        $("#Submit").hide();
+                        $("#chkForm").submit();
+                    }
+                });
+                $("#TId").change(function () {
+                    var tag = $(this).find("option:selected").attr("data-tag");
+                    $("#Tag").val(tag);
+                });
+                $('.date-picker').datepicker({
+                    rtl: App.isRTL(),
+                    autoclose: true
+                });
+                $("#ModuleType").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#selectValue").show();
+                        $("#fillValue").hide();
+                        $("#SelectValueSelect").attr("name", "Url");
+                        $("#FillValueInput").attr("name", "");
+                    }
+                    else {
+                        $("#selectValue").hide();
+                        $("#fillValue").show();
+                        $("#FillValueInput").attr("name", "Url");
+                        $("#SelectValueSelect").attr("name", "");
+                    }
+                });
+            });
+        </script>       
+    }
+}

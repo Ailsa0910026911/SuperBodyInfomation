@@ -1,0 +1,196 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<Orders> OrdersList = ViewBag.OrdersList;
+    ViewBag.SMUid = 124;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    //IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    Orders Orders = ViewBag.Orders;
+    ViewBag.NoShowDel = true;
+    bool IsAll = ViewBag.IsAll;
+    decimal SumAmoney = ViewBag.SumAmoney ?? decimal.Zero;
+    decimal SumMyProfit = ViewBag.SumMyProfit ?? decimal.Zero;
+    decimal PageSumMyProfit = decimal.Zero;
+    SysSet SysSet = ViewBag.SysSet;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+    int LowerLevel = ViewBag.LowerLevel;
+    Dictionary<string, decimal> DicOrderProfitLog = ViewBag.DicOrderProfitLog;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="50" align="right">交易号 : </td>
+                            <td width="120" align="left">
+                                <input type="text" class="input-text input-max"  name="TNum" value="@(Orders.TNum)" /></td>
+                            <td width="80" align="right">交易时间 : </td>
+                            <td width="380" align="left">
+                                <input id="STime" class=" Wdate" type="text" 
+                                name="STime" value="@(Orders.STime == DateTime.MinValue ? "" : Orders.STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                - 
+                            <input id="ETime" class=" Wdate" type="text" 
+                                name="ETime" id="ETime" value="@(Orders.ETime == DateTime.MinValue ? "" : Orders.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                @if (IsAll)
+                                {
+                                    <select class="input-md" name="AId" id="AId">
+                                        <option value="">==业务员==</option>
+                                        @foreach (var p in SysAdminList)
+                                        {
+                                            <option value="@(p.Id)"@(Orders.AId == p.Id ? " selected" : "")>@(p.TrueName)</option>
+                                        }
+                                    </select>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80" align="right">交易商户 : </td>
+                            <td width="250" align="left">
+                                <input type="text" class="input-text input-sm"  name="TName" value="@(Orders.TName)" />
+                                |<select name="TType" class="input-md">
+                                    <option value="">交易类型</option>
+                                    @foreach (var p in Utils.GetOrdersModel().Where(n => n.Id != 10))
+                                    {
+                                         if (p.Id != 3 && p.Id != 5 && p.Id != 9) 
+                                        {
+                                        <option value="@(p.Id)" @(Orders.TType == p.Id ? "selected" : "")>@(p.Name)</option>
+                                    }
+                                    }
+                                </select>
+                            </td>
+                            @*@if (BasicAgent.Tier < BasicAgent.AgentLevelMax && IsAll)
+                            {
+                                <td width="150" align="right">显示下级:
+                                      <select name="IsShowSupAgent" id="IsShowSupAgent" class="input-sm">
+                                          <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+                                          <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+                                      </select>
+                                </td>
+                                <td width="200" align="left" id="LowerLevel_td2">&nbsp;&nbsp;&nbsp;&nbsp;下级代理商:
+                                    <select name="LowerLevel">
+                                        <option value="0">所有</option>
+                                        @{
+                                IList<SysAgent> LowerLevelAgent = Entity.SysAgent.Where(s => s.AgentID == BasicAgent.Id && s.State == 1).ToList();
+                                foreach (SysAgent item in LowerLevelAgent)
+                                {
+                                            <option value="@(item.Id)" @(LowerLevel == item.Id ? "selected" : "")>@(item.Name)</option>
+                                }
+                                        }
+                                    </select>
+                                </td>
+                            }*@
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-table">
+            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                <thead>
+                    <tr>
+                        <th width="120">交易号 </th>
+                        <th width="200">交易商户 </th>
+                        <th width="200">交易用户</th>
+                        <th width="80">交易类型 </th>
+                        <th width="100" style="text-align: right">交易金额 </th>
+                        <th width="100" style="text-align: right">我的佣金</th>
+                        <th width="120">交易时间 </th>
+                        <th width="80">操作 </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    @if (OrdersList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in OrdersList)
+                        {
+                            Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                            //string PayWay = "--";
+                            //if (p.PayWay > 0 && p.PayState == 1)
+                            //{
+                            //    PayWay = PayConfigList.FirstOrNew(n => n.Id == p.PayWay).Name;
+                            //}
+                        <tr class="odd gradeX">
+                            <td class="center">
+                                @(p.TNum)
+                            </td>
+                            <td class="center">@(Users.NeekName)</td>
+                            <td class="center">@(Users.TrueName)</td>
+                            <td class="center">[<span>@(p.GetTTName())</span>]</td>
+                            <td class="price" style="text-align: right">@(p.Amoney.ToString("F2"))</td>
+                            <td class="price AgentMoney" style="text-align: right">
+                                @{
+                                    PageSumMyProfit += DicOrderProfitLog[p.TNum];
+                                    @(DicOrderProfitLog[p.TNum].ToString("F2"))
+                                }
+                            </td>
+                            <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                            <td class="center">
+                                @if (ViewBag.Edit)
+                                {
+                                    <a class="label label-sm label-success Ajax" href="/Agent/Orders/Edit.html?Id=@(p.Id)" title="交易信息"><i class="fa fa-gavel"></i>查看</a>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                    <tr>
+                        <td colspan="4" class="price" style="text-align: left">当页合计：</td>
+                        <td class="price" style="text-align: right">@(OrdersList.Sum(o => o.Amoney).ToString("F2"))</td>
+                        <td class="price" style="text-align: right">@(PageSumMyProfit.ToString("F2"))</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="price" style="text-align: left">所有合计：</td>
+                        <td class="price" style="text-align: right">@(SumAmoney.ToString("F2"))</td>
+                        <td class="price" style="text-align: right">@(SumMyProfit.ToString("F2"))</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", OrdersList)
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if ($("#IsShowSupAgent").val() == "true") {
+                $("#LowerLevel_td1").show();
+                $("#LowerLevel_td2").show();
+            }
+            else {
+                $("#LowerLevel_td1").hide();
+                $("#LowerLevel_td2").hide();
+            }
+            $("#IsShowSupAgent").change(function () {
+                if ($("#IsShowSupAgent").val() == "true") {
+                    $("#LowerLevel_td1").show();
+                    $("#LowerLevel_td2").show();
+                }
+                else {
+                    $("#LowerLevel_td1").hide();
+                    $("#LowerLevel_td2").hide();
+                }
+            });
+        });
+    </script>
+}

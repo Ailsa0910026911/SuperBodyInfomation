@@ -1,0 +1,226 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    ViewBag.SMUid = 42;
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin Admin = Entity.SysAdmin.FirstOrNew(n => n.Id == Users.AId);
+    SysAgent Agent = Entity.SysAgent.FirstOrNew(n => n.Id == Users.Agent);
+    string AppImgPath = ViewBag.AppImgPath;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    IList<BasicDesc> BasicDescList = ViewBag.BasicDescList;
+    var parentAgents = SysAgent.GetAgentsById(Entity);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height: 600px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <div class="portlet-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">登录帐户</td>
+                        <td class="active">@(Users.UserName)</td>
+                        <td class="success" style="width: 120px">注册卡号</td>
+                        <td class="active">@(Users.CardNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">商户名称</td>
+                        <td class="active">@(Users.NeekName)</td>
+                        <td class="success">姓名</td>
+                        <td class="active">@(Users.TrueName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">手机号</td>
+                        <td class="active">@(Users.Mobile)</td>
+                        <td class="success">QQ号</td>
+                        <td class="active">@(Users.QQ)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">状态</td>
+                        <td class="active">@if (Users.State == 1)
+                                           {
+                            <i class="fa fa-check color-green">正常</i>
+                                           }
+                                           else
+                                           {
+                            <i class="fa fa-times color-red">锁定</i>
+                                           }</td>
+                        <td class="success">身份认证</td>
+                        <td class="active">@if (Users.CardStae == 2)
+                                           {
+                            <i class="fa fa-check color-green">已认证</i>
+                                           }
+                                           else if (Users.CardStae == 1)
+                                           {
+                            <i class="fa fa-check color-green">已申请</i>
+                                           }
+                                           else
+                                           {
+                            <i class="fa fa-times color-red">未认证</i>
+                                           }</td>
+                    </tr>
+                </tbody>
+                @if (Users.CardStae > 0)
+                {
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>身份认证信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">真实姓名</td>
+                            <td class="active">@(Users.TrueName)</td>
+                            <td class="success">身份证号码</td>
+                            <td class="active">@(Users.CardId)</td>
+                        </tr>
+                        <tr>
+                            <td class="success">身份认证照片</td>
+                            <td colspan="4" style="text-align: center;">
+                                <img src="@Utils.ImageUrl("Users", Users.CardFace, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardFace, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                                <img src="@Utils.ImageUrl("Users", Users.CardBack, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardBack, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                                <img src="@Utils.ImageUrl("Users", Users.CardPic, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardPic, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                                @if (!Users.AssureImgName.IsNullOrEmpty())
+                                {
+                                    <img src="@(Utils.ImageUrl("Users", Users.AssureImgName))" href="@(Utils.ImageUrl("Users", Users.AssureImgName, AppImgPath))" width="120"  title="认证担保/@(Users.CardId)" alt="认证担保" class="LightBox" style="cursor:pointer;" />
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success">店铺门头照</td>
+
+                            <td colspan="4" style="text-align: center;">
+                                @if (!Users.CarLocationPic.IsNullOrEmpty())
+                                {
+                                    <img src="@(Utils.ImageUrl("Users", Users.CarLocationPic, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarLocationPic, AppImgPath))" width="120"  title="@(Users.TrueName)/实地照片" alt="实地照片" class="LightBox" style="cursor:pointer;" />
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success">营业执照</td>
+
+                            <td colspan="4" style="text-align: center;">
+                                @if (!Users.CarLicensePic.IsNullOrEmpty())
+                                {
+                                    <img src="@(Utils.ImageUrl("Users", Users.CarLicensePic, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarLicensePic, AppImgPath))" width="120"  title="@(Users.TrueName)/营业执照图片" alt="营业执照图片" class="LightBox" style="cursor:pointer;" />
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="success">其它图片</td>
+                            <td colspan="4" style="text-align: center;">
+                                @if (!Users.CarOther.IsNullOrEmpty())
+                                {
+                                    <img src="@(Utils.ImageUrl("Users", Users.CarOther, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarOther, AppImgPath))" width="120"  title="@(Users.TrueName)/其它图片" alt="其它图片" class="LightBox" style="cursor:pointer;" />
+                                }
+                            </td>
+                            <tr>
+                    </tbody>
+                }
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>注册信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">注册时间</td>
+                        <td class="active">@(Users.AddTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                        <td class="success">注册地址</td>
+                        <td class="active"><a href="/Manage/Map/Users.html?Id=@(Users.Id)" class="Ajax">@(Users.RegAddress)</a>
+                            @if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"] != null)
+                            {
+                                if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"].ToString().Equals("ON"))
+                                {
+                                <a class="label label-sm label-success Ajax" href="/Manage/UserTrail/Index.html?UId=@(Users.Id)"><i class="fa fa-anchor"></i>轨迹</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success">所属于机构</td>
+                        @* <td class="active">@(Agent.Name)</td>*@
+                        <td class="active">
+                            @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                        </td>
+                        <td class="success">所属业务员</td>
+                        <td class="active">@(Admin.TrueName)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="form-actions fluid">
+                <div class="col-md-offset-3 col-md-9">
+                   @* <div class="col-md-9" style="margin-bottom: 10px;">
+                        失败原因：
+                    <select style="width: 180px" class="form-control input-inline input-sm" id="CharCode" name="CharCode">
+                        <option value="0">--请选择--</option>
+                        @{
+                            foreach (var item in BasicDescList)
+                            {  
+                            <option value="@item.Id">@item.TitleCode</option>
+                            }
+                        }
+                    </select>
+                    </div>*@
+                    <div class="col-md-6" style="height: 100px;">
+                        <form action="Save.html" method="post" style="display: inline;">
+                            <input type="hidden" name="Id" value="@(Users.Id)" />
+                            <input type="hidden" name="CardStae" value="2" />
+                            <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                            <button type="submit" class="btn green" style="position: absolute; bottom: 0; left: 16px;">确认并审核</button>
+                        </form>
+                        <form action="Save.html" method="post" style="display: inline;">
+                            <input type="hidden" name="Id" value="@(Users.Id)" />
+                            <input type="hidden" name="CardStae" value="3" />
+                            <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                            <button type="submit" class="btn red" style="position: absolute; bottom: 0; left: 120px;">审核失败</button>
+                            <textarea placeholder="请输入失败原因" class="form-control input-medium input-inline" name="CardRemark" id="CardRemark">@(Users.CardRemark)</textarea>
+                            <br />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    foreach (var item in BasicDescList)
+    {
+    <input type="hidden" id="hi_@item.Id" value="@item.DescText" />
+    }
+}
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.css" />
+        <script src="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.js"></script>
+        <script type="text/ecmascript">
+            $("#CharCode").change(function () {
+                var checkValue = $(this).val();
+                $("#CardRemark").text();
+                $("#CardRemark").text($("#hi_" + checkValue).val());
+            });
+        </script>
+    }
+}

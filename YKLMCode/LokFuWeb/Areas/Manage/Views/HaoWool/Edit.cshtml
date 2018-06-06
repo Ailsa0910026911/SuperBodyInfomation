@@ -1,0 +1,123 @@
+﻿@{
+    HaoWool HaoWool = ViewBag.HaoWool;
+    ViewBag.SMUid = 97;
+    if (HaoWool.Id.IsNullOrEmpty()){
+        HaoWool.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(HaoWool.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(HaoWool.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">标题 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Title" id="Title" value="@(HaoWool.Title)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">小标题 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="SmallTitle" id="SmallTitle" value="@(HaoWool.SmallTitle)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">内容 <span class="required"> * </span> </label>
+              <div class="col-md-9">
+                <div class="input-icon right"> <i class="fa"></i>
+                  <textarea class="xyeditor input-xxlarge" name="Content" id="Content" rows="12" data-path="/Manage/Home/UpFile.html">@(HaoWool.Content)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">小图片</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                  @Html.Partial("FileLoad", new FileLoad() { BigName = "SmallPic", FilePath = "HaoWool", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                    @if (!HaoWool.SmallPic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("HaoWool", HaoWool.SmallPic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("HaoWool", HaoWool.SmallPic))" height="25" />
+                        </a>
+                    }
+                </div>
+                <p class="help-block">列表小图</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">大图片</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                  @Html.Partial("FileLoad", new FileLoad() { BigName = "Pic", FilePath = "HaoWool", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                    @if (!HaoWool.Pic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("HaoWool", HaoWool.Pic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("HaoWool", HaoWool.Pic))" height="25" />
+                        </a>
+                    }
+                </div>
+                <p class="help-block">详细页广告图</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">图片链接</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" name="Url" id="Url" value="@(HaoWool.Url)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">置顶 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="checkbox" name="IsTop" id="IsTop" class="one-check" value="1" /> 置顶
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(HaoWool.State==1?" selected":"")>显示</option>
+                    <option value="0"@(HaoWool.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(HaoWool.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+    }
+}

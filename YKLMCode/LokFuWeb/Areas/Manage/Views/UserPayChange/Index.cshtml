@@ -1,0 +1,163 @@
+﻿@{
+    IList<UserPayChange> UserPayChangeList = ViewBag.UserPayChangeList;
+    ViewBag.SMUid = 40;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    UserPayChange UserPayChange = ViewBag.UserPayChange;
+    ViewBag.NoShowDel = true;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>商户：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Remark" id="Remark" value="@(UserPayChange.Remark)" />
+        <span class="seperator">|</span>
+        <span>状态：</span>
+        <select name="State" class="form-control input-small input-inline input-sm">
+            <option value="">不限制</option>
+            <option value="1" @(UserPayChange.State == 1 ? "selected" : "")>待审核</option>
+            <option value="2" @(UserPayChange.State == 2 ? "selected" : "")>已审核</option>
+            <option value="3" @(UserPayChange.State == 3 ? "selected" : "")>审核失败</option>
+        </select>
+        <span class="seperator">|</span>
+        <select class="form-control input-medium input-inline input-sm select2me" data-placeholder="==分支机构==" name="SId" id="SId">
+            <option value="">==分支机构==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(UserPayChange.SId == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        @* <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>*@
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>真实姓名 </th>
+                                <th>分支机构 </th>
+                                <th>业务员 </th>
+                                <th>申请时间 </th>
+                                <th>审核人员 </th>
+                                <th>审核时间 </th>
+                                <th>状态 </th>
+                                <th width="80">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (UserPayChangeList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in UserPayChangeList)
+                                {
+                                    Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                                    SysAdmin AgentAdmin = SysAdminList.FirstOrNew(n => n.Id == p.SAId);
+                                    SysAgent SysAgent = SysAgentList.FirstOrNew(n => n.Id == p.SId);
+                                    SysAdmin SysAdmin = SysAdminList.FirstOrNew(n => n.Id == p.AId);
+                                <tr class="odd gradeX">
+                                    <td class="center">@(Users.TrueName) </td>
+                                    <td class="center">@(SysAgent.Name) </td>
+                                    <td class="center">@(AgentAdmin.TrueName) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                                    @if (p.State > 1)
+                                    {
+                                        <td class="center">@(SysAdmin.TrueName) </td>
+                                        <td class="center">@(((DateTime)p.EditTime).ToString("yyyy-MM-dd HH:mm")) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="center">-- </td>
+                                        <td class="center">-- </td>
+                                    }
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <i class="fa fa-wrench color-blue">待审核</i>
+                                                       }
+                                                       else if (p.State == 2)
+                                                       {
+                                        <i class="fa fa-check color-green">已审核</i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red">失败</i>
+                                                       } </td>
+                                    <td class="center">
+                                        @if (ViewBag.Save)
+                                        {
+                                            <a class="label label-sm label-success Ajax" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>审核操作</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", UserPayChangeList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    @{
+        <script>
+            $(function () {
+                if ($("#SId").val() != "") {
+                    $("#S_IsShowSupAgent").show();
+                    $("#IsShowSupAgent").show();
+                }
+                else {
+                    $("#S_IsShowSupAgent").hide();
+                    $("#IsShowSupAgent").hide();
+                }
+                $("#SId").change(function () {
+                    if ($("#SId").val() != "") {
+                        $("#S_IsShowSupAgent").show();
+                        $("#IsShowSupAgent").show();
+                    }
+                    else {
+                        $("#S_IsShowSupAgent").hide();
+                        $("#IsShowSupAgent").hide();
+                    }
+                });
+                $('#Agent').select2({
+                    allowClear: false
+                });
+            });
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}

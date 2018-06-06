@@ -1,0 +1,23 @@
+﻿@{
+    MsgAdmin MsgAdmin = ViewBag.MsgAdmin;
+    ViewBag.SMUid = 0;
+    ViewBag.Title = "阅读消息";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div style="width: 600px;">
+    <div style="padding: 15px;">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <h3 style="text-align: center;">@(MsgAdmin.Name)</h3>
+            <p style="text-align: right; border-bottom: 1px gray dashed; border-top: double gray 3px; padding: 5px 3px">发送时间：@(MsgAdmin.AddTime)</p>
+            <div>@Html.Raw(MsgAdmin.Info)</div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+    }
+}

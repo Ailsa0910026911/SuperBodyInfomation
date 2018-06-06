@@ -1,0 +1,174 @@
+﻿@{
+    Layout = null;
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    Users Users = ViewBag.Users;
+    IList<UserPic> UserPicList = ViewBag.UserPicList;
+
+    LokFuEntity Entity = ViewBag.Entity;
+
+    SysSet BasicSet = ViewBag.BasicSet;
+    
+    SysAgent SysAgent = ViewBag.SysAgent;
+
+    string title = "好付";
+    
+    if (!SysAgent.Id.IsNullOrEmpty())
+    {
+        title = SysAgent.Name;
+    }
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>@(Users.NeekName)的收银台</title>
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="/Content/Mobile/Shop/css/main.css?2016" rel="stylesheet" />
+</head>
+<body>
+    @if (!IsWeiXinBrowser)
+    {
+        <div class="topbu">@(Users.NeekName)的收银台</div>
+    }
+    <form action="GoPay.html" method="post" name="GoPay" id="GoPay">
+        <input type="hidden" name="payway" id="payway" value="" />
+        <input type="hidden" name="shopid" value="@(Users.Id)" />
+    <div class="box1"><span class="sp1">收款商户</span><span class="sp2">@(Users.NeekName)</span></div>
+    <div class="fenge"><span></span></div>
+    <div class="box1" style="margin-top: 0;"><span class="sp1">消费金额</span><input class="shuru" name="Amount" id="Amount" type="number" placeholder="请输入您的消费金额" /></div>
+    <div class="tishi"><img src="/Content/Mobile/Shop/images/beizhu_icon.png" width="32%" height="auto" /></div>
+    @{
+    SysControl SysControl = new SysControl();
+    SysControl = Entity.SysControl.FirstOrNew(n => n.Tag == "Transfer");
+    }
+    @if (SysControl.State != 0)
+    {
+    <div class="fangshi1 @(IsWeiXinBrowser?"none":"")" data-rel="@(IsWeiXinBrowser?"false":"")" data-rev="Transfer" data-state="@(SysControl.State)" data-min="@(SysControl.SNum)" data-max="@(SysControl.ENum)">
+        <img class="i1" src="/Content/Mobile/Shop/images/qianbao@(IsWeiXinBrowser?"_no":"").png" width="7%" height="auto" />
+        <span class="i2">@(title)钱包支付</span>
+        @if(IsWeiXinBrowser){
+            <span class="i2_1">(请使用浏览器打开)</span>
+        }
+    </div>
+    }
+    @{
+        SysControl = Entity.SysControl.FirstOrNew(n => n.Tag == "Alipay");
+    }
+    @if (SysControl.State != 0){
+    <div class="fenge"><span></span></div>
+    <div class="fangshi1 @(IsWeiXinBrowser?"none":"")" data-rel="@(IsWeiXinBrowser?"false":"")" data-rev="Alipay" data-state="@(SysControl.State)" data-min="@(SysControl.SNum)" data-max="@(SysControl.ENum)">
+        <img class="i1" src="/Content/Mobile/Shop/images/zhifubao@(IsWeiXinBrowser?"_no":"").png" width="7%" height="auto" />
+        <span class="i2">支付宝</span>
+        @if(IsWeiXinBrowser){
+            <span class="i2_1">(请使用浏览器打开)</span>
+        }
+    </div>
+    }
+    @{
+        SysControl = Entity.SysControl.FirstOrNew(n => n.Tag == "WeiXin");
+    }
+    @if (SysControl.State != 0){
+    <div class="fenge"><span></span></div>
+    <div class="fangshi1 @(IsWeiXinBrowser?"":"none")" data-rel="@(IsWeiXinBrowser?"":"false")" data-rev="WeiXin" data-state="@(SysControl.State)" data-min="@(SysControl.SNum)" data-max="@(SysControl.ENum)">
+        <img class="i1" src="/Content/Mobile/Shop/images/weixin@(IsWeiXinBrowser?"":"_no").png" width="7%" height="auto" />
+        <span class="i2">微信</span>
+        @if(!IsWeiXinBrowser){
+            <span class="i2_1">(请使用微信打开)</span>
+        }
+    </div>
+    }
+    @{
+        SysControl = Entity.SysControl.FirstOrNew(n => n.Tag == "Recharge");
+        if (SysControl.ENum > BasicSet.CtrlMoney1)
+        {
+            SysControl.ENum = (int)BasicSet.CtrlMoney1;
+        }
+    }
+    @if (SysControl.State != 0){
+    <div class="fenge"><span></span></div>
+    <div class="fangshi1 @(IsWeiXinBrowser?"none":"")" data-rel="@(IsWeiXinBrowser?"false":"")" data-rev="Recharge" data-state="@(SysControl.State)" data-min="@(SysControl.SNum)" data-max="@(SysControl.ENum)">
+        <img class="i1" src="/Content/Mobile/Shop/images/yinhangka@(IsWeiXinBrowser?"_no":"").png" width="7%" height="auto" />
+        <span class="i2">银行卡支付</span>
+        @if(IsWeiXinBrowser){
+            <span class="i2_1">(请使用浏览器打开)</span>
+        }else{
+            <span class="i2_1">(暂不支持交通银行)</span>
+        }
+    </div>
+    }
+    <div class="jishu">好付钱包有限公司提供技术支持</div>
+    <input class="fukuan" type="submit" value="付款" />
+    </form>
+
+<!--弹层提示-->
+<div class="zfc" id="TipsBg"></div>
+<div class="baik" id="TipsBox">
+	<div class="fksb" id="errTitle">出错啦</div>
+    <div class="text1" id="errText"></div>
+    <span class="wzdl" id="errBtn">我知道了</span>
+</div>
+
+    <script>
+        var state = 0; min = 9999, max = 0;
+        $(function () {
+            $(".fangshi1").click(function () {
+                var rel = $(this).attr("data-rel");
+                if (rel == "false") {
+                    return;
+                }
+                $(".fangshi1").removeClass("addback");
+                $(this).addClass("addback");
+                var rev = $(this).attr("data-rev");
+                $("#payway").val(rev);
+
+                state = parseInt($(this).attr("data-state"));
+                min = parseFloat($(this).attr("data-min"));
+                max = parseFloat($(this).attr("data-max"));
+
+            });
+            $("#GoPay").submit(function () {
+                var payway = $("#payway").val();
+                var Amount = parseFloat($("#Amount").val());
+                if (payway == "") {
+                    showTip("温馨提示您！", "请选择付款方式");
+                    return false;
+                }
+                if (Amount == "") {
+                    showTip("温馨提示您！", "请输入您的消费金额");
+                    return false;
+                }
+                if (!/^(0|[1-9][0-9]*)(.[0-9]{1,2})?$/.test(Amount)) {
+                    showTip("温馨提示您！", "请正确输入付款金额");
+                    return false;
+                }
+                if (state != 1) {
+                    showTip("温馨提示您！", "接口维护中，请稍后再试");
+                    return false;
+                }
+                if (Amount < min) {
+                    showTip("温馨提示您！", "交易金额必须大于" + min + "元");
+                    return false;
+                }
+                if (Amount > max) {
+                    showTip("温馨提示您！", "交易金额必须小于" + max + "元");
+                    return false;
+                }
+            });
+            $("#TipsBg,#errBtn").click(function () {
+                $("#TipsBg").hide();
+                $("#TipsBox").hide();
+            });
+        });
+        var showTip = function (title, tips) {
+            $("#TipsBg").show();
+            $("#errTitle").text(title);
+            $("#errText").text(tips);
+            $("#TipsBox").show();
+        }
+    </script>
+</body>
+</html>

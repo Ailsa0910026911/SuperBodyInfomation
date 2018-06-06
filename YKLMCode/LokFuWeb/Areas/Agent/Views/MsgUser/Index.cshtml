@@ -1,0 +1,242 @@
+﻿@{
+    IList<MsgUser> MsgUserList = ViewBag.MsgUserList;
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    MsgUser MsgUser = ViewBag.MsgUser;
+    LokFuEntity Entity = ViewBag.Entity;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+
+    bool IsMyDelete = false;
+    bool IsMyEdit = false;
+    bool IsMySave = false;
+    bool IsMyAdd = false;
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "MsgUser" && SP.Method == "Delete") != null)
+    {
+        IsMyDelete = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "MsgUser" && SP.Method == "Edit") != null)
+    {
+        IsMyEdit = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "MsgUser" && SP.Method == "Save") != null)
+    {
+        IsMySave = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "MsgUser" && SP.Method == "Add") != null)
+    {
+        IsMyAdd = true;
+    }
+}
+<link rel="stylesheet" href="/Content/HaoFu/css/normalize.css">
+<link rel="stylesheet" href="/Content/HaoFu/css/style.css">
+<link rel="stylesheet" href="/Content/HaoFu/css/custom.css">
+<style>
+    .dropdown-menu {
+        position: absolute;
+        right: 10px;
+        width: 114px;
+        border: 1px solid #ddd;
+        text-align: left;
+        background: #fff;
+    }
+
+        .dropdown-menu li {
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+            .dropdown-menu li a {
+                color: #000;
+            }
+</style>
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <input type="hidden" name="IsAjax" value="1" />
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="112" align="left">短信标题 : </td>
+                            <td width="200" align="left">
+                                <input type="text" class="input-text" name="Name" value="@(MsgUser.Name)" />
+                            </td>
+                            <td align="right">状态:
+                            </td>
+                            <td align="left">
+                                <select name="State" class="input-sm">
+                                    <option value="">不限制</option>
+                                    <option value="1" @(MsgUser.State == 1 ? "selected" : "")>未读</option>
+                                    <option value="2" @(MsgUser.State == 2 ? "selected" : "")>已读</option>
+                                    <option value="99" @(MsgUser.State == 99 ? "selected" : "")>失效</option>
+                                </select>
+                            </td>
+                            <td align="right">
+                                <button class="but pull-right" type="submit">查询</button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                @{
+                                    if (IsMyAdd)
+                                    {
+                                    <a class="but but-xs" href="Edit.html">发送消息<i class="iconfont">&#xe631;</i></a>
+                                    }
+                                }
+                            </td>
+                            <td colspan="2" align="right" style="position: relative">
+                                <button class="btn btn-warning" type="button" data-toggle="dropdown" id="but_piliang">批量操作 <i class="iconfont">&#xe60c;</i></button>
+                                <ul class="dropdown-menu list-unstyled hide">
+                                    @if (IsDel == "1")
+                                    {
+                                        if (IsMyDelete)
+                                        {
+                                        <li><a href="#" class="BatSet" rev="Reply">批量恢复 </a></li>
+                                        <li><a href="#" class="BatSet" rev="Deleted">彻底删除 </a></li>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        if (IsMySave)
+                                        {
+                                        <li><a href="#" class="BatSet" rev="State" rel="1">批量显示 </a></li>
+                                        <li><a href="#" class="BatSet" rev="State" rel="0">批量隐藏 </a></li>
+                                        }
+                                        if (IsMyDelete)
+                                        {
+                                        <li><a href="#" class="BatSet" rev="Delete">批量删除 </a></li>
+                                        }
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="list-table">
+            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox" width="100%">
+                <thead>
+                    <tr>
+                        <th class="table-checkbox" width="40">
+                            <input type="checkbox" class="group-checkable CheckAll" rev="list" />
+                        </th>
+                        <th>接收商户 </th>
+                        <th>标题 </th>
+                        <th>状态 </th>
+                        <th>发送时间 </th>
+                        <th>操作 </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    @if (MsgUserList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in MsgUserList)
+                        {
+                        <tr class="odd gradeX">
+                            <td>
+                                <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" />
+                            </td>
+                            <td class="center">
+                                @{
+                            //全体商户的情况下
+                            if (p.UId == 0 && p.SendUsers == ",0,")
+                            {
+                                    @:全体商户
+                                                }
+                            //多个商户的情况下
+                            else if (p.UId == 0 && p.SendUsers != ",0,")
+                            {
+                                    @:多个商户
+                                                }
+                            //单个商户的情况下
+                            else if (p.UId > 0 && p.SendUsers == ",0,")
+                            {
+                                var userModel = Entity.Users.FirstOrDefault(x => x.Id == p.UId);
+                                if (userModel != null)
+                                {
+                                    @(userModel.TrueName)
+                                }
+                            }
+                                }
+                            </td>
+                            <td class="center">
+                                @(p.Name.Length > 15 ? p.Name.Substring(0, 15) + "...." : p.Name)
+                            </td>
+                            <td class="center">
+                                @{
+                            if (p.UId > 0)
+                            {
+                                if (p.State == 1)
+                                {
+                                    <i class="fa fa-envelope color-green">未读</i>
+                                }
+                                else if (p.State == 2)
+                                {
+                                    <i class="fa fa-envelope-o color-red">已读</i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-times color-gray">取消</i>
+                                }
+                            }
+                            else
+                            {
+                                    <i class="fa fa-envelope-o color-red">==</i>
+                            }
+                                }
+                            </td>
+                            <td class="center">
+                                @(p.AddTime)
+                            </td>
+                            <td class="center">
+                                @if (IsDel == "1")
+                                {
+                                    if (IsMyDelete)
+                                    {
+                                    <a class="label label-sm label-info Reply" href="Delete.html?Id=@(p.Id)"><i class="fa fa-reply"></i>恢复</a>
+                                    <a class="label label-sm label-danger Deleted" href="Delete.html?Id=@(p.Id)&IsDel=1"><i class="fa fa-trash-o"></i>彻底删除</a>
+                                    }
+                                }
+                                else
+                                {
+                                    if (IsMySave)
+                                    {
+                                    <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>修改</a>
+                                    }
+                                    if (IsMyDelete)
+                                    {
+                                    <a class="label label-sm label-danger Delete" href="Delete.html?Id=@(p.Id)"><i class="fa fa-trash-o"></i>删除</a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("/Areas/Agent/Views/Shared/NewPage.cshtml", MsgUserList)
+        </div>
+    </div>
+</div>
+<!-- END EXAMPLE TABLE PORTLET-->
+@section FooterScripts
+{
+    <script type="text/javascript">
+        $("#but_piliang").click(function (event) {
+            event.stopPropagation();
+            $(".dropdown-menu").toggleClass("hide");
+        });
+        $(document).click(function () {
+            $(".dropdown-menu").addClass("hide");
+        })
+    </script>
+}

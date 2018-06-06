@@ -1,0 +1,154 @@
+﻿@{
+    DaiLiApply DaiLiApply = ViewBag.DaiLiApply;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    ViewBag.SMUid = 190;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(DaiLiApply.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公司名</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">@(DaiLiApply.YingYeName)</div>
+              </div>
+            </div>
+             <div class="form-group">
+              <label class="control-label col-md-3">营业执照号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    @(DaiLiApply.YingYeNum)
+                    @if (!DaiLiApply.YingYePic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.YingYePic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.YingYePic))" height="25" />
+                        </a>
+                    }
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">税务登记证号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    @(DaiLiApply.SuiWuNum)
+                    @if (!DaiLiApply.SuiWuPic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.SuiWuPic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.SuiWuPic))" height="25" />
+                        </a>
+                    }
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">组织机构证号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    @(DaiLiApply.ZuZhiNum)
+                    @if (!DaiLiApply.ZuZhiPic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.ZuZhiPic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.ZuZhiPic))" height="25" />
+                        </a>
+                    }
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">地址</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">【@(DaiLiApply.Area)】@(DaiLiApply.Address)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">姓名</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">@(DaiLiApply.TureName)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">身份证</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    @(DaiLiApply.IdCard)
+                    @if (!DaiLiApply.IdCardPic.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.IdCardPic))" target="_blank">
+                            <img src="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.IdCardPic))" height="25" />
+                        </a>
+                    }
+                    @if (!DaiLiApply.Pic1.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.Pic1))" target="_blank">
+                            <img src="@(Utils.ImageUrl("DaiLiApply", DaiLiApply.Pic1))" height="25" />
+                        </a>
+                    }
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">联系电话</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">@(DaiLiApply.Pic4)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">联系手机</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">@(DaiLiApply.Mobile)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">备注信息</label>
+              <div class="col-md-4">
+                <div class="input-icon right col-md-9">@(DaiLiApply.Remark)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">分支机构 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">@(SysAgent.Name)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <select class="bs-select form-control input-small" name="OrderState" id="OrderState">
+                        <option value="2">已处理</option>
+                        <option value="3">已失败</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

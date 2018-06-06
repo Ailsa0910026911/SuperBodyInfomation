@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0466128A-24D6-46D8-9F58-BA8770021AF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LokFu.Repositories</RootNamespace>
+    <AssemblyName>LokFu.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\AdInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\AgentType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\ALF2FPAY.cs" />
+    <Compile Include="Extensions\ApplyCredit.cs" />
+    <Compile Include="Extensions\ApplyLoan.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\AppBlock.cs" />
+    <Compile Include="Extensions\APPModule.cs" />
+    <Compile Include="Extensions\AppUpdate.cs" />
+    <Compile Include="Extensions\BalanceDayModel.cs" />
+    <Compile Include="Extensions\BanKaList.cs" />
+    <Compile Include="Extensions\BanKaOrder.cs" />
+    <Compile Include="Extensions\BanKaType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BaoLog.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BaoUsers.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BasicBank.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BasicBankCard.cs" />
+    <Compile Include="Extensions\BasicBankInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BasicCarBrand.cs" />
+    <Compile Include="Extensions\BasicCardBin.cs" />
+    <Compile Include="Extensions\BasicCity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BasicDistrict.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\BasicProvince.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Card.cs" />
+    <Compile Include="Extensions\DaiLiOrder.cs" />
+    <Compile Include="Extensions\Equipment.cs" />
+    <Compile Include="Extensions\FastOrder.cs" />
+    <Compile Include="Extensions\MsgHelp.cs" />
+    <Compile Include="Extensions\SysMoneySet.cs" />
+    <Compile Include="Extensions\UserTrack.cs" />
+    <Compile Include="Extensions\FastPayWay.cs" />
+    <Compile Include="Extensions\FinTotal.cs" />
+    <Compile Include="Extensions\JobItem.cs" />
+    <Compile Include="Extensions\JobOrders.cs" />
+    <Compile Include="Extensions\JobSet.cs" />
+    <Compile Include="Extensions\MsgAbout.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\MsgCallBack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\MsgNotice.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\MsgUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\NFCObj.cs" />
+    <Compile Include="Extensions\OrderCash.cs" />
+    <Compile Include="Extensions\OrderF2F.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OrderHouse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OrderRecharge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\Orders.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\OrdersModel.cs" />
+    <Compile Include="Extensions\OrderTransfer.cs" />
+    <Compile Include="Extensions\PayConfig.cs" />
+    <Compile Include="Extensions\PayConfigChange.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\PayConfigOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\PayConfigTemp.cs" />
+    <Compile Include="Extensions\ProfitLossModel.cs" />
+    <Compile Include="Extensions\QRCode.cs" />
+    <Compile Include="Extensions\ShareTotal.cs" />
+    <Compile Include="Extensions\SysAdmin.cs" />
+    <Compile Include="Extensions\SysControl.cs" />
+    <Compile Include="Extensions\SysSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\TaskCashInfo.cs" />
+    <Compile Include="Extensions\TnOrders.cs" />
+    <Compile Include="Extensions\TurnProc.cs" />
+    <Compile Include="Extensions\UserAuth.cs" />
+    <Compile Include="Extensions\UserCard.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\UserLog.cs" />
+    <Compile Include="Extensions\UserLoginSceneid.cs" />
+    <Compile Include="Extensions\UserPay.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\UserPayCredit.cs" />
+    <Compile Include="Extensions\UserPic.cs" />
+    <Compile Include="Extensions\FastUser.cs" />
+    <Compile Include="Extensions\Users.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extensions\SysAgent.cs" />
+    <Compile Include="Extensions\OrderProfitLog.cs" />
+    <Compile Include="Extensions\UsersNervousModel.cs" />
+    <Compile Include="Extensions\VIPOrder.cs" />
+    <Compile Include="Extensions\YYDaily.cs" />
+    <Compile Include="Extensions\YYDevice.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\LokFu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LokFu.edmx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Repositories\LokFu.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LokFu.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>LokFu.Repositories</CustomToolNamespace>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

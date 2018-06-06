@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+    PayConfig PayConfig = ViewBag.PayConfig;
+    Orders Orders = ViewBag.Orders;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="MobileOptimized" content="240">
+<title>@(Orders.TName)</title>
+<script src="/Content/Metronic/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/Content/Pay/css/style.css?2016" />
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+<div style="min-height: 466px;" class="ui-page ui-page-theme-a ui-page-active" tabindex="0" data-url="pageone" data-role="page" id="pageone"> 
+  <!-- <div class="container"> -->
+  <div class="middle">
+    <div class="info"> <span class="txt1">交易名称: </span><span class="txt2">@(Orders.TName)</span> </div>
+    <div class="info"> <span class="txt1">订单号码 : </span><span class="txt2">@(Orders.TNum)</span> </div>
+    <div class="info"> <span class="txt1">交易金额 : </span><span class="txt2"><span class="txt3">@(Orders.Amoney.ToString("F2"))</span>元</span> </div>
+    <div class="info"> <span class="txt1">交易时间 : </span><span class="txt2">@(Orders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</span> </div>
+    @*<hr class="info line">*@
+    <div style="height:40px; text-align:center;"> 
+        @if (PayConfig != null)
+        {
+            <img src="/Content/Pay/img/gun1.gif" width="40px" class="submitTips" />
+            <span style="line-height:40px; font-size:20px; display:inline-block; margin-left:20px;" class="submitTips">正在提交收银台…</span>
+            <div style="display:none;" id="PayFormBox">@{
+            LokFu.Payment.IPayment Payment = LokFu.Payment.PaymentFactory.GetInstance(PayConfig.DllName);
+            string paraArray = "";
+            if (PayConfig.DllName == "HFPay")
+            {
+                Users Users = Entity.Users.FirstOrNew(n => n.Id == Orders.UId);
+                paraArray = string.Format("{0},{1},{2},{3},{4}", Orders.TNum, (Orders.Amoney).ToString("F2"), Orders.TName, Users.TrueName, Users.CardId);
+            }
+            else
+            {
+                paraArray = string.Format("{0},{1},{2}", Orders.TNum, (Orders.Amoney).ToString("F2"), Orders.TName);
+            }
+            string Image = string.Format("/Content/Pay/images/{0}.jpg", PayConfig.DllName);
+            string url = Payment.GetPayStr(PayConfig.QueryArray, paraArray, Image);
+                @Html.Raw(url)
+            }
+            </div>
+        }
+    </div>
+  </div>
+</div>
+</body>
+<script>
+    @if (PayConfig != null)
+    {
+        <text>
+    $(function () {
+        if ($("#PayForm").length > 0) {
+            $("#PayForm").submit();
+        } else {
+            $(".submitTips").hide();
+            $("#PayFormBox").show();
+        }
+    });
+        </text>
+    }
+</script>
+</html>

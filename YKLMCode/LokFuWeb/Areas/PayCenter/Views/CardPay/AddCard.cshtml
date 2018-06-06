@@ -1,0 +1,94 @@
+﻿@{
+    Layout = null;
+    string etnum = ViewBag.etnum;
+    FastOrder FastOrder = ViewBag.FastOrder;
+    Users Users = ViewBag.Users;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>银行卡支付</title>
+    <link href="/Content/Pay/css/qiapay.css?v=20170425" rel="stylesheet" />
+    <script src="/Content/Pay/js/jquery.js"></script>
+</head>
+<body>
+    <div class="banck_box"><img src="/Content/Pay/images/bank_icon.png" /></div>
+	<div class="bdbn">请绑定持卡人本人银行卡</div>
+    <form action="AddCard.html" method="post" id="SaveCard" name="SaveCard">
+        <input name="etnum" type="hidden" value="@(etnum)" />
+	    <div class="forma_box">
+		    <span class="sp01">姓名</span>
+		    <span class="sp02">@(Users.TrueName)</span>
+	    </div>
+	    <div class="forma_box">
+		    <span class="sp01">银行卡</span>
+            <input class="puin" type="tel" name="Card" id="Card" placeholder="请输入银行卡号" />
+	    </div>
+	    <div class="forma_box">
+		    <span class="sp01">手机号</span>
+            <input class="puin" type="tel" name="Mobile" id="Mobile" placeholder="请输入银行卡预留手机号" />
+	    </div>
+	    <div class="forma_box">
+		    <span class="sp01">验证码</span>
+		    <input class="puin"  type="text" name="code" id="code" placeholder="点击显示图形验证码" />
+            <img class="zm_tx" src="/Content/Pay/images/none.gif" id="img" title="点击更换验证码" />
+	    </div>
+        <div class="forma_box">
+		    <p id="Info"></p>
+	    </div>
+	    <input class="bandz" value="绑卡并支付" type="submit" id="submit" />
+    </form>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#SaveCard").submit(function () {
+            var Card = $("#Card").val();
+            if (Card.length < 10) {
+                ShowInfo("请输入银行卡卡号！");
+                return false;
+            }
+            if (!/^[0-9]{10,19}$/.test(Card)) {
+                ShowInfo("请正确输入银行卡卡号！");
+                return false;
+            }
+            var Mobile = $("#Mobile").val();
+            if (Mobile.length < 10) {
+                ShowInfo("请输入手机号！");
+                return false;
+            }
+            if (!/^((\(\d{2,3}\))|(\d{3}\-))?1[3,5,7,8]\d{9}$/.test(Mobile)) {
+                ShowInfo("请正确填写手机号");
+                return false;
+            }
+            var code = $("#code").val();
+            if (!/^[0-9A-Za-z]{4}$/.test(code)) {
+                ShowInfo("请输入4位验证码！");
+                return false;
+            }
+            var data = $.ajax({ url: "/home/CheckCode.html?code=" + code, async: false }).responseText;
+            if (data != "1") {
+                ShowInfo("验证码错误！");
+                return false;
+            }
+            $("#submit").text("正在提交").prop("disabled", true);
+        });
+        $("#Card,#Mobile").focus(function () {
+            $("#Info").text("").hide();
+        });
+        $("#img").click(function () {
+            $(this).fadeOut(0).attr("src", "/Content/Pay/images/none.gif").attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+        });
+        $("#code").focus(function () {
+            if ($("#img").attr("src") == "/Content/Pay/images/none.gif") {
+                $("#img").fadeOut(0).attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+                $(this).val("");
+            }
+        });
+    });
+    var ShowInfo = function (info) {
+        $("#Info").text(info).show();
+    }
+</script>

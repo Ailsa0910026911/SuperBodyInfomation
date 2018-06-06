@@ -1,0 +1,166 @@
+﻿@{
+    BasicBankInfo BasicBankInfo = ViewBag.BasicBankInfo;
+    ViewBag.SMUid = 13;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    IList<BasicDistrict> BasicDistrictList = ViewBag.BasicDistrictList;
+    IList<BasicBank> BasicBankList = ViewBag.BasicBankList;
+    if (BasicBankInfo.Id.IsNullOrEmpty())
+    {
+        BasicBankInfo.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(BasicBankInfo.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BasicBankInfo.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属省 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <select name="SId" id="SId" class="form-control input-small input-inline input-sm validate[required]" type="select-one" rev="@(BasicBankInfo.SId)">
+                      <option value="">==请选择==</option>
+                      @foreach (var p in BasicProvinceList)
+                      {
+                          <option value="@(p.Id)"@(BasicBankInfo.SId==p.Id?" selected":"")>@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属市 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <select name="CId" id="CId" class="form-control input-small input-inline input-sm validate[required]" type="select-one" rev="@(BasicBankInfo.CId)">
+                      <option value="">==请选择==</option>
+                  </select>
+                  <select id="CId-Sel" style="display:none;">
+                      @foreach (var p in BasicCityList)
+                      {
+                          <option value="@(p.Id)"@(BasicBankInfo.CId==p.Id?" selected":"") rev="@(p.PId)">@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属地区</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <select name="DId" id="DId" class="form-control input-small input-inline input-sm" rev="@(BasicBankInfo.DId)">
+                      <option value="">==请选择==</option>
+                  </select>
+                  <select id="DId-Sel" style="display:none;">
+                      @foreach (var p in BasicDistrictList)
+                      {
+                          <option value="@(p.Id)"@(BasicBankInfo.DId==p.Id?" selected":"") rev="@(p.CId)">@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属银行 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                <select name="BId" id="BId" class="form-control input-small input-inline input-sm validate[required]" type="select-one">
+                      <option value="" data-tag="">请选择</option>
+                      @foreach (var p in BasicBankList)
+                      {
+                          <option value="@(p.Id)" @(p.Id==BasicBankInfo.BId?"selected":"")>@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">支行名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(BasicBankInfo.Name)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">联行号 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control validate[required] input-large" name="BIN" id="BIN" value="@(BasicBankInfo.BIN)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(BasicBankInfo.State==1?" selected":"")>显示</option>
+                    <option value="0"@(BasicBankInfo.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(BasicBankInfo.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#SId").change(function () {
+            var SId = $(this).val();
+            if (SId == "") { SId = 0; }
+            if (SId > 0) {
+                var CIds = $("#CId-Sel option[rev=" + SId + "]").clone(true);
+                var CId = $("#CId").attr("rev");
+                $("#CId").html("<option value=\"\">==请选择==</option>").append(CIds);
+                $("#CId").find("option[value=" + CId + "]").attr("selected", true);
+            } else {
+                $("#CId").html("<option value=\"\">==请选择==</option>");
+            }
+            $("#DId").html("<option value=\"\">==请选择==</option>");
+        }).change();
+        $("#CId").change(function () {
+            var CId = $(this).val();
+            if (CId == "") { CId = 0; }
+            if (CId > 0) {
+                var DIds = $("#DId-Sel option[rev=" + CId + "]").clone(true);
+                var DId = $("#DId").attr("rev");
+                $("#DId").html("<option value=\"\">==请选择==</option>").append(DIds);
+                $("#DId").find("option[value=" + DId + "]").attr("selected", true);
+            } else {
+                $("#CId").html("<option value=\"\">==请选择==</option>");
+            }
+        }).change();
+    });
+</script>
+    }
+}

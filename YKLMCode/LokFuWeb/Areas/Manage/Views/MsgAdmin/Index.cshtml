@@ -1,0 +1,202 @@
+﻿@{
+    IList<MsgAdmin> MsgAdminList = ViewBag.MsgAdminList;
+    ViewBag.SMUid = 19;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    LokFuEntity Entity = ViewBag.Entity;
+    ViewBag.NoShowDel = true;
+    bool IsMyDelete = ViewBag.IsMyDelete;
+    bool IsMyEdit = ViewBag.IsMyEdit;
+    bool IsMySave = ViewBag.IsMySave;
+    bool IsMyAdd = ViewBag.IsMyAdd;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    @if (IsMyAdd)
+                    {
+                        <div class="btn-group">
+                            <a class="btn green" href="Edit.html">发送消息 <i class="fa fa-plus"></i></a>
+                        </div>
+                    }
+                    <div class="btn-group pull-right">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">批量操作 <i class="fa fa-angle-down"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            @if (IsDel == "1")
+                            {
+                                if (IsMySave)
+                                {
+                                <li><a href="#" class="BatSet" rev="Reply">批量恢复 </a></li>
+                                }
+                                if (IsMyDelete)
+                                {
+                                <li><a href="#" class="BatSet" rev="Deleted">彻底删除 </a></li>
+                                }
+
+                            }
+                            else
+                            {
+                                if (IsMySave)
+                                {
+                                <li><a href="#" class="BatSet" rev="State" rel="1">批量显示 </a></li>
+                                <li><a href="#" class="BatSet" rev="State" rel="0">批量隐藏 </a></li>
+                                }
+                                if (IsMyDelete)
+                                {
+                                <li><a href="#" class="BatSet" rev="Delete">批量删除 </a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>接收管理 </th>
+                                <th>标题 </th>
+                                <th>状态 </th>
+                                <th>操作商户【操作人】 </th>
+                                <th>添加时间 </th>
+                                <th width="140">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (MsgAdminList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in MsgAdminList)
+                                {
+                                    string AgentName = "后台管理员";
+                                    switch (p.IsAdmin)
+                                    {
+                                        case 0:
+                                            //管理员多人
+                                            if (p.AId == 0 && !string.IsNullOrWhiteSpace(p.SendUsers))
+                                            {
+                                                AgentName = "后台管理员多人";
+                                            }
+                                            else if (p.AId > 0 && string.IsNullOrWhiteSpace(p.SendUsers))
+                                            {
+                                                var adminModel = Entity.SysAdmin.FirstOrDefault(x => x.Id == p.AId);
+                                                if (adminModel != null)
+                                                {
+                                                    AgentName = string.IsNullOrWhiteSpace(adminModel.TrueName) ? adminModel.UserName : adminModel.TrueName;
+                                                }
+                                            }
+                                            break;
+                                        case 1:
+                                            //代理商多人
+                                            if (p.AId == 0 && !string.IsNullOrWhiteSpace(p.SendUsers))
+                                            {
+                                                AgentName = "代理商多人";
+                                            }
+                                            else if (p.AId > 0 && (string.IsNullOrWhiteSpace(p.SendUsers) || p.SendUsers == ",0,"))
+                                            {
+                                                var adminModel = Entity.SysAdmin.FirstOrDefault(x => x.Id == p.AId);
+                                                if (adminModel != null)
+                                                {
+                                                    var agentModel = Entity.SysAgent.FirstOrDefault(x => x.Id == adminModel.AgentId);
+                                                    if (agentModel != null)
+                                                    {
+                                                        AgentName = agentModel.Name;
+                                                    }
+                                                }
+                                            }
+                                            break;
+                                    }
+                                    //SysAdmin SysAdmin = SysAdminList.FirstOrNew(n => n.Id == p.AId);
+                                    //if (!SysAdmin.AgentId.IsNullOrEmpty())
+                                    //{
+                                    //    AgentName = SysAgentList.FirstOrNew(n => n.Id == SysAdmin.AgentId).Name;
+                                    //}
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td class="center">@(AgentName)</td>
+                                    <td class="center">@(p.Name.Length > 15 ? p.Name.Substring(0, 15) + "...." : p.Name) </td>
+                                    <td class="center">@{
+                                    if (p.AId > 0)
+                                    {
+                                        if (p.State == 1)
+                                        {
+                                        <i class="fa color-green">未读</i>
+                                        }
+                                        else if (p.State == 2)
+                                        {
+                                        <i class="fa color-red">已读</i>
+                                        }
+                                        else if (p.State == 3)
+                                        {
+                                        <i class="fa color-green">隐藏</i>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <i class="fa color-red">==</i>
+                                    }
+                                    }
+                                    </td>
+                                    <td class="center">@{
+                                    SysAdmin SysAdmin = Entity.SysAdmin.FirstOrNew(a => a.Id == p.PId);
+                                    SysAgent SysAgent = Entity.SysAgent.FirstOrNew(a => a.Id == SysAdmin.AgentId);
+                                    }
+                                        @(SysAgent.Name + "【" + SysAdmin.TrueName + "】")
+                                    </td>
+                                    <td class="center">@(p.AddTime) </td>
+                                    <td class="center">
+                                        @if (IsDel == "1")
+                                        {
+                                            if (IsMySave)
+                                            {
+                                            <a class="label label-sm label-info Reply" href="Delete.html?Id=@(p.Id)"><i class="fa fa-reply"></i>恢复</a>
+                                            }
+                                            if (IsMyDelete)
+                                            {
+                                            <a class="label label-sm label-danger Deleted" href="Delete.html?Id=@(p.Id)&IsDel=1"><i class="fa fa-trash-o"></i>彻底删除</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (IsMySave)
+                                            {
+                                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>修改</a>
+                                            }
+                                            if (IsMyDelete)
+                                            {
+                                            <a class="label label-sm label-danger Delete" href="Delete.html?Id=@(p.Id)"><i class="fa fa-trash-o"></i>删除</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", MsgAdminList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

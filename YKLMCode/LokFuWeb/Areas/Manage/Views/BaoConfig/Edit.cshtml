@@ -1,0 +1,161 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    BaoConfig BaoConfig = ViewBag.BaoConfig;
+    ViewBag.SMUid = 193;
+    ViewBag.Title = "余额理财配置";
+    int count1, count2;
+    decimal count3, count4;
+    DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+    DateTime ToMonty = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01"));
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat blue">
+            @{
+                count1 = Entity.BaoUsers.Count();
+                count2 = Entity.BaoUsers.Count(n => n.AddTime > Today);
+            }
+            <div class="visual"><i class="fa fa-user"></i></div>
+            <div class="details">
+                <div class="number">@(count1) </div>
+                <div class="desc">总参与用户数 </div>
+            </div>
+            <a class="more">今日新增用户：@(count2) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        @{
+            count3 = 0;
+            try{
+            count3 = Entity.BaoUsers.Sum(n => n.AllMoney);
+            }catch(Exception){}
+            count1 = Entity.BaoLog.Count(n => n.LType == 1);
+        }
+        <div class="dashboard-stat green">
+            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+            <div class="details">
+                <div class="number">@(count3.ToMoney()) </div>
+                <div class="desc">总金额 </div>
+            </div>
+            <a class="more">转入笔数：@(count1) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        @{
+            count3 = 0; count4 = 0;
+            try{
+            count3 = Entity.BaoUsers.Sum(n => n.ActMoney);
+            count4 = Entity.BaoUsers.Sum(n => n.InMoney);
+            }catch(Exception){}
+        }
+        <div class="dashboard-stat purple">
+            <div class="visual"><i class="fa fa-gift"></i></div>
+            <div class="details">
+                <div class="number">@(count3.ToMoney()) </div>
+                <div class="desc">计息金额 </div>
+            </div>
+            <a class="more">未计息金额：@(count4.ToMoney()) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat yellow">
+            @{
+                count3 = 0; count4 = 0;
+                try{
+                count3 = Entity.BaoUsers.Sum(n => n.AllRec);
+                count4 = Entity.BaoUsers.Sum(n => n.LastRec);
+                }catch(Exception){}
+            }
+            <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
+            <div class="details">
+                <div class="number">@(count3.ToMoney()) </div>
+                <div class="desc">总利息 </div>
+            </div>
+            <a class="more">昨日利息：@(count4.ToMoney()) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BaoConfig.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">理财名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="BaoName" id="BaoName" value="@(BaoConfig.BaoName)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">万份收益 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required,custom[money]] input-small" name="GetCost" id="GetCost" value="@(BaoConfig.GetCost.ToMoney())" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">年化收益 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-small input-inline" id="YearPer" value="@(BaoConfig.YearPer.ToString("F4"))" readonly="readonly" />%
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+                @if (ViewBag.Save)
+                {
+                    <button type="submit" class="btn green">确认修改</button>
+                }
+              
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#GetCost").change(function () {
+            var v = $(this).val();
+            var r = "";
+            if (!isNaN(v)) {
+                var w = v / 10000;
+                var n = 1 + w;
+                var p = Math.pow(n, 365);
+                var y = p - 1;
+                r = y * 100;
+            } 
+            $("#YearPer").val(r.toFixed(4));
+        });
+        $("#GetCost").keyup(function () {
+            $(this).change();
+        });
+    });
+</script>
+    }
+}

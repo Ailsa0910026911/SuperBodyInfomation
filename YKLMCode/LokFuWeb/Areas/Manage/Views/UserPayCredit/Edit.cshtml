@@ -1,0 +1,104 @@
+﻿@{
+    UserPayCredit UserPayCredit = ViewBag.UserPayCredit;
+    ViewBag.SMUid = 93;
+    if (UserPayCredit.Remark.IsNullOrEmpty()){
+        UserPayCredit.Remark = string.Empty;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(UserPayCredit.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(UserPayCredit.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">还款金额</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" disabled="disabled" value="@((double)UserPayCredit.Amount)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">真实姓名</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" disabled="disabled" value="@(UserPayCredit.TrueName)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">手机号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" disabled="disabled" value="@(UserPayCredit.Mobile)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">客服备注</label>
+              <div class="col-md-5">
+                      @{
+                          string[] arrA = UserPayCredit.Remark.Split('|');
+                      }
+                      <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="success center" style="width:80px;">客服</td>
+                                <td class="success center" style="width:140px;">时间</td>
+                                <td class="success center">备注</td>
+                            </tr>
+                            @foreach(var p in arrA){
+                                string[] ArrB=p.Split(',');
+                                if(ArrB.Length==3){
+                            <tr class="odd gradeX">
+                                <td class="center">@(ArrB[0])</td>
+                                <td class="center">@(ArrB[1])</td>
+                                <td>@(ArrB[2])</td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                  <textarea class="form-control input-xxlarge" name="Remark" id="Remark" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-small" name="State" id="State">
+                    <option value="1"@(UserPayCredit.State==1?" selected":"")>待处理</option>
+                    <option value="2"@(UserPayCredit.State==2?" selected":"")>已联系</option>
+                    <option value="3"@(UserPayCredit.State==3?" selected":"")>已完成</option>
+                    <option value="0"@(UserPayCredit.State==0?" selected":"")>已取消</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

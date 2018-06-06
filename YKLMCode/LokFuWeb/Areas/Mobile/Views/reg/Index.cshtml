@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+    Turntable Turntable = ViewBag.Turntable;
+    bool IsApple = ViewBag.IsApple;
+    SysSet BasicSet = ViewBag.BasicSet;
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    Users users = Entity.Users.FirstOrNew(n => n.Id == Users.MyPId);
+    string NoteDownload = "/mobile/down/index-0.html";
+    string AppName = BasicSet.Name;
+    if (!users.Id.IsNullOrEmpty())
+    {
+        if(users.Agent != 0)
+        {
+            var CurrentAgent = Entity.SysAgent.FirstOrNew(o => o.Id == users.Agent);//当前代理
+            if (CurrentAgent.Tier == 1)
+            {
+                if (CurrentAgent.IsTeiPai == 1)
+                {
+                    AppName = CurrentAgent.APPName.IsNullOrEmpty() ? AppName : CurrentAgent.APPName;
+                    NoteDownload = CurrentAgent.NoteDownload.IsNullOrEmpty() ? NoteDownload : CurrentAgent.NoteDownload;
+                }
+            }
+            else
+            {
+                var TreeAgent = CurrentAgent.GetAgentsById(Entity);
+                SysAgent RootAgent = TreeAgent.FirstOrDefault(o => o.Tier == 1);
+                if (RootAgent.IsTeiPai == 1)
+                {
+                    AppName = RootAgent.APPName.IsNullOrEmpty() ? AppName : RootAgent.APPName; 
+                    NoteDownload = RootAgent.NoteDownload.IsNullOrEmpty() ? NoteDownload : RootAgent.NoteDownload;
+                }
+            }
+        }
+    }   
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>@(users.NeekName)的分享</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+ <link rel="stylesheet" href="/Content/Mobile/share/css/money.css?V=4" />
+
+</head>
+
+<body>
+	<img class="share01" src="/Content/Mobile/share/image/fenxiang01.png" />
+	<div class="dw_box">
+		<img class="share01" src="/Content/Mobile/share/image/fenxiang02.png" />
+		<div class="share_text">
+			<div class="share_line"></div>
+			<span class="hf_name">@(AppName)</span>
+			<p class="share_text02">   @(AppName)是一款专业的移动金融助手，更是聪明又体贴的移动生活利器，一款服务大众的移动端“随身”钱包。全面集成了支付、理财、信贷的贴心钱包!助您实现“所需支付、优越理财、轻松贷款”的综合需求。</p>
+			<a class="register01" href="reg.html?mypid=@(Users.MyPId)&payconfigid=@(Users.PayConfigId)&sharetype=2">立即注册体验</a>
+			<a class="register02" href="@(NoteDownload)">已有账户用户点击下载</a>
+		</div>
+	</div>
+</body>
+</html>
+

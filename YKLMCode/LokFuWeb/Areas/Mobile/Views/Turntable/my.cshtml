@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+    IList<TurnLog> TurnLogList = ViewBag.TurnLogList;
+    bool IsApple = ViewBag.IsApple;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的奖品</title>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+<link rel="stylesheet" href="/Content/Mobile/Turntable/css/themes/default/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="/Content/Mobile/Turntable/css/style.css">
+<script src="/Content/Mobile/Turntable/js/jquery.js"></script>
+<script src="/Content/Mobile/Turntable/js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body class="rel">
+<img src="/Content/Mobile/Turntable/img/bg_run.png" class="bg_run">
+<div class="gift">
+  @foreach(var p in TurnLogList){
+  <div class="box">
+  	<div class="text">
+    	<h1>@(p.Name)<span>@(p.State==1?"未领取":"已领取")</span></h1>
+        <p>获取时间：@(p.AddTime.ToString("yyyy.MM.dd"))</p>
+        <p>@(p.AddTime.ToString("hh:mm:ss"))</p>
+    </div>
+  	<img src="/Content/Mobile/Turntable/img/box_b1.png" class="box_b">
+    @if(p.State==1){
+    <img src="/Content/Mobile/Turntable/img/my_get.png" class="my_get" id="@(p.Id)">
+    }
+  </div>
+  }
+</div>
+<div class="tipsbg"></div>
+<div class="tips">
+	<div class="tips_box">
+    	<div class="text">
+    		<p class="title"></p>
+            <p class="bold"></p>
+            <p class="small"></p>
+        </div>
+		<img src="/Content/Mobile/Turntable/img/tips_bg.png" class="tips_bg">
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".tipsbg").click(function () {
+            $(".type").hide();
+            $(".tips").hide();
+            $(".tipsbg").hide();
+        });
+        $(".my_get").click(function () {
+            var btn = $(this);
+            var id = btn.attr("id");
+            btn.hide();
+            //领奖开始
+            $.ajax({
+                url: "Take.html",
+                dataType: "text",
+                data: { lid: id },
+                type: "POST",
+                beforeSend:function(){
+                    $(".type").hide();
+                    $(".tips").hide();
+                    var h = $(document).height();
+                    $(".tipsbg").height(h);
+                    $(".tipsbg").show();
+                },
+                success: function (data) {
+                    if (data == "0") {
+                        btn.closest(".box").find("h1").find("span").text("已领取");
+                        showTips("领奖成功", "奖金已发到您的钱包中~请查收！", "", "");
+                        return;
+                    }
+                    if (data == "1") {
+                        showTips("领奖失败", "该奖金已被领走，请查看钱包或领奖记录！", "", "");
+                        return;
+                    }
+                    if (data == "2") {
+                        btn.show();
+                        showTips("领奖失败", "请稍候再试！", "", "");
+                        return;
+                    }
+                }
+            });
+        });
+    });
+    var showTips = function (title, bolds, smalls, type) {
+        $(".tips").find(".title").html(title);
+        $(".tips").find(".bold").html(bolds);
+        if (bolds == "") {
+            $(".tips").find(".bold").hide();
+        }
+        $(".tips").find(".small").html(smalls);
+        if (type != "") {
+            $(".tips").find("." + type).show();
+        }
+        var h = $(document).height();
+        $(".tipsbg").height(h);
+        var th = $(".tips").height();
+        $(".tips").css("marginTop", "-" + (th / 2) + "px");
+        $(".tips").show();
+        $(".tipsbg").show();
+    }
+</script>
+    @if(IsApple){
+    <div class="copytext">
+        <p>本公司所有活动与苹果公司无关　</p>
+    </div>
+    }
+</body>
+</html>

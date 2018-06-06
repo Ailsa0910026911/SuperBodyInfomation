@@ -1,0 +1,122 @@
+﻿@{
+    IList<DownFileTag> DownFileTagList = ViewBag.DownFileTagList;
+    ViewBag.SMUid = 222;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="btn-group">
+                        @if (ViewBag.Save)
+                        {
+                            <a class="btn green" href="Edit.html">添加记录 <i class="fa fa-plus"></i></a>
+                        }
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">批量操作 <i class="fa fa-angle-down"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            @if (IsDel == "1")
+                            {
+                                if (ViewBag.Delete)
+                                {
+                                <li><a href="#" class="BatSet" rev="Reply">批量恢复 </a></li>
+                                <li><a href="#" class="BatSet" rev="Deleted">彻底删除 </a></li>
+                                }
+                            }
+                            else
+                            {
+                                if (ViewBag.Save)
+                                {
+                                <li><a href="#" class="BatSet" rev="State" rel="1">批量显示 </a></li>
+                                <li><a href="#" class="BatSet" rev="State" rel="0">批量隐藏 </a></li>
+                                }
+                                if (ViewBag.Delete)
+                                {
+                                <li><a href="#" class="BatSet" rev="Delete">批量删除 </a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>名称 </th>
+                                <th>状态 </th>
+                                <th>排序 </th>
+                                <th width="140">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (DownFileTagList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in DownFileTagList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td>@(p.Name) </td>
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">@(p.Sort) </td>
+                                    <td class="center">
+                                        @if (IsDel == "1")
+                                        {
+                                            if (ViewBag.Delete)
+                                            {
+                                            <a class="label label-sm label-info Reply" href="Delete.html?Id=@(p.Id)"><i class="fa fa-reply"></i>恢复</a>
+                                            <a class="label label-sm label-danger Deleted" href="Delete.html?Id=@(p.Id)&IsDel=1"><i class="fa fa-trash-o"></i>彻底删除</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (ViewBag.Save)
+                                            {
+                                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>修改</a>
+                                            }
+
+                                            if (ViewBag.Delete)
+                                            {
+                                            <a class="label label-sm label-danger Delete" href="Delete.html?Id=@(p.Id)"><i class="fa fa-trash-o"></i>删除</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", DownFileTagList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+

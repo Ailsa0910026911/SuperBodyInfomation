@@ -1,0 +1,158 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    ViewBag.SMUid = 247;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    ApplyCreditCard ApplyCreditCard = ViewBag.ApplyCreditCard;
+    bool IsSave = ViewBag.IsSave;
+}
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(ApplyCreditCard.Id)" />
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">姓名</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small" value="@(ApplyCreditCard.UserName)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">身份证号</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(ApplyCreditCard.UserIdCard)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">申请银行</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(Entity.BasicBank.FirstOrNew(b => b.Id == ApplyCreditCard.BankId).Name)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">手机号</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(ApplyCreditCard.UserMobile)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">申请日期</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(ApplyCreditCard.AddTime)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">所属一级代理</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(Entity.SysAgent.FirstOrNew(SA => SA.Id == ApplyCreditCard.FirstAgentId).Name)" disabled="disabled" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">申请进度</label>
+                            <div class="col-md-4">
+                                @if (ApplyCreditCard.SettlementState == 1)
+                                {
+                                    string state="";
+                                    switch (ApplyCreditCard.State)
+                                    {
+                                        case 1:
+                                            state = "申请中";
+                                            break;
+                                        case 2:
+                                            state = "转人工审核中";
+                                            break;
+                                        case 3:
+                                            state = "过件未发卡";
+                                            break;
+                                        case 4:
+                                            state = "过件已发卡";
+                                            break;
+                                        case 5:
+                                            state = "拒件";
+                                            break;
+                                        case 6:
+                                            state = "待转人工审核";
+                                            break;
+                                        case 7:
+                                            state = "通过并有效";
+                                            break;
+                                        default:
+                                            state = "申请中";
+                                            break;
+                                    }
+                                    <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large" value="@(state)" disabled="disabled" />
+                                </div>
+                                }
+                                else
+                                { 
+                                   <select class="bs-select form-control input-small" name="State" id="State">
+                                    <option value="1" @(ApplyCreditCard.State == 1 ? "selected" : "")>申请中</option>
+                                    <option value="6" @(ApplyCreditCard.State == 6 ? "selected" : "")>待转人工审核</option>
+                                    <option value="2" @(ApplyCreditCard.State == 2 ? "selected" : "")>转人工审核中</option>
+                                    <option value="3" @(ApplyCreditCard.State == 3 ? "selected" : "")>过件未发卡</option>
+                                    <option value="4" @(ApplyCreditCard.State == 4 ? "selected" : "")>过件已发卡</option>
+                                    <option value="5" @(ApplyCreditCard.State == 5 ? "selected" : "")>拒件</option>
+                                    <option value="7" @(ApplyCreditCard.State == 7 ? "selected" : "")>通过并有效</option>
+                                </select>
+                                }
+                             
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">银行结算金额</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large  validate[required,custom[float]]" name="SettlementAmount" id="SettlementAmount"   value="@(ApplyCreditCard.SettlementAmount)") @(ApplyCreditCard.SettlementAmount.IsNullOrEmpty() ? "" : "disabled=\"disabled\"")/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">一级代理结算金额</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large  validate[required,custom[float]]" name="FirstAgentAmount" id="FirstAgentAmount"   value="@(ApplyCreditCard.FirstAgentAmount)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (IsSave)
+                    {
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">确认结算</button>
+                            </div>
+                        </div>
+                    }
+
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+

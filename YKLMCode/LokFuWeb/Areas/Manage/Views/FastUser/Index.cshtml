@@ -1,0 +1,84 @@
+﻿@{
+    IList<FastUser> FastUserList = ViewBag.FastUserList;
+    FastUser FastUser = ViewBag.FastUser;
+    ViewBag.SMUid = 267;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    DateTime STime = ViewBag.STime ?? DateTime.MinValue;
+    DateTime ETime = ViewBag.ETime ?? DateTime.MinValue;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="UId" class="form-control input-small input-inline input-sm" id="UId">
+            <option value="1" @(FastUser.UId == 1 ? "selected" : "")>商户姓名</option>
+            <option value="2" @(FastUser.UId == 2 ? "selected" : "")>身份证</option>
+            <option value="3" @(FastUser.UId == 3 ? "selected" : "")>结算卡号</option>
+            <option value="4" @(FastUser.UId == 4 ? "selected" : "")>联行号</option>
+        </select>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-medium" name="TrueName" value="@(FastUser.TrueName)" />
+        <span class="seperator">|</span>
+        <span>结算银行：</span>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-medium" name="Bank" value="@(FastUser.Bank)" />
+        <span class="seperator">|</span>
+        <span>创建时间：</span>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text"  name="STime" id="STime" value="@(STime == DateTime.MinValue ? "" : STime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~<input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="ETime" id="ETime" value="@(ETime == DateTime.MinValue ? "" : ETime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>商户姓名 </th>
+                                <th>身份证 </th>
+                                <th>结算银行 </th>
+                                <th>结算卡号 </th>
+                                <th>联行号 </th>
+                                <th>添加时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (FastUserList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in FastUserList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td class="center">@(p.TrueName) </td>
+                                    <td class="center">@(p.CardId) </td>
+                                    <td class="center">@(p.Bank) </td>
+                                    <td class="center">@(p.Card) </td>
+                                    <td class="center">@(p.Bin) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm:ss")) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", FastUserList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

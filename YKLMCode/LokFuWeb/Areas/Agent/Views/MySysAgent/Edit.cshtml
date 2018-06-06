@@ -1,0 +1,125 @@
+﻿@{
+    SysAgent SysAgent = ViewBag.BasicAgent;
+    ViewBag.SMUid = 151;
+                //this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix">
+		<div class="information">
+			<div></div>	
+			<div class="proxy-con inquiry-cont">
+				<form action="@(SysAgent.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                    <input type="hidden" name="Id" value="@(SysAgent.Id)" />
+                    <ul class="list-unstyled inform-list">
+						<li>
+							<span class="left-span"> 机构名称 </span> 
+                            <span class="text-warning">@(SysAgent.Name)</span>
+						</li>
+						<li>
+							<span class="left-span"> 机构地址 <b class="text-warning">*</b></span> 
+                            <input type="text" class="input-text validate[required]" name="Address" id="Address" value="@(SysAgent.Address)" />
+						</li>
+						<li>
+							<span class="left-span"> 客服电话 <b class="text-warning">*</b></span> 
+                            <input type="text" class="input-text validate[required,custom[phone],ajax[Checktelephone]]" name="Tel" id="Tel" value="@(SysAgent.Tel)" />
+						</li>
+						<li>
+							<span class="left-span"> 机构传真 </span> 
+                            <input type="text" class="input-text" name="Fax" id="Fax" value="@(SysAgent.Fax)" />
+						</li>
+						<li>
+							<span class="left-span"> 联系人 <b class="text-warning">*</b></span> 
+                            <input type="text" class="input-text validate[required]" name="Linker" id="Linker" value="@(SysAgent.Linker)" />
+						</li>
+						<li>
+							<span class="left-span"> 联系手机 </span> 
+                            <input type="text" class="input-text" maxlength="11" name="LinkMobile" id="LinkMobile" value="@(SysAgent.LinkMobile)" disabled />
+						</li>
+                        <li>
+                            <span class="left-span"> 公司logo </span> 
+                            <input type="hidden"  name="CompanyLogo" id="CompanyLogo" />
+                            <span id="files" style="margin-left:10px;width:260px;display:inline-block;"></span>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>上传文件</span>
+                                <input id="CompanyLogoFile" type="file" name="CompanyLogoFile" />
+                            </span>
+                            <p>logo位置左上角,大小210x80</p>
+                        </li>
+                        <li>
+                            <span class="left-span"> 上传进度: </span> 
+                            <div id="progress" class="progress" style="width: 260px;display:inline-block;margin-bottom:0px;margin-left:10px;">
+                            <div class="progress-bar progress-bar-success"></div>
+                            </div>
+                        </li>
+                        @if (SysAgent.IsTeiPai == 1)
+                        {
+                        <li>
+							<span class="left-span"> 超级收银台 </span> 
+                            <a  href="http://dl@(SysAgent.Id).goodpay.net.cn/shop/" target="_blank">http://dl@(SysAgent.Id).goodpay.net.cn/shop/</a>
+						</li>
+                        }
+					</ul>					
+					<br>
+                    @if (ViewBag.Save)
+                    {
+                        <div class="text-center warning"><button type="submit" class="sub">确认</button></div>
+                    }
+					
+					<br>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604261603"></script>
+    @Html.Partial("~/Areas/Agent/Views/Shared/UpLoadFile.cshtml")
+    <script type="text/javascript">
+        $(function () {
+            //File元素
+            $('#CompanyLogoFile').fileupload({
+                url: '/agent/Asyn/UpLoadCompanyLogo.html',
+                dataType: 'json',
+                maxFileSize: 2000000,
+                acceptFileTypes: new RegExp("(\.|\/)(gif|jpe?g|png)$", "i"),
+                //多语言支付
+                messages: {
+                    maxNumberOfFiles: '最多能上传文件10个',
+                    acceptFileTypes: '文件类型不正确,格式:gif,jpeg,png',
+                    maxFileSize: '上传文件最大2M',
+                    minFileSize: '上传文件最小1KB'
+                },
+                //上传成功后调用
+                done: function (e, data) {
+                    if (data.result.Status == true) {
+                        $.each(data.files, function (index, file) {
+                            $('#files').html('<a target="_blank" href=' + data.result.Result + '>查看图片</a>');
+                        });
+                        $("#CompanyLogo").val(data.result.Result);
+                    }
+                    else { alert(data.result.Message); }
+                },
+                //处理出错时调用
+                processalways: function (e, data) {
+                    if (data.files.error) {
+                        $.each(data.files, function (index, file) {
+                            alert(file.error);
+                        });
+                    }
+                }
+                //进度条。*这种是后绑事件
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                ).text(progress + '%');
+            });
+        });
+    </script>
+}

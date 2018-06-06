@@ -1,0 +1,204 @@
+﻿@{
+    Layout = null;
+    Orders Orders = ViewBag.Orders;
+    Users Users = ViewBag.Users;
+    //SysAgent SysAgent = ViewBag.SysAgent;
+    //SysAdmin SysAdmin = ViewBag.SysAdmin;
+    //SysAdmin FinAdmin = ViewBag.FinAdmin;
+    LokFuEntity Entity = ViewBag.Entity;
+    string PayWay = "--";
+    if (Orders.PayWay > 0 && Orders.PayState == 1)
+    {
+        PayWay = Entity.PayConfig.FirstOrNew(n => n.Id == Orders.PayWay).Name;
+    }
+    string AppImgPath = ViewBag.AppImgPath;
+    string PayUrl = ViewBag.PayUrl;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>订单详情</title>
+    <link href="/Content/Mobile/css/orders.css?0002" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="dabox">
+        <img class="tx" src="@(Users.Pic.IsNullOrEmpty() ? "/Content/Mobile/images/toux.jpg" : Utils.ImageUrl("UsersPic", Users.Pic, AppImgPath))" />
+        <span class="xm">@(Users.TrueName.CutString(0, 1))**</span> </div>
+    <div class="lxxm">
+        <span class="left">交易类型：</span> <span class="right">[@(Orders.GetTTName())]</span>
+    </div>
+    <div class="lxxm"><span class="left">交易时间：</span> <span class="right">@(Orders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</span> </div>
+    <div class="lxxm"><span class="left">订单号码：</span> <span class="right">@(Orders.TNum)</span> </div>
+    <div class="lxxm"><span class="left">交易内容：</span> <span class="right">@(Orders.GetPayNameWithTName())</span> </div>
+    @if (Orders.TType == 1)
+    { //银联卡支付订单
+        OrderRecharge OrderRecharge = Entity.OrderRecharge.FirstOrNew(n => n.OId == Orders.TNum);
+        <div class="lxxm"><span class="left">交易金额：</span> <span class="right">@(Orders.Amoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">手 续 费：</span> <span class="right">-@(OrderRecharge.Poundage.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">到帐金额：</span> <span class="right">@(OrderRecharge.PayMoney.ToString("F2"))</span> </div>
+        if (Orders.PayState == 1)
+        {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+        }
+        else
+        { 
+        <div class="payment"><a href="@(PayUrl)">立即付款</a></div>
+        }
+    }
+    @if (Orders.TType == 2)
+    { //提现订单
+        OrderCash OrderCash = Entity.OrderCash.FirstOrNew(n => n.OId == Orders.TNum);
+        <div class="lxxm"><span class="left">提现金额：</span> <span class="right">@(Orders.Amoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">到帐金额：</span> <span class="right">@((OrderCash.Amoney - (decimal)OrderCash.UserRate).ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">提现银行：</span> <span class="right">@(OrderCash.Bank)</span> </div>
+        <div class="lxxm"><span class="left">开 户 名：</span> <span class="right">@(OrderCash.Owner)</span> </div>
+        <div class="lxxm"><span class="left">提现卡号：</span> <span class="right">************@(OrderCash.CardNum.Substring(OrderCash.CardNum.Length - 4))</span> </div>
+        if (!Orders.Remark.IsNullOrEmpty())
+        { 
+        <div style="background: #f9d99b; color: #f57d12; font-size: 1.5rem; text-align: center; line-height: 4rem;">@(Orders.Remark) </div>
+        }
+        if (Orders.TState == 1)
+        {
+        <div class="dzzt"><span>处理中</span></div>
+        }
+        else if (Orders.TState == 2)
+        {
+            if (Orders.PayState == 1)
+            {
+        <div class="dzzt"><span>出款中</span></div>
+            }
+            if (Orders.PayState == 2)
+            {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+            }
+        }
+        else if (Orders.TState == 3)
+        {
+        <div class="dzzt"><span>提现失败</span></div>
+        }
+    }
+    @if (Orders.TType == 3)
+    { //转帐订单
+        OrderTransfer OrderTransfer = Entity.OrderTransfer.FirstOrNew(n => n.OId == Orders.TNum);
+        if (OrderTransfer.RUId != Users.Id)
+        {
+        <div class="lxxm"><span class="left">收款人：</span> <span class="right">@(Entity.Users.FirstOrNew(n => n.Id == OrderTransfer.RUId).TrueName)</span> </div>
+        }
+        if (OrderTransfer.UId != Users.Id)
+        {
+        <div class="lxxm"><span class="left">付款人：</span> <span class="right">@(Entity.Users.FirstOrNew(n => n.Id == OrderTransfer.UId).TrueName)</span> </div>
+        }
+        if (OrderTransfer.IsMe == 1)
+        {
+        <div class="lxxm"><span class="left">转帐金额：</span> <span class="right">@(OrderTransfer.PayMoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">手 续 费：</span> <span class="right">+@(OrderTransfer.Poundage.ToString("F2"))【付方】</span> </div>
+        <div class="lxxm"><span class="left">交易金额：</span> <span class="right">@(OrderTransfer.Amoney.ToString("F2"))</span> </div>
+        }
+        else
+        {
+        <div class="lxxm"><span class="left">交易金额：</span> <span class="right">@(OrderTransfer.Amoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">手 续 费：</span> <span class="right">-@(OrderTransfer.Poundage.ToString("F2"))【收方】</span> </div>
+        <div class="lxxm"><span class="left">转帐金额：</span> <span class="right">@(OrderTransfer.PayMoney.ToString("F2"))</span> </div>
+        }
+        if (Orders.PayState == 1)
+        {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+        }
+        else
+        {
+            if (Orders.PayWay == 4)
+            {
+        <div class="dzzt"><span>未付款</span></div>
+            }
+            else
+            {
+        <div class="payment"><a href="@(PayUrl)">立即付款</a></div>
+            }
+        }
+    }
+    @if (Orders.TType == 5)
+    { //付房租订单
+        OrderHouse OrderHouse = Entity.OrderHouse.FirstOrNew(n => n.OId == Orders.TNum);
+        <div class="lxxm"><span class="left">应付房租：</span> <span class="right">@((OrderHouse.PayMoney).ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">手 续 费：</span> <span class="right">+@(OrderHouse.Poundage.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">交易金额：</span> <span class="right">@(OrderHouse.Amoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">房东姓名：</span> <span class="right">@(OrderHouse.HouseOwner)</span> </div>
+        <div class="lxxm"><span class="left">付款银行：</span> <span class="right">@(OrderHouse.Bank)</span> </div>
+        <div class="lxxm"><span class="left">提现卡号：</span> <span class="right">************@(OrderHouse.CardNum.Substring(OrderHouse.CardNum.Length - 4))</span> </div>
+        if (!Orders.Remark.IsNullOrEmpty())
+        { 
+        <div style="background: #f9d99b; color: #f57d12; font-size: 1.5rem; text-align: center; line-height: 4rem;">@(Orders.Remark) </div>
+        }
+        if (Orders.TState == 1)
+        {
+            if (Orders.PayState == 1)
+            {
+        <div class="dzzt"><span>处理中</span></div>
+            }
+            if (Orders.PayState == 0)
+            {
+                if (Orders.PayWay == 4)
+                {
+        <div class="dzzt"><span>未付款</span></div>
+                }
+                else
+                {
+        <div class="payment"><a href="@(PayUrl)">立即付款</a></div>
+                }
+            }
+        }
+        else if (Orders.TState == 2)
+        {
+            if (Orders.PayState == 1)
+            {
+        <div class="dzzt"><span>出款中</span></div>
+            }
+            if (Orders.PayState == 2)
+            {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+            }
+        }
+        else if (Orders.TState == 3)
+        {
+        <div class="dzzt"><span>提现失败</span></div>
+        }
+    }
+    @if (Orders.TType == 6)
+    { //升级订单
+        //PayConfigOrder PayConfigOrder = Entity.PayConfigOrder.FirstOrNew(n => n.OId == Orders.TNum);
+        if (Orders.PayState == 0)
+        {
+        <div class="payment"><a href="@(PayUrl)">立即付款</a></div>
+        }
+        if (Orders.PayState == 1)
+        {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+        }
+    }
+    @if (Orders.TType == 7 || Orders.TType == 8 || Orders.TType == 9)
+    { //订单
+        OrderF2F OrderF2F = Entity.OrderF2F.FirstOrNew(n => n.OId == Orders.TNum);
+        <div class="lxxm"><span class="left">交易金额：</span> <span class="right">@(Orders.Amoney.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">手 续 费：</span> <span class="right">-@(OrderF2F.Poundage.ToString("F2"))</span> </div>
+        <div class="lxxm"><span class="left">到帐金额：</span> <span class="right">@(OrderF2F.PayMoney.ToString("F2"))</span> </div>
+        if (Orders.PayState == 1)
+        {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+        }
+    }
+    @if (Orders.TType == 10)
+    { //代理订单
+        if (Orders.PayState == 0)
+        {
+        <div class="payment"><a href="@(PayUrl)">立即付款</a></div>
+        }
+        if (Orders.PayState == 1)
+        {
+        <img class="whfs" src="/Content/Mobile/images/jycg.jpg" />
+        }
+    }
+</body>
+</html>

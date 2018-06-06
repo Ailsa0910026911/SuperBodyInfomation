@@ -19,16 +19,16 @@
       <publishTime>12/28/2015 21:38:26</publishTime>
     </File>
     <File Include="bin/CMSManage.dll">
-      <publishTime>06/05/2018 11:41:50</publishTime>
+      <publishTime>06/06/2018 14:29:58</publishTime>
     </File>
     <File Include="bin/Com.Alipiay.dll">
-      <publishTime>06/05/2018 11:41:40</publishTime>
+      <publishTime>06/06/2018 14:29:49</publishTime>
     </File>
     <File Include="bin/CTCommon.dll">
-      <publishTime>06/05/2018 11:41:41</publishTime>
+      <publishTime>06/06/2018 14:29:49</publishTime>
     </File>
     <File Include="bin/CTModel.dll">
-      <publishTime>06/05/2018 11:41:41</publishTime>
+      <publishTime>06/06/2018 14:29:50</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -41,6 +41,9 @@
     </File>
     <File Include="bin/jpush-api.dll">
       <publishTime>10/15/2015 11:14:38</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>03/08/2017 19:26:22</publishTime>
     </File>
     <File Include="bin/LokFu.Base.dll">
       <publishTime>04/12/2018 21:05:20</publishTime>
@@ -160,7 +163,7 @@
       <publishTime>04/17/2018 14:52:56</publishTime>
     </File>
     <File Include="bin/SuperBodyInfomation.dll">
-      <publishTime>06/05/2018 11:41:45</publishTime>
+      <publishTime>06/06/2018 14:29:53</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>07/10/2012 21:51:54</publishTime>
@@ -193,13 +196,13 @@
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
     <File Include="bin/Webdiyer.MvcPager.dll">
-      <publishTime>06/05/2018 11:41:40</publishTime>
+      <publishTime>06/06/2018 14:29:49</publishTime>
     </File>
     <File Include="bin/zh-CHS/Webdiyer.MvcPager.resources.dll">
-      <publishTime>06/05/2018 11:41:41</publishTime>
+      <publishTime>06/06/2018 14:29:50</publishTime>
     </File>
     <File Include="bin/zh-CHT/Webdiyer.MvcPager.resources.dll">
-      <publishTime>06/05/2018 11:41:41</publishTime>
+      <publishTime>06/06/2018 14:29:49</publishTime>
     </File>
     <File Include="bin/zh-Hans/System.Net.Http.Formatting.resources.dll">
       <publishTime>07/10/2012 23:30:26</publishTime>
@@ -327,8 +330,17 @@
     <File Include="Images/ZXLogo.png">
       <publishTime>05/18/2018 09:45:55</publishTime>
     </File>
+    <File Include="Log/LogError/2018/201806/20180605.txt">
+      <publishTime>06/05/2018 18:54:07</publishTime>
+    </File>
+    <File Include="Log/LogInfo/2018/201806/20180605.txt">
+      <publishTime>06/05/2018 17:47:02</publishTime>
+    </File>
+    <File Include="Log/LogMonitor/2018/201806/20180605.txt">
+      <publishTime>06/05/2018 18:15:47</publishTime>
+    </File>
     <File Include="packages.config">
-      <publishTime>06/01/2018 17:49:47</publishTime>
+      <publishTime>06/05/2018 16:11:15</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>05/15/2018 13:29:02</publishTime>
@@ -2614,25 +2626,25 @@
       <publishTime>06/01/2018 16:56:09</publishTime>
     </File>
     <File Include="Views/Default/ConfigurationList.cshtml">
-      <publishTime>06/01/2018 18:20:05</publishTime>
+      <publishTime>06/05/2018 13:53:00</publishTime>
     </File>
     <File Include="Views/Default/DistributionFenRun.cshtml">
-      <publishTime>06/05/2018 10:59:35</publishTime>
+      <publishTime>06/05/2018 16:07:43</publishTime>
     </File>
     <File Include="Views/Default/DistributionFenRunList.cshtml">
-      <publishTime>06/05/2018 11:22:15</publishTime>
+      <publishTime>06/05/2018 12:01:28</publishTime>
     </File>
     <File Include="Views/Default/FenRunByUsers.cshtml">
-      <publishTime>06/05/2018 11:32:46</publishTime>
+      <publishTime>06/05/2018 18:08:35</publishTime>
     </File>
     <File Include="Views/Default/Index.cshtml">
-      <publishTime>06/01/2018 14:12:58</publishTime>
+      <publishTime>06/06/2018 14:24:19</publishTime>
     </File>
     <File Include="Views/Default/Login.cshtml">
       <publishTime>05/28/2018 09:52:01</publishTime>
     </File>
     <File Include="Views/Default/Test.cshtml">
-      <publishTime>06/05/2018 10:00:18</publishTime>
+      <publishTime>06/05/2018 17:46:51</publishTime>
     </File>
     <File Include="Views/Default/ThroughTrain.cshtml">
       <publishTime>06/05/2018 11:08:15</publishTime>
@@ -2641,7 +2653,7 @@
       <publishTime>05/30/2018 15:29:57</publishTime>
     </File>
     <File Include="Views/Shared/_DistributionFenRunTableList.cshtml">
-      <publishTime>06/01/2018 17:53:14</publishTime>
+      <publishTime>06/06/2018 14:29:16</publishTime>
     </File>
     <File Include="Views/Shared/_FenRunByUsersTable.cshtml">
       <publishTime>06/05/2018 10:14:31</publishTime>
@@ -2656,10 +2668,10 @@
       <publishTime>05/15/2018 13:28:52</publishTime>
     </File>
     <File Include="Views/_LayoutPage.cshtml">
-      <publishTime>06/05/2018 10:16:30</publishTime>
+      <publishTime>06/05/2018 14:29:58</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/05/2018 11:41:51</publishTime>
+      <publishTime>06/06/2018 14:29:58</publishTime>
     </File>
   </ItemGroup>
 </Project>

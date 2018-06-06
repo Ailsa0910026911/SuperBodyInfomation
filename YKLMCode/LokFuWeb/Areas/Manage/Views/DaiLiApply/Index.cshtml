@@ -1,0 +1,86 @@
+﻿@{
+    IList<DaiLiApply> DaiLiApplyList = ViewBag.DaiLiApplyList;
+    ViewBag.SMUid = 190;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>公司名 </th>
+                                <th>姓名 </th>
+                                <th>分支机构 </th>
+                                <th>状态 </th>
+                                <th>备注 </th>
+                                <th>申请时间 </th>
+                                <th width="80">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (DaiLiApplyList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in DaiLiApplyList)
+                                {
+                                    SysAgent SysAgent = SysAgentList.FirstOrNew(n => n.Id == p.Agent);
+                                <tr class="odd gradeX">
+                                    <td class="center">@(p.YingYeName) </td>
+                                    <td class="center">@(p.TureName) </td>
+                                    <td class="center">@(SysAgent.Name) </td>
+                                    <td class="center">
+                                        @if (p.OrderState == 0)
+                                        { 
+                                            @:已取消
+                  }
+                                        @if (p.OrderState == 1)
+                                        { 
+                                            @:处理中
+                  }
+                                        @if (p.OrderState == 2)
+                                        { 
+                                            @:已处理
+                  }
+                                        @if (p.OrderState == 3)
+                                        { 
+                                            @:已失败
+                  }
+                                    </td>
+                                    <td class="center">@(p.Remark) </td>
+                                    <td class="center">@(p.AddTime) </td>
+                                    <td class="center">
+                                        @if (p.OrderState == 1)
+                                        {
+                                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>处理</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", DaiLiApplyList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

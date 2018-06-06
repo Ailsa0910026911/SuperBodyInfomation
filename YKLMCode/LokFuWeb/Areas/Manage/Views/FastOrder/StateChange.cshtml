@@ -1,0 +1,76 @@
+﻿@{
+    FastOrder FastOrder = ViewBag.FastOrder;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height:auto; overflow-x: hidden;overflow-y:auto; margin: 0px;">
+  <div class="" style="margin:10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="StateChange.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="TNum" value="@(FastOrder.TNum)" />
+          <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            
+            <div class="form-group">
+              <label class="control-label col-md-3">订单号 </label>
+              <div class="col-md-5">
+                    @(FastOrder.TNum)
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3">当前用户结算状态 </label>
+              <div class="col-md-5">
+                @(FastOrder.GetUserClearingState())
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="control-label col-md-3">用户结算状态 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <select class="bs-select form-control input-small" name="UserState" id="UserState">
+                    <option value="" selected>请选择</option>
+                    <option value="1" >已结算</option>
+                    <option value="2" >结算失败</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-3">备注 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right"> <i class="fa"></i>
+                  <textarea class="input-xlarge form-control validate[required,maxSize[1000]]" name="Remark" id="Remark" rows="2" ></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+</script>        
+    }
+}

@@ -1,0 +1,102 @@
+﻿@{
+    FastOrder FastOrder = ViewBag.FastOrder;
+    Users Users = ViewBag.Users;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    FastPayWay FastPayWay = ViewBag.FastPayWay;
+    LokFuEntity Entity = ViewBag.Entity;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+}
+<!-- BEGIN PAGE CONTENT-->
+<div id="twitter-bootstrap-container" class="row" style="width: 720px; height: 800px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">交易信息</a></li>
+        @if (FastOrder.AgentPayGet > 0 && FastOrder.PayState == 1)
+        {
+            <li><a href="/Agent/FastOrder/IndexOrderProfitLog.html?TNum=@(FastOrder.TNum) #IndexOrderProfitLog" data-target="#OrderProfitLogDiv">分润记录</a></li>
+        }
+    </ul>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易号</td>
+                        <td class="active" colspan="3">@(FastOrder.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易类型</td>
+                        <td class="active">
+                            [<span>@(Utils.GetFastOrderModel().FirstOrNew(n => n.Id == FastOrder.OType).Name)</span>]
+                        </td>
+                        <td class="success">交易金额</td>
+                        <td class="active price">@(FastOrder.Amoney.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易状态</td>
+                        <td class="active">
+                            @(FastOrder.GetState())
+                        </td>
+                        <td class="success">交易时间</td>
+                        <td class="active">@(FastOrder.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">用户结算状态</td>
+                        <td class="active">@(FastOrder.GetUserClearingState())</td>
+                        <td class="success">用户结算时间</td>
+                        <td class="active">@(FastOrder.UserTime.HasValue ? FastOrder.UserTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易备注</td>
+                        <td class="active" colspan="3">@(FastOrder.Remark)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>机构信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">机构名称</td>
+                        <td class="active" colspan="3">@(SysAgent.Name)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    <div id="OrderProfitLogDiv"></div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.css" />
+    <script src="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.js"></script>
+    <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+    <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+    <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+    <script type="text/ecmascript">
+        $(document).ready(function () {
+            //ajax请求完成执行
+            tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                if ($clicked.attr("data-target") == "#OrderProfitLogDiv") {
+                    var table = TableIni("IndexOrderProfitLog");
+                }
+            });
+        });
+    </script>
+}

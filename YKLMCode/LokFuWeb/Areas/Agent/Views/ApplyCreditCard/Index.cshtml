@@ -1,0 +1,188 @@
+﻿@{
+    IList<ApplyCreditCard> ApplyCreditCardList = ViewBag.ApplyCreditCardList;
+    DateTime STime = ViewBag.STime;
+    DateTime ETime = ViewBag.ETime;
+    ViewBag.SMUid = 245;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    IList<BasicBank> BasicBankList = ViewBag.BasicBankList;
+    ApplyCreditCard ApplyCreditCard = ViewBag.ApplyCreditCard;
+    int IsShowSupAgent = ViewBag.IsShowSupAgent;
+    LokFuEntity Entity = ViewBag.Entity;
+    string BankName = ViewBag.BankName;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysSet SysSet = Entity.SysSet.FirstOrNew();
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="40" align="right">姓名 : </td>
+                            <td>
+                                <input class="input-text" name="UserName" value="@(ApplyCreditCard.UserName)" />
+                                订单号:
+                                 <input class="input-text" name="OrderNum" value="@(ApplyCreditCard.OrderNum)" />
+                                手机号码:
+                                 <input class="input-text" name="UserMobile" value="@(ApplyCreditCard.UserMobile)" />
+                                申请银行:
+                                 <input class="input-text" name="BankName" value="@(BankName)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="70" align="right">申请时间 : </td>
+                            <td align="left">
+                                <input id="STime" class=" Wdate" type="text" 
+                            name="STime" value="@(STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                - 
+                        <input  class=" Wdate" type="text" 
+                            name="ETime" id="ETime" value="@(ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                <select name="State" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">申请进度</option>
+                                    <option value="1" @(ApplyCreditCard.State == 1 ? "selected" : "")>申请中</option>
+                                    <option value="6" @(ApplyCreditCard.State == 6 ? "selected" : "")>待转人工审核</option>
+                                    <option value="2" @(ApplyCreditCard.State == 2 ? "selected" : "")>转人工审核中</option>
+                                    <option value="3" @(ApplyCreditCard.State == 3 ? "selected" : "")>过件未发卡</option>
+                                    <option value="4" @(ApplyCreditCard.State == 4 ? "selected" : "")>过件已发卡</option>
+                                    <option value="5" @(ApplyCreditCard.State == 5 ? "selected" : "")>拒件</option>
+                                    <option value="7" @(ApplyCreditCard.State == 7 ? "selected" : "")>通过并有效</option>
+                                </select>
+                                |<select name="FirstAgentAmount" id="FirstAgentAmount" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">佣金结算</option>
+                                    <option value="1" @(ApplyCreditCard.FirstAgentAmount == 1 ? "selected" : "")>已结算</option>
+                                    <option value="0" @(ApplyCreditCard.FirstAgentAmount == 0 ? "selected" : "")>未结算</option>
+                                </select>|
+                                @* |<select name="SettlementState" id="SettlementState" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">银行结算</option>
+                                    <option value="1" @(ApplyCreditCard.SettlementState == 1 ? "selected" : "")>已结算</option>
+                                    <option value="0" @(ApplyCreditCard.SettlementState == 0 ? "selected" : "")>未结算</option>
+                                </select>*@
+                                @if (BasicAgent.Tier < BasicAgent.AgentLevelMax)
+                                {
+                                    <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-xsmall input-inline input-md">
+                                        <option value="-1" @(IsShowSupAgent == -1 ? "selected" : "")>是否显示下级</option>
+                                        <option value="0" @(IsShowSupAgent == 0 ? "selected" : "")>否</option>
+                                        <option value="1"  @(IsShowSupAgent == 1 ? "selected" : "")>是</option>
+                                    </select>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        @*  @if(ApplyCreditList!=null){
+    *@@*<div class="point">
+        共有<span class="text-red">@(ApplyCreditCardList.Count)</span>条信息,佣金<span id="AgentMoney" class="text-red">@(ApplyCreditCardList.Sum(n => n.FirstAgentAmount))</span>。
+    </div>*@
+        <div class="list-table">
+            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                <thead>
+                    <tr>
+                        <th width="150">订单号 </th>
+                        <th width="150">姓名 </th>
+                        <th width="150">手机号码 </th>
+                        <th width="150">申请银行 </th>
+                        <th width="150">申请状态 </th>
+                        <th width="100">结算金额 </th>
+                        @if (IsShowSupAgent == 1)
+                        {
+                            <th width="100">所属代理 </th>
+                        }
+                        <th width="150">申请时间 </th>
+                    </tr>
+                </thead>
+                <tbody clas="tbody">
+                    @if (ApplyCreditCardList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in ApplyCreditCardList)
+                        {
+                            //if (p.UserName.IsNullOrEmpty())
+                            //{
+                            //    p.UserName = "***";
+                            //}
+                            //string TrueName = p.UserName.Substring(0, 1);
+                            //if (p.UserName.Length == 2)
+                            //{
+                            //    TrueName += "*";
+                            //}
+                            //else if (p.UserName.Length == 1)
+                            //{
+                            //    TrueName = p.UserName;
+                            //}
+                            //else
+                            //{
+                            //    TrueName += "********************".Substring(0, p.UserName.Length - 2);
+                            //    TrueName += p.UserName.Substring(p.UserName.Length - 1, 1);
+                            //}
+                            BasicBank BasicBank = BasicBankList.FirstOrNew(n => n.Id == p.BankId);
+                        <tr class="odd gradeX">
+                            <td class="center">@(p.OrderNum) </td>
+                            <td class="center">@(p.UserName) </td>
+                            <td class="center">@(p.UserMobile) </td>
+                            <td class="center">@(BasicBankList.FirstOrNew(b => b.Id == p.BankId).Name) </td>
+
+                            <td class="center">@if (p.State == 1)
+                                               {
+                                <span class="color-yellow">申请中</span>
+                                               }
+                                               else if (p.State == 2)
+                                               {
+                                <span class="color-blue">转人工审核中</span>
+                                               }
+                                               else if (p.State == 3)
+                                               {
+                                <span class="color-green">过件未发卡</span>
+                                               }
+                                               else if (p.State == 4)
+                                               {
+                                <span class="color-green">过件已发卡</span>
+                                               }
+                                               else if (p.State == 5)
+                                               {
+                                <span class="color-red">拒件</span>
+                                               }
+                                               else if (p.State == 6)
+                                               {
+                                <span class="color-blue">待转人工审核</span>
+                                               }
+                                               else if (p.State == 7)
+                                               {
+                                <span class="color-green">通过并有效</span>
+                                               }
+                            </td>
+                            <td class="center">@(p.FirstAgentAmount) </td>
+                            @if (IsShowSupAgent == 1)
+                            {
+                                <td class="center">@(Entity.SysAgent.FirstOrNew(f => f.Id == p.AgentId).Name) </td>
+                            }
+                            <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", ApplyCreditCardList)
+        </div>
+        @*  }*@
+    </div>
+</div>
+@section FooterScripts
+{
+    <script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+}

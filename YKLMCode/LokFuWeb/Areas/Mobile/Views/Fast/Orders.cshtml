@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+    IPageOfItems<FastOrder> FastOrderList = ViewBag.FastOrderList;
+}
+<div>
+    <ul>
+        @foreach (var p in FastOrderList)
+        {
+            <li class="line-bottom-e5 orderinfo" data-tnum="@(p.TNum)">
+                <dl class="bill">
+                    <dd class="d1">
+                        <span class="sp01">@(p.AddTime.ToString("MM-dd"))</span>
+                        <span class="sp02">@(p.AddTime.ToString("HH:mm"))</span>
+                    </dd>
+                    <dd class="d2">
+                        <p class="sp01">收入:￥@(p.Amoney.ToString("F2"))<span class="state state@(p.PayState)">@(p.PayState == 1 ? (p.UserState == 1 ? "已结算" : "已支付") : "待支付")</span></p>
+                        <p class="sp02">@(p.TNum)</p>
+                    </dd>
+                </dl>
+            </li>
+        }
+    </ul>
+    <input type="hidden" value="@(FastOrderList.TotalPage)" id="TotalPage" />
+</div>

@@ -1,0 +1,217 @@
+﻿@{
+    UserPayChange UserPayChange = ViewBag.UserPayChange;
+    ViewBag.SMUid = 40;
+    Users Users = ViewBag.Users;
+    SysAdmin AgentAdmin = ViewBag.AgentAdmin;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    IList<UserPayTemp> UserPayTempList = ViewBag.UserPayTempList;
+    IList<UserPay> UserPayList = ViewBag.UserPayList;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+
+    SysAgent SysAgent = ViewBag.SysAgent;
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 920px; height: 600px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form class="form-horizontal">
+
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            
+              
+                  <div class="form-group">
+                  <label class="control-label col-md-3">商户 </label>
+                  <div class="col-md-4">
+                    <div class="input-icon right input-large">
+                      <input type="text" class="form-control input-small" disabled="disabled" value="@(Users.TrueName)" />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3 ttkuan">业务员 </label>
+                  <div class="col-md-4">
+                    <div class="input-icon right input-large">
+                      <input type="text" class="form-control input-small" disabled="disabled" value="@(AgentAdmin.TrueName)" />
+                    </div>
+                  </div>
+                </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">T0提现费 </label>
+              <div class="col-md-4">
+                <div class="input-icon" style="width:600px;">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="success center" style="width:120px;">最低费用</td>
+                                <td class="success center" style="width:120px;">变更前</td>
+                                <td class="success center" style="width:120px;">变更后</td>
+                                <td class="success center" style="width:120px;">检测</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td class="center"><span class="price">@((SysAgent.ECash0).ToString("F2"))</span>元/笔+<span class="price">@((SysAgent.Cash0*1000).ToString("F2"))‰</span></td>
+                                <td class="center"><span class="price">@((UserPayChange.ECash0).ToString("F2"))</span>元/笔+<span class="price">@((UserPayChange.Cash0*1000).ToString("F2"))‰</span></td>
+                                <td class="center"><span class="price">@((UserPayChange.ECashNew0).ToString("F2"))</span>元/笔+<span class="price">@((UserPayChange.CashNew0*1000).ToString("F2"))‰</span></td>
+                                <td class="center"> @if (UserPayChange.ECashNew0 >= SysAgent.ECash0 && UserPayChange.CashNew0 >= SysAgent.Cash0)
+                                                                     {
+                                    <i class="fa fa-check color-green" style="margin:0">设置正确</i>
+                                                                     }
+                                                                     else
+                                                                     {
+                                    <i class="fa fa-times color-red" style="margin:0">设置有误</i>
+                                                                     }</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">T1提现费 </label>
+              <div class="col-md-4">
+                <div class="input-icon" style="width:600px;">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="success center" style="width:120px;">系统</td>
+                                <td class="success center" style="width:120px;">变更前</td>
+                                <td class="success center" style="width:120px;">变更后</td>
+                                <td class="success center" style="width:120px;">检测</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td class="center"><span class="price">@((SysAgent.ECash1).ToString("F2"))</span>元/笔+<span class="price">@((SysAgent.Cash1*1000).ToString("F2"))‰</span></td>
+                                <td class="center"><span class="price">@((UserPayChange.ECash1).ToString("F2"))</span>元/笔+<span class="price">@((UserPayChange.Cash1*1000).ToString("F2"))‰</span></td>
+                                <td class="center"><span class="price">@((UserPayChange.ECashNew1).ToString("F2"))</span>元/笔+<span class="price">@((UserPayChange.CashNew1*1000).ToString("F2"))‰</span></td>
+                                <td class="center"> @if (UserPayChange.ECashNew1 >= SysAgent.ECash1 && UserPayChange.CashNew1 >= SysAgent.Cash1)
+                                                                     {
+                                    <i class="fa fa-check color-green" style="margin:0">设置正确</i>
+                                                                     }
+                                                                     else
+                                                                     {
+                                    <i class="fa fa-times color-red" style="margin:0">设置有误</i>
+                                                                     }</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">支付通道费率 </label>
+              <div class="col-md-4">
+                <div class="input-icon" style="width:600px;">
+                  <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="success center">通道名称 </td>
+                                <td class="success center" style="width:120px;">系统</td>
+                                <td class="success center" style="width:120px;">变更前</td>
+                                <td class="success center" style="width:120px;">变更后</td>
+                                <td class="success center" style="width:120px;">检测</td>
+                            </tr>
+                            @foreach (var p in UserPayTempList)
+                            {
+                                PayConfig PayConfig = PayConfigList.FirstOrDefault(n => n.Id == p.PId);
+                                if (PayConfig!=null){
+                                <tr class="odd gradeX">
+                                    <td class="center">@(PayConfig.Name) </td>
+                                    <td class="center"><span class="permillage">@(PayConfig.Cost * 1000)</span>‰ </td>
+                                    <td class="center"><span class="permillage">@(p.ACost * 1000)</span>‰ </td>
+                                    <td class="center"><span class="permillage">@(p.Cost * 1000)</span>‰ </td>
+                                    <td class="center">@if (p.Cost >= PayConfig.Cost)
+                                                                     {
+                                    <i class="fa fa-check color-green" style="margin:0">设置正确</i>
+                                                                     }else{
+                                    <i class="fa fa-times color-red" style="margin:0">设置有误</i>
+                                                                     } </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">申请扫描件 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <a href="@Utils.ImageUrl("UserPayChange", UserPayChange.Pic)" target="_blank"><img src="@Utils.ImageUrl("UserPayChange", UserPayChange.Pic)" width="400" /></a>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">申请时间 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" disabled="disabled" value="@(UserPayChange.AddTime)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">申请备注 </label>
+              <div class="col-md-4">
+                <div class="input-icon right> <i class="fa"></i>
+                  <textarea class="form-control input-large" rows="3" disabled="disabled">@(UserPayChange.Remark)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">审核管理员 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-small" disabled="disabled" value="@(SysAdmin.TrueName)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">审核时间 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" disabled="disabled" value="@(UserPayChange.EditTime)" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">审核备注 </label>
+              <div class="col-md-4">
+                <div class="input-icon right">
+                  <textarea class="form-control input-large" disabled="disabled" rows="3">@(UserPayChange.EditRemark)</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#Green").click(function () {
+            $("#State").val(2);
+        });
+        $("#Red").click(function () {
+            $("#State").val(3);
+        });
+    });
+</script>    
+    }
+}

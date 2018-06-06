@@ -1,0 +1,79 @@
+﻿@{
+    SysSet SysSet = ViewBag.SysSet;
+    ViewBag.SMUid = 236;
+    ViewBag.Title = "提现名称设置";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysSet.Id)" />
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">提现名称 <span class="required">* </span></label>
+                            <div class="col-md-6">
+                                <div class="input-icon right">
+                                    T0：<input type="text" class="form-control validate[required] input-inline input-small" name="SW1Key" id="SW1Key" value="@(SysSet.SW1Key)" />
+                                    T1：<input type="text" class="form-control validate[required] input-inline input-small" name="SW2Key" id="SW2Key" value="@(SysSet.SW2Key)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">T0名称变动 <span class="required">* </span></label>
+                            <div class="col-md-6">
+                                <div class="input-icon right">
+                                    <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="width:200px;" name="SW1sTime" id="SW1sTime" value="@(SysSet.SW1sTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                    ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="width:200px;" name="SW1eTime" id="SW1eTime" value="@(SysSet.SW1eTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss"))" />：<input type="text" class="form-control validate[required] input-inline input-small" name="SW1KeyT" id="SW1KeyT" value="@(SysSet.SW1KeyT)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">T1名称变动 <span class="required">* </span></label>
+                            <div class="col-md-6">
+                                <div class="input-icon right">
+                                    <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="width:200px;" name="SW2sTime" id="SW2sTime" value="@(SysSet.SW2sTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                    ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" style="width:200px;" name="SW2eTime" id="SW2eTime" value="@(SysSet.SW2eTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss"))" />：<input type="text" class="form-control validate[required] input-inline input-small" name="SW2KeyT" id="SW2KeyT" value="@(SysSet.SW2KeyT)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.Save)
+                            {
+                                <button type="submit" class="btn green">确认修改</button>
+                            }
+
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+
+            })
+        </script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    }
+}

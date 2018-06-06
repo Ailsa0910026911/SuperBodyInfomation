@@ -1,0 +1,191 @@
+﻿@{
+    IList<FastUserPay> FastUserPayList = ViewBag.FastUserPayList;
+    FastUserPay FastUserPay = ViewBag.FastUserPay;
+    List<Users> UsersList = ViewBag.UsersList;
+    List<FastPayWay> FastPayWayList = ViewBag.FastPayWayList;
+    ViewBag.SMUid = 268;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    DateTime STime = ViewBag.STime ?? DateTime.MinValue;
+    DateTime ETime = ViewBag.ETime ?? DateTime.MinValue;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="Bin" class="form-control input-small  input-inline input-sm" id="Bin">
+            <option value="2" @(FastUserPay.Bin == "2" ? "selected" : "")>商户账号</option>
+            <option value="1" @(FastUserPay.Bin == "1" ? "selected" : "")>商户姓名</option>
+        </select>
+        <input type="text" class="pagination-panel-input form-control input-xsmedium input-inline" name="MerId" value="@(FastUserPay.MerId)" />
+        <span class="seperator">|</span>
+        <select name="MerState" class="form-control input-small input-inline input-sm" id="MerState">
+            <option value="">商户状态</option>
+            <option value="99" @(FastUserPay.MerState == 99 ? "selected" : "")>锁定</option>
+            <option value="1" @(FastUserPay.MerState == 1 ? "selected" : "")>正常</option>
+            <option value="2" @(FastUserPay.MerState == 2 ? "selected" : "")>待提交</option>
+            <option value="3" @(FastUserPay.MerState == 3 ? "selected" : "")>审核中</option>
+            <option value="4" @(FastUserPay.MerState == 4 ? "selected" : "")>审核失败</option>
+        </select>
+        <select name="CardState" class="form-control input-small input-inline input-sm" id="CardState">
+            <option value="">绑卡状态</option>
+            <option value="99" @(FastUserPay.CardState == 99 ? "selected" : "")>锁定</option>
+            <option value="1" @(FastUserPay.CardState == 1 ? "selected" : "")>正常</option>
+            <option value="2" @(FastUserPay.CardState == 2 ? "selected" : "")>待提交</option>
+            <option value="3" @(FastUserPay.CardState == 3 ? "selected" : "")>审核中</option>
+            <option value="4" @(FastUserPay.CardState == 4 ? "selected" : "")>审核失败</option>
+        </select>
+        <select name="BusiState" class="form-control input-small input-inline input-sm" id="BusiState">
+            <option value="">开通状态</option>
+            <option value="1" @(FastUserPay.BusiState == 1 ? "selected" : "")>正常</option>
+            <option value="2" @(FastUserPay.BusiState == 2 ? "selected" : "")>待提交</option>
+            <option value="3" @(FastUserPay.BusiState == 3 ? "selected" : "")>审核中</option>
+            <option value="4" @(FastUserPay.BusiState == 4 ? "selected" : "")>审核失败</option>
+        </select>
+        <select name="PayWay" class="form-control input-small input-inline input-sm" id="PayWay">
+            <option value="">支付通道</option>
+            @foreach (var item in FastPayWayList.OrderBy(o=>o.Id))
+            {
+                <option value="@(item.Id)" @(item.Id == FastUserPay.PayWay ? "selected" : "")>@(item.Title)</option>
+            }
+        </select>
+        <span class="seperator">|</span>
+        <span>创建时间：</span>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text"  name="STime" id="STime" value="@(STime == DateTime.MinValue ? "" : STime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~<input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="ETime" id="ETime" value="@(ETime == DateTime.MinValue ? "" : ETime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>账号 </th>
+                                <th>商户姓名 </th>
+                                <th>商户号 </th>
+                                <th>商户状态 </th>
+                                <th>绑卡状态 </th>
+                                <th>开通状态 </th>
+                                <th>支付通道 </th>
+                                <th>商户费率 </th>
+                                <th>商户手续费 </th>
+@*                                <th>结算银行 </th>
+                                <th>开户名 </th>
+                                <th>结算卡号 </th>
+                                <th>联行号 </th>*@
+                                <th>添加时间 </th>
+                                <th>操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (FastUserPayList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in FastUserPayList)
+                                {
+                                    var Users = UsersList.FirstOrNew(o => o.Id == p.UId);
+                                <tr class="odd gradeX">
+                                    <td class="center"><a class="Ajax" href="/Manage/Users/Info.html?Id=@(p.UId)" title="商户信息">@(Users.UserName)</a> </td>
+                                    <td class="center">@(Users.TrueName) </td>
+                                    <td class="center">@(p.MerId) </td>
+                                    <td class="center">
+                                    @{
+                                        switch(p.MerState)
+                                        {
+                                            case 0:
+                                                @("锁定")
+                                                break;
+                                            case 1:
+                                                @("正常")
+                                                break;
+                                            case 2:
+                                                @("待提交")
+                                                break;
+                                            case 3:
+                                                @("审核中")
+                                                break;
+                                            case 4:
+                                                @("审核失败")
+                                                break;
+                                        }
+                                    }
+                                    </td>
+                                    <td class="center">
+                                        @{
+                                            switch (p.CardState)
+                                            {
+                                                case 0:
+                                                    @("锁定")
+                                                    break;
+                                                case 1:
+                                                    @("正常")
+                                                    break;
+                                                case 2:
+                                                    @("待提交")
+                                                    break;
+                                                case 3:
+                                                    @("审核中")
+                                                    break;
+                                                case 4:
+                                                    @("审核失败")
+                                                    break;
+                                            }
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        @{
+                                            switch (p.BusiState)
+                                            {
+                                                case 1:
+                                                    @("正常")
+                                                    break;
+                                                case 2:
+                                                    @("待提交")
+                                                    break;
+                                                case 3:
+                                                    @("审核中")
+                                                    break;
+                                                case 4:
+                                                    @("审核失败")
+                                                    break;
+                                            }
+                                        }
+                                    </td>
+                                    <td class="center">@(FastPayWayList.FirstOrNew(o=> o.Id == p.PayWay).Title) </td>
+                                    <td class="center"><span class="permillage">@((p.UserCost * 1000).ToString("F2"))</span>‰ </td>
+                                    <td class="center"><span class="permillage">@(p.UserCash.ToString("F2"))</span>元 </td>
+@*                                    <td class="center">@(p.Bank) </td>
+                                    <td class="center">@(p.CardName) </td>
+                                    <td class="center">@(p.Card) </td>
+                                    <td class="center">@(p.Bin) </td>*@
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                                    <td class="center"><a href="ChannelQuery.html?Id=@(p.Id)" class="label label-sm label-success Ajax" title="通过渠道接口查询余额及商户信息">通道查询</a></td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", FastUserPayList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

@@ -1,0 +1,170 @@
+﻿@{
+    IList<LokFu.Areas.Manage.Controllers.BaoUsersVM> BaoUsersList = ViewBag.BaoUsersList;
+    ViewBag.SMUid = 194;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = "true";
+    LokFuEntity Entity = ViewBag.Entity;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;//是否显示下级
+    int AgentID = ViewBag.AgentID ?? 0;
+    string UserName = ViewBag.UserName;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    BaoUsers BaoUsers = ViewBag.BaoUsers;
+
+    decimal sumAllMoney = ViewBag.sumAllMoney ?? 0;
+    decimal sumInMoney = ViewBag.sumInMoney ?? 0;
+    bool? HasMoney = ViewBag.HasMoney;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>登录帐户：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="UserName" value="@(UserName)" />
+        <span class="seperator">|</span>
+        <span>身份证：</span>
+        <input type="text" class="pagination-panel-input form-control input-xsmedium input-inline input-sm" name="PayPwd" value="@(BaoUsers.PayPwd)" />
+        <span class="seperator">|</span>
+        <select class="form-control input-medium select2me input-sm" data-placeholder="==分支机构==" name="AgentID" id="AgentID">
+            <option value="">==分支机构==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(AgentID == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span class="seperator">|</span>
+        <span>是否有钱：</span>
+        <select name="HasMoney" id="HasMoney" class="form-control input-small input-inline input-sm">
+            <option value="" @(!HasMoney.HasValue ? "selected" : "")>请选择</option>
+            <option value="false" @(HasMoney.HasValue && HasMoney.Value == false ? "selected" : "")>否</option>
+            <option value="true"  @(HasMoney.HasValue && HasMoney.Value == true ? "selected" : "")>是</option>
+        </select>
+        <span class="seperator">|</span>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>姓名 </th>
+                                <th>手机号 </th>
+                                <th>所属代理</th>
+                                <th>总金额 </th>
+                                <th>未计息金额 </th>
+                                <th>总收益 </th>
+                                <th>昨日收益 </th>
+                                <th>开通时间 </th>
+                                <th width="80">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (BaoUsersList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in BaoUsersList)
+                                {
+                                    //Users Users = Entity.Users.FirstOrNew(n => n.Id == p.UId);
+                                    SysAgent SysAgent = Entity.SysAgent.FirstOrNew(o => o.Id == p.Users.Agent);
+                                <tr class="odd gradeX">
+                                    <td class="center">@(p.Users.TrueName) </td>
+                                    <td class="center">@(p.Users.UserName) </td>
+                                    <td class="center">@(SysAgent.Name) </td>
+                                    <td style="text-align: right;">@(p.BaoUsers.AllMoney.ToString("f2")) </td>
+                                    <td style="text-align: right;">@(p.BaoUsers.InMoney.ToString("f2")) </td>
+                                    <td class="center">@(p.BaoUsers.AllRec.ToMoney()) </td>
+                                    <td class="center">@(p.BaoUsers.LastRec.ToMoney()) </td>
+                                    <td class="center">@(p.BaoUsers.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                                    <td class="center">
+                                        @if (ViewBag.Log)
+                                        {
+                                             <a class="label label-sm label-success Ajax" href="Log.html?UId=@(p.BaoUsers.UId)" title="“@(p.Users.TrueName)”帐户明细"><i class="fa fa-wrench"></i>明细</a>
+                                        }
+                                        @if (ViewBag.TransferUser && p.BaoUsers.AllMoney != 0)
+                                        {
+                                            <a class="label label-sm label-success TransferUser" href="TransferUser.html?Id=@(p.BaoUsers.Id)" title="转出到余额"><i class="fa fa-wrench"></i>转出到余额</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            <tr class="odd gradeX">
+                                <td colspan="3">统计： </td>
+                                <td style="text-align: right;">@(sumAllMoney.ToString("f2")) </td>
+                                <td style="text-align: right;">@(sumInMoney.ToString("f2")) </td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", BaoUsersList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        $(function () {
+            $('#AgentID').select2({
+                allowClear: false
+            });
+
+
+            $(".TransferUser").click(function (e) {
+                e.preventDefault();
+                var url = $(this)[0].href;
+                var title = $(this).attr("atitle") == undefined ? $(this).attr("title") : $(this).attr("atitle");
+                var awidth = $(this).attr("awidth") == undefined ? "0" : $(this).attr("awidth");
+                var aheight = $(this).attr("aheight") == undefined ? "0" : $(this).attr("aheight");
+                var save = $(this).attr("save") == undefined ? true : false;
+                if (url.indexOf("?") != -1) {
+                    url = url + "&IsAjax=1";
+                } else {
+                    url = url + "?IsAjax=1";
+                }
+                if (title == "" || title == null) {
+                    title = "系统弹窗操作";
+                }
+                if (awidth == "0" || aheight == "0") {
+                    var json = { title: title, lock: true };
+                } else {
+                    var json = { width: awidth, height: aheight, title: title, lock: true };
+                }
+                art.dialog.confirm('确认要转出到余额？', function () {
+                    art.dialog.open(url, json);
+                });
+
+            });
+        });
+    </script>
+}
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}

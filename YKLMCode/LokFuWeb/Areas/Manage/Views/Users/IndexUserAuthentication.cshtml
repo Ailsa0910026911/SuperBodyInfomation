@@ -1,0 +1,87 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    string AppImgPath = ViewBag.AppImgPath;
+    this.Layout = null;
+}
+
+<table class="table table-striped table-bordered table-advance table-hover" style="width: 99%;" id="UserAuthentication">
+    @if (Users.CardStae == 2)
+    {
+        <tbody>
+            <tr>
+                <td class="success">真实姓名</td>
+                <td class="active">@(Users.TrueName)</td>
+                <td class="success">身份证号码</td>
+                <td class="active">@(Users.CardId)</td>
+            </tr>
+            <tr>
+                <td class="success">身份认证照片</td>
+                <td colspan="3" style="text-align: center;">
+                    @if (!Users.CardFace.IsNullOrEmpty())
+                    {
+                        <img src="@Utils.ImageUrl("Users", Users.CardFace, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardFace, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                    }
+                    @if (!Users.CardBack.IsNullOrEmpty())
+                    {
+                        <img src="@Utils.ImageUrl("Users", Users.CardBack, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardBack, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                    }
+                    @if (!Users.CardPic.IsNullOrEmpty())
+                    {   <img src="@Utils.ImageUrl("Users", Users.CardPic, AppImgPath)" href="@Utils.ImageUrl("Users", Users.CardPic, AppImgPath)" width="120" title="@(Users.TrueName)/@(Users.CardId)" alt="@(Users.TrueName)/@(Users.CardId)" class="LightBox" style="cursor:pointer;" />
+                    }
+                    @if (!Users.AssureImgName.IsNullOrEmpty())
+                    {
+                        <img src="@(Utils.ImageUrl("Users", Users.AssureImgName))" href="@(Utils.ImageUrl("Users", Users.AssureImgName, AppImgPath))" width="120" title="认证担保/@(Users.CardId)" alt="认证担保" class="LightBox" style="cursor:pointer;" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="success">营业执照图片</td>
+
+                <td colspan="3" style="text-align: center;">
+                    @if (!Users.CarLicensePic.IsNullOrEmpty())
+                    {
+                        <img src="@(Utils.ImageUrl("Users", Users.CarLicensePic, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarLicensePic, AppImgPath))" width="120" title="@(Users.TrueName)/营业执照图片" alt="营业执照图片" class="LightBox" style="cursor:pointer;" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="success">实地照片</td>
+
+                <td colspan="3" style="text-align: center;">
+                    @if (!Users.CarLocationPic.IsNullOrEmpty())
+                    {
+                        <img src="@(Utils.ImageUrl("Users", Users.CarLocationPic, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarLocationPic, AppImgPath))" width="120" title="@(Users.TrueName)/实地照片" alt="实地照片" class="LightBox" style="cursor:pointer;" />
+                    }
+                </td>
+            </tr>
+
+            <tr>
+                <td class="success">其它图片</td>
+                <td colspan="4" style="text-align: center;">
+                    @if (!Users.CarOther.IsNullOrEmpty())
+                    {
+                        <img src="@(Utils.ImageUrl("Users", Users.CarOther, AppImgPath))" href="@(Utils.ImageUrl("Users", Users.CarOther, AppImgPath))" width="120" title="@(Users.TrueName)/其它图片" alt="其它图片" class="LightBox" style="cursor:pointer;" />
+                    }
+                </td>
+            <tr>
+
+            <tr>
+                <td class="success">认证担保</td>
+                <td colspan="4" style="text-align: center;">
+                    @if (!Users.AssureImgName.IsNullOrEmpty())
+                    {
+                        <img src="@(Utils.ImageUrl("Users", Users.AssureImgName))" href="@(Utils.ImageUrl("Users", Users.AssureImgName))" width="120" title="认证担保/@(Users.CardId)" alt="认证担保" class="LightBox" style="cursor:pointer;" />
+                    }
+                </td>
+            <tr>
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td colspan="4" style="text-align: center;">没有数据</td>
+            </tr>
+        </tbody>
+    }
+</table>

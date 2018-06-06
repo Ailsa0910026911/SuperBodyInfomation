@@ -1,0 +1,142 @@
+﻿@{
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    ViewBag.SMUid = 244;
+    //this.Layout = "../Shared/MetronicLayout.cshtml";
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<style>
+    .inform-list {
+        font-size: 12px;
+        padding-top: 30px;
+    }
+
+    input.input-text {
+        width: 60px !important;
+    }
+
+    .index .information .left-span {
+        width: 160px;
+    }
+</style>
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="information">
+            <div class="proxy-top">@(ViewBag.Title)</div>
+            <div class="proxy-con inquiry-cont">
+                <form action="MoneySave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                    <input type="hidden" name="Id" value="@(BasicAgent.Id)" />
+                    <ul class="list-unstyled inform-list">
+                        <li>
+                            <span class="left-span">T0提现用户入网 <b class="text-warning">*</b></span>
+                            <div style="display: inline-block;">
+                                <input type="text" class="input-text validate[required,custom[money],min[@(BasicSet.AgentECash0)]]" name="ECash0" id="ECash0" value="@((BasicAgent.ECash0).ToString("F2"))" />元/笔
+                              +
+                              <input type="text" class="input-text validate[required,custom[float1],min[@(BasicSet.AgentCash0 * 1000)],max[1000]]" name="Cash0" id="Cash0" value="@((BasicAgent.Cash0 * 1000).ToString("F1"))" />‰
+                              　　免费:<input type="text" class="input-text validate[required,custom[int],min[0],max[@(BasicSet.AgentCash0Times)]]" name="Cash0Times" id="Cash0Times" value="@(BasicAgent.Cash0Times)" />次/月
+                               @if (ViewBag.MoneySave)
+                               {
+                                   if (BasicAgent.Tier < BasicAgent.AgentLevelMax)
+                                   {
+                                   <input type="checkbox" name="AnsyNext0" id="AnsyNext0" value="1" /><a>同步下级代理</a>
+                                   }
+                                   <input type="checkbox" name="AnsyCash0" id="AnsyCash0" value="1" /><a>同步到老用户</a>
+                               }
+                            </div>
+                        </li>
+                        <li>
+                            <span class="left-span">T1提现用户入网 <b class="text-warning">*</b></span>
+                            <div style="display: inline-block;">
+                                <input type="text" class="input-text validate[required,custom[money],min[@(BasicSet.AgentECash1)]]" name="ECash1" id="ECash1" value="@((BasicAgent.ECash1).ToString("F2"))" />元/笔
+                              +
+                              <input type="text" class="input-text validate[required,custom[float1],min[@(BasicSet.AgentCash1 * 1000)],max[1000]]" name="Cash1" id="Cash1" value="@((BasicAgent.Cash1 * 1000).ToString("F1"))" />‰
+                              　　免费:<input type="text" class="input-text validate[required,custom[int],min[0],max[@(BasicSet.AgentCash1Times)]]" name="Cash1Times" id="Cash1Times" value="@(BasicAgent.Cash1Times)" />次/天
+                              @if (ViewBag.MoneySave)
+                              {
+                                  if (BasicAgent.Tier < BasicAgent.AgentLevelMax)
+                                  {
+                                  <input type="checkbox" name="AnsyNext1" id="AnsyNext1" value="1" /><a>同步下级代理</a>
+                                  }
+                                  <input type="checkbox" name="AnsyCash1" id="AnsyCash1" value="1" /><a>同步到老用户</a>
+                              }
+                            </div>
+                        </li>
+                    </ul>
+                    <br>
+                    @if (ViewBag.MoneySave)
+                    {
+                        <div class="text-center warning">
+                            <button type="submit" class="sub">确认</button>
+                        </div>
+                    }
+
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604261603"></script>
+    <script>
+        $(function () {
+            $("#AnsyCash0,#AnsyCash1").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = parent.ArtDialog({
+                        title: '温馨提示',
+                        content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+            $("#AnsyNext0,#AnsyNext1").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = parent.ArtDialog({
+                        title: '温馨提示',
+                        content: '下级代理商自行设置的配置将会被覆盖，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+        })
+    </script>
+}

@@ -1,0 +1,43 @@
+﻿@{
+    IList<DownFileTag> DownFileTagList = ViewBag.DownFileTagList;
+    LokFuEntity Entity = ViewBag.Entity;
+    int MaxTake = 20;
+}
+@if (DownFileTagList != null && DownFileTagList.Count > 0)
+{
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix download-warp">
+        @foreach (var item in DownFileTagList)
+        {
+            var DownFileList = Entity.DownFile.OrderBy(o => o.Sort).Where(o => o.State == 1 && o.TId == item.Id).Take(MaxTake).ToList();
+            <div class="business pull-left">
+			    <div class="business-top">
+				    <h2>@(item.Name)</h2>
+			    </div>
+				    <div class="business-cont pull-left">
+					    <ul class="list-unstyled">
+                        @if (DownFileList != null && DownFileList.Count > 0)
+                        {
+                        foreach (var p in DownFileList)
+                        {
+                            <li>
+							    <div class="clearfix download-p">
+                                    <p class="pull-left text-p">
+                                    <a href="@(Utils.ImageUrl("/UpLoadFiles/DownFile", p.Pic))" target="_blank" >@(p.Pic)</a>
+							        </p>
+                                    <span class="pull-right">@(p.AddTime.ToString("yyyy-MM-dd"))</span>
+							    </div>
+						    </li>
+                        }
+                        }
+					    </ul>
+                        @if (DownFileList.Count == MaxTake)
+                        {
+                            <div class="more"><ul class="list-unstyled"><li><a href="javascript:void(0)" onclick="parent.OpenNewIFarme('@(item.Name)', '/Agent/DownFile/Info.html')">查看更多>></a></li></ul></div>
+                        }
+				    </div>
+		    </div>
+        }		
+	</div>
+</div>
+}

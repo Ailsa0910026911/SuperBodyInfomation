@@ -1,0 +1,955 @@
+﻿@{
+    SysAgent SysAgent = ViewBag.SysAgent;
+    List<AgentType> agentTypes = ViewBag.agentTypes;
+    ViewBag.SMUid = 30;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList;
+    if (SysAdmin.Id.IsNullOrEmpty())
+    {
+       return;
+    }
+    SysSet BasicSet = ViewBag.BasicSet;
+    List<Attach> Contract = this.ViewBag.Contract;
+    List<Attach> Certificate = this.ViewBag.Certificate;
+    Attach IDCard_Front = this.ViewBag.IDCard_Front;
+    Attach IDCard_Hand = this.ViewBag.IDCard_Hand;
+    Attach IDCard_Reverse = this.ViewBag.IDCard_Reverse;
+    ViewBag.Title = "代理商管理--查看";
+    LokFuEntity Entity = ViewBag.Entity;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<style>
+.TeiPai { display: none; }
+.adddiv li { border-bottom: 1px solid #ddd; line-height: 42px; }
+.adddiv .progress { position: relative; top: 10px; right: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset !important; }
+.adddiv { width: 680px; }
+.adddiv .container { width: 620px; padding: 0; }
+.adddiv .progress { padding: 0; }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Info.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysAgent.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机构名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(SysAgent.Name)" alert="请填写机构名称" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        @if (!SysAgent.Id.IsNullOrEmpty())
+                        { 
+                            <div class="form-group">
+                                <label class="control-label col-md-3">登录密码  </label>
+                                <div class="col-md-4">
+                                    <div class="input-icon right input-large">
+                                        <i class="fa"></i>
+                                        <input type="text" class="form-control input-large" name="PassWord" id="PassWord" />
+                                    </div>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机构地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Address" id="Address" value="@(SysAgent.Address)" alert="请填写机构地址" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">客服电话 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Tel" id="Tel" value="@(SysAgent.Tel)" alert="请填写联系电话" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">机构传真 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large" name="Fax" id="Fax" value="@(SysAgent.Fax)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系人 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large validate[required]" name="Linker" id="Linker" value="@(SysAgent.Linker)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">联系手机 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large validate[required,custom[mobile]" name="LinkMobile" id="LinkMobile" @(SysAgent.MyUId.IsNullOrEmpty() ? "" : "readonly") value="@(SysAgent.LinkMobile)" />
+                                </div>
+                                <p class="help-block">该手机号用于关联钱包帐号，请准确填写，绑定后不可更改。</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">区域 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large" name="AgentRegion" id="AgentRegion" maxlength="200"  value="@(SysAgent.AgentRegion)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1"@(SysAgent.State == 1 ? " selected" : "")>正常</option>
+                                    <option value="0"@(SysAgent.State != 1 ? " selected" : "")>锁定</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">级数</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-small"  value="@(SysAgent.Tier)级" />
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-md-3">上级代理</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large"  value="@(Entity.SysAgent.FirstOrNew(o=>o.Id==SysAgent.AgentID).Name)" />
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-md-3">同级代理</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large"  value="@(Entity.SysAgent.FirstOrNew(o=>o.Id==SysAgent.SameAgent).Name)" />
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                       @* <div class="form-group">
+                            <label class="control-label col-md-3">交易分润比例 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[int],max[100],min[0]]" name="PayGet" id="PayGet" value="@(SysAgent.PayGet * 100)" />%
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                        @*<div class="form-group">
+              <label class="control-label col-md-3">提现类分润比例 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-small input-inline validate[required,custom[int],max[100],min[0]]" name="CashGet" id="CashGet" value="@(SysAgent.CashGet*100)" />%
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>*@
+                       @* <div class="form-group">
+                            <label class="control-label col-md-3">贷款信息分润比例 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[int],max[100],min[0]]" name="LoanGet" id="LoanGet" value="@(SysAgent.LoanGet * 100)" />%
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">信用卡信息分润比例 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[int],max[100],min[0]]" name="Credit" id="Credit" value="@(SysAgent.Credit * 100)" />%
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+
+                        <div class="form-group">
+                          <label class="control-label col-md-3">T0提现用户入网 <span class="required"> * </span> </label>
+                          <div class="col-md-4" style="width:auto;">
+                            <div class="input-icon right">
+                              <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="ECash0" id="ECash0" value="@((SysAgent.ECash0).ToString("F2"))" />元/笔
+                              +
+                              <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[money]]" name="Cash0" id="Cash0" value="@((SysAgent.Cash0*1000).ToString("F1"))" />‰
+                              免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int],min[0],max[@(BasicSet.AgentCash0Times)]]" name="Cash0Times" id="Cash0Times" value="@(SysAgent.Cash0Times)" />次/月
+                            </div>
+                            <p class="help-block"></p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-md-3">T1提现用户入网 <span class="required"> * </span> </label>
+                          <div class="col-md-4" style="width:auto;">
+                            <div class="input-icon right">
+                              <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="ECash1" id="ECash1" value="@((SysAgent.ECash1).ToString("F2"))" />元/笔
+                              +
+                              <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[money]]" name="Cash1" id="Cash1" value="@((SysAgent.Cash1*1000).ToString("F1"))" />‰
+                              免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int]]" name="Cash1Times" id="Cash1Times" value="@(SysAgent.Cash1Times)" />次/天
+                            </div>
+                            <span class="help-block"></span>
+                          </div>
+                        </div>
+
+
+                        @*            <div class="form-group">
+              <label class="control-label col-md-3">推广代理佣金 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-small input-inline validate[required,custom[int],min[0]]" name="DaiLiGet" id="DaiLiGet" value="@(SysAgent.DaiLiGetType==1?SysAgent.DaiLiGet*100:SysAgent.DaiLiGet)" />
+                  <select class="bs-select form-control input-xxsmall input-inline" name="DaiLiGetType" id="DaiLiGetType">
+                    <option value="1"@(SysAgent.DaiLiGetType==1?" selected":"")>%</option>
+                    <option value="2"@(SysAgent.DaiLiGetType==2?" selected":"")>元</option>
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>*@
+                        @*<hr />*@
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">独立APP <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="radio" class="validate[required] TeiPaiR" name="IsTeiPai" id="IsTeiPai0" value="0" @(SysAgent.IsTeiPai != 1 ? "checked" : "") />非独立
+                  <input type="radio" class="validate[required] TeiPaiR" name="IsTeiPai" id="IsTeiPai1" value="1" @(SysAgent.IsTeiPai == 1 ? "checked" : "") />独立
+                                </div>
+                            </div>
+                        </div>*@
+                        <hr class="TeiPai" />
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">APP标识 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="APPTag" id="APPTag" value="@(SysAgent.APPTag)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">APP名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="APPName" id="APPName" value="@(SysAgent.APPName)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">短信签名 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control" name="MsgExt" id="MsgExt" value="@(SysAgent.MsgExt)" />
+                                    <p>不填测以系统配置签名发送</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">短信邀请下载地址 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control" name="NoteDownload" id="NoteDownload" value="@(SysAgent.NoteDownload)" />
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">显示APP版权 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <select class="bs-select form-control input-xsmall" name="IsShowWord" id="IsShowWord">
+                                        <option value="1"@(SysAgent.IsShowWord == 1 ? " selected" : "")>显示</option>
+                                        <option value="0"@(SysAgent.IsShowWord != 1 ? " selected" : "")>隐藏</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">激活码功能 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <select class="bs-select form-control input-xsmall" name="Set3" id="Set3">
+                                        <option value="1"@(SysAgent.Set3 == 1 ? " selected" : "")>必填</option>
+                                        <option value="2"@(SysAgent.Set3 == 2 ? " selected" : "")>不填</option>
+                                        <option value="3"@(SysAgent.Set3 == 3 ? " selected" : "")>选填</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">分享功能 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <select class="bs-select form-control input-small" name="Set4" id="Set4">
+                                        <option value="0"@(SysAgent.Set4 == 0 ? " selected" : "")>关闭</option>
+                                        <option value="1"@(SysAgent.Set4 == 1 ? " selected" : "")>仅开分享挣钱</option>
+                                        <option value="2"@(SysAgent.Set4 == 2 ? " selected" : "")>仅开分享降费率</option>
+                                        <option value="3"@(SysAgent.Set4 == 3 ? " selected" : "")>全部开启</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="TeiPai" />
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">安卓版本号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ApkVer" id="ApkVer" value="@(SysAgent.ApkVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">安卓序号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ApkInt" id="ApkInt" value="@(SysAgent.ApkInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">下载地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="ApkUrl" id="ApkUrl" value="@(SysAgent.ApkUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">应用宝地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="ApkYYB" id="ApkYYB" value="@(SysAgent.ApkYYB)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">安卓升级内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control validate[required]" name="ApkInfo" id="ApkInfo" rows="5" style="width: 600px;">@(SysAgent.ApkInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">安卓颜色 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control" name="ApkColor" id="ApkColor" value="@(SysAgent.ApkColor)" />
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="TeiPai" />
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">IOS版本号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="IosVer" id="IosVer" value="@(SysAgent.IosVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">IOS序号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="IosInt" id="IosInt" value="@(SysAgent.IosInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">App Store地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="IosUrl" id="IosUrl" value="@(SysAgent.IosUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">应用宝地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="IosYYB" id="IosYYB" value="@(SysAgent.IosYYB)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">IOS升级内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control validate[required]" name="IosInfo" id="IosInfo" rows="5" style="width: 600px;">@(SysAgent.IosInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">苹果颜色 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control" name="IosColor" id="IosColor" value="@(SysAgent.IosColor)" />
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="TeiPai" />
+                        @*
+            <div class="form-group TeiPai">
+              <label class="control-label col-md-3">分享卡片背景 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                  @Html.Partial("FileLoad", new FileLoad() { BigName = "CradBg", FilePath = "SysAgent/" + SysAgent.Id, FileName = "CradBg", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                  @if (!SysAgent.CradBg.IsNullOrEmpty())
+                  {
+                      <a href="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.CradBg))" target="_blank">
+                          <img src="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.CradBg))" height="25" />
+                      </a>
+                  }
+                </div>
+                <p class="help-block">600*372</p>
+              </div>
+            </div>
+            <div class="form-group TeiPai">
+              <label class="control-label col-md-3">分享页面背景 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                  @Html.Partial("FileLoad", new FileLoad() { BigName = "ShareBg", FilePath = "SysAgent/" + SysAgent.Id, FileName = "ShareBg", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                  @if (!SysAgent.ShareBg.IsNullOrEmpty())
+                  {
+                      <a href="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.ShareBg))" target="_blank">
+                          <img src="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.ShareBg))" height="25" />
+                      </a>
+                  }
+                </div>
+                <p class="help-block">640*N 至少一屏，注意按钮位置</p>
+              </div>
+            </div>
+            *@
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">下载背景1 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "DownBg1", FilePath = "SysAgent/" + SysAgent.Id, FileName = "DownBg1", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!SysAgent.DownBg1.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg1))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg1))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block">640*1008</p>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">下载背景2 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "DownBg2", FilePath = "SysAgent/" + SysAgent.Id, FileName = "DownBg2", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!SysAgent.DownBg2.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg2))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg2))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block">640*1008</p>
+                            </div>
+                        </div>
+                        <div class="form-group TeiPai">
+                            <label class="control-label col-md-3">下载背景3 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "DownBg3", FilePath = "SysAgent/" + SysAgent.Id, FileName = "DownBg3", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!SysAgent.DownBg3.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg3))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.DownBg3))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block">640*1008</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">权限 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xxxlarge">
+                                    @{
+                                        if (SysAgent.AgentLevelMax <= 1)//当全局设置代理最大等级小于1时，他就不能开下一级
+                                        {
+                                            SysPowerList = SysPowerList.Where(n => n.Ctrl != "SysAgent" && n.Ctrl != "AgentAdmin" && n.Ctrl != "NextAgent" && n.Ctrl != "FinAgent").ToList();
+                                        }
+                                        if (SysAgent.Tier == SysAgent.AgentLevelMax)
+                                        {
+                                            SysPowerList = SysPowerList.Where(n => n.Ctrl != "FinAgent").ToList();
+                                        }
+                                        if (SysAgent.Tier != 1 && SysAgent.Tier != 0)
+                                        {
+                                            SysPowerList = SysPowerList.Where(n => n.Method != "SaveAssureImg").ToList();
+                                        }
+                                    }
+                                    @foreach (var p in SysPowerList.Where(n => n.PId == 0))
+                                    {
+                                        IList<SysPower> List = SysPowerList.Where(n => n.PId == p.Id).ToList();
+                                        int i = 1;
+                                        <table class="table table-striped table-hover table-bordered">
+                                            @foreach (var pp in List)
+                                            {
+                                                <tr>
+                                                    @if (i == 1)
+                                                    {
+                                                        <th rowspan="@(List.Count)" style="width:140px;">
+                                                            <input type="checkbox" name="PId" class="p" id="P@(p.Id)" value="@(p.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", p.Id)) != -1 ? "checked" : "") />@(p.Name)
+                                                        </th>
+                                                    }
+                                                    <td class="title" style="width: 175px;">
+                                                        <input type="checkbox" name="PId" class="pp" id="P@(pp.Id)" data-p="@(p.Id)" value="@(pp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", pp.Id)) != -1 ? "checked" : "") />@(pp.Name)
+                                                    </td>
+                                                    <td>
+                                                        @foreach (var ppp in SysPowerList.Where(n => n.PId == pp.Id))
+                                                        {
+                                                            <input type="checkbox" name="PId" class="ppp" id="P@(ppp.Id)" data-p="@(p.Id)" data-pp="@(pp.Id)" value="@(ppp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", ppp.Id)) != -1 ? "checked" : "") />@(ppp.Name)　
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                        i++;
+                                            }
+                                        </table>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">销售人员 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-small input-inline validate[required]" name="Salesman" id="Salesman" value="@(SysAgent.Salesman)"  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">到期时间 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ExpireTime"  style="width:180px" id="DDLastTime"  value="@(SysAgent.ExpireTime == DateTime.MinValue ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : SysAgent.ExpireTime.ToString("yyyy-MM-dd HH:mm:ss"))"  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">代理费 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[money]]" name="AgentFee" id="AgentFee" value="@(SysAgent.AgentFee.ToString("f2"))"  />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">代理合同(多张) <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" multiple data-name="Contract" />
+                                </span>
+                                <div class="adddiv" style="margin: 10px 0 0">
+                                    <input type="@(Contract.Count > 0 ? "hidden" : "text")" class="validate[required] validateinput" id="Contract" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;"></input>
+                                    <ul style="list-style: none; margin: 0; padding: 0">
+                                        @if (Contract.Count > 0)
+                                        {
+                                            for (int i = 0; i < Contract.Count; i++)
+                                            {
+                                                var item = Contract[i];
+                                            <li id="@(item.Id)" >
+                                                <div class="container cont">
+                                                    <span class="title col-md-4"><a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a></span>
+                                                    <div class="progress col-md-5">
+                                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                                    </div>
+                                                    <input type="hidden" value="@(item.Id)" name="Contract[@(i)].Id">
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-danger delete"  data-id="@(item.Id)"><span>删除</span></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">身份证正面 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Front" />
+                                </span>
+                                <div class="adddiv" style="margin: 10px 0 0">
+                                    <input type="@(!IDCard_Front.Id.IsNullOrEmpty() ? "hidden" : "text")" class="validate[required] validateinput" id="IDCard_Front" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;"></input>
+                                    <ul style="list-style: none; margin: 0; padding: 0">
+                                        @if (!IDCard_Front.Id.IsNullOrEmpty())
+                                        {
+                                            <li id="@(IDCard_Front.Id)" >
+                                                <div class="container cont">
+                                                    <span class="title col-md-4"><a target="_blank" href="@(Utils.ImageUrl("Attach/", IDCard_Front.AFile))">@(IDCard_Front.UpLoadFile)</a></span>
+                                                    <div class="progress col-md-5">
+                                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                                    </div>
+                                                    <input type="hidden" value="@(IDCard_Front.Id)" name="IDCard_Front.Id">
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-danger delete" data-id="@(IDCard_Front.Id)"><span>删除</span></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">身份证反面 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Reverse" />
+                                </span>
+                                <div class="adddiv" style="margin: 10px 0 0">
+                                    <input type="@(!IDCard_Reverse.Id.IsNullOrEmpty() ? "hidden" : "text")" class="validate[required] validateinput" id="IDCard_Reverse" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;"></input>
+                                    <ul style="list-style: none; margin: 0; padding: 0">
+                                        @if (!IDCard_Reverse.Id.IsNullOrEmpty())
+                                        {
+                                            <li id="@(IDCard_Reverse.Id)" >
+                                                <div class="container cont">
+                                                    <span class="title col-md-4"><a target="_blank" href="@(Utils.ImageUrl("Attach/", IDCard_Reverse.AFile))">@(IDCard_Reverse.UpLoadFile)</a></span>
+                                                    <div class="progress col-md-5">
+                                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                                    </div>
+                                                    <input type="hidden" value="@(IDCard_Reverse.Id)" name="IDCard_Reverse.Id">
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-danger delete" data-id="@(IDCard_Reverse.Id)"><span>删除</span></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">身份证手持 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Hand" />
+                                </span>
+                                <div class="adddiv" style="margin: 10px 0 0">
+                                    <input type="@(!IDCard_Hand.Id.IsNullOrEmpty() ? "hidden" : "text")" class="validate[required] validateinput" id="IDCard_Hand" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;"></input>
+                                    <ul style="list-style: none; margin: 0; padding: 0">
+                                        @if (!IDCard_Hand.Id.IsNullOrEmpty())
+                                        {
+                                            <li id="@(IDCard_Hand.Id)" >
+                                                <div class="container cont">
+                                                    <span class="title col-md-4"><a target="_blank" href="@(Utils.ImageUrl("Attach/", IDCard_Hand.AFile))">@(IDCard_Hand.UpLoadFile)</a></span>
+                                                    <div class="progress col-md-5">
+                                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                                    </div>
+                                                    <input type="hidden" value="@(IDCard_Hand.Id)" name="IDCard_Hand.Id">
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-danger delete" data-id="@(IDCard_Hand.Id)"><span>删除</span></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">营业执照或其它证件(多张) <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" multiple data-name="Certificate" />
+                                </span>
+                                <div class="adddiv" style="margin: 10px 0 0">
+                                    <input type="@(Certificate.Count > 0 ? "hidden" : "text")" class="validate[required] validateinput" id="Certificate" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;"></input>
+                                    <ul style="list-style: none; margin: 0; padding: 0">
+                                        @if (Certificate.Count > 0)
+                                        {
+                                            for (int i = 0; i < Certificate.Count; i++)
+                                            {
+                                                var item = Certificate[i];
+                                            <li id="@(item.Id)" >
+                                                <div class="container cont">
+                                                    <span class="title col-md-4"><a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a></span>
+                                                    <div class="progress col-md-5">
+                                                        <div class="progress-bar" style="width: 100%;">100%</div>
+                                                    </div>
+                                                    <input type="hidden" value="@(item.Id)" name="Certificate[@(i)].Id">
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-danger delete" data-id="@(item.Id)"><span>删除</span></button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: none" class="deleteA"></div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <link rel="stylesheet" href="/Content/HaoFu/plugins/FileUpLoad/css/jquery.fileupload.css">
+        <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+        <script src="/Content/HaoFu/plugins/FileUpLoad/js/vendor/jquery.ui.widget.js"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload.js"></script>
+        <!-- The File Upload processing plugin -->
+        <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-process.js"></script>
+        <!-- The File Upload validation plugin -->
+        <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-validate.js"></script>
+@*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" /> 
+<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/Content/Metronic/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>*@    
+        <script>
+            var imgpathad = "@(Utils.ImageUrl("Attach/", "/"))";
+            var submitvalue = "确认@(SysAgent.Id.IsNullOrEmpty() ? "添加" : "修改")";
+            $(function () {
+                $("form[id='chkForm'] :text").attr("disabled", true);
+                $("form[id='chkForm'] textarea").attr("disabled", true);
+                $("form[id='chkForm'] select").attr("disabled", true);
+                $("form[id='chkForm'] :radio").attr("disabled", true);
+                $("form[id='chkForm'] :checkbox").attr("disabled", true);
+                $("form[id='chkForm'] :button").attr("disabled", true);
+                $("form[id='chkForm'] :file").attr("disabled", true);
+
+                $(".TeiPaiR").click(function () {
+                    var v = $(this).val();
+                    if (v == "1") {
+                        $(".TeiPai").show();
+                    } else {
+                        $(".TeiPai").hide();
+                    }
+                });
+                if ($(".TeiPaiR:checked").val() == "1") {
+                    $(".TeiPai").show();
+                }
+                $(".p").click(function () {
+                    var T = $(this).prop("checked");
+                    var C = "";
+                    if (T) C = "checked";
+                    $(this).closest("table").find(".pp").prop("checked", T).parent().attr("class", C);
+                    $(this).closest("table").find(".ppp").prop("checked", T).parent().attr("class", C);
+                });
+                $(".pp").click(function () {
+                    var T = $(this).prop("checked");
+                    var C = "";
+                    if (T) C = "checked";
+                    $(this).closest("tr").find(".ppp").prop("checked", T).parent().attr("class", C);
+                    var L = $(this).closest("table").find(".pp:checked").length;
+                    if (L > 0) {
+                        $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                    } else {
+                        $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                    }
+                });
+                $(".ppp").click(function () {
+                    var LL = $(this).closest("td").find(".ppp:checked").length;
+                    if (LL > 0) {
+                        $(this).closest("td").prev("td").find(".pp").prop("checked", true).parent().attr("class", "checked");
+                    } else {
+                        $(this).closest("td").prev("td").find(".pp").prop("checked", false).parent().attr("class", "");
+                    }
+                    var L = $(this).closest("table").find(".pp:checked").length;
+                    if (L > 0) {
+                        $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                    } else {
+                        $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                    }
+                });
+                sub = $("#sub");
+                $('.chkForm').bind('jqv.form.result', function (event, errorFound) {
+                    if (errorFound == false) {
+                        sub.attr("disabled", true);
+                        sub.text("提交中...");
+                        sub.removeClass("green");
+                        sub.addClass("grey");
+                    }
+                });
+            });
+            var sub;
+            var count = 0;
+            //整理行
+            listTidy();
+            function listTidy() {
+                $(".adddiv").find("li:nth-child(odd)").css({ background: "#f9f9f9" });
+                $(".adddiv").find("li:nth-child(1)").css({ "border-top": "1px solid #ddd" });
+            }
+            //删除行
+            $("body").on("click", ".delete", function () {
+                var adddiv = $(this).parents(".adddiv");
+                var id = $(this).attr("data-id");
+                pushDel(id);
+                $(this).parents("li").remove();
+                var li = adddiv.find("li");
+                //删除之后判断是否最后一个
+                if (li.length == 0) {
+                    adddiv.find(".validateinput").attr("type", "text");
+                }
+                listTidy();
+            });
+            //已存在数据添加进删除列表
+            function pushDel(id) {
+                if (id != null) {
+                    var delHtml = '<input type="hidden" name="DelIds" value="' + id + '">';
+                    $(".deleteA").append(delHtml);
+                }
+            }
+            //File元素
+            $(".UpLoadFile").fileupload({
+                url: 'EditUpLoadAttach.html',
+                dataType: 'json',
+                maxFileSize: 1000000,
+                acceptFileTypes: new RegExp("(\.|\/)(gif|jpe?g|png)$", "i"),
+                //多语言支付
+                messages: {
+                    maxNumberOfFiles: '最多能上传文件10个',
+                    acceptFileTypes: '文件类型不正确,格式:gif,jpeg,png',
+                    maxFileSize: '上传文件最大1M',
+                    minFileSize: '上传文件最小1KB'
+                },
+                //上传成功后调用
+                done: function (e, data) {
+                    var Return = data.result;
+                    var multiple = $(this).attr("multiple");
+                    var adddiv = $(this).parents(".col-md-4").find(".adddiv");
+                    var li = adddiv.find("li[id=" + data.files[0].FileID + "]");
+                    var dn = $(this).attr("data-name");
+                    adddiv.find(".validateinput").attr("type", "hidden");
+                    if (Return.Status == true) {
+                        if (multiple != null) {
+                            dn = dn + '[' + (data.files[0].Index - 1) + ']';
+                        }
+                        var inputHtml = '<input type="hidden" name="' + dn + '.AFile" value="' + Return.Result.SaveFileName + '">';
+                        var inputHtml2 = '<input type="hidden" name="' + dn + '.UpLoadFile" value="' + Return.Result.UpLoadFileName + '">';
+                        var delhtml = '<div class="col-md-3"><button class="btn btn-danger delete" type="button"><span>删除</span></button></div>';
+                        li.find(".title").html('<a href="' + imgpathad + Return.Result.SaveFileName + '" target="_blank" >' + Return.Result.UpLoadFileName + '</a>');
+                        li.find(".cont").append(inputHtml + inputHtml2 + delhtml);
+                    }
+                    else { showdialog(Return.Message); }
+                },
+                //处理出错时调用
+                processalways: function (e, data) {
+                    if (data.files.error) {
+                        showdialog(data.files[0].error);
+                    }
+                    else {
+                        data.files[0].FileID = newGuid();
+                        var adddiv = $(this).parents(".col-md-4").find(".adddiv");
+                        data.files[0].Index = adddiv.find("li").length + 1;
+                        $(this).parents(".col-md-4").find(".help-block").remove();
+                        $(this).parents(".form-group").removeClass("has-error");
+                        var html = '<li style="padding: 0" id="' + data.files[0].FileID + '"><div class="container cont"><span class="title col-md-4"> ' + data.files[0].name + ' </span><div class="progress col-md-5"><div class="progress-bar"></div></div></div></li>'
+                        var ul = adddiv.find("ul");
+                        //处理上传多个与单个
+                        if ($(this).attr("multiple") == null) {
+                            var id = $(ul).find(".delete").attr("data-id");
+                            pushDel(id);
+                            ul.empty();
+                        }
+                        //写入html与调整
+                        ul.append(html);
+                        listTidy();
+                    }
+                },
+                always: function (e, data) {
+                    count--;
+                    if (count == 0) {
+                        sub.attr("disabled", false);
+                        sub.text(submitvalue);
+                        sub.addClass("green");
+                        sub.removeClass("grey");
+                    }
+                },
+                submit: function (e, data) {
+                    count++;
+                    if (count > 0) {
+                        sub.attr("disabled", true);
+                        sub.text("上传文件中...");
+                        sub.removeClass("green");
+                        sub.addClass("grey");
+                    }
+                }
+                //单个进程的进度条
+            }).on('fileuploadprogress', function (e, data) {
+                var progressElem = $(this).parents(".col-md-4").find(".adddiv").find("li[id=" + data.files[0].FileID + "]").find(".progress .progress-bar");
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                progressElem.css(
+                    'width',
+                    progress + '%'
+                ).text(progress + '%');
+            });
+        </script>
+    }
+}

@@ -1,0 +1,25 @@
+﻿@{
+    IList<UsersMoveLog> UsersMoveLogList = ViewBag.UsersMoveLogList;
+    this.Layout = null;
+}
+<table class="table table-striped table-bordered table-hover tablethc" id="UsersMoveLog">
+    <thead>
+        <tr>
+            <th>真实姓名 </th>
+            <th>调出代理商 </th>
+            <th>调入代理商 </th>
+            <th>操作时间 </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in UsersMoveLogList)
+        {
+        <tr class="odd gradeX">
+            <td class="center">@(p.UTrueName)</td>
+            <td class="center">@(p.FromName) </td>
+            <td class="center">@(p.ToName) </td>
+            <td class="center">@(p.AddTime) </td>
+        </tr>
+        }
+    </tbody>
+</table>

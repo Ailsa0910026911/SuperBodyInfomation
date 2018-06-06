@@ -1,0 +1,225 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers;
+    IPageOfItems<Orders> OrdersList = ViewBag.OrdersList;
+    Orders Orders = ViewBag.Orders;
+    LokFuEntity Entity = ViewBag.Entity;
+    int Nav = 40;
+    Page.Name = BasicUsers.NeekName + "的交易明细";
+}
+<div class="cash details">
+    @Html.Partial("Header", Nav)
+    <div class="main">
+        <div class="container">
+            <div class="main-top">
+                <p><a href="/shop/">首页 </a>&gt; <a href="javascript:">交易明细</a></p>
+            </div>
+        </div>
+        <div class="container border text-center">
+            <div class="table">
+                <form class="frame-list" id="ListForm" name="ListForm" method="post">
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td width="80">交易号</td>
+                                <td width="230" align="left"><input class="input-mx" type="text" name="TNum" value="@(Orders.TNum)" /></td>
+                                <td width="80">交易日期</td>
+                                <td width="410" colspan="2" align="left">
+                                    <input class="input-ms Wdate" type="text" name="STime" id="STime" value="@(Orders.STime == DateTime.MinValue ? "" : Orders.STime.ToString("yyyy-MM-dd"))" />
+                                    -<input class="input-ms Wdate" type="text" name="ETime" id="ETime" value="@(Orders.ETime == DateTime.MinValue ? "" : Orders.ETime.ToString("yyyy-MM-dd"))" /></td>
+                            </tr>
+                            <tr>
+                                <td width="80">交易类型</td>
+                                <td colspan="2" align="left">
+                                    <select name="TType" class="select-ms" id="TType">
+                                        <option value="">所有</option>
+                                        @foreach (var p in Utils.GetOrdersModel().Where(n => n.Id != 10))
+                                        {
+                                        <option value="@(p.Id)" @(Orders.TType == p.Id ? "selected" : "")>@(p.Name)</option>
+                                        }
+                                    </select>
+                                    |
+                                    <select name="TState" class="select-ms" id="TState">
+                                        <option value="0">交易状态</option>
+                                    </select>
+                                </td>
+                                <td colspan="2">
+                                    <button class="reset" type="reset">重 置 </button>
+                                    <button class="sub" type="submit">提 交 </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            @if (OrdersList.PageIndex<2){
+                LokFu.Infrastructure.EFPagingInfo<Orders> P = new LokFu.Infrastructure.EFPagingInfo<Orders>();
+                P.SqlWhere.Add(f => f.UId == BasicUsers.Id && f.TState == 2);
+                if (!Orders.STime.IsNullOrEmpty() && !Orders.ETime.IsNullOrEmpty())
+                {
+                    DateTime ETime = Orders.ETime.AddDays(1);
+                    P.SqlWhere.Add(f => f.PayTime > Orders.STime && f.PayTime < ETime);
+                }
+                P.PageSize = 99999999;
+                P.OrderByList.Add("Id", "DESC");
+                IPageOfItems<Orders> CountList = Entity.Selects<Orders>(P);
+                //银联卡支付
+                decimal B = CountList.Where(n => n.TType == 1).Sum(n => n.Amoney);
+                int b = CountList.Count(n => n.TType == 1);
+                //提现
+                decimal C = CountList.Where(n => n.TType == 2).Sum(n => n.Amoney);
+                int c = CountList.Count(n => n.TType == 2);
+                //房租
+                decimal E = CountList.Where(n => n.TType == 5).Sum(n => n.Amoney);
+                int e = CountList.Count(n => n.TType == 5);
+                //支付宝
+                decimal G = CountList.Where(n => n.TType == 7).Sum(n => n.Amoney);
+                int g = CountList.Count(n => n.TType == 7);
+                //微信
+                decimal H = CountList.Where(n => n.TType == 8).Sum(n => n.Amoney);
+                int h = CountList.Count(n => n.TType == 8);
+                //NFC
+                decimal K = CountList.Where(n => n.TType == 9).Sum(n => n.Amoney);
+                int k = CountList.Count(n => n.TType == 9);
+            <div class="powder">
+                <p><span>汇总范围 : 
+                @if(Orders.STime.IsNullOrEmpty()&&Orders.ETime.IsNullOrEmpty()){
+                    @:所有交易
+                }else{
+                    if (!Orders.STime.IsNullOrEmpty() && !Orders.ETime.IsNullOrEmpty())
+                    {
+                        @:支付时间【@(Orders.STime.ToString("yyyy-MM-dd"))~@(Orders.ETime.ToString("yyyy-MM-dd"))】　　
+                    }
+                }
+                </span>
+                </p>
+                <p><span>银联快捷 : @(B.ToMoney())元/@(b)笔</span>　　<span>提现交易 : @(C.ToMoney())元/@(c)笔</span>　　　<span>房租交易 : @(E.ToMoney())元/@(e)笔</span></p>
+                <p><span>支 付 宝 : @(G.ToMoney())元/@(g)笔</span>　　<span>微信收款 : @(H.ToMoney())元/@(h)笔</span>　　　<span>NFC 刷卡 : @(K.ToMoney())元/@(k)笔</span></p>
+            </div>
+            }
+            <div class="transaction">
+                <h3>交易明细 </h3>
+                <hr />
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>交易金额</th>
+                            <th>交易类型</th>
+                            <th>交易时间</th>
+                            <th>订单状态</th>
+                            <th>支付时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in OrdersList){
+                        <tr>
+                            <td width="25%">@(p.TNum)</td>
+                            <td width="15%">@(p.Amoney.ToString("F2"))</td>
+                            <td width="10%">@(Utils.GetOrdersModel().Where(n => n.Id == p.TType).FirstOrNew().Name)</td>
+                            <td width="25%">@(p.AddTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                            <td width="10%">@{
+                                var statestr = p.GetState();
+                                switch (statestr)
+                                {
+                                    case "未付":
+                                        <b class="color-red">@(statestr)</b>
+                                        break;
+                                    case "处理中":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "出款中":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "已汇出":
+                                        <b class="color-green">@(statestr)</b>
+                                        break;
+                                    case "已付":
+                                        <b class="color-green">@(statestr)</b>
+                                        break;
+                                    case "退款中":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "已退款":
+                                        <b class="color-green">@(statestr)</b>
+                                        break;
+                                    case "待传证照":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "待审核":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "审核失败":
+                                        <b class="color-red">@(statestr)</b>
+                                        break;
+                                    case "待传身份证":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "已传身份证":
+                                        <b class="color-green">@(statestr)</b>
+                                        break;
+                                    case "交易关闭":
+                                        <b class="color-grey">@(statestr)</b>
+                                        break;
+                                    case "提现失败":
+                                        <b class="color-red">@(statestr)</b>
+                                        break;
+                                    case "成功":
+                                        <b class="color-green">@(statestr)</b>
+                                        break;     
+                                    default :
+                                        @statestr
+                                        break;
+                                }
+                            }
+                            </td>
+                            <td width="15%">@(p.PayState>0?p.PayTime.GetValueOrDefault().ToString("MM/dd HH:mm"):"--")</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.Partial("Page", OrdersList)
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Footer")
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Shop/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+    <script type="text/javascript">
+        //交易时间限制  add gaojin 2016-7-26
+        $("#STime").click(function () {
+            WdatePicker({ maxDate: '#F{$dp.$D(\'ETime\')|| \'%y-%M-%d\'}' });
+        });
+        $("#ETime").click(function () {
+            WdatePicker({ maxDate: '%y-%M-%d', minDate: '#F{$dp.$D(\'STime\')}' });
+        });
+        var sjson = '{"1":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"3","Value":"待传证照"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"}],"2":[{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"提现失败"},{"Key":"4","Value":"出款中"}],"3":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"3","Value":"待传证照"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"}],"5":[{"Key":"99","Value":"未付"},{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"审核失败"},{"Key":"4","Value":"出款中"},{"Key":"5","Value":"退款中"},{"Key":"6","Value":"已退款"},{"Key":"7","Value":"待传身份证"},{"Key":"8","Value":"已传身份证"}],"6":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],"7":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],"8":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],"9":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],"10":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}]}';
+        var obj = jQuery.parseJSON(sjson);
+        $(function () {
+            getState("@(Orders.TType)");
+            $("#TState").val("@(Orders.TState)");
+            $("#TType").change(function () {
+                if ($(this).val() != "") {
+                    getState($(this).val());
+                }
+                else {
+                    $("#TState").empty();
+                    $("#TState").append('<option value="0">交易状态</option>');
+                }
+            });
+        });
+        function getState(typeindex) {
+            $.each(obj, function (i, n) {
+                if (typeindex == i) {
+                    //清空
+                    $("#TState").empty();
+                    $("#TState").append('<option value="0">交易状态</option>');
+                    $.each(n, function (k, y) {
+                        $("#TState").append('<option value="' + y.Key + '">' + y.Value + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
+}

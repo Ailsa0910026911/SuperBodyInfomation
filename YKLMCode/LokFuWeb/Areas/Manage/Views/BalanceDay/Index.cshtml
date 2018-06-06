@@ -1,0 +1,175 @@
+﻿@{
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.SMUid = 260;
+    LokFuEntity Entity = ViewBag.Entity;
+
+    DateTime? S_Time = ViewBag.S_Time;
+    DateTime? E_Time = ViewBag.E_Time;
+    IList<BaoStory> BaoStoryList = ViewBag.BaoStoryList;
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px; line-height: 40px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>交易时间：</span>
+        <input type="text" class="pagination-panel-input form-control input-inline input-sm  Wdate"  name="STime" id="STimes" value="@(S_Time == null ? DateTime.Now.ToString("yyyy-MM-dd ") : S_Time.Value.ToString("yyyy-MM-dd"))" />
+        ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ETime" id="ETimes" value="@(E_Time == null ? DateTime.Now.ToString("yyyy-MM-dd") : E_Time.Value.ToString("yyyy-MM-dd"))" />
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="today"><i class="fa fa-clock-o"></i>昨天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="toweek"><i class="fa fa-clock-o"></i>本周</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days7"><i class="fa fa-clock-o"></i>近七天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="tomonth"><i class="fa fa-clock-o"></i>本月</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days30"><i class="fa fa-clock-o"></i>近30天</button>
+        <br />
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+        @if (ViewBag.Xls)
+        {
+            <button class="btn btn-sm green" style="margin-left: 10px;" type="button" id="XLS"><i class="fa fa-share"></i>导出报表</button>
+        }
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>日期 </th>
+                                <th>类型</th>
+                                <th>存入 </th>
+                                <th>取出 </th>
+                                <th>余额 </th>
+                                <th>利息 </th>
+                                <th>计息余额</th>
+                                <th>未计息余额</th>
+                                <th>万分收益</th>
+                                <th>年化收益</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (BaoStoryList == null || BaoStoryList.Count <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in BaoStoryList)
+                                {          
+                                <tr class="odd gradeX">
+                                    <td style="text-align: center">@(item.SDate.ToString("yyyy-MM-dd"))</td>
+                                    <td style="text-align: center">@(item.LType == 1 ? " 理财利息" : "余额奖励金")</td>
+                                    <td style="text-align: center">@(item.InMoney.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.OutMoney.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.BfAllMoney.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.Interest.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.BfActMoney.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.BfInMoney.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.GetCost.ToString("F2"))</td>
+                                    <td style="text-align: center">@(item.YearPer.ToString("N4") + "%")</td>
+                                </tr>
+                                }
+                                <tr class="totalCount">
+                                    <td class="center"><b>合计：</b></td>
+                                     <td class="center price"></td>
+                                    <td class="center price"><b>@(BaoStoryList.Sum(x => x.InMoney).ToString("F2"))</b></td>
+                                    <td class="center price">@(BaoStoryList.Sum(x => x.OutMoney).ToString("F2"))</td>
+                                    <td class="center price"></td>
+                                    <td class="center price">@(BaoStoryList.Sum(x => x.Interest).ToString("F2"))</td>
+                                    <td class="center price"></td>
+                                    <td class="center price"></td>
+                                    <td class="center price"></td>
+                                    <td class="center price"></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            $("#STimes").focus(function () {
+                WdatePicker({ maxDate: '#F{$dp.$D(\'ETimes\')|| \'%y-%M-%d\'}', dateFmt: 'yyyy-MM-dd', startDate: '%y-%M-%d' });
+            });
+            $("#ETimes").focus(function () {
+                WdatePicker({ maxDate: '%y-%M-%d', minDate: '#F{$dp.$D(\'STimes\')}', dateFmt: 'yyyy-MM-dd', startDate: '%y-%M-%d' });
+            });
+
+            var Today = new Date();
+            $("#today").click(function () {
+                $("#STimes").val(new Date(new Date() - 24 * 60 * 60 * 1000).Format("yyyy-MM-dd"));
+                $("#ETimes").val(new Date(new Date() - 24 * 60 * 60 * 1000).Format("yyyy-MM-dd"));
+            });
+            $("#toweek").click(function () {
+                var currentDay = Today.getDay();
+                if (currentDay == 0) { currentDay = 7; }
+                var mondayTime = Today.getTime() - (currentDay - 1) * 24 * 60 * 60 * 1000;
+                var sundayTime = Today.getTime() + (7 - currentDay) * 24 * 60 * 60 * 1000;
+                var monday = new Date(mondayTime);
+                var sunday = new Date(sundayTime);
+                $("#STimes").val(monday.Format("yyyy-MM-dd"));
+                $("#ETimes").val(sunday.Format("yyyy-MM-dd"));
+            });
+            $("#days7").click(function () {
+                var StartTime = Today.getTime() - 6 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STimes").val(Start.Format("yyyy-MM-dd"));
+                $("#ETimes").val(Today.Format("yyyy-MM-dd"));
+            });
+            $("#tomonth").click(function () {
+                var myyear = Today.getFullYear();
+                var mymonth = Today.getMonth();
+                var monthStartDate = new Date(myyear, mymonth, 1);
+                var days = getMonthDays(myyear, mymonth);
+                var monthEndDate = new Date(myyear, mymonth, days);
+                $("#STimes").val(monthStartDate.Format("yyyy-MM-dd"));
+                $("#ETimes").val(monthEndDate.Format("yyyy-MM-dd"));
+            });
+            $("#days30").click(function () {
+                var StartTime = Today.getTime() - 29 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STimes").val(Start.Format("yyyy-MM-dd"));
+                $("#ETimes").val(Today.Format("yyyy-MM-dd"));
+            });
+        });
+        Date.prototype.Format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        //获得某月的天数     
+        function getMonthDays(myYear, myMonth) {
+            var monthStartDate = new Date(myYear, myMonth, 1);
+            var monthEndDate = new Date(myYear, myMonth + 1, 1);
+            var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+            return days;
+        }
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿@{
+    IList<SysLog> SysLogList = ViewBag.SysLogList;
+    SysLog SysLog = ViewBag.SysLog;
+    List<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    ViewBag.NoShowDel = true;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <td width="80" align="right">操作员 : </td>
+                        <td width="100" align="left">
+                            <select name="AId" class="input-sm">
+                                <option value="0">不限制</option>
+                                @foreach (var p in SysAdminList)
+                                {
+                                    <option value="@(p.Id)" @(p.Id == SysLog.AId ? "selected" : "") >@(p.TrueName.IsNullOrEmpty() ? p.UserName : p.TrueName)</option>
+                                }
+                            </select>
+                        </td>
+                        <td width="80" align="right">操作内容 : </td>
+                        <td width="100" align="left">
+                            <input class="input-text" name="Title" value="@(SysLog.Title)" />
+                        </td>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-table">
+            <table id="ListBox" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th width="150px">姓名 </th>
+                        <th width="300px">操作内容 </th>
+                        <th width="120px">IP </th>
+                        <th width="150px">添加时间 </th>
+                    </tr>
+                </thead>
+                <tbody class="ListBox">
+                    @if (SysLogList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in SysLogList)
+                        {
+                        <tr class="odd gradeX">
+                            <td class="center">@(p.TrueName) </td>
+                            <td class="center">@(p.Title) </td>
+                            <td class="center">@(p.IP) </td>
+                            <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm:ss")) </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", SysLogList)
+        </div>
+    </div>
+</div>
+

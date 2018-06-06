@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.SMUid = 140;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    Users Users = ViewBag.Users;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    IList<UserPay> UserPayList = ViewBag.UserPayList;
+    SysSet BasicSet = ViewBag.BasicSet;
+    ViewBag.NoShowDel = true;
+    this.Layout = "../Shared/FromLayout.cshtml";
+}
+<!--[if lt IE 9]>
+      <script src="/Content/HaoFu/js/html5shiv.min.js"></script>
+      <script src="/Content/HaoFu/js/respond.min.js"></script>
+<![endif]-->
+<div class="portlet-warp">
+	<div class="container">
+        <div class="row" >
+            <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+            <input type="hidden" id="IsAjax" name="IsAjax" value="@(Request["IsAjax"])" />
+            <input type="hidden" name="IFrameId" value="@(Request.QueryString["IFrameId"])" />
+	        <div class="portlet-body">
+	            <div class="table-scrollable">
+				    <table class="table table-striped table-bordered table-advance table-hover">
+					    <tbody>
+						    <tr>
+							    <td class="success" style="width:120px;">商户名称</td>
+                                <td class="active">@(Users.NeekName)<input type="hidden" id="UId" name="UId" value="@(Users.Id)" /></td>
+                                <td class="success" style="width:120px;">姓名</td>
+                                <td class="active">@(Users.TrueName)</td>
+						    </tr>
+						    <tr>
+							    <td class="success">T0提现费</td>
+							    <td class="active" colspan="3"><span class="price">@((Users.ECash0).ToString("F2"))</span>元/笔+<span class="price">@((Users.ECash0).ToString("F2"))</span>元/笔+<span class="price">@((Users.Cash0*1000).ToString("F2"))‰</span></td>
+						    </tr>
+						    <tr>
+							    <td class="success">T0修改为</td>
+							    <td class="active form-group" colspan="3">
+								    <div class="row">
+									    <div class="col-xs-5">
+										    <div class="row">
+											    <div class="col-sm-4 col-xs-4">
+												    <input type="text" class="form-control input-mini validate[required,min[@(BasicSet.AgentECash0)],custom[money]]" name="ECashNew0" id="ECashNew0" value="">
+												    </div> 
+											    <span class="padd">元/笔 需大于或等@(BasicSet.AgentECash0.ToString("F2"))</span>
+										    </div>
+									    </div>
+									    <span class="col-xs-1 padd">+</span>
+									    <div class="col-xs-5">
+										    <div class="row">
+											    <div class="col-sm-4 col-xs-4"><input type="text" class="form-control input-mini validate[required,min[@(BasicSet.AgentCash0*1000)],custom[float1]]" name="CashNew0" id="CashNew0" value=""></div> 
+											    <span class="padd">‰ 需大于或等@((BasicSet.AgentCash0*1000).ToString("F2"))‰</span>
+										    </div>
+									    </div>													
+													
+								    </div>
+							    </td>
+						    </tr>
+						    <tr>
+							    <td class="success">T1提现费</td>
+							    <td class="active" colspan="3"><span class="price">@((Users.ECash1).ToString("F2"))</span>元/笔+<span class="price">@((Users.Cash1*1000).ToString("F2"))‰</span></td>
+						    </tr>
+						    <tr>
+							    <td class="success">T1修改为</td>
+							    <td class="active form-group" colspan="3">
+								    <div class="row">
+									    <div class="col-xs-5">
+										    <div class="row">
+											    <div class="col-sm-4 col-xs-4"><input type="text" class="form-control input-mini validate[required,min[@(BasicSet.AgentECash1)],custom[money]]" name="ECashNew1" id="ECashNew1" value=""></div> 
+											    <span class="padd">元/笔 需大于或等@(BasicSet.AgentECash1.ToString("F2"))</span>
+										    </div>
+									    </div>
+									    <span class="col-xs-1 padd">+</span>
+									    <div class="col-xs-5">
+										    <div class="row">
+											    <div class="col-sm-4 col-xs-4"><input type="text" class="form-control input-mini validate[required,min[@(BasicSet.AgentCash1*1000)],custom[float1]]" name="CashNew1" id="CashNew1" value=""></div> 
+											    <span class="padd">‰ 需大于或等@((BasicSet.AgentCash1*1000).ToString("F2"))‰</span>
+										    </div>
+									    </div>													
+													
+								    </div>
+						    </td>
+						    </tr>
+					    </tbody>
+				    </table>
+			    </div>
+		        <div class="table-scrollable">
+				    <table class="table table-striped table-bordered table-advance table-hover">
+					    <tbody>
+						    <tr>
+							    <td class="success center">通道名称 </td>
+							    <td class="success center">当前费率 </td>
+							    <td class="success center">新费率 </td>
+							    <td class="success center">配置要求 </td>
+						    </tr>
+                            @foreach (var p in PayConfigList)
+                            {
+                                UserPay UP = UserPayList.FirstOrNew(n => n.PId == p.Id);
+						        <tr class="odd gradeX">
+							        <td class="center">@(p.Name)<input type="hidden" name="PId" value="@(p.Id)"></td>
+							        <td class="center"><span class="permillage">@(UP.Cost*1000)</span> ‰</td>
+							        <td class="center form-group"><div class="col-sm-4 col-xs-4"><input type="text" class="form-control input-mini validate[required,min[@(p.CostAgent * 1000)],custom[float]]" name="Cost" id="Cost@(p.Id)" value=""></div><span class="padd">‰</span> </td>
+							        <td class="center"> 需大于或等<span class="permillage">@(p.CostAgent * 1000)</span>‰ </td>
+						        </tr>
+						    }
+					    </tbody>
+				    </table>
+			    </div>
+	            <div class="table-scrollable" >
+					<div class=" col-md-12">
+						<div class="control-label col-md-3">上传申请书 </div>
+						<div class="col-md-12">
+							<div class="input-icon right">
+								<div class="row">
+									<div class="col-sm-4 col-xs-4 form-group">
+                                        <input name="Pic" id="Pic" class="validate[required] form-control input-sm" readonly="true" type="text">
+									</div>
+									<div class="col-sm-8 col-xs-8"  >
+										<span id="files"></span>
+										<span class="btn btn-success fileinput-button">
+											<span>上传文件</span>
+											<input id="UpLoad" type="file" name="UpLoad">
+										</span>
+									</div>
+								</div>
+										
+							</div>
+							<p class="help-block hide">* 请输入内容.　</p>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-12">
+						<label class="control-label col-md-3">上传进度</label>
+                        <div class="row">
+						<div class="col-md-12">
+							<div id="progress" class="progress col-sm-4 col-xs-4">
+                                <div class="row">
+									<div class="progress-bar progress-bar-success"></div>
+                                    </div>
+							</div>
+                        </div>
+                            </div>
+					</div>
+					<div class="form-group col-sm-12 col-xs-12">
+						<label class="control-label col-md-3">备注说明</label>
+						<div class="col-md-12">
+							<div class="input-icon right input-xlarge">
+								<textarea class="form-control input-large" name="Remark" id="Remark" rows="6"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions text-center">
+						<button type="submit" class="btn btn-warning btn-lg">确认变更并提交审核</button>
+					</div>
+				</div>
+	    	</div>
+            </form>
+	    </div>
+    </div>
+</div>
+<link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+<script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+@Html.Partial("~/Areas/Agent/Views/Shared/UpLoadFile.cshtml")
+@section FooterScripts
+{
+    <script type="text/javascript">
+        $(function () {
+            //File元素
+            $('#UpLoad').fileupload({
+                url: '/agent/Asyn/UpLoadUserPayChangePic.html',
+                dataType: 'json',
+                maxFileSize: 2000000,
+                acceptFileTypes: new RegExp("(\.|\/)(bmp|gif|jpe?g|png)$", "i"),
+                //多语言支付
+                messages: {
+                    maxNumberOfFiles: '最多能上传文件10个',
+                    acceptFileTypes: '文件类型不正确,格式:bmp,gif,jpeg,png',
+                    maxFileSize: '上传文件最大2M',
+                    minFileSize: '上传文件最小1KB'
+                },
+                //上传成功后调用
+                done: function (e, data) {
+                    if (data.result.Status == true) {
+                        $.each(data.files, function (index, file) {
+                            $('#files').html('<a target="_blank" href="/UpLoadFiles/UserPayChange/' + data.result.Result + '">查看图片</a>');
+                        });
+                        $("#Pic").val(data.result.Result);
+                    }
+                    else { alert(data.result.Message); }
+                },
+                //jquery过低时防止验证失败还会上传
+                send:function (e, data) {
+                    if (data.files.error) {
+                        return false;
+                    }
+                },
+                //处理完成后调用
+                processalways: function (e, data) {
+                    if (data.files.error) {
+                        $.each(data.files, function (index, file) {
+                            alert(file.error);
+                        });
+                    };
+                },
+                //进度条。*这种是后绑事件
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                ).text(progress + '%');
+            });
+        });
+    </script>
+}

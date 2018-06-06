@@ -1,0 +1,382 @@
+﻿@{
+    List<JobItem> JobItemList = ViewBag.JobItemList;
+    this.Layout = null;
+    List<JobPayWay> PaywayList = ViewBag.PaywayList;
+    List<UserCard> UsersCardList = ViewBag.UsersCardList;
+    LokFu.Areas.Manage.Controllers.SP_JobReSet SP_JobReSet = ViewBag.SP_JobReSet;
+
+    bool CloseJob = ViewBag.CloseJob;
+    bool RetSetItem = ViewBag.RetSetItem;
+    bool RepairCloseJob = ViewBag.RepairCloseJob;
+    bool RepairRetSetItem = ViewBag.RepairRetSetItem;
+
+    bool CancelJob = ViewBag.CancelJob;
+    bool SetTimeSave = ViewBag.SetTimeSave;
+
+    JobOrders JobOrders = ViewBag.JobOrders;
+}
+<div id="JobOrders">
+    <div class="alert alert-danger">
+        <button data-close="alert" class="close"></button>
+        已刷卡金额：<b>@(SP_JobReSet.XPayMoney.ToString("f2"))</b>
+        已刷卡手续费：<b>@(SP_JobReSet.XCashPoundage.ToString("f2"))</b>
+        已还款金额：<b>@(SP_JobReSet.HPayMoney.ToString("f2"))</b>
+        已还款手续费：<b>@(SP_JobReSet.HCashPoundage.ToString("f2"))</b>
+    </div>
+    <table class="table table-striped table-bordered table-hover" style="overflow: scroll;">
+        <thead>
+            <tr>
+                <th style="text-align: center">交易号</th>
+                <th style="text-align: center">金额</th>
+                <th style="text-align: center">执行时间</th>
+                <th style="text-align: center">手续费</th>
+                @*<th style="text-align: center">利润</th>*@
+                <th style="text-align: center">成本</th>
+               @* <th style="text-align: center">分润</th>*@
+                <th style="text-align: center">状态</th>
+                <th style="text-align: center">类型</th>
+                <th style="text-align: center">支付方式</th>
+                <th style="text-align: center">支付卡号</th>
+                @if (CloseJob || RetSetItem || RepairCloseJob || RepairRetSetItem)
+                {
+                    <th style="text-align: center">处理</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in JobItemList)
+            {
+                string State = "";
+                string color = "";
+                string Title = "";
+                switch (item.State)
+                {
+                    case 0:
+                        State = "取消";
+                        color = "color:gray;";
+                        break;
+                    case 1:
+                        State = "待执行";
+                        break;
+                    case 2:
+                        State = "执行中";
+                        break;
+                    case 3:
+                        State = "执行完成";
+                        color = "color:green;";
+                        break;
+                    case 4:
+                        State = "执行失败";
+                        color = "color:red;";
+                        break;
+                }
+                if (!item.Remark.IsNullOrEmpty())
+                {
+                    color += "background:url(/Content/Manage/images/abg.png) no-repeat top left; cursor:pointer;";
+                    Title = " title=\"" + item.Remark + "\"";
+                }
+                <tr class="odd gradeX">
+                    <td style="text-align: center">@(item.RunNum) </td>
+                    <td style="text-align: center">@(item.RunMoney.ToString("F2"))</td>
+                    <td style="text-align: center">@(item.RunTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                    <td style="text-align: center">@(item.Poundage.ToString("F2"))</td>
+                    @*<td style="text-align: center">@(item.HFGet.ToString("F2"))</td>*@
+                    <td style="text-align: center">@(item.RunGet.ToString("F2"))</td>
+                    @*<td style="text-align: center;">@(item.AgentGet.ToString("F2"))</td>*@
+                    <td style="text-align:center;@(color)" @Html.Raw(Title)>
+                        @(State)
+                    </td>
+                    <td style="text-align:center; @(item.RunType == 2 ? "color:red" : "")">
+                        @if (item.RunType == 1)
+                        { @("消费")}
+                        else if (item.RunType == 2)
+                        {
+                            @("还款")
+                        }
+                    </td>
+                    <td style="text-align: center">@(PaywayList.Where(o => o.Id == item.PayWay).FirstOrNew().Name)</td>
+                    <td style="text-align: center">@(UsersCardList.Where(o => o.Id == item.UserCardId).FirstOrNew().Card)</td>
+                    @if (CloseJob || RetSetItem || RepairCloseJob || RepairRetSetItem)
+                    {
+                        <td style="text-align: center">
+                            @if (item.RunType == 2 && item.State == 4)
+                            {
+                                <a href="#" data-id="@(item.Id)" data-tnum="@(item.TNum)" class="label label-sm label-success DoReply" title="处理">处理</a>
+                            }
+                            else if (item.RunType == 1 && item.State == 4)
+                            {
+                                <a href="#" data-id="@(item.Id)" data-tnum="@(item.TNum)" class="label label-sm label-success DoRepair" title="处理">处理</a>
+                            }
+                            else
+                            {
+                                @:--
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="12" style="text-align:center;">
+                 @if (SetTimeSave && (JobOrders.State == 3 || JobOrders.State == 5))
+                 { 
+                     <button type="button" class="btn green" id="SetTime" data-tnum="@(JobOrders.TNum)">调整执行时间</button>
+                 }
+                 @if (CancelJob && JobOrders.State == 3)
+                 {
+                     <button type="button" class="btn yellow" id="CancelJob" data-tnum="@(JobOrders.TNum)">取消任务</button>
+                 }
+                 @if (CloseJob && JobOrders.State == 5)
+                 {
+                     <button type="button" class="btn red" id="CloseJob" data-tnum="@(JobOrders.TNum)">结清任务</button>
+                 }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<style>
+    .jobaui {border: none;background: none;}
+    .jobtext {width: 160px;border: solid 1px #DEDEDE;}
+</style>
+<script type="text/javascript">
+    //InitIsAjax();
+    var DoReply;
+    var DoRepair;
+    $(".DoReply").click(function () {
+        var id = $(this).data("id");
+        var tnum = $(this).data("tnum");
+        DoReply = art.dialog({
+            title: '温馨提示',
+            content: '请选择要处理的类型？<br /><b>重启任务</b>需要重新安排还款执行时间，并对未执行的交易进行调整。<br /><b>结束并清算</b>会对已完成交易进行清算，如有余额会重新还到任务还款的银行卡。',
+            icon: 'warning',
+            lock: true,
+            button: [
+                @if (RetSetItem)
+                {
+                    DateTime Now = DateTime.Now;
+                    DateTime RunTime = Now;
+                    if (RunTime.Hour < 12)
+                    {
+                        RunTime.AddHours(12 - RunTime.Hour);
+                    }
+                <text>
+                {
+                    name: '重启任务',
+                    callback: function () {
+                        this.content("<p>设置时间：<input type='text' id='Time' class='jobtext' value='@(RunTime.ToString("yyyy-MM-dd HH:mm:00"))'>");
+                    $(".aui_buttons").html("<p class='aui_buttons jobaui'><button type='button' id='SumTime'>确认重启</button>");
+                    $("#SumTime").on("click", function () {
+                        var RunTime = $("#Time").val();
+                        if (RunTime == "") {
+                            alert("请指定重跑时间");
+                            return;
+                        }
+                        $.ajax({
+                            type: "Post",
+                            url: "RetSetItem.html",
+                            data: "id=" + id + "&runtime=" + RunTime,
+                            dataType: "json",
+                            success: function (ret) {
+                                if (ret.error == 0) {
+                                    showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                    DoReply.close();
+                                } else if (ret.error == 99) {
+                                    var json = { width: 600, height: 400, title: ret.info, lock: true };
+                                    var url = "/Manage/JobOrders/SetTime.html?isajax=1&tnum=" + tnum;
+                                    art.dialog.open(url, json);
+                                } else {
+                                    showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                }
+                            }
+                        });
+                    });
+                    return false;
+                },
+                    disabled: false
+                },
+                </text>
+                }
+                @if (CloseJob)
+                {
+                <text>
+                {
+                    name: '结束并清算',
+                    callback: function () {
+                        $.ajax({
+                            type: "Post",
+                            url: "CloseJob.html",
+                            data: "tnum=" + tnum,
+                            dataType: "json",
+                            success: function (ret) {
+                                if (ret.error == 0) {
+                                    showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                    DoReply.close();
+                                } else {
+                                    showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                }
+                            }
+                        });
+                        return false;
+                    },
+                    disabled: false
+                },
+                </text>
+                }
+            ]
+        });
+        return false;
+    });
+    $(".DoRepair").click(function () {
+        var id = $(this).data("id");
+        var tnum = $(this).data("tnum");
+        DoRepair = art.dialog({
+            title: '温馨提示',
+            content: '请选择要处理的类型？<br /><b>补单并重启</b>需要重新安排还款执行时间，并对未执行的交易进行调整。<br /><b>补单并结清</b>会对已完成交易进行清算，如有余额会重新还到任务还款的银行卡。',
+            icon: 'warning',
+            lock: true,
+            button: [
+                @if (RepairRetSetItem)
+                {
+                <text>
+                {
+                    name: '补单并重启',
+                    callback: function () {
+                        $.ajax({
+                            type: "Post",
+                            url: "RepairRetSetItem.html",
+                            data: "id=" + id,
+                            dataType: "json",
+                            success: function (ret) {
+                                if (ret.error == 0) {
+                                    showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                    DoRepair.close();
+                                } else if (ret.error == 99) {
+                                    var json = { width: 600, height: 400, title: ret.info, lock: true };
+                                    var url = "/Manage/JobOrders/SetTime.html?isajax=1&tnum=" + tnum;
+                                    art.dialog.open(url, json);
+                                } else {
+                                    showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                    DoRepair.close();
+                                }
+                            }
+                        });
+                        return false;
+                    },
+                    disabled: false
+                },
+                </text>
+                }
+                @if (RepairCloseJob)
+                {
+                <text>
+                {
+                    name: '补单并结清',
+                    callback: function () {
+                        $.ajax({
+                            type: "Post",
+                            url: "RepairCloseJob.html",
+                            data: "id="+id,
+                            dataType: "json",
+                            success: function (ret) {
+                                if (ret.error == 0) {
+                                    showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                    DoRepair.close();
+                                } else {
+                                    showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                    DoRepair.close();
+                                }
+                            }
+                        });
+                        return false;
+                    },
+                    disabled: false
+                },
+                </text>
+                }
+            ]
+        });
+         return false;
+    });
+    $("#SetTime").click(function () {
+        var tnum = $(this).data("tnum");
+        var json = { width: 600, height: 400, title: "调整任务执行时间", lock: true };
+        var url = "/Manage/JobOrders/SetTime.html?isajax=1&tnum=" + tnum;
+        art.dialog.open(url, json);
+        return false;
+    });
+    var CancelJob;
+    $("#CancelJob").click(function () {
+        var tnum = $(this).data("tnum");
+        CancelJob = art.dialog({
+            title: '温馨提示',
+            content: "<p>取消任务后将不可重新启动，请谨慎操作。</p><p>取消原因：<input type='text' id='Rs' class='jobtext' value=''></p>",
+            icon: 'warning',
+            lock: true,
+            button: [{
+                name: '确认并取消',
+                callback: function () {
+                    var Rs = $("#Rs").val();
+                    if (Rs == "") {
+                        alert("请填写取消原因");
+                        return false;
+                    }
+                    $.ajax({
+                        type: "Post",
+                        url: "CancelJob.html",
+                        data: "tnum=" + tnum + "&rs=" + Rs,
+                        dataType: "json",
+                        success: function (ret) {
+                            if (ret.error == 0) {
+                                showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                CancelJob.close();
+                            } else {
+                                showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                CancelJob.close();
+                            }
+                        }
+                    });
+                    return false;
+                },
+                disabled: false
+            }
+            ]
+        });
+        return false;
+    });
+    var CloseJob;
+    $("#CloseJob").click(function () {
+        var tnum = $(this).data("tnum");
+        CloseJob = art.dialog({
+            title: '温馨提示',
+            content: '结清任务如果任务有余额将生成一笔还款计划，请谨慎操作。',
+            icon: 'warning',
+            lock: true,
+            button: [{
+                name: '确认并结清',
+                callback: function () {
+                    $.ajax({
+                        type: "Post",
+                        url: "CloseJob.html",
+                        data: "tnum=" + tnum,
+                        dataType: "json",
+                        success: function (ret) {
+                            if (ret.error == 0) {
+                                showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                                CloseJob.close();
+                            } else {
+                                showdialog("<h3>操作失败</h3>" + ret.info, "操作失败", "error");
+                                CloseJob.close();
+                            }
+                        }
+                    });
+                    return false;
+                },
+                disabled: false
+            }
+            ]
+        });
+        return false;
+    });
+</script>

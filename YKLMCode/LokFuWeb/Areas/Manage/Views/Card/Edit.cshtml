@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.SMUid = 17;
+    ViewBag.Title = "发卡";
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="Add.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">发布数量 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required,custom[int],max[1000]] input-xsmall" name="Num" id="Num" alert="请填写发布数据，最大值100" />
+                </div>
+                <p class="help-block">每次最多发卡1000张</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">分支机构 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <select name="AId" id="AId" class="form-control input-medium input-inline input-sm select2me">
+                      <option value="0">不指定机构</option>
+                      @foreach(var p in SysAgentList){
+                      <option value="@(p.Id)">@(p.Name)-@(p.Tier)级</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">分配 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <select name="Auto" id="Auto" class="form-control input-small input-inline input-sm">
+                      <option value="1">自动分配</option>
+                      <option value="0">保留</option>
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认发卡</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>  
+@section FooterScripts
+{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+	$(function () {
+		$('#AId').select2({
+            allowClear: false
+        });
+	});
+}
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}

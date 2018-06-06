@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.SMUid = 0;
+    ViewBag.Title = "补单";
+    Orders Orders = ViewBag.Orders;
+    IList<BasicDesc> BasicDescList = ViewBag.BasicDescList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style type="text/css">
+    #r_main * {
+        font-size: 12px;
+    }
+</style>
+<div class="row" style="width: 500px; padding-top: 15px; margin: 0 auto;" id="r_main">
+    <div class="" style="margin: 10px;">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <form action="RepairSave.html?@(Request.QueryString["IsAjax"].IsNullOrEmpty() ? "" : "IsAjax=1")" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="TNum" value="@(Orders.TNum)" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">订单编号</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                            @(Orders.TNum)
+                                </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">补单凭证 </label>
+                        <div class="col-md-6 input-icon right">
+                            @Html.Partial("FileLoad", new FileLoad() { StandardSize=4 ,BigName = "Pic", FilePath = "OrdersRepair", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png","application/zip" },Class="validate[required]" })
+                            <p class="help-block"></p>
+                            <br />
+                            <span><span style="color:red">*</span>请上传Bmp、Gif、Jpeg、Png、ZIP格式</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">补单说明</label>
+                        <div class="col-md-4">
+                            <select style="width: 180px;margin-bottom:5px;" class="form-control input-inline input-sm" id="CharCode" name="CharCode">
+                                <option value="0">--请选择--</option>
+                                @{
+                                    foreach (var item in BasicDescList)
+                                    {  
+                                    <option value="@item.DescText">@item.TitleCode</option>
+                                    }
+                                }
+                            </select>
+                            <textarea class="form-control input-large validate[required]" name="Remark" id="Remark" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="margin-top-10">
+                    <button class="btn green" type="submit" style="margin-left: 200px;">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" /> 
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js"></script>
+    <script type="text/ecmascript">
+        $("#CharCode").change(function () {
+            var checkValue = $(this).val();
+            if (checkValue == "0") {
+                $("#Remark").val("");
+            } else {
+                $("#Remark").val(checkValue);
+            }
+        });
+    </script>
+}

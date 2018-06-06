@@ -1,0 +1,267 @@
+﻿@{
+    IList<ApplyLoan> ApplyLoanList = ViewBag.ApplyLoanList;
+    ViewBag.SMUid = 70;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    ApplyLoan ApplyLoan = ViewBag.ApplyLoan;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">@*col-md-9*@
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>姓名：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="TrueName" value="@(ApplyLoan.TrueName)" />
+        <span class="seperator">|</span>
+        <select class="form-control input-small input-inline" data-placeholder="==不限制==" name="Education" id="Education">
+            <option value="">==学历==</option>
+            <option value="高中"@(ApplyLoan.Education == "高中" ? " selected" : "")>高中</option>
+            <option value="中专"@(ApplyLoan.Education == "中专" ? " selected" : "")>中专</option>
+            <option value="大专"@(ApplyLoan.Education == "大专" ? " selected" : "")>大专</option>
+            <option value="本科"@(ApplyLoan.Education == "本科" ? " selected" : "")>本科</option>
+            <option value="本科以上"@(ApplyLoan.Education == "本科以上" ? " selected" : "")>本科以上</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="SheBao" class="form-control input-small input-inline input-md">
+            <option value="">社保情况</option>
+            <option value="无" @(ApplyLoan.SheBao == "无" ? "selected" : "")>无</option>
+            <option value="连续3个月" @(ApplyLoan.SheBao == "连续3个月" ? "selected" : "")>连续3个月</option>
+            <option value="连续半年" @(ApplyLoan.SheBao == "连续半年" ? "selected" : "")>连续半年</option>
+            <option value="连续1年" @(ApplyLoan.SheBao == "连续1年" ? "selected" : "")>连续1年</option>
+            <option value="连续1年以上" @(ApplyLoan.SheBao == "连续1年以上" ? "selected" : "")>连续1年以上</option>
+            >
+        </select>
+        <span class="seperator">|</span>
+        <select name="HasCar" class="form-control input-xsmall input-inline input-sm">
+            <option value="">有车</option>
+            <option value="1" @(ApplyLoan.HasCar == 1 ? "selected" : "")>有</option>
+            <option value="99" @(ApplyLoan.HasCar == 99 ? "selected" : "")>无</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="House" class="form-control input-xsmall input-inline input-sm">
+            <option value="">房产信息</option>
+            <option value="商品房全款"@(ApplyLoan.House == "商品房全款" ? " selected" : "")>商品房全款</option>
+            <option value="商品房按揭"@(ApplyLoan.House == "商品房按揭" ? " selected" : "")>商品房按揭</option>
+            <option value="无房产"@(ApplyLoan.House == "无房产" ? " selected" : "")>无房产</option>
+        </select>
+        <select name="HasCredit" class="form-control input-xsmall input-inline input-sm">
+            <option value="">有信用卡</option>
+            <option value="1" @(ApplyLoan.HasCredit == 1 ? "selected" : "")>有</option>
+            <option value="99" @(ApplyLoan.HasCredit == 99 ? "selected" : "")>无</option>
+        </select>
+        <span class="seperator">|</span>
+        <br />
+        <br />
+        <select name="State" class="form-control input-xsmall input-inline input-sm">
+            <option value="">申请进度</option>
+            <option value="1" @(ApplyLoan.State == 1 ? "selected" : "")>申请中</option>
+            <option value="2" @(ApplyLoan.State == 2 ? "selected" : "")>已跟进</option>
+            <option value="3" @(ApplyLoan.State == 3 ? "selected" : "")>已审核</option>
+            <option value="4" @(ApplyLoan.State == 4 ? "selected" : "")>已放款</option>
+            <option value="5" @(ApplyLoan.State == 5 ? "selected" : "")>失败</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="PayState" class="form-control input-xsmall input-inline input-sm">
+            <option value="">佣金结算</option>
+            <option value="1" @(ApplyLoan.PayState == 1 ? "selected" : "")>已结算</option>
+            <option value="99" @(ApplyLoan.PayState == 99 ? "selected" : "")>未结算</option>
+        </select>
+        <span class="seperator">|</span>
+        <select class="form-control input-medium select2me" data-placeholder="==分支机构==" name="AgentAId" id="AgentAId">
+            <option value="">==分支机构==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(ApplyLoan.AgentAId == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>姓名 </th>
+                                <th>申请金额 </th>
+                                <th>工作单位性质 </th>
+                                <th>教育 </th>
+                                <th>社保 </th>
+                                <th>婚姻 </th>
+                                <th>有车 </th>
+                                <th>住房 </th>
+                                <th>年收入 </th>
+                                <th>有信用卡 </th>
+                                <th>进度 </th>
+                                <th>经理购买 </th>
+                                <th>售价 </th>
+                                <th>代理结算 </th>
+                                <th>结算金额 </th>
+                                <th>申请日期 </th>
+                                <th width="60">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ApplyLoanList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in ApplyLoanList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td class="center">@(p.TrueName) </td>
+                                    <td class="center">@(p.Amount.ToString("F0")) </td>
+                                    <td class="center">@(p.CompanyNature) </td>
+                                    <td class="center">@(p.Education) </td>
+                                    <td class="center">@(p.SheBao) </td>
+                                    <td class="center">@if (p.Marry == 1)
+                                                       {
+                                        <i>已婚</i>
+                                                       }
+                                                       else if (p.Marry == 0)
+                                                       {
+                                        <i>未婚</i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i>其它</i>
+                                                       } </td>
+                                    <td class="center">@if (p.HasCar == 1)
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">@(p.House) </td>
+                                    <td class="center">@(p.Income)万元 </td>
+                                    <td class="center">@if (p.HasCredit == 1)
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <span>申请中</span>
+                                                       }
+                                                       else if (p.State == 2)
+                                                       {
+                                        <span class="color-green">已跟进</span>
+                                                       }
+                                                       else if (p.State == 3)
+                                                       {
+                                        <span class="color-green">已审核</span>
+                                                       }
+                                                       else if (p.State == 4)
+                                                       {
+                                        <span class="color-green">已放款</span>
+                                                       }
+                                                       else if (p.State == 5)
+                                                       {
+                                        <span class="color-red">失败</span>
+                                                       }
+                                    </td>
+                                    <td class="center">@if (p.PayState == 1)
+                                                       {
+                                        <span class="color-green">已支付</span>
+                                                       }
+                                                       else
+                                                       {
+                                        <span>未支付</span>
+                                                       }
+                                    </td>
+                                    <td class="center">@(p.Amoney.ToString("F2")) </td>
+                                    <td class="center">@if (p.AgentPay == 1)
+                                                       {
+                                        <span class="color-green">已结算</span>
+                                                       }
+                                                       else
+                                                       {
+                                        <span>未结算</span>
+                                                       }
+                                    </td>
+                                    <td class="center">@(p.AgentMoney.ToString("F2")) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                    <td class="center">
+                                        @if (ViewBag.Save)
+                                        {
+                                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>审核</a>
+                                        }
+
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", ApplyLoanList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <script>
+            $(function () {
+                if ($("#AgentAId").val() != "") {
+                    $("#S_IsShowSupAgent").show();
+                    $("#IsShowSupAgent").show();
+                }
+                else {
+                    $("#S_IsShowSupAgent").hide();
+                    $("#IsShowSupAgent").hide();
+                }
+                $("#AgentAId").change(function () {
+                    if ($("#AgentAId").val() != "") {
+                        $("#S_IsShowSupAgent").show();
+                        $("#IsShowSupAgent").show();
+                    }
+                    else {
+                        $("#S_IsShowSupAgent").hide();
+                        $("#IsShowSupAgent").hide();
+                    }
+                });
+                $('#Agent').select2({
+                    allowClear: false
+                });
+            });
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+    }
+}

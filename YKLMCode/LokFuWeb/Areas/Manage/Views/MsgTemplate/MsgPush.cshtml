@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.SMUid = 68;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<MsgTemplate> MsgTemplateList = ViewBag.MsgTemplateList;
+    MsgTemplate M = new MsgTemplate();
+    IList<MsgTemplate> List = new List<MsgTemplate>();
+    IList<OrdersModel> OML = Utils.GetOrdersModel().Where(n => n.Id == 1 || n.Id == 2 || n.Id == 3 || n.Id == 5 || n.Id == 6 || n.Id == 7 || n.Id == 8 || n.Id == 9).OrderBy(n => n.Id).ToList();
+    foreach (var p in OML)
+    {
+        M = new MsgTemplate(); M.OrderType = (byte)p.Id; M.Tag = p.Name; List.Add(M);
+    }
+    int i = 0;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue tabbable">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-bar-chart-o"></i>@(ViewBag.Title) </div>
+            </div>
+            <div class="portlet-body">
+                <div class="portlet-tabs">
+                    <ul class="nav nav-tabs" style="margin-right: 50px">
+                        @foreach (var p in List.OrderByDescending(n => n.OrderType))
+                        {
+                            if (p.OrderType != 3 && p.OrderType != 5 && p.OrderType != 9)
+                            {
+                            <li class="@(p.OrderType == 1 ? "active" : "")"><a href="#Tab@(p.OrderType)" data-toggle="tab">@(p.Tag) </a></li>
+                            }
+                        }
+                    </ul>
+                    <div class="tab-content">
+                        @foreach (var p in List)
+                        {
+                            IList<MsgTemplate> TList = MsgTemplateList.Where(n => n.OrderType == p.OrderType).OrderBy(n => n.OrderState).ThenBy(n => n.PayState).ToList();
+                            <div class="tab-pane @(p.OrderType == 1 ? "active" : "")" id="Tab@(p.OrderType)">
+                                <div class="tabbable">
+                                    <ul class="nav nav-tabs" style="margin-bottom: 0;">
+                                        @{i = 1;}
+                                        @foreach (var pp in TList)
+                                        {
+                                            if (pp.Id != 221 && pp.Id != 222)
+                                            {
+                                            <li class="@(i == 1 ? "active" : "")"><a href="#tab_@(pp.Id)" data-toggle="tab">@(pp.Tag) </a></li>  
+                                                i++;
+                                            }
+                                        }
+                                    </ul>
+                                    <div class="tab-content no-space" style="border: 1px solid #ddd; border-top: 0;">
+                                        @{i = 1;}
+                                        @foreach (var ppp in TList)
+                                        {
+                                            <div class="tab-pane @(i == 1 ? "active" : "")" id="tab_@(ppp.Id)" style="padding:15px 20px;">
+                                                <div class="portlet box green">
+                                                    <div class="portlet-title">
+                                                        <div class="caption"><i class="fa fa-reorder"></i>@(ppp.Tag)_发送给商户</div>
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                        <form action="Index.html" id="chkForm@(ppp.Id)" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                                                            <input type="hidden" name="Id" value="@(ppp.Id)" />
+                                                            <input type="hidden" id="Title@(ppp.Id)" name="Title" value="">
+                                                            <div class="form-body">
+                                                                <div class="form-group">
+                                                                    <label for="State@(ppp.Id)">是否启用<span class="required"> * </span></label>
+                                                                    <select class="form-control input-small input-inline State" name="State" id="State@(ppp.Id)">
+                                                                        <option value="1" @(ppp.State == 1 ? "selected" : "")>启用</option>
+                                                                        <option value="0" @(ppp.State != 1 ? "selected" : "")>禁用</option>
+                                                                    </select>
+                                                                    <span class="help-block" style="height: 1px; display: block; overflow: hidden;"></span>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>消息内容<span class="required"> * </span></label>
+                                                                    <textarea rows="3" class="Info form-control" id="Info@(ppp.Id)" name="Info">@(ppp.Info)</textarea>
+                                                                    <span class="help-block" style="height: 1px; display: block; overflow: hidden;"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-actions">
+                                                                <button class="btn blue" type="submit">提交</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            i++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+                $(".chkForm").submit(function () {
+                    if ($(this).validationEngine("validate")) {
+                        var data = $(this).serialize();
+                        var url = $(this).attr("action");
+                        $.post(url, data, function (r) {
+                            if (r == "OK") {
+                                showdialog("保存成功");
+                            } else {
+                                showdialog("保存失败，请重试");
+                            }
+                        });
+                    };
+                    return false;
+                })
+            });
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <style>
+            .form-horizontal .form-group {
+                margin: 0 !important;
+            }
+        </style>
+    }
+}

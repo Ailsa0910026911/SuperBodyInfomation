@@ -1,0 +1,80 @@
+﻿@{
+    BasicCarBrand BasicCarBrand = ViewBag.BasicCarBrand;
+    ViewBag.SMUid = 62;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(BasicCarBrand.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BasicCarBrand.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">首字母 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Letter" id="Letter" value="@(BasicCarBrand.Letter)" alert="请输入汽车品牌首字母" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">品牌名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(BasicCarBrand.Name)" alert="请输入汽车品牌" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">品牌分值 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required,custom[int]] input-small" name="Score" id="Score" value="@(BasicCarBrand.Score)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">图片地址 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                  @Html.Partial("FileLoad", new FileLoad() { BigName = "Logo", FilePath = "BasicCarBrand", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                    @if (!BasicCarBrand.Logo.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("BasicCarBrand", BasicCarBrand.Logo))" target="_blank">
+                            <img src="@(Utils.ImageUrl("BasicCarBrand", BasicCarBrand.Logo))" height="25" />
+                        </a>
+                    }
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(BasicCarBrand.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

@@ -1,0 +1,169 @@
+﻿@{
+    SysControl SysControl = ViewBag.SysControl;
+    ViewBag.SMUid = 96;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height: 706px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(SysControl.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(SysControl.Id)" />
+          <input type="hidden" name="IsAjax" value="1" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">标识 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Tag" id="Tag" value="@(SysControl.Tag)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-large validate[required]" name="CName" id="CName" value="@(SysControl.CName)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">绑定通道<span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-small" name="PayWay" id="PayWay">
+                    <option value="0"@(SysControl.PayWay==0?" selected":"")>不需绑定</option>
+                    @foreach (var p in PayConfigList) { 
+                        <option value="@(p.Id)"@(SysControl.PayWay==p.Id?" selected":"")>@(p.Name)</option>
+                    }
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">排序 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xsmall"> <i class="fa"></i>
+                  <input type="text" class="form-control input-xsmall validate[required,min[1],max[999],custom[int]]" name="Sort" id="Sort" value="@(SysControl.Sort)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态<span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="0"@(SysControl.State==0?" selected":"")>隐藏</option>
+                    <option value="1"@(SysControl.State==1?" selected":"")>正常</option>
+                    <option value="2"@(SysControl.State==2?" selected":"")>不可用</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">时间限制 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                    <select class="bs-select form-control input-small" name="TimeType" id="TimeType">
+                        <option value="0"@(SysControl.TimeType==0?" selected":"")>不限制</option>
+                        <option value="1"@(SysControl.TimeType==1?" selected":"")>按每天时段</option>
+                    </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">开始时间 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <select class="bs-select form-control input-xsmall input-inline" name="STimeHH" id="STimeHH">
+                        @for (var i = 0; i <= 23;i++ ){
+                        <option value="@(i)"@(Int32.Parse(SysControl.STime.ToString("HH")) == i ? " selected" : "")>@(i<10?"0":"")@(i)</option>
+                        }
+                    </select>:
+                    <select class="bs-select form-control input-xsmall input-inline" name="STimemm" id="STimemm">
+                        @for (var i = 0; i <= 59;i++ ){
+                        <option value="@(i)"@(Int32.Parse(SysControl.STime.ToString("mm")) == i ? " selected" : "")>@(i<10?"0":"")@(i)</option>
+                        }
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">结束时间 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <select class="bs-select form-control input-xsmall input-inline" name="ETimeHH" id="ETimeHH">
+                        @for (var i = 0; i <= 23;i++ ){
+                        <option value="@(i)"@(Int32.Parse(SysControl.ETime.ToString("HH")) == i ? " selected" : "")>@(i<10?"0":"")@(i)</option>
+                        }
+                    </select>:
+                    <select class="bs-select form-control input-xsmall input-inline" name="ETimemm" id="ETimemm">
+                        @for (var i = 0; i <= 59;i++ ){
+                        <option value="@(i)"@(Int32.Parse(SysControl.ETime.ToString("mm")) == i ? " selected" : "")>@(i<10?"0":"")@(i)</option>
+                        }
+                    </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">最小金额 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-small" name="SNum" id="SNum" value="@(SysControl.SNum)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">最大金额 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-small" name="ENum" id="ENum" value="@(SysControl.ENum)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">显示到账天数 <span class="required"> * </span> </label>
+                <div class="col-md-4">
+                    <div class="input-icon right input-large">
+                        <i class="fa"></i>
+                        <input type="text" class="form-control validate[required] input-small" name="LagEntryDay" id="LagEntryDay" value="@(SysControl.LagEntryDay)" />
+                    </div>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">实际到账天数 <span class="required"> * </span> </label>
+                <div class="col-md-4">
+                    <div class="input-icon right input-large">
+                        <i class="fa"></i>
+                        <input type="text" class="form-control validate[required] input-small" name="LagEntryNum" id="LagEntryNum" value="@(SysControl.LagEntryNum)" />
+                    </div>
+                    <p class="help-block"></p>
+                </div>
+            </div>
+
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(SysControl.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

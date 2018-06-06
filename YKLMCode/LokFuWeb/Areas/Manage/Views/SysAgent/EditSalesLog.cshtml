@@ -1,0 +1,260 @@
+﻿@{
+    SalesLog SalesLog = ViewBag.SalesLog;
+    ViewBag.SMUid = 30;
+    SysSet BasicSet = ViewBag.BasicSet;
+    List<Attach> Contract = this.ViewBag.Contract;
+    List<Attach> Certificate = this.ViewBag.Certificate;
+    List<Attach> IDCard_Front = this.ViewBag.IDCard_Front;
+    List<Attach> IDCard_Hand = this.ViewBag.IDCard_Hand;
+    List<Attach> IDCard_Reverse = this.ViewBag.IDCard_Reverse;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<style>
+    .TeiPai {
+        display: none;
+    }
+    .adddiv li {
+        border-bottom: 1px solid #ddd;
+        line-height: 42px;
+    }
+    .adddiv {
+        width: 380px;
+    }
+    .adddiv .container {
+        width: 340px;
+        padding: 0;
+    }
+    .col-md-8 {
+        white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+    }
+</style>
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <form class="form-horizontal" >
+        <div class="form-body">
+        <!-- BEGIN FORM-->
+          <input type="hidden" name="Id" value="@(SalesLog.Id)" />
+            <div class="form-group">
+              <label class="control-label col-md-3">变动时间 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <input type="text" class="form-control input-large" value="@(SalesLog.AddTime.ToString())"  disabled />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">销售人员 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <input type="text" class="form-control input-large" value="@(SalesLog.Salesman)"  disabled />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">到期时间 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <input type="text" class="form-control input-large" value="@(SalesLog.ExpireTime.ToString("yyyy-MM-dd"))"  disabled />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">代理费 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                    <input type="text" class="form-control input-large" value="@(SalesLog.AgentFee.ToString("f2"))"  disabled />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">代理合同(多张) <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="adddiv" style="margin:10px 0 0">   
+                  <ul style="list-style:none; margin:0; padding:0">
+                      @if (Contract.Count > 0)
+                      {
+                          for (int i = 0; i < Contract.Count; i++)
+                          {
+                              var item = Contract[i];
+                        <li id="@(item.Id)" >
+                            <div class="container cont">
+                                <span class="title col-md-8">
+                                <a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a>
+                                </span>
+                                <div class="col-md-4">
+                                @if (item.RemoveSLogId > 0)
+                                {
+                                <span>删除</span>
+                                }
+                                else
+                                {
+                                <span>新增</span>
+                                }
+                                </div>
+                            </div>
+                        </li>
+                          }
+                      }
+                  </ul>
+                </div>  
+              </div>             
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">身份证正面 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="adddiv" style="margin:10px 0 0">   
+                  <ul style="list-style:none; margin:0; padding:0">
+                    @if (IDCard_Front.Count > 0)
+                    {
+                        foreach (var item in IDCard_Front)
+                        { 
+                            <li >
+                                <div class="container cont">
+                                    <span class="title col-md-8">
+                                    <a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a>
+                                    </span>
+                                    <div class="col-md-4">
+                                    @if (item.RemoveSLogId > 0)
+                                    {
+                                    <span>删除</span>
+                                    }
+                                    else
+                                    {
+                                    <span>新增</span>
+                                    }
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                  </ul>
+                </div>  
+                </div>  
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">身份证反面 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="adddiv" style="margin:10px 0 0">   
+                  <ul style="list-style:none; margin:0; padding:0">
+                    @if (IDCard_Reverse.Count > 0)
+                    {
+                        foreach (var item in IDCard_Reverse)
+                        { 
+                    <li >
+                        <div class="container cont">
+                        <span class="title col-md-8">
+                        <a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a>
+                        </span>
+                        <div class="col-md-4">
+                        @if (item.RemoveSLogId > 0)
+                        {
+                        <span>删除</span>
+                        }
+                        else
+                        {
+                        <span>新增</span>
+                        }
+                        </div>
+                        </div>
+                    </li>
+                        }
+                    }
+                  </ul>
+                </div> 
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">身份证手持 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="adddiv" style="margin:10px 0 0">  
+                  <ul style="list-style:none; margin:0; padding:0">
+                    @if (IDCard_Hand.Count > 0)
+                    {
+                        foreach (var item in IDCard_Hand)
+                        { 
+                    <li >
+                        <div class="container cont">
+                        <span class="title col-md-8">
+                        <a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a>
+                        </span>
+                        <div class="col-md-4">
+                        @if (item.RemoveSLogId > 0)
+                        {
+                        <span>删除</span>
+                        }
+                        else
+                        {
+                        <span>新增</span>
+                        }
+                        </div>
+                        </div>
+                    </li>
+                        }
+                    }
+                  </ul>
+                </div> 
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">营业执照或其它证件(多张) <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="adddiv" style="margin:10px 0 0">   
+                    <ul style="list-style:none; margin:0; padding:0">
+                    @if (Certificate.Count > 0)
+                    {
+                        for (int i = 0; i < Certificate.Count; i++)
+                        {
+                            var item = Certificate[i];
+                        <li id="@(item.Id)" >
+                            <div class="container cont">
+                            <span class="title col-md-8">
+                                <a target="_blank" href="@(Utils.ImageUrl("Attach/", item.AFile))">@(item.UpLoadFile)</a>
+                            </span>
+                            <div class="col-md-4">
+                            @if (item.RemoveSLogId > 0)
+                            {
+                            <span>删除</span>
+                            }
+                            else
+                            {
+                            <span>新增</span>
+                            }
+                            </div>
+                            </div>
+                        </li>
+                        }
+                    }
+                    </ul>
+                </div> 
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+<script>
+    $(function () {
+        //整理行
+        listTidy();
+        function listTidy() {
+            $(".adddiv").find("li:nth-child(odd)").css({ background: "#f9f9f9" });
+            $(".adddiv").find("li:nth-child(1)").css({ "border-top": "1px solid #ddd" });
+        }
+    });
+</script>
+}

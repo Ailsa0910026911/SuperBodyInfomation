@@ -1,0 +1,254 @@
+﻿@{
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    IList<SysAgent> AgentList = ViewBag.AgentList;
+    ViewBag.SMUid = 292;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = false;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+     @*   <input type="hidden" name="Id" value="@(SysAgent.Id)" />*@
+        <select class="form-control input-xsmedium input-inline input-large select2me" data-placeholder="==分支机构==" name="Id" id="Id">
+            <option value="">==分支机构==</option>
+            @foreach (var p in AgentList)
+            {
+                <option value="@(p.Id)"@(SysAgent.Id == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+         @if (ViewBag.AllAgent)
+                        {
+                            <button class="btn btn-sm green table-group-action-submit" type="button" id="AllAgent"><i class="fa fa-share"></i>全部调入</button>
+                        }
+         <select name="AgentId" id="AgentId" style="display:none;">
+                      <option value="">==请选择==</option>
+                     @* @foreach (var p in AgentList)
+                      {
+                      <option value="@(p.Id)">@(p.Name)</option>
+                      }*@
+        </select>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+             <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="btn-group">
+                        @if (ViewBag.Batch)
+                        {
+                            <button class="btn btn-sm green table-group-action-submit" type="button" id="Batch"><i class="fa fa-share"></i>批量调入</button>
+                        }
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                       
+                    </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>机构名称 </th>
+                                <th>联系人 </th>
+                                <th>联系手机 </th>
+                                <th>区域 </th>
+                                <th>代理费</th>
+                                <th>级数</th>
+                                <th>状态 </th>
+                                <th>所属销售 </th>
+                                <th>钱包绑定 </th>
+                                <th>开通时间 </th>
+                                <th>到期时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (SysAgentList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in SysAgentList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td class="center"><a class="Ajax" href="~/Manage/SysAgent/Info.html?Id=@(p.Id)">@(p.Name)</a> </td>
+                                    <td class="center">@(p.Linker) </td>
+                                    <td class="center">@(p.LinkMobile) </td>
+                                    <td class="center">
+                                        @{
+                                    string AgentRegion = p.AgentRegion;
+                                    if (!string.IsNullOrWhiteSpace(AgentRegion))
+                                    {
+                                        AgentRegion = p.AgentRegion.Length > 30 ? p.AgentRegion.Substring(0, 20) + "..." : p.AgentRegion;
+                                    }
+                                        }
+                                        @(AgentRegion)
+                                    </td>
+                                    <td class="center">@(p.AgentFee.ToString("F2"))</td>
+                                    <td class="center">@(p.Tier)级</td>
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">
+                                      @(p.Salesman)
+                                    </td>
+                                    <td class="center">@if (!p.MyUId.IsNullOrEmpty())
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                    <td class="center">@(p.ExpireTime.ToString("yyyy-MM-dd")) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", SysAgentList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js?v=2"></script>
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="/Content/HaoFu/js/iframe.js?20161230"></script>
+    <script>
+        $("#Batch").click(function () {
+            var action = "Batch.html";
+            var ListID = "0";
+            var allselectText = $('input[name=list]');
+            for (var i = 0; i < allselectText.length; i++) {
+                if (allselectText[i].checked) {
+                    ListID += "," + allselectText[i].value;
+                }
+            }
+            if (ListID.split(",").length == 1) {
+                art.dialog({
+                    title: '温馨提示',
+                    content: '当前页面信息并没有任何选中项？',
+                    icon: 'warning',
+                    lock: true,
+                    cancel: function () {
+                        this.close();
+                    }
+                });
+                return false;
+            }
+            ListID = ListID.replace("0,", "");
+
+            $.ajax({
+                type: "POST",
+                url: "/manage/asyn/GetAgent.html",
+                data: "AgengtId="+$("#Id").val(),
+                dataType: "json",
+                async: false,
+                beforeSend: function () {
+
+                },
+                success: function (json) {
+                    $("#AgentId").empty();
+                    $("#AgentId").append("<option value=''>==请选择==</option>");
+                    for (var i = 0; i < json.length; i++) {
+                        var obj = json[i];
+                        $("#AgentId").append("<option value='" + obj.id + "' >" + obj.name + "</option>");
+                    }
+                }
+            })
+            var option = $("#AgentId").html();
+            art.dialog({
+                title: '温馨提示',
+                lock: true,
+                content: "共有" + (ListID.split(",").length) + "个代理商被调出,您确定操作吗？<br />请选择代理商：<select id=\"AgentValue\">" + option + "</select>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#AgentValue").val();
+                    if (value == "" || value == "undefined") return false;
+                    var Url = action + '?agengtid=' + $("#Id").val() + '&value=' + value + '&InfoList=' + ListID + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+        $("#AllAgent").click(function () {
+            if ($("#Id").val() == "")
+            {
+                showdialog("请选择代理商");
+                return false;
+            }
+            var action = "AllAgent.html";
+            $.ajax({
+                type: "POST",
+                url: "/manage/asyn/GetAgent.html",
+                data: "AgengtId=" + $("#Id").val(),
+                dataType: "json",
+                async: false,
+                beforeSend: function () {
+
+                },
+                success: function (json) {
+                    $("#AgentId").empty();
+                    $("#AgentId").append("<option value=''>==请选择==</option>");
+                    for (var i = 0; i < json.length; i++) {
+                        var obj = json[i];
+                        $("#AgentId").append("<option value='" + obj.id + "' >" + obj.name + "</option>");
+                    }
+                }
+            })
+            var option = $("#AgentId").html();
+            art.dialog({
+                title: '温馨提示',
+                lock: true,
+                content: "请选择代理商：<select id=\"AgentValue\">" + option + "</select>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#AgentValue").val();
+                    if (value == "" || value == "undefined") return false;
+                    var Url = action + '?agengtid=' + $("#Id").val() + '&value=' + value + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+    </script>
+}
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}

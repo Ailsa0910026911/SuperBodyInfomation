@@ -1,0 +1,75 @@
+﻿@{
+    List<JobItem> JobItemList = ViewBag.JobItemList;
+}
+<div style="width:600px; height:400px; overflow:scroll;">
+<table class="table table-striped table-bordered table-hover"  style="overflow:scroll;" id="JobOrders">
+    <thead>
+        <tr>
+            <th style="text-align:center">交易号</th>
+            <th style="text-align:center">金额</th>
+            <th style="text-align:center">执行时间</th>
+            <th style="text-align:center">类型</th>
+            <th style="text-align:center">处理</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in JobItemList)
+        {
+            <tr class="odd gradeX" >
+                <td style="text-align:center">@(item.RunNum) </td>
+                <td style="text-align:center">@(item.RunMoney.ToString("F2"))</td>
+                <td style="text-align:center" class="time">@(item.RunTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                <td style="text-align:center; @(item.RunType==2?"color:red":"")">@if (item.RunType == 1)
+                    { @("消费")}
+                    else if (item.RunType == 2)
+                    { 
+                     @("还款")
+                    }
+                </td>
+                <td style="text-align:center">
+                    <a href="#" data-id="@(item.Id)" class="label label-sm label-success SetTime" title="设置">设置</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+<script type="text/javascript">
+    //InitIsAjax();
+    var DoSetTime;
+    $(".SetTime").click(function () {
+        var id = $(this).data("id");
+        var Tr = $(this).closest("tr");
+        var time = Tr.find(".time").text() + ":00";
+        DoSetTime = art.dialog({
+            title: '温馨提示',
+            content: '<p>设置时间：<input type="text" id="Time" class="jobtext" value="' + time + '">',
+            icon: 'warning',
+            lock: true,
+            button: [{
+                name: '保存时间',
+                callback: function () {
+                    var RunTime = $("#Time").val();
+                    if (RunTime == "") {
+                        alert("请指定执行时间");
+                        return;
+                    }
+                    $.ajax({
+                        type: "Post",
+                        url: "SetTimeSave.html",
+                        data: "id=" + id + "&runtime=" + RunTime,
+                        success: function () {
+                            showdialog("<h3>操作成功</h3>请再次核对所有交易", "操作成功", "success");
+                            Tr.find(".time").text(RunTime);
+                            DoSetTime.close();
+                        }
+                    });
+                    return false;
+                },
+                disabled: false
+            }
+            ]
+        });
+        return false;
+    });
+</script>

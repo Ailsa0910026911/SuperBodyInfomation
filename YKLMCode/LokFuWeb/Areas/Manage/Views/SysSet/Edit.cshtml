@@ -1,0 +1,348 @@
+﻿@{
+    SysSet SysSet = ViewBag.SysSet;
+    ViewBag.SMUid = 35;
+    ViewBag.Title = "系统基础设置";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysSet.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">系统名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(SysSet.Name)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">分支系统名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="AgentName" id="AgentName" value="@(SysSet.AgentName)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">APP版权信息 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="AppWord" id="AppWord" value="@(SysSet.AppWord)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备案号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ICP" id="ICP" value="@(SysSet.ICP)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">客服热线 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="Tel" id="Tel" value="@(SysSet.Tel)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">禁用关键词 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control" name="NoWord" id="NoWord" rows="5" style="width: 600px;">@(SysSet.NoWord)</textarea>
+                                    <p>多个关键写请与“|”线隔开</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">登录密码重试次数 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control validate[required,custom[int],min[1]] input-inline input-small" name="LoginLock" id="LoginLock" value="@(SysSet.LoginLock)" />次/天
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">支付密码重试次数 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control validate[required,custom[int],min[1]] input-inline input-small" name="PayLock" id="PayLock" value="@(SysSet.PayLock)" />次/天
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">短信重发次数 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control validate[required,custom[int],min[1]] input-inline input-small" name="SMSTimes" id="SMSTimes" value="@(SysSet.SMSTimes)" />次/天
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">短信有效时间 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control validate[required,custom[int],min[1]] input-inline input-small" name="SMSActives" id="SMSActives" value="@(SysSet.SMSActives)" />分钟
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">短信后辍 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control" name="SMSEnd" id="SMSEnd" value="@(SysSet.SMSEnd)" />
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓版本号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ApkVer" id="ApkVer" value="@(SysSet.ApkVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="radio-list right">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="APKState" id="APKState1" @(SysSet.APKState == 1 ? "checked" : "") />已上线
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="2" name="APKState" id="APKState2" @(SysSet.APKState == 2 ? "checked" : "") />审核中
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓序号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ApkInt" id="ApkInt" value="@(SysSet.ApkInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">下载地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="ApkUrl" id="ApkUrl" value="@(SysSet.ApkUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">应用宝地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="ApkYYB" id="ApkYYB" value="@(SysSet.ApkYYB)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓升级内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control validate[required]" name="ApkInfo" id="ApkInfo" rows="5" style="width: 600px;">@(SysSet.ApkInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓颜色 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="ApkColor" id="ApkColor" value="@(SysSet.ApkColor)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓更新设置 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <select class="bs-select form-control input-small input-inline" name="ApkAutoUpdate" id="ApkAutoUpdate">
+                                        <option value="0" @(SysSet.ApkAutoUpdate == 0 ? " selected" : "")>不更新</option>
+                                        <option value="1" @(SysSet.ApkAutoUpdate == 1 ? " selected" : "")>选择更新</option>
+                                        <option value="2" @(SysSet.ApkAutoUpdate == 2 ? " selected" : "")>强制更新</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS版本号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="IosVer" id="IosVer" value="@(SysSet.IosVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="radio-list right">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="IOSState" id="IOSState1" @(SysSet.IOSState == 1 ? "checked" : "") />已上线
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="2" name="IOSState" id="IOSState2" @(SysSet.IOSState == 2 ? "checked" : "") />审核中
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS序号 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="IosInt" id="IosInt" value="@(SysSet.IosInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">App Store地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="IosUrl" id="IosUrl" value="@(SysSet.IosUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">应用宝地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-xlarge" name="IosYYB" id="IosYYB" value="@(SysSet.IosYYB)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS升级内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control validate[required]" name="IosInfo" id="IosInfo" rows="5" style="width: 600px;">@(SysSet.IosInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS颜色 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required]" name="IosColor" id="IosColor" value="@(SysSet.IosColor)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS更新设置 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <select class="bs-select form-control input-small input-inline" name="IosAutoUpdate" id="IosAutoUpdate">
+                                        <option value="0" @(SysSet.IosAutoUpdate == 0 ? " selected" : "")>不更新</option>
+                                        <option value="1" @(SysSet.IosAutoUpdate == 1 ? " selected" : "")>选择更新</option>
+                                        <option value="2" @(SysSet.IosAutoUpdate == 2 ? " selected" : "")>强制更新</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                @if (ViewBag.Save)
+                                {
+                                    <button type="submit" class="btn green">确认修改</button>
+                                }
+                            </div>
+                        </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+@*<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+        <script>
+            $(function () {
+                $("#chkForm").submit(function () {
+                })
+                //$("#SW1sTime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                //$("#SW1eTime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                //$("#SW2sTime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                //$("#SW2eTime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+            })
+        </script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    }
+}

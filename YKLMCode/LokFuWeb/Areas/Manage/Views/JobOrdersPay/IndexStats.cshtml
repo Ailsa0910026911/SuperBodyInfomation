@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+    decimal SumAmoney = ViewBag.SumAmoney;
+    decimal SumProfit = ViewBag.SumProfit;
+    decimal Count = ViewBag.Count;
+}
+<div class="alert alert-danger">
+    <button data-close="alert" class="close"></button>
+    总金额：<b>@(SumAmoney.ToString("f2"))</b> 
+    总笔数：<b>@(Count)</b> 
+    总分润：<b>@(SumProfit.ToString("f2"))</b> 
+</div>

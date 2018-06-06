@@ -1,0 +1,457 @@
+﻿@{
+    IList<Card> CardList = ViewBag.CardList;
+    ViewBag.SMUid = 156;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    Card Card = ViewBag.Card;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    string Num0 = ViewBag.Num0;
+    string Num1 = ViewBag.Num1;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+
+    SysAgent SysAgent = ViewBag.BasicAgent;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+    <div class="inquiry-cont">
+    <form class="frame-list" id="ListForm" name="ListForm" method="get">
+        <input  type="hidden" id="IsFirst" name="IsFirst" value="1"/>
+        <table>
+			<tbody>
+                <td width="80" align="right">卡号起止 : </td>
+	            <td width="250" align="left">
+                    <input id="Num0" class="input-sm" type="text" name="Num0" value="@(Num0)" /> - 
+                    <input id="Num1" class="input-sm" type="text" name="Num1" value="@(Num1)" />
+                </td>
+                <td width="60" align="right">状态 : </td>
+	            <td width="100" align="left">
+                    <select name="State" class="input-sm">
+                        <option value="">不限制</option>
+                        <option value="1" @(Card.State == 1 ? "selected" : "")>未授权</option>
+                        <option value="2" @(Card.State == 2 ? "selected" : "")>已授权</option>
+                        <option value="3" @(Card.State == 3 ? "selected" : "")>使用中</option>
+                        <option value="99" @(Card.State == 99 ? "selected" : "")>失效</option>
+                    </select>
+	            </td>
+                <td width="80" align="right">激活码状态 : </td>
+	            <td width="100" align="left">
+                    <select name="AId" class="input-sm">
+                        <option value="">不限制</option>
+                        <option value="1" @(Card.State == 1 ? "selected" : "")>未授权</option>
+                        <option value="2" @(Card.State == 2 ? "selected" : "")>已授权</option>
+                        <option value="3" @(Card.State == 3 ? "selected" : "")>使用中</option>
+                        <option value="99" @(Card.State == 99 ? "selected" : "")>失效</option>
+                    </select>
+	            </td>
+                <td width="60" align="right">分配 : </td>
+	            <td width="100" align="left">
+                    <select name="Auto" class="input-sm">
+                      <option value="">不限制</option>
+                      <option value="1" @(Card.Auto == 1 ? "selected" : "")>自动</option>
+                      <option value="99" @(Card.Auto == 99 ? "selected" : "")>保留</option>
+                  </select>
+	            </td>
+                @if (SysAdminList.Count > 0)
+                {
+                    <td width="80" align="right">领卡员工 : </td>
+	                <td width="100" align="left">
+                         <select name="AdminId" class="input-sm" id="AdminId">
+                              <option value="">不限制</option>
+                              @foreach (var p in SysAdminList)
+                              {
+                              <option value="@(p.Id)" @(Card.AdminId == p.Id ? "selected" : "")>@(p.TrueName)</option>
+                              }
+                          </select>
+	                </td>
+                }
+                @if (SysAgentList.Count > 0)
+                {
+                  <select name="AgentId" id="AgentId" style="display:none;">
+                      <option value="">不限制</option>
+                      @foreach (var p in SysAgentList)
+                      {
+                      <option value="@(p.Id)">@(p.Name)</option>
+                      }
+                  </select>
+                }
+            </tbody>
+      </table>
+            <div class="text-right">
+                <button type="submit" class="but">查  询</button>
+                <button type="reset" class="but">重  置</button>
+            </div>
+    </form>
+    </div>
+    <div class="frame-bg bg-none">
+        @if (ViewBag.Save)
+        {
+            <a href="javascript:void(0);" class="btn btn-blue" id="BatSetAdmin">授权给员工</a>	
+            <a href="javascript:void(0);" class="btn btn-blue" id="BatchBatSetAdmin">批量授权给员工</a>
+            if (SysAgentList.Count > 0)
+            {
+            <a href="javascript:void(0);" class="btn btn-green" id="BatSetAgent">授权给代理</a>		
+             <a href="javascript:void(0);" class="btn btn-green" id="BatchBatSetAgent">批量授权给代理</a>		
+            }
+        }
+        @if (SysAgent.IsTeiPai == 1 && SysAgent.Tier == 1 && ViewBag.SetSave)
+        {
+        <div style="float:right;width:280px; border:1px dashed #890101;" class="inquiry-cont">
+            <form class="frame-list" id="SetForm" name="SetForm" method="post">
+                <span>激活码设置</span>
+                <select class="input-sm" name="Set3" id="Set3">
+                    <option value="1"@(SysAgent.Set3 == 1 ? " selected" : "")>必填</option>
+                    <option value="2"@(SysAgent.Set3 == 2 ? " selected" : "")>不填</option>
+                    <option value="3"@(SysAgent.Set3 == 3 ? " selected" : "")>选填</option>
+                </select>
+                <button type="button" class="but" style="font-size:12px;" id="SetFormBtn">保存设置</button>
+        </form>
+        </div>
+        }
+	</div>
+    <div class="point">
+        卡片分配方式设置为<span class="text-red">自动时</span>，用户分享后可随机分享该卡片给到新用户，如果设置为<span class="text-red">保留时</span>，卡片不会被分配出去. 如卡片分配给客户，请设置为保留。
+	</div>
+    <div class="license-table">
+        <table id="ListBox">
+            <thead>
+            <tr>
+                <th class="table-checkbox" width="40"> <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                <th width="70"> 卡号 </th>
+                <th width="70"> 密码 </th>
+                <th width="60"> 状态 </th>
+                <th width="60"> 分配 </th>
+                <th width="80"> 授权员工 </th>
+                <th width="100"> 时间 </th>
+                @*<th width="80"> 会员卡 </th>*@
+            </tr>
+            </thead>
+            <tbody class="tbody">
+                @if (CardList.Count() <= 0)
+                {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                }
+                else
+                {
+                    foreach (var p in CardList)
+                    {
+                        SysAdmin SA = SysAdminList.FirstOrNew(n => n.Id == p.AdminId);
+                        if (SA.TrueName.IsNullOrEmpty())
+                        {
+                            SA.TrueName = "--";
+                        }
+            <tr class="odd gradeX">
+                <td>
+                    @if (p.AdminId > 0)
+                    {
+                        <input type="checkbox" class="checkboxes" disabled />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" />
+                    }
+                </td>
+            <td class="center"> @(p.Code) </td>
+            <td class="center"> @(p.PasWd) </td>
+                <td class="center"> 
+                    @if (p.State == 1)
+                    {
+                        <i class="fa fa-times color-green">未授权</i>
+                    }
+                    else if (p.State == 2)
+                    {
+                        <i class="fa fa-check color-red">已授权</i>
+                    }
+                    else if (p.State == 0)
+                    {
+                        <i class="fa fa-times color-gray">失效</i>
+                    }
+                    else if (p.State == 3)
+                    {
+                        <i class="fa fa-times color-gray">使用中</i>
+                    }
+                </td>
+                <td class="center"> @if (p.Auto == 1)
+                                    {
+                    <a class="fa fa-check color-green AutoSet" rev="@(p.Id)" rel="0" href="javascript:void(0);" title="点击设为保留">自动</a>
+                                    }
+                                    else
+                                    {
+                    <a class="fa fa-times color-gray AutoSet" rev="@(p.Id)" rel="1" href="javascript:void(0);" title="点击设为自动">保留</a>
+                                    } </td>
+                <td class="center"> @(SA.TrueName) </td>
+                <td class="center"> @(p.AddTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")) </td>
+                @*<td class="center"> <a href="/card?en=@(LokFu.Infrastructure.LokFuEncode.Base64Encode(p.Code + "|" + p.PasWd))" class="label label-sm label-success Ajax"><i class="fa fa-credit-card"></i>生成</a></td>*@
+            </tr>
+                    }
+                }
+            </tbody>
+        </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", CardList)
+    </div>
+</div>
+    </div>
+@section FooterScripts
+{
+<script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+<script>
+    var Tips = 0;
+    $(function () {
+        $("#SetFormBtn").click(function () {
+            var Set3 = $("#Set3").val();
+            $.ajax({
+                type: "Post",
+                url: "SetSave.html",
+                data: "Set3=" + Set3,
+                beforeSend: function () {
+                    Tips = parent.ArtDialog({
+                        title: '温馨提示',
+                        content: '正在保存数据',
+                        icon: 'warning',
+                        lock: true,
+                        cancel: function () {
+                            this.close();
+                        }
+                    });
+                },
+                success: function (ret) {
+                    Tips.close();
+                    if (ret == "OK") {
+                        parent.ArtDialog({
+                            title: '温馨提示',
+                            content: '保存成功',
+                            icon: 'success',
+                            lock: true,
+                            ok: function () {
+                                this.close();
+                            }
+                        });
+                    } else {
+                        parent.ArtDialog({
+                            title: '温馨提示',
+                            content: '保存失败',
+                            icon: 'error',
+                            lock: true,
+                            ok: function () {
+                                this.close();
+                            }
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+        $(".AutoSet").click(function () {
+            var obj = $(this);
+            var id = $(this).attr("rev");
+            var v = $(this).attr("rel");
+            $.get("ChangeStatus.html?Clomn=Auto&value=" + v + "&InfoList=" + id, function () {
+                if (v == "1") {
+                    obj.text("自动");
+                    obj.removeClass("fa-times color-gray").addClass("fa-check color-green");
+                    obj.attr("rel", 0);
+                } else {
+                    obj.text("保留");
+                    obj.removeClass("fa-check color-green").addClass("fa-times color-gray");
+                    obj.attr("rel", 1);
+                }
+            });
+        });
+        $("#BatSetAgent").click(function () {
+            var action = arguments[2] ? arguments[2] : "Save.html";
+            var ListID = "0";
+            var allselectText = $('input[name=list]');
+            for (var i = 0; i < allselectText.length; i++) {
+                if (allselectText[i].checked) {
+                    ListID += "," + allselectText[i].value;
+                }
+            }
+            if (ListID.split(",").length == 1) {
+                parent.ArtDialog({
+                    title: '温馨提示',
+                    content: '当前页面信息并没有任何选中项？',
+                    icon: 'warning',
+                    lock: true,
+                    cancel: function () {
+                        this.close();
+                    }
+                });
+                return false;
+            }
+            ListID = ListID.replace("0,", "");
+            var option = $("#AgentId").html().replace("不限制", "请选择");
+            parent.ArtDialog({
+                title: '温馨提示',
+                lock: true,
+                content: "共有" + (ListID.split(",").length) + "张卡片将被指派给下级代理,您确定操作吗？<br />请选择代理：<select id=\"AgentValue\">" + option + "</select><br /><span style='color:red;'>指派给下级后您将对这所指定的片失去管理权。</span>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#AgentValue").val();
+                    if (value == "") return false;
+                    var Url = action + '?type=Agent&value=' + value + '&InfoList=' + ListID + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+        $("#BatSetAdmin").click(function () {
+            var action = arguments[2] ? arguments[2] : "Save.html";
+            var ListID = "0";
+            var allselectText = $('input[name=list]');
+            for (var i = 0; i < allselectText.length; i++) {
+                if (allselectText[i].checked) {
+                    ListID += "," + allselectText[i].value;
+                }
+            }
+            if (ListID.split(",").length == 1) {
+                parent.ArtDialog({
+                    title: '温馨提示',
+                    content: '当前页面信息并没有任何选中项？',
+                    icon: 'warning',
+                    lock: true,
+                    cancel: function () {
+                        this.close();
+                    }
+                });
+                return false;
+            }
+            ListID = ListID.replace("0,", "");
+            var option = $("#AdminId").html().replace("不限制", "请选择");
+            parent.ArtDialog({
+                title: '温馨提示',
+                lock: true,
+                content: "共有" + (ListID.split(",").length) + "张卡片将被派给指定员工,您确定操作吗？<br />请选择员工：<select id=\"UserValue\">" + option + "</select>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#UserValue").val();
+                    if (value == "" || value == "undefined") return false;
+                    var Url = action + '?type=User&value=' + value + '&InfoList=' + ListID + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+
+        $("#BatchBatSetAgent").click(function () {
+            var start = $("#Num0").val();
+            var end = $("#Num1").val();
+            var count = 0;
+            if (start == "" || end == "" || (end - start) < 0) {
+                AlertDialog('请输入正确的卡号起止');
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                async: false,
+                url: "/Agent/Asyn/GetCount.html",
+                data: "start=" + start + "&end=" + end,
+                success: function (ret) {
+                    count = ret;
+                }
+            });
+            if (count == 0) {
+                AlertDialog('该区间没有可以授权的激活码');
+
+                return false;
+            }
+            if (count > 10000) {
+                AlertDialog('一次最多授权10000条激活码');
+                return false;
+            }
+            var action = arguments[2] ? arguments[2] : "Save.html";
+            var option = $("#AgentId").html().replace("不限制", "请选择");
+            parent.ArtDialog({
+                title: '温馨提示',
+                lock: true,
+                content: "" + start + "-" + end + "共" + count + "张卡片将被指派给下级代理,您确定操作吗？<br />请选择代理：<select id=\"AgentValue\">" + option + "</select><br /><span style='color:red;'>指派给下级后您将对这所指定的片失去管理权。</span>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#AgentValue").val();
+                    if (value == "") return false;
+                    var Url = action + '?type=BatchAgent&value=' + value + '&InfoList=0&start=' + start + '&end=' + end + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+        $("#BatchBatSetAdmin").click(function () {
+            var start = $("#Num0").val();
+            var end = $("#Num1").val();
+            var count = 0;
+            if (start == "" || end == "" || (end - start) < 0) {
+                AlertDialog('请输入正确的卡号起止');
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                async: false,
+                url: "/Agent/Asyn/GetCount.html",
+                data: "start=" + start + "&end=" + end,
+                success: function (ret) {
+                    count = ret;
+                }
+            });
+            if (count == 0) {
+                AlertDialog('该区间没有可以授权的激活码');
+
+                return false;
+            }
+            if (count > 10000) {
+                AlertDialog('一次最多授权10000条激活码');
+                return false;
+            }
+            var action = arguments[2] ? arguments[2] : "Save.html";
+            var option = $("#AdminId").html().replace("不限制", "请选择");
+            parent.ArtDialog({
+                title: '温馨提示',
+                lock: true,
+                content: "" + start + "-" + end + "共" + count + "张卡片将被派给指定员工,您确定操作吗？<br />请选择员工：<select id=\"UserValue\">" + option + "</select>",
+                icon: 'warning',
+                ok: function () {
+                    var value = parent.$("#UserValue").val();
+                    if (value == "" || value == "undefined") return false;
+                    var Url = action + '?type=BatchUser&value=' + value + '&InfoList=0&start=' + start + '&end=' + end + '&' + Math.random();
+                    $.get(Url, function (data) {
+                        GoHref(location.href);
+                    });
+                },
+                cancel: function () {
+                    this.close()
+                }
+            });
+            return false;
+        });
+
+        function AlertDialog(text) {
+            parent.ArtDialog({
+                title: '温馨提示',
+                content: text,
+                icon: 'warning',
+                lock: true,
+                cancel: function () {
+                    this.close();
+                }
+            });
+        }
+
+    });
+</script>
+}

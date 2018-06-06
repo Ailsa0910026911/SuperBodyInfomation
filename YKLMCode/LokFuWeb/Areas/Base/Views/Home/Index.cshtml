@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Index";
+    if (Request.Url.Host == "sys.goodpay.net.cn" || Request.Url.Host == "sys.kkapay.com")
+    {
+        Response.Redirect("/agent/");
+    }
+    else if (Request.Url.Host == "m.goodpay.net.cn")
+    {
+        Response.Redirect("/manage/");
+    }else
+    {
+        Response.Write("出错了，此路不通！");
+    }
+}

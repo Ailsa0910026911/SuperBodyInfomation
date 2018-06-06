@@ -1,0 +1,34 @@
+﻿@{
+    Layout = @"../Shared/_Layout.cshtml";
+    string ActionUrl = ViewBag.ActionUrl;
+}
+@Html.Partial("Menu")
+<div class="row" style="min-width:600px;">
+    <div class="col-md-12 page-500">
+        <div class=" number">
+            <i class="fa fa-exclamation-circle"></i>
+        </div>
+        <div class=" details">
+            <h3>请确认？</h3>
+            <p>
+                信息：@(ViewBag.Msg)<br />
+            </p>
+            <form action="@(ActionUrl.IsNullOrEmpty() ? this.Request.RawUrl : ActionUrl)&Confirm=true" method="post">
+                @*<a href="@(this.Request.RawUrl)&Confirm=true" class="btn blue" style="margin-right:80px;">确定</a>*@
+                <input type="submit" class="btn blue" value="确定" id="confirm" style="margin-right:80px;">
+                <input type="button" class="btn red" value="取消" id="close">
+            </form>
+        </div>
+    </div>
+</div>
+@section HeaderScripts
+{
+    <link href="/Content/Metronic/css/pages/error.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(function () {
+            $("#close").click(function () {
+                art.dialog.close();
+            });
+        });
+    </script>
+}

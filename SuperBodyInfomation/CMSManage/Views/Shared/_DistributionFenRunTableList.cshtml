@@ -30,7 +30,11 @@
                 <td>@item.S2_6_4</td>
                 <td>@item.S2_5_4</td>
                 <td>@item.S3_6_5_4</td>
-                <td>@item.Type</td>
+                <td>@if (item.Type == 0)
+                { <span>信用卡</span>}
+                else if(item.Type==1)
+                { <span>贷款</span>}
+                </td>
                 <td><a href="~/Default/DistributionFenRun?Id=@item.Id"><input value="修改" accesskey="S" class="btn btn-info" style="width:54px" /></a></td>
             </tr>
         }

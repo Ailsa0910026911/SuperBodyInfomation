@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    bool IsAlipayBrowser = ViewBag.IsAlipayBrowser;
+
+    bool IsGoogle = ViewBag.IsGoogle;
+    bool IsIPhone = ViewBag.IsIPhone;
+
+    Users Users = ViewBag.Users;
+    FastUser FastUser = ViewBag.FastUser;
+    IList<FastPayWay> FastPayWayList = ViewBag.FastPayWayList;
+}
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>直通车</title>
+    <link href="/Content/Mobile/Fast/css/index_2.0.css" rel="stylesheet" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body>
+    <form action="/mobile/Fast/GoPay.html" method="post" name="PayForm" id="PayForm">
+        <input type="hidden" name="shopid" value="@(Users.Id)" />
+        <input type="hidden" name="payway" value="0" id="payway" />
+        <input type="hidden" value="0" id="snum" />
+        <input type="hidden" value="0" id="enum" />
+        <div class="prompt_box">
+            <img src="/Content/Mobile/Shop/image/gantanhao1.png" />
+        </div>
+        <div class="shopinfo">
+            <div class="shop-title">
+                <i class="iconfont">&#xe60e;</i>
+                <span>@(Users.NeekName)</span>
+            </div>
+            <div class="mone_box">
+                <span>金额</span>
+                <input type="@(IsIPhone?"number":"")@(IsGoogle?"tel":"")@(!IsIPhone&&!IsGoogle?"text":"")" placeholder="￥0.00" autocomplete="off" name="Amount" id="Amount" step="0.01" />
+            </div>
+        </div>
+        <div class="payment">请选择付款方式</div>
+        <ul class="payway">
+            @foreach (var p in FastPayWayList)
+            {
+                <li data-payway="@(p.Id)" data-snum="@(p.SNum.ToMoney())" data-enum="@(p.ENum.ToMoney())">
+                    <p class="@(p.GroupType)">@(p.DllName)<span>(￥@(p.SNum.ToMoney())~￥@(p.ENum.ToMoney()))</span></p>
+                </li>
+            }
+        </ul>
+        <span class="he_text">和店员已经确认,立即买单！</span>
+        <input class="submit" type="submit" value="立即买单" />
+    </form>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#PayForm").submit(function () {
+            var Amount = $("#Amount").val();
+            var num = /^(0|[1-9][0-9]*)(.[0-9]{1,2})?$/;
+            if (!num.test(Amount)) {
+                ShowInfo("请正确输入金额！");
+                return false;
+            }
+            Amount = parseFloat(Amount);
+            if (Amount <= 0) {
+                ShowInfo("请正确输入金额！");
+                return false;
+            }
+
+            var payway = parseInt($("#payway").val());
+            if (payway != 1 && payway != 2 && payway != 3) {
+                ShowInfo("请选择付款方式！");
+                return false;
+            }
+
+            var snum = parseFloat($("#snum").val());
+            var Enum = parseFloat($("#enum").val());
+            if (Amount < snum || Amount > Enum) {
+                ShowInfo("本付款方式限定金额为￥" + snum + "~￥" + Enum + "！");
+                return false;
+            }
+            
+        });
+        $("#Amount").change(function () {
+            HideInfo();
+        });
+        $(".payway li").on("click touchstart", function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            var payway = $(this).data("payway");
+            $("#payway").val(payway);
+            var snum = $(this).data("snum");
+            $("#snum").val(snum);
+            var Enum = $(this).data("enum");
+            $("#enum").val(Enum);
+        });
+    });
+    var ShowInfo = function (info) {
+        $(".he_text").addClass("red").text(info);
+    }
+    var HideInfo = function () {
+        $(".he_text").removeClass("red").text("和店员已经确认,立即买单！");
+    }
+</script>
+

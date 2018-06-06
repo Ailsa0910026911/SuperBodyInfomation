@@ -1,0 +1,35 @@
+*{ font-family:"微软雅黑"; margin:0; padding:0; text-decoration:none;}
+ input[type=button],input[type=submit]{-webkit-appearance:none;outline:none} 
+.union_box{ width: 100%; padding: 2% 0 6%; background-color: #5ca3d9; text-align: center;}
+.union_box span{ display: block; color: #fff;}
+.union_box .sp01{ margin-top: 8%;}
+.union_box .sp02{ font-size: 4rem; margin-bottom: 4%; font-weight: bold;}
+.union_box .sp03{ font-size: 0.8rem;}
+.strip{ width: 100%; height: 10px; background-color: #f1f1f1;}
+.union_box2{ width: 100%; height: auto; background-color: #fff; overflow: hidden; }
+.union_box2 .sp01{ color: #b8b7b7; padding: 3% 0; display: block; float: left; margin-left: 3%;}
+.union_box2 .sp02{ padding: 3% 0; display: block; float: left; margin-left: 3%;}
+.union_box2 .sp03{ color: #b8b7b7; padding: 3% 0; display: block; float: left; margin-left: 3%; width:82px;text-align:right;}
+
+.select{ display: block; float: left; padding: 2% 0 2% 2%;margin:1% 0 1% 5%; width:25%; border-radius: 4px; border: 1px solid #eee;appearance:none; -moz-appearance:none;-webkit-appearance:none;background: url("../images/arrow.png") no-repeat scroll right center transparent;}
+.mlp2{margin-left:2%;}
+
+.codebox{ width: 100%; height: auto; overflow: hidden; padding-top: 5%; border-top: 10px solid #f1f1f1;}
+.code{ display: block; float: left; margin-left: 5%; padding: 3% 0 3% 2%; width: 50%; border-radius: 4px; border: 1px solid #eee;}
+.btn{ display: block; float: right; margin-right: 5.5%; padding: 3% 2%; width: 30%; border: 1px solid #5ca3d9; border-radius: 4px; color: #fff; background-color: #5ca3d9;}
+.un_st{ width: 70%; background-color:#fe7620; color: #fff; display: block; margin: 6% auto 0; padding: 3% 0; border: 1px solid #fe7620; border-radius: 4px;}
+.disabled{background:#d1d1d1 !important; border-color:#d1d1d1;}
+.input{ display: block; float: left; padding: 2% 0 2% 2%;margin:1% 0 1% 5%; width: 50%; border-radius: 4px; border: 1px solid #eee;}
+#change{float:right;color:blue; margin-right:3%; padding:3% 0;}
+.none{display:none;}
+
+.zctc_box { position:fixed; color:#000; top: 30%; left: 50%; transform: translate(-50%, -50%); padding:2% 4%; text-align:center; border-radius:8px; background:rgba(0, 0, 0, .75); }
+.zctc_box_hidden { display:none; }
+.zctc_box span { filter:alpha(Opacity=100); -moz-opacity:1; opacity:1; display:block; line-height:1.5rem; color:#ffffff; }
+.zctc_box span img { margin: 0 auto; width:3.8rem; height:auto; padding-bottom:5%; }
+@media only screen and (min-width: 681px) {
+    body {
+        width: 681px;
+        margin: 0 auto;
+    }
+}

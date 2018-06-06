@@ -1,0 +1,155 @@
+﻿@{
+    JobOrders JobOrders = ViewBag.JobOrders;
+    ViewBag.SMUid = 150;
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+    var OrderSysAgent = Entity.SysAgent.FirstOrNew(o => o.Id == JobOrders.AgentId);
+    var parentAgents = OrderSysAgent.GetAgentsById(Entity);
+    OrderProfitLog OrderProfitLog = ViewBag.OrderProfitLog;
+}
+<!-- BEGIN PAGE CONTENT-->
+<div id="twitter-bootstrap-container" class="row" style="width: 800px; height:600px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">订单基本信息</a></li>
+        <li><a href="/Agent/JobOrders/IndexJobOrders.html?TNum=@(JobOrders.TNum)" data-target="#JobOrdersDiv">订单明细</a></li>
+         @if (JobOrders.AgentGet > 0 && JobOrders.PayState == 1)
+        {
+            <li><a href="/Agent/JobOrders/IndexOrderProfitLog.html?TNum=@(JobOrders.TNum) #IndexOrderProfitLog" data-target="#OrderProfitLogDiv">分润记录</a></li>
+        }
+    </ul>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易号</td>
+                        <td class="active" colspan="3">@(JobOrders.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                </tbody>
+                   <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>交易信息</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">总还款金额</td>
+                        <td class="active">
+                            @(JobOrders.TotalMoney.ToString("F2"))
+                        </td>
+                        <td class="success">手续费</td>
+                        <td class="active" >
+                            @(JobOrders.Poundage.ToString("F2"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success">分润</td>
+                        <td class="active" colspan="3">
+                           @(OrderProfitLog.Profit.ToString("F2"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success">订单状态</td>
+                        <td class="active">
+                            @(JobOrders.GetState())
+                        </td>
+                        <td class="success">创建时间</td>
+                        <td class="active">@(JobOrders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">支付状态</td>
+                        <td class="active">@if (JobOrders.PayState == 0)
+                                           {
+                            <span>未付款</span>
+                                           }
+                                           else
+                                           {
+                            <span>已付款</span>
+                                           }</td>
+                        <td class="success">支付时间</td>
+                        <td class="active">@(JobOrders.PayTime.HasValue ? JobOrders.PayTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>机构结算</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">机构名称</td>
+                        <td class="active" colspan="3">
+                            @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                    <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                        </td>
+                       @* <td class="success">业务员</td>
+                        <td class="active">@(SysAdmin.TrueName)</td>*@
+                        </tr>
+                         <tr>
+                              <td class="success">结算状态</td>
+                            <td class="active">@(JobOrders.AgentState == 0 ? "未结算" : "已结算")</td>
+                            <td class="success">结算时间</td>
+                            <td class="active">
+                                @(JobOrders.AgentTime.HasValue ? JobOrders.AgentTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")
+                            </td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="JobOrdersDiv"></div>
+     <div id="OrderProfitLogDiv"></div>
+<!-- END EXAMPLE TABLE PORTLET-->
+</div>
+
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+    <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+    <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+    <script type="text/ecmascript">
+        $(document).ready(function () {
+            //ajax请求完成执行
+            tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                if ($clicked.attr("data-target") == "#JobOrdersDiv") {
+                    var table = TableIni("JobOrders");
+                }
+                if ($clicked.attr("data-target") == "#OrderProfitLogDiv") {
+                    var table = TableIni("IndexOrderProfitLog");
+                }
+            });
+        });
+    </script>
+}

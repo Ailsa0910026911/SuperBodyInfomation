@@ -1,0 +1,208 @@
+﻿@{
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    SysSet BasicSet = ViewBag.BasicSet;
+    ViewBag.SMUid = 30;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<SysAgent> agentCrumbs = SysAgent.GetAgentsById(Entity);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <input type="hidden" name="Id" value="@(SysAgent.Id)" />
+        <span>机构名称：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Name" value="@(SysAgent.Name)" />
+        <span class="seperator">|</span>
+        <span>联系手机：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="LinkMobile" value="@(SysAgent.LinkMobile)" />
+        <span class="seperator">|</span>
+        @*<span>APP名称：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="APPName" value="@(SysAgent.APPName)" />*@
+        <span class="seperator">|</span>
+        <span>所属销售：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Salesman" value="@(SysAgent.Salesman)" />
+        <span class="seperator">|</span>
+        <span>到期时间：</span>
+        <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ExpireTime" id="ExpireTime" value="@(SysAgent.ExpireTime == DateTime.MinValue ? "" : SysAgent.ExpireTime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+       
+       @* <span>APP独立：</span>
+        <select class="pagination-panel-input form-control input-small input-inline input-xsmall" name="IsTeiPai" id="IsTeiPai">
+            <option value="">所有</option>
+            <option value="1"@(SysAgent.IsTeiPai == 1 ? " selected" : "")>是</option>
+            <option value="99"@(SysAgent.IsTeiPai == 99 ? " selected" : "")>否</option>
+        </select>*@
+        <span class="seperator">|</span>
+        <span>级数：</span>
+        <select class="pagination-panel-input form-control input-small input-inline input-xsmall" name="Tier" id="Tier">
+            <option value="">所有</option>
+            @for (int i = 1; i <= BasicSet.GlobalAgentMaxLevel; i++)
+            {
+                <option value="@(i)"@(SysAgent.Tier == i ? " selected" : "")>@(i)级</option>
+            }
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-globe"></i>@(ViewBag.Title)
+                    <span style="color: #fff !important; font-size: 14px;"><a style="color: #fff !important;" href="Index.html?Id=0">所有代理商</a>&nbsp;></span>
+                    @foreach (var item in agentCrumbs)
+                    {
+                        <span style="color: #fff !important; font-size: 14px;"><a style="color:#fff !important;" href="Index.html?Id=@(item.Id)">@(item.Name)</a>&nbsp;></span>
+                    }
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="btn-group">
+                        @if (ViewBag.Add)
+                        {
+                            <a class="btn green" href="Edit.html">添加记录 <i class="fa fa-plus"></i></a>
+                        }
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">批量操作 <i class="fa fa-angle-down"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            @if (IsDel == "1")
+                            {
+                                <li><a href="#" class="BatSet" rev="Reply">批量恢复 </a></li>
+                                <li><a href="#" class="BatSet" rev="Deleted">彻底删除 </a></li>
+                            }
+                            else
+                            {
+                                if (ViewBag.Save)
+                                {
+                                <li><a href="#" class="BatSet" rev="State" rel="1">批量解锁 </a></li>
+                                }
+@*<li> <a href="#" class="BatSet" rev="State" rel="0"> 批量锁定 </a> </li>*@
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>机构名称 </th>
+                                <th>联系人 </th>
+                                <th>联系手机 </th>
+                                <th>区域 </th>
+                                <th>代理费</th>
+                                <th>级数</th>
+                                <th>状态 </th>
+                                <th>所属销售 </th>
+                                <th>钱包绑定 </th>
+                                <th>开通时间 </th>
+                                <th>到期时间 </th>
+                                <th width="100">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (SysAgentList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in SysAgentList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td class="center">@(p.Name) </td>
+                                    <td class="center">@(p.Linker) </td>
+                                    <td class="center">@(p.LinkMobile) </td>
+                                    <td class="center">
+                                        @{
+                                    string AgentRegion = p.AgentRegion;
+                                    if (!string.IsNullOrWhiteSpace(AgentRegion))
+                                    {
+                                        AgentRegion = p.AgentRegion.Length > 30 ? p.AgentRegion.Substring(0, 20) + "..." : p.AgentRegion;
+                                    }
+                                        }
+                                        @(AgentRegion)
+                                    </td>
+                                    <td class="center">@(p.AgentFee.ToString("F2"))</td>
+                                    <td class="center">@(p.Tier)级</td>
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">
+                                        <a class="Ajax" href="EditSalesLogIndex.html?AgentId=@(p.Id)" title="销售信息变动记录">@(p.Salesman)</a>
+                                    </td>
+                                    <td class="center">@if (!p.MyUId.IsNullOrEmpty())
+                                                       {
+                                        <i class="fa fa-check color-green"></i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-red"></i>
+                                                       } </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                    <td class="center">@(p.ExpireTime.ToString("yyyy-MM-dd")) </td>
+                                    <td class="center">
+                                        @if (ViewBag.Edit)
+                                        {
+                                            <a class="label label-sm label-success" href="Info.html?Id=@(p.Id)">查看</a>
+                                        }
+                                        @if (ViewBag.Save)
+                                        {
+                                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)">修改</a>
+                                        }
+                                       
+                                       @*<a class="label label-sm label-success" href="/Manage/AgentAdmin/Edit.html?Id=@(p.AdminId)"> <i class="fa fa-wrench"></i>权限</a>*@
+                                        <a class="label label-sm label-success Ajax" awidth="1000px" aheight="auto" href="ShowAgentList.html?Id=@(p.Id)">下级代理</a>
+                                         <a class="label label-sm label-success Ajax" awidth="1000px" aheight="auto" href="ShowSameAgentList.html?Id=@(p.Id)">同级代理</a>
+                                        @if (ViewBag.Users)
+                                        {
+                                            <a class="label label-sm label-success" href="/Manage/Users/Index.html?Agent=@(p.Id)&IsFirst=1">所属商户</a>
+                                        }
+                                        @if (ViewBag.Orders)
+                                        {
+                                            <a class="label label-sm label-success" href="/Manage/Orders/Index.html?Agent=@(p.Id)&IsFirst=1">所属交易</a>
+                                        }
+
+                                        @if (ViewBag.PayEdit)
+                                        { 
+                                            <a class="label label-sm label-success Ajax" href="PayEdit.html?Id=@(p.Id)">入网费率</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", SysAgentList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@*@section FooterScripts
+{
+    <link href="/Content/Metronic/plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" /> 
+    <script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Content/Metronic/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>    
+}*@

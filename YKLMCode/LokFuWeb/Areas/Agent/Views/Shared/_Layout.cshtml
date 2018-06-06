@@ -1,0 +1,43 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin Admin = ViewBag.AdminUser;
+    if (Admin == null)
+    {
+        //return;
+    }
+    SysSet BasicSet = ViewBag.BasicSet;
+    bool IsAjax = Request.QueryString["IsAjax"] != null ? true : false;
+    Boolean IsError = Request.QueryString["IsError"] != null ? true : false;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    Boolean IsExcel = Request.QueryString["IsExcel"] != null ? true : false;
+}
+@if (IsExcel)
+{
+    Response.Clear();
+    Response.Buffer = true;
+    Response.Charset = "UTF-8";
+    Response.ContentEncoding = System.Text.Encoding.GetEncoding("UTF-8");
+    Response.AddHeader("Content-Disposition", "attachment;filename=" + DateTime.Now.ToString("yyyyMMddHHmmss") + new Random().Next(10, 99) + ".xls");
+    Response.ContentType = "application/vnd.ms-excel";
+    @RenderBody()
+    return;
+}
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        <meta name="renderer" content="webkit">
+        <link rel="stylesheet" href="/Content/HaoFu/css/normalize.css" />
+		<link rel="stylesheet" href="/Content/HaoFu/css/style.css" />
+        @RenderSection("HeaderScripts", false)
+        <link rel="stylesheet" href="/Content/HaoFu/css/custom.css" />
+		<title>@(BasicSet.AgentName)商户管理系统</title>
+	</head>
+    <body class="index inquiry license">
+    @RenderBody()
+    <script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Content/HaoFu/js/iframe.js?20161230"></script>
+    @RenderSection("FooterScripts", false)
+    </body>
+</html>

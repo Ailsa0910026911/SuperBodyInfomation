@@ -11,6 +11,7 @@ namespace CMSManage.Extended
         //表示是否检查登录
         public bool IsCheck { get; set; }
 
+
         //Action方法执行之前执行此方法
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

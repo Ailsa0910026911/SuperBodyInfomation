@@ -1,0 +1,36 @@
+﻿@charset "utf-8";
+html body { width:100%; height:100%; margin:0px; padding:0px;}
+a { text-decoration:none; color:#00F; font-size:16px; font-family:'微软雅黑'; }
+* { font-family:'微软雅黑'; }
+.container { width:auto; height:auto; }
+.content { margin-top:30px; height:auto; width:100%; text-align:center; }
+.f_15x { font-size:18px; color:#7C7C7C; font-weight:bold; }
+.top { height:auto; width:auto;margin-top:20%; text-align:center;line-height:28px;}
+.top p{margin:0; padding:0; font-size:14px; color:#999;}
+.middle { width:100%; height:auto; padding-top:3px;}
+.info { width:auto; height:auto; margin:0 12px 0 12px; line-height:42px; border-bottom:1px solid #DEDEDE;}
+.txt1 { color:#484848; font-size:16px; }
+.txt2 { color:#484848; font-size:16px; float:right; }
+.txt3 { color:#F00; font-size:16px; }
+.line { width: auto; margin-right:20px; border:dashed 1px #999999; margin-top:13px; }
+.banktxt { font-size:16px; color:#2F97FF; }
+.foot { width:100%; height:auto; position: absolute; bottom: 10px; }
+.foottxt { color:#484848; font-size:18px; }
+.t_m { width:40%; }
+.cer { width:auto; height:auto; margin-top:20px; text-align:center; }
+.a_b { width:auto; height:auto; text-decoration:none; font-size:20px; }
+.a_s_b { width:80%; height:auto; background:#09F; color:#FFF; padding-top:10px; padding-bottom:10px; margin:auto; }
+.m_f { color:#FC0; }
+.list { margin-left:20px; margin-right:20px; margin-top:13px; }
+.bor { border:#B2B2B2 thin 1px; }
+.cg {
+	margin-top: 20px;
+	display: block;
+	width: 200px;
+	height: 50px;
+	background: url(../img/cg.jpg) no-repeat left center;
+	text-align: center;
+	line-height: 50px;
+}
+.PayWay{ padding-top:1rem; width:80%; margin:auto;}
+.PayWay input[type=image]{width:100%; border:1px #ddd solid; border-radius:5px;max-width:640px;}

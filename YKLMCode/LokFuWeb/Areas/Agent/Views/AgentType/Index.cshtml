@@ -1,0 +1,76 @@
+﻿@{
+    IList<AgentType> AgentTypeList = ViewBag.AgentTypeList;
+    ViewBag.SMUid = 203;
+    string IsDel = Request["IsDel"] != null ? Request["IsDel"].ToString() : "0";
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="clearfix bg-blue">
+			<a href="?IsDel=@(1-Int16.Parse(IsDel))" class="trash pull-right"><i class="iconfont"></i>@(IsDel=="1"?"退出":"进入")回收站</a>
+		</div>
+        <div class="frame-bg bg-none">
+            <a class="btn btn-blue" href="Edit.html"> 添加记录 <i class="fa fa-plus"></i> </a>
+            <div class="pull-right batch hight">
+				<div class="">批量操作 <i class="iconfont"></i></div>
+				<ul class="list-unstyled">
+                    @if (IsDel == "1")
+                      {
+                          <li class="BatSet" rev="Reply">批量恢复</li>
+                          <li class="BatSet" rev="Deleted">彻底删除</li>
+                      }else{
+                          <li class="BatSet" rev="State" rel="1">批量启用</li>
+                          <li class="BatSet" rev="State" rel="0">批量停用</li>
+                          <li class="BatSet" rev="Delete">批量删除</li>
+                      }										
+				</ul>
+			</div>
+	    </div>
+    <div class="list-table">
+        <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+          <thead>
+            <tr>
+              <th class="table-checkbox" width="40"> <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+              <th width="250px"> 类型名称 </th>
+              <th width="100px"> 开通费用 </th>
+              <th width="100px"> 开通费率 </th>
+              <th width="100px"> 状态 </th>
+              <th width="200px"> 添加时间 </th>
+              <th width="200px"> 操作 </th>
+            </tr>
+          </thead>
+          <tbody class="ListBox">
+            @foreach (var p in AgentTypeList){
+            <tr class="odd gradeX">
+                    <td><input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                    <td class="center"> @(p.Name) </td>
+                    <td class="center"> @(p.RegisterFee.ToString("n2")) </td>
+                    <td class="center"> @((p.RegisterPayGet * 100).ToString("n2"))% </td>
+                    <td class="center"> 
+                        @if (p.State == 1)
+                        {
+                            <i class="iconfont color-green">&#xe60d;</i>
+                        }
+                        else
+                        {
+                            <i class="iconfont color-red">&#xe611;</i>
+                        }
+                    </td>
+                    <td class="center"> @(p.AddTime) </td>
+                    <td class="center">
+                      @if (IsDel == "1"){
+                          <a class="label label-sm label-info Reply" href="Delete.html?Id=@(p.Id)"> <i class="fa fa-reply"></i>恢复</a>
+                          <a class="label label-sm label-danger Deleted" href="Delete.html?Id=@(p.Id)&IsDel=1"> <i class="fa fa-trash-o"></i>彻底删除</a>
+                      }else{
+                          <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"> <i class="fa fa-wrench"></i>修改</a>
+                          <a class="label label-sm label-danger Delete" href="Delete.html?Id=@(p.Id)"> <i class="fa fa-trash-o"></i>删除</a>
+                      }
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+          @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml",AgentTypeList)
+    </div>
+  </div>
+</div>
+

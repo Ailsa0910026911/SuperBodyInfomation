@@ -1,0 +1,41 @@
+/*颜色*/
+.color-blue {
+    background-color: #4b8df8 !important;
+    background-image: none !important;
+    border-color: #4b8df8 !important;
+    color: #fff !important;
+}
+.color-red {
+    color: #e02222 !important;
+}
+.color-yellow {
+    color: #ffb848 !important;
+}
+.color-green {
+    color: #35aa47 !important;
+}
+.color-purple {
+    color: #852b99 !important;
+}
+.color-dark {
+    color: #555555 !important;
+}
+.color-grey {
+    color: #999 !important;
+}
+.price {
+  color: #f30;
+  font-weight: bold;
+}
+/*表单*/
+.inquiry .input-min {
+    height: 24px;
+    width: 32px;
+}
+.license-table table {
+    width:100%;
+}
+.license-table table th {
+    text-align:center !important;
+}
+

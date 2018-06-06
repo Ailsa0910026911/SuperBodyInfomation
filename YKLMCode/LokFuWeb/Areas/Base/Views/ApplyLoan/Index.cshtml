@@ -1,0 +1,186 @@
+﻿@{
+    Layout = null;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    IList<BasicCarBrand> BasicCarBrandList = ViewBag.BasicCarBrandList;
+    IList<BasicBank> BasicBankList = ViewBag.BasicBankList;
+    string comeurl = ViewBag.ComeUrl;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>申请贷款</title>
+    <link href="/Content/Base/ApplyLoan/css/dddk.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="/Content/Base/ApplyLoan/js/index.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="k1">
+        <div class="title1">申请贷款</div>
+        <div class="ggyt">
+            <div class="dinbu">
+                <div class="yqsm"><span class="jbzl yqsm2">1</span></div>
+                <div class="yitg"></div>
+                <div class="jbabc jbabc2">基本信息</div>
+            </div>
+            <div class="dinbu">
+                <div class="yqsm"><span class="jbzl">2</span></div>
+                <div class="yitg"></div>
+                <div class="jbabc">工作信息</div>
+            </div>
+            <div class="dinbu" style="margin-right: 0px;">
+                <div class="yqsm"><span class="jbzl">3</span></div>
+                <div class="jbabc">资产信息</div>
+            </div>
+        </div>
+        <div style="width: 500px; height: 1px; margin: 20px auto 0; background-color: #ccc;"></div>
+        <form action="/ApplyLoan/Add.html" id="chkForm" name="chkForm" class="chkForm" method="post">
+            <input type="hidden" name="comeurl" value="@(comeurl)" />
+            <div class="geji" style="display: block;">
+                <div class="wzx"><div>姓名</div> <div>性别</div> <div>身份证号</div> <div>手机号码</div> <div>教育程度</div> <div>婚姻状况</div> </div>
+                <div class="bg1">
+                    <input placeholder="填写您的真实姓名" maxlength="4" name="TrueName" id="TrueName" class="validate[required,custom[chinese]]" />
+                    <br />
+                    <select name="Sex" id="Sex" class="validate[required]" type="select-one" alert="请选择性别">
+                        <option value="">请选择</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                    <br />
+                    <input placeholder="请正确填写身份证号码" maxlength="18" name="IDcard" id="IDcard" class="validate[required,custom[idcard]]" />
+                    <br />
+                    <input placeholder="请正确填写手机号码" maxlength="11" name="Mobile" id="Mobile" class="validate[required,custom[mobile]]" />
+                    <br />
+                    <select name="Education" id="Education" class="validate[required]" type="select-one" alert="请选择学历">
+                        <option value="">请选择</option>
+                        <option value="高中">高中</option>
+                        <option value="中专">中专</option>
+                        <option value="大专">大专</option>
+                        <option value="本科">本科</option>
+                        <option value="本科以上">本科以上</option>
+                    </select>
+                    <br />
+                    <select name="Marry" id="Marry" class="validate[required]" type="select-one" alert="请选择婚姻状况">
+                        <option value="">请选择</option>
+                        <option value="0">未婚</option>
+                        <option value="1">已婚</option>
+                        <option value="2">其它</option>
+                    </select>
+                    <br />
+                </div>
+                <div class="cl"></div>
+                <div>
+                    <input class="xyb Next" type="button" value="下一步" style="margin-left:107px;" />
+                </div>
+            </div>
+            <div class="geji">
+                <div class="wzx"><div>公司名称</div> <div>所在城市</div> <div>公司地址</div> <div>公司电话</div> <div>担任职位</div> <div>有无社保</div> <div class="HasSheBao">社保时长</div> <div>年收入</div> </div>
+                <div class="bg1">
+                    <input placeholder="请填写公司名称" name="Company" id="Company" class="validate[required]" />
+                    <br />
+                    <select name="ComProvince" id="ComProvince" class="validate[required]" type="select-one" alert="请选择省" style="width:99px;">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicProvinceList)
+                      {
+                          <option value="@(p.Id)">@(p.Name)</option>
+                      }
+                    </select>
+                    <select name="ComCity" id="ComCity" class="validate[required]" type="select-one" alert="请选择城市" style="width:99px; margin-left:0px;">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicCityList)
+                      {
+                          <option value="@(p.Id)" rev="@(p.PId)">@(p.Name)</option>
+                      }
+                    </select>
+                    <br />
+                    <input placeholder="请填写公司详细地址" name="ComAddress" id="ComAddress" class="validate[required]" />
+                    <br />
+                    <input placeholder="例：0755-23180158" name="ComTel" id="ComTel" class="validate[required,custom[phone]]" />
+                    <br />
+                    <input placeholder="请填写公司职位" name="Position" id="Position" class="validate[required]" />
+                    <br />
+                    <select name="HasSheBao" id="HasSheBao" class="validate[required]" type="select-one" alert="请选择社保情况">
+                        <option value="">请选择</option>
+                        <option value="1">有</option>
+                        <option value="0">无</option>
+                    </select>
+                    <br />
+                    <select name="SheBaoTime" id="SheBaoTime" class="validate[required] HasSheBao" type="select-one" alert="请选择交社保时长">
+                        <option value="">请选择</option>
+                        <option value="1-3个月">1-3个月</option>
+                        <option value="4-6个月">4-6个月</option>
+                        <option value="7-12个月">7-12个月</option>
+                        <option value="13个月以上">13个月以上</option>
+                    </select>
+                    <br class="HasSheBao" />
+                    <input name="Income" id="Income" class="validate[required,custom[int]]" placeholder="请填年收入" />
+                    <br />
+                </div>
+                <div class="cl"></div>
+                <div>
+                    <input class="xyb Prev" type="button" value="上一步" /><input class="xyb Next" type="button" value="下一步" />
+                </div>
+            </div>
+            <div class="geji">
+                <div class="wzx"><div>是否有车</div> <div class="HasCar">汽车品牌</div> <div>住房性质</div> <div>工资发放方式</div> <div>有无信用卡</div> <div class="HasCredit">信用卡银行</div> <div>贷款金额</div> <div>验证码</div> </div>
+                <div class="bg1">
+                    <select name="HasCar" id="HasCar" class="validate[required]" type="select-one" alert="请选择是否有车">
+                        <option value="">请选择</option>
+                        <option value="1">有</option>
+                        <option value="0">无</option>
+                    </select>
+                    <br />
+                    <select name="CarBrand" id="CarBrand" class="validate[required] HasCar" type="select-one" alert="请选择汽车品牌">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicCarBrandList)
+                      {
+                          <option value="@(p.Id)">@(p.Letter) @(p.Name)</option>
+                      }
+                    </select>
+                    <br class="HasCar" />
+                    <select name="House" id="House" class="validate[required]" type="select-one" alert="请选择房产类型">
+                        <option value="">请选择</option>
+                        <option value="商品房全款">商品房全款</option>
+                        <option value="商品房按揭">商品房按揭</option>
+                        <option value="无房产">无房产</option>
+                    </select>
+                    <br />
+                    <select name="Payment" id="Payment" class="validate[required]" type="select-one" alert="请选择工资发放方式">
+                        <option value="">请选择</option>
+                        <option value="银行代发">银行代发</option>
+                        <option value="银行转帐">银行转帐</option>
+                        <option value="现金发放">现金发放</option>
+                    </select>
+                    <br />
+                    <select name="HasCredit" id="HasCredit" class="validate[required]" type="select-one" alert="请选择是否有信用卡">
+                        <option value="">请选择</option>
+                        <option value="1">有</option>
+                        <option value="0">无</option>
+                    </select>
+                    <br />
+                    <select name="CreditBankId" id="CreditBankId" class="validate[required] HasCredit" type="select-one" alert="请选择信用卡所属银行">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicBankList)
+                      {
+                          <option value="@(p.Id)">@(p.Name)</option>
+                      }
+                    </select>
+                    <br class="HasCredit" />
+                    <input placeholder="请输入贷款金额" name="Amount" id="Amount" class="validate[required,custom[int]]" />
+                    <br />
+                    <input placeholder="点击获取" name="code" id="code" class="validate[required]" style="width:106px;" alert="请填写验证码" />
+                    <img src="/Content/Metronic/img/none.gif" id="img" style="display:none; cursor:pointer; width:80px; height:42px; margin-top:-4px;" title="点击更换验证码" align="absmiddle"/>
+                    <br />
+                </div>
+                <div class="cl"></div>
+                <div>
+                    <input class="xyb Prev" type="button" value="上一步" /><input class="xyb" id="submit" type="submit" value="提交" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+</body>
+</html>
+

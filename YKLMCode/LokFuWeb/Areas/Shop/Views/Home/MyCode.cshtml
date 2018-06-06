@@ -1,0 +1,25 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers;
+    int Nav = 20;
+    Page.Name = BasicUsers.NeekName + "的专属二维码";
+}
+<div class="cash excl">
+    @Html.Partial("Header", Nav)
+    <div class="main">
+        <div class="container">
+            <div class="main-top">
+                <p><a href="/shop/">首页 </a>&gt; <a href="javascript:">专属二维码</a></p>
+            </div>
+        </div>
+        <div class="container border text-center">
+            <div class="excl-warp">
+                <img src="@(BasicUsers.QRCode())" alt="" />
+            </div>
+            <br />
+            <div class="text-center">
+                <i class="iconfont">&#xe607;</i> 任意扫一扫都可以哦! 请扫我之后输入金额
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Footer")
+</div>

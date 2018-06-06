@@ -1,0 +1,225 @@
+﻿@{
+    FastOrder FastOrder = ViewBag.FastOrder;
+    ViewBag.SMUid = 60;
+    Users Users = ViewBag.Users;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    FastPayWay FastPayWay = ViewBag.FastPayWay;
+    LokFuEntity Entity = ViewBag.Entity;
+    var parentAgents = SysAgent.GetAgentsById(Entity);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div id="twitter-bootstrap-container" class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+     <ul class="nav nav-tabs">
+        <li><a href="#base">交易信息</a></li>
+        <li><a href="/Manage/FastOrder/IndexFastOrderChange.html?TNum=@(FastOrder.TNum)" data-target="#FastOrderChangeDiv">重新出款</a></li>
+         @if (FastOrder.AgentPayGet > 0 && FastOrder.PayState == 1)
+         {
+            <li><a href="/Manage/FastOrder/IndexOrderProfitLog.html?TNum=@(FastOrder.TNum) #IndexOrderProfitLog" data-target="#OrderProfitLogDiv">分润记录</a></li>
+         }
+    </ul>
+
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易号</td>
+                        <td class="active" colspan="3">@(FastOrder.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易类型</td>
+                        <td class="active">
+                            [<span>@(Utils.GetFastOrderModel().FirstOrNew(n=>n.Id==FastOrder.OType).Name)</span>]
+                        </td>
+                        <td class="success">交易金额</td>
+                        <td class="active price">@(FastOrder.Amoney.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易状态</td>
+                        <td class="active">
+                            @(FastOrder.GetState())
+                        </td>
+                        <td class="success">交易时间</td>
+                        <td class="active">@(FastOrder.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">用户结算状态</td>
+                        <td class="active">@(FastOrder.GetUserClearingState())</td>
+                        <td class="success">用户结算时间</td>
+                        <td class="active">@(FastOrder.UserTime.HasValue ? FastOrder.UserTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易备注</td>
+                        <td class="active" colspan="3">@(FastOrder.Remark)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>付款信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">第三方交易号</td>
+                        <td class="active" colspan="3">@(FastOrder.Trade)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">支付状态</td>
+                        <td class="active">@if (FastOrder.PayState == 0)
+                                           {
+                            <span>未付款</span>
+                                           }
+                                           else
+                                           {
+                            <span>已付款</span>
+                                           }</td>
+                        <td class="success">支付时间</td>
+                        <td class="active">@(FastOrder.PayTime)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">支付方式</td>
+                        <td class="active" colspan="3">@(FastPayWay.Title)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>机构信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">机构名称</td>
+                        <td class="active" colspan="3">
+                            @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>结算信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">到账金额</td>
+                        <td class="active price">@(FastOrder.PayMoney.ToString("F2"))</td>
+                        <td class="success" style="width: 120px">用户手续费</td>
+                        <td class="active price">@(FastOrder.Poundage.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">接口费率</td>
+                        <td class="active price">@((FastOrder.SysRate * 1000 ).ToString("F2"))‰</td>
+                        <td class="success">结算成本</td>
+                        <td class="active price">@(FastOrder.SysCash.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">用户费率</td>
+                        <td class="active price">@((FastOrder.UserRate * 1000 ).ToString("F2"))‰</td>
+                        <td class="success">用户结算费用</td>
+                        <td class="active price">@(FastOrder.UserCash.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">费率差利润</td>
+                        <td class="active price">@((FastOrder.UserRate * FastOrder.Amoney - FastOrder.SysRate * FastOrder.Amoney ).ToString("F2"))</td>
+                        <td class="success">结算费差额利润</td>
+                        <td class="active price">@( (FastOrder.UserCash - FastOrder.SysCash).ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">分支机构提成</td>
+                        <td class="active price">@((FastOrder.AgentPayGet).ToString("F2"))</td>
+                        <td class="success">利润总和</td>
+                        <td class="active price">@(((FastOrder.UserRate * FastOrder.Amoney - FastOrder.SysRate * FastOrder.Amoney) + (FastOrder.UserCash - FastOrder.SysCash)).ToString("F2"))</td>
+                    </tr>
+                    @if (!FastOrder.SameGet.IsNullOrEmpty())
+                    { 
+                         <tr>
+                        <td class="success">同级机构提成</td>
+                        <td class="active price">@((FastOrder.SameGet).ToString("F2"))</td>
+                        <td class="success"></td>
+                        <td class="active price"></td>
+                    </tr>
+                    }
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>银行卡信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td class="success" style="width: 120px">银行</td>
+                        <td class="active">@(FastOrder.Bank)</td>
+                        <td class="success">开户名</td>
+                        <td class="active">@(FastOrder.CardName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">联行号</td>
+                        <td class="active">@(FastOrder.Bin)</td>
+                        <td class="success">卡号</td>
+                        <td class="active">@(FastOrder.Card)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+    <div id="FastOrderChangeDiv" ></div>
+    <div id="OrderProfitLogDiv"></div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.css" />
+        <script src="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.js"></script>
+        <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+        <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+        <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+        <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+        <script type="text/ecmascript">
+            $(document).ready(function () {
+                //ajax请求完成执行
+                tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                    if ($clicked.attr("data-target") == "#FastOrderChangeDiv") {
+                        var table = TableIni("FastOrderChange");
+                    }
+                });
+                tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                    if ($clicked.attr("data-target") == "#OrderProfitLogDiv") {
+                        var table = TableIni("IndexOrderProfitLog");
+                    }
+                });
+            });
+        </script>
+    }
+}

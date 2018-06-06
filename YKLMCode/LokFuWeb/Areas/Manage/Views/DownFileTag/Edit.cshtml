@@ -1,0 +1,75 @@
+﻿@{
+    DownFileTag DownFileTag = ViewBag.DownFileTag;
+    ViewBag.SMUid = 224;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN VALIDATION STATES-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form"> 
+        <!-- BEGIN FORM-->
+        <form action="@(DownFileTag.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(DownFileTag.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(DownFileTag.Name)" alert="请填写名称" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">排序 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Sort" id="Sort" value="@(DownFileTag.Sort)" alert="请填写排序" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(DownFileTag.State==1?" selected":"")>显示</option>
+                    <option value="0"@(DownFileTag.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(DownFileTag.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END VALIDATION STATES--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#chkForm").submit(function () {
+        })
+    })
+</script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+    }
+}

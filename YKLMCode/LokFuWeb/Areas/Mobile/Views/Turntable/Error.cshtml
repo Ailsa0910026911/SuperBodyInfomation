@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>首页</title>
+	<link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<link rel="stylesheet" href="/Content/Mobile/Turntable/css/themes/default/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="/Content/Mobile/Turntable/css/style.css">
+	<script src="/Content/Mobile/Turntable/js/jquery.js"></script>
+    <script src="/Content/Mobile/Turntable/js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body class="rel">
+	<img src="/Content/Mobile/Turntable/img/bg_run.png" class="bg_run">
+    <div class="tipsbg"></div>
+    <div class="tips">
+        <div class="tips_box">
+            <div class="text">
+                <p class="title"></p>
+                <p class="bold"></p>
+                <p class="small"></p>
+            </div>
+            <img src="/Content/Mobile/Turntable/img/tips_bg.png" class="tips_bg">
+        </div>
+    </div>
+<script>
+$(function(){
+	var title="出错啦~~！";
+    var bolds = "@Html.Raw(ViewBag.ErrorMsg)";
+    showTips(title, bolds, "", "");
+});
+var showTips=function(title,bolds,smalls,type){
+	$(".tips").find(".title").html(title);
+	$(".tips").find(".bold").html(bolds);
+	if(bolds==""){
+		$(".tips").find(".bold").hide();
+	}
+	$(".tips").find(".small").html(smalls);
+	var h=$(document).height();
+	$(".tipsbg").height(h);
+	var th=$(".tips").height();
+	$(".tips").css("marginTop","-"+(th/2)+"px");
+	$(".tips").show();
+	$(".tipsbg").show();
+}
+</script>
+</body>
+</html>

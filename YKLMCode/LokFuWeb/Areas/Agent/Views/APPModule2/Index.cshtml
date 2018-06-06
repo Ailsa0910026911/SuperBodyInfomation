@@ -1,0 +1,1542 @@
+﻿@using Newtonsoft.Json
+@{
+    List<APPModule> APPModuleList = ViewBag.APPModuleList;
+    List<APPBlock> APPBlockList = ViewBag.APPBlockList;
+    ViewBag.SMUid = 276;
+    ViewBag.NoShowDel = true;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    List<AdInfo> BannerInfos = ViewBag.bannerInfos;
+    AdTag BannerTag = ViewBag.BannerTag;
+    var Home = APPModuleList.Where(o => o.DisplaySite == 1).OrderBy(o => o.Sort).ToList();
+    var Boot = APPModuleList.Where(o => o.DisplaySite == 2).OrderBy(o => o.Sort).ToList();
+    FileInfo[] homeFiles = ViewBag.homeFiles;
+    FileInfo[] bottomDefaultFiles = ViewBag.bottomDefaultFiles;
+    FileInfo[] bottomActFiles = ViewBag.bottomActFiles;
+    string ninfo = ViewBag.ninfo;
+    int SourceAgentId = ViewBag.SourceAgentId;
+    bool IsSave = ViewBag.IsSave;
+    bool IsDelete = ViewBag.IsDelete;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+}
+<style>
+    input[readonly],select[readonly],textarea[readonly] {
+        cursor: not-allowed;
+        background-color: #F9F9F9 !important;
+    }
+    .SysIconActivate {
+        border: 1px solid #f00 !important;
+    }
+    .menu_btbox ul li img{width: 32px;height: 32px;margin: 0 auto;z-index: 999;display: block;}
+    .add_block{ width: 102%; height: 30px; line-height: 30px; text-align: center; color: #999; border: 2px solid #e5e5e5; background: #fff; display: block; margin: 3px; font-size: 24px}
+</style>
+
+<link href="/Content/Manage/APPModule2/css/styleForAgent.css" rel="stylesheet" type="text/css">
+
+<div class="big_box" style="height:1150px;">
+    
+    <div class="gl_mainbox">
+        <div class="gl_mainboxfl">
+            @if (IsSave)
+            {
+            <botton class="sub_sztj" onclick="$APPModule.Sort()" style="cursor:pointer;">保存功能图标排序</botton>
+            }
+            <div id="testDiv" class="iphone_box">
+                <!-- 顶部菜单开始 -->
+                <!--头部滚动banner-->
+                <div id="slideBox" class="slideBox">
+                    <!--底部漂浮菜单栏-->
+                    <div class="top_fixbox">
+                        <span class="span1">扫一扫</span>
+                        <span class="span2">@(BasicAgent.APPName)</span>
+                        <span class="span3">消息</span>
+
+                    </div>
+                    <!--底部漂浮菜单栏-->
+                    <div class="bd">
+                        <ul id="ADHtml"></ul>
+                    </div>
+                    <div class="hd"><ul></ul></div>
+                    @if (IsSave || IsDelete)
+                    {
+                    <div class="lasy">
+                        <a class="green_abtn" onclick="$ADInfo.ShowForm(0)">编辑</a>
+                    </div>
+                    }
+                </div>
+
+                <!--头部滚动banner结束-->
+                <!--头部重要公告滚动-->
+                <div class="gundong_box">
+                    <ul id="marquee1" class="marquee">
+                        <li>@(ninfo)</li>
+                    </ul>
+                </div>
+
+                    <!--头部重要公告滚动结束-->
+                    <!--十二宫ge格开始-->
+                    <div class="home_mainbox tc">
+                        <div style="clear:both" id="msg"></div>
+                        <ul class="gbin1-list" id="homeDiv"></ul>
+
+                        <div class="cl"></div>
+                    </div>
+                    <!--十二宫ge格结束-->
+                    <div id="APPBlockDiv"></div>
+                    <div class="nola_box">
+                        不要拉了，已经到底拉
+                    </div>
+                </div>
+
+
+            <div id="testDiv2" class="iphone_box iphone_box2">
+                <!-- 顶部菜单开始 -->
+                <!--十二宫ge格开始-->
+                <div id="testb" class="erji_fanhui"><a onclick="MoreBack()">返回>></a></div>
+                <div class="home_mainbox tc">
+
+                    <ul class="gbin1-listb" id="MoreBackDiv"></ul>
+                    <div style="clear:both" id="msgb"></div>
+
+                    <div class="cl"></div>
+                </div>
+                <!--十二宫ge格结束-->
+            </div>
+
+
+            <!--底部漂浮菜单栏-->
+            <div class="menu_btbox">
+                <ul id="BottomUl"></ul>
+            </div>
+            <!--底部漂浮菜单栏-->
+
+        </div>
+
+        <div class="gl_mainboxfr" style="height:auto;min-height:550px;width:550px;">
+            <!--右边的修改内容图 banner-->
+            <div class="tc_frbox" id="FormDiv-ADInfo" name="dv" style="display: none;">
+                <form action="/Agent/APPModule2/SaveAdinfo.html" class="ADInfoForm" id="Form-ADInfo" enctype="multipart/form-data" method="post">
+                    <input type="hidden" id="TId" name="TId" value="@(BannerTag.Id)" />
+                    <input type="hidden" id="Tag" name="Tag" value="newBanner" />
+                    <input type="hidden" name="AgentId" value="@(SysAgent.Id)" />
+                    <div class="tc_frbox_tit">广告图</div>
+                    <ul>
+                        <li>
+                            <span>序号:</span>
+                            <div class="fl">
+                                <select name="Id" id="AD-Index" onchange="$ADInfo.ShowForm($(this).val())"></select>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                        <li>
+                            <span>广告名称:</span>
+                            <input class="input_loadpic validate[required]" type="text" name="Name" id="Name">
+                            <div class="cl"></div>
+                        </li>
+                        <li>
+                            <span>功能类型:</span>
+                            <div class="fl">
+                                <select name="ModuleType" id="ModuleType" onchange="ShowValue(this)">
+                                    <option value="1">内置</option>
+                                    <option value="2">外链</option>
+                                </select>
+                                <p>内置为app内置功能,外链可以自己设置跳转链接</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li class="Value1" style="display: none;">
+                            <span>值:</span>
+                            <div class="fl">
+                                <select name="Url" id="Url1" class="validate[required]">
+                                    @foreach (var item in ModuleTypeSelectList)
+                                    {
+                                        <option value="@(item.Value)">@(item.Key)</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li class="Value2" style="display: none;">
+                            <span>值:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required,maxSize[300]]" type="text" name="Url" id="Url2">
+                                <p>请输入以"http://"开头的网址,例如"http://www.taobao.com"</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>图片:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="500,900,600,1080" url="/Agent/Asyn/UpLoadFile.html" savepath="ADInfo" />
+                                <i>选择文件</i>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink"><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="Pic" id="Pic" class="input_loadpic validate[required]" readonly />
+                                </div>
+                                <p>尺寸：1080*600px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                        <li>
+                            <span>排序:</span>
+                            <input class="input_loadpic validate[required]" type="text" name="Sort" id="Sort">
+                            <div class="cl"></div>
+
+                        </li>
+                    </ul>
+                    @if (IsSave){<input type="submit" class="tijiao_btn" value="提交">} @if (IsDelete) { <input value="删除" type="button" class="tijiao_btn2" onclick="$ADInfo.Del(this)">}
+                </form>
+            </div>
+
+            <!--右边的修改内容图 APP图标-->
+            <div class="tc_frbox" id="FormDiv-AppModel" name="dv" style="display: none">
+                <form action="/Agent/APPModule2/SaveAPPModule.html" class="APPModuleForm" id="Form-APPModule" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" id="Id">
+                    <input type="hidden" name="AgentId" id="AgentId" value="@(SysAgent.Id)">
+                    <input type="hidden" name="DisplaySite" id="DisplaySite">
+
+                    <div class="tc_frbox_tit" id="AppModel-title"></div>
+                    <ul>
+                        <li>
+                            <span>功能名称:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required,maxSize[5]]" type="text" name="Name" id="Name">
+                                <p>字数不超过5个字</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                        <li>
+                            <span>功能类型:</span>
+                            <div class="fl">
+                                <select name="ModuleType" id="ModuleType" onchange="ShowValue(this)">
+                                    <option value="1">内置</option>
+                                    <option value="2">外链</option>
+                                </select>
+                                <p>内置为app内置功能,外链可以自己设置跳转链接</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li class="Value1" style="display: none;">
+                            <span>值:</span>
+                            <div class="fl">
+                                <select name="Value" id="Url" class="validate[required] selectValue"></select>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li class="Value2" style="display: none;">
+                            <span>值:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required,maxSize[500]]" type="text" name="Value" id="Url">
+                                <p>请输入以"http://"开头的网址,例如"http://www.taobao.com"</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li id="home_upfile">
+                            <span>图标:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="150,150,160,160" url="/Agent/Asyn/UpLoadFile.html" savepath="APPModule" />
+                                <i>选择文件</i>
+                                <a href="javascript:0;" class=" a1 cd-popup-trigger2">选择系统文件</a>
+                                <div class="cd-popup2">
+                                    <div id="cd-popup2_tit">系统图标<a class="cd-popup-close">×</a></div>
+                                    <ul>
+                                        @foreach (var item in homeFiles)
+                                        {
+                                            <li><a onclick="dangqian(this)" id="home2/@(item.Name)"><img src="@(Utils.ImageUrl("APPModule", "/") + "home2/" + item.Name)" width="32" height="32" alt="" /></a></li>
+                                        }
+                                    </ul>
+                                    <div class="cd-popup2_bott">
+                                        <a onclick="SysIconConfirm(this)" class="SysIconClose">确定</a>
+                                    </div>
+                                </div>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink" ><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="PictureUrl" id="PictureUrl" class="input_loadpic validate[required]" readonly />
+                                </div>
+                                <p>尺寸：160*160px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li id="bottom_upfile">
+                            <span>默认图标:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="42,42,50,50" url="/Agent/Asyn/UpLoadFile.html" savepath="APPModule" />
+                                <i>选择文件</i>
+                                <a href="javascript:0;" class=" a1 cd-popup-trigger2">选择系统文件</a>
+                                <div class="cd-popup2">
+                                    <div id="cd-popup2_tit">系统图标<a class="cd-popup-close">×</a></div>
+                                    <ul>
+                                        @foreach (var item in bottomDefaultFiles)
+                                        {
+                                            <li><a onclick="dangqian(this)" id="bottom2/default/@(item.Name)"><img src="@(Utils.ImageUrl("APPModule", "/") + "bottom2/default/" + item.Name)" width="32" height="32" alt="" /></a></li>
+                                        }
+                                    </ul>
+                                    <div class="cd-popup2_bott">
+                                        <a onclick="SysIconConfirm(this)" class="SysIconClose">确定</a>
+                                    </div>
+                                </div>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink"><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="PictureUrl" id="PictureUrl" class="input_loadpic validate[required]" readonly />
+                                </div>
+                                <p>尺寸：50*50px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li id="bottom_upfile2">
+                            <span>选中图标:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="42,42,50,50" url="/Agent/Asyn/UpLoadFile.html" savepath="APPModule" />
+                                <i>选择文件</i>
+                                <a href="javascript:0;" class=" a1 cd-popup-trigger2">选择系统文件</a>
+                                <div class="cd-popup2">
+                                    <div id="cd-popup2_tit">系统图标<a class="cd-popup-close">×</a></div>
+                                    <ul>
+                                        @foreach (var item in bottomActFiles)
+                                        {
+                                            <li><a onclick="dangqian(this)" id="bottom2/activate/@(item.Name)"><img src="@(Utils.ImageUrl("APPModule", "/") + "bottom2/activate/" + item.Name)" width="32" height="32" alt="" /></a></li>
+                                        }
+                                    </ul>
+                                    <div class="cd-popup2_bott">
+                                        <a onclick="SysIconConfirm(this)" class="SysIconClose">确定</a>
+                                    </div>
+                                </div>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink"><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="PicUrl" id="PicUrl" class="input_loadpic validate[required]" readonly />
+                                </div>
+                                <p>尺寸：50*50px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>排序:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required]" type="text" name="Sort" id="Sort">
+
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                    </ul>
+                    <input type="submit" class="tijiao_btn" value="提交">
+                </form>
+            </div>
+
+            <div class="tc_frbox" id="FormDiv-APPBlock" name="dv" style="display: none">
+                <form action="/Agent/APPModule2/SaveAPPBlock.html" class="APPBlockForm" id="APPBlockForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" id="Id">
+                    <input type="hidden" name="AgentId" id="AgentId" value="@(SysAgent.Id)">
+
+                    <div class="tc_frbox_tit" id="APPBlock-title"></div>
+                    <ul>
+
+                        <li>
+                            <span>标题:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required,maxSize[5]]" type="text" name="Name" id="Name">
+                                <p>字数不超过5个字</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li id="PicUrl_upfile">
+                            <span>广告图:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="300,800,400,1020" url="/Agent/Asyn/UpLoadFile.html" savepath="APPBlock" />
+                                <i>选择文件</i>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink"><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="PicUrl" id="PicUrl" class="input_loadpic validate[required]" readonly />
+                                </div>
+                                <p>尺寸：1020*400px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>功能类型:</span>
+                            <div class="fl">
+                                <select name="LinkType" id="LinkType" onchange="ShowInsideValue(this)" style="width:95px;">
+                                    <option value="1">内置</option>
+                                    <option value="2">外链</option>
+                                </select>
+                                <select name="LinkUrl" id="Value1" class="validate[required]" style="width:300px;display: none;">
+                                    @foreach (var item in ModuleTypeSelectList)
+                                    {
+                                        <option value="@(item.Value)">@(item.Key)</option>
+                                    }
+                                </select>
+                                <input class="input_loadpic validate[required,maxSize[500]]" placeholder="例如http://www.taobao.com" type="text" name="LinkUrl" id="Value2" style="width:300px;display: none;">
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>排序:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required]" type="text" name="Sort" id="Sort">
+
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+                        <hr />
+                        <li>
+                            <span>小标题:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[required,maxSize[12]]" type="text" name="SubName" id="SubName">
+                                <p>字数不超过12个字</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li id="IconUrl_upfile">
+                            <span>小图标:</span>
+                            <div class="fl upLoadFileDiv" style="display: block;">
+                                <input class="input_loadpic2 upLoadFile" type="file" name="upLoadFile"
+                                       size="60,60,75,75" url="/Agent/Asyn/UpLoadFile.html" savepath="APPBlock" />
+                                <i>选择文件</i>
+                                <div id="progress_info">
+                                    <a href="" target="_blank" style="display: none;" id="imglink"><img src="" id="preview" /></a>
+                                    <br />
+                                    <input type="text" name="IconUrl" id="IconUrl" class="input_loadpic validate[required]" readonly=""  />
+                                </div>
+                                <p>尺寸：75*75px，格式.Png，图片以英文命名（例如：my.png）</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <hr />
+                        <li>
+                            <span>链接名称1:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[maxSize[6]]" type="text" name="LinkName1" id="LinkName1">
+                                <p>字数不超过6个字</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>链接类型1:</span>
+                            <div class="fl">
+                                <select name="LinkType1" id="LinkType1" onchange="ShowInsideValue(this)" style="width:95px;">
+                                    <option value="1">内置</option>
+                                    <option value="2">外链</option>
+                                </select>
+                                <select name="LinkUrl1" id="Value1" class="" style="width:300px;display: none;">
+                                    @foreach (var item in ModuleTypeSelectList)
+                                    {
+                                        <option value="@(item.Value)">@(item.Key)</option>
+                                    }
+                                </select>
+                                <input class="input_loadpic validate[maxSize[500]]" placeholder="例如http://www.taobao.com" type="text" name="LinkUrl1" id="Value2" style="width:300px;display: none;">
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <hr />
+                        <li>
+                            <span>链接名称2:</span>
+                            <div class="fl">
+                                <input class="input_loadpic validate[maxSize[6]]" type="text" name="LinkName2" id="LinkName2">
+                                <p>字数不超过6个字</p>
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                        <li>
+                            <span>链接类型2:</span>
+                            <div class="fl">
+                                <select name="LinkType2" id="LinkType2" onchange="ShowInsideValue(this)" style="width:95px;">
+                                    <option value="1">内置</option>
+                                    <option value="2">外链</option>
+                                </select>
+                                <select name="LinkUrl2" id="Value1" class="" style="width:300px;display: none;">
+                                    @foreach (var item in ModuleTypeSelectList)
+                                    {
+                                        <option value="@(item.Value)">@(item.Key)</option>
+                                    }
+                                </select>
+                                <input class="input_loadpic validate[maxSize[500]]" placeholder="例如http://www.taobao.com" type="text" name="LinkUrl2" id="Value2" style="width:300px;display: none;">
+                            </div>
+                            <div class="cl"></div>
+                        </li>
+
+                    </ul>
+                    <input type="submit" class="tijiao_btn" value="提交">
+                </form>
+            </div>
+        </div>
+        <div class="cl"></div>
+    </div>
+    <div class="cl"></div>
+</div>
+
+@section FooterScripts
+{
+    <!--头部banner滚动-->
+    <script src="/Content/Metronic/plugins/TouchSlide.1.1.source.js" type="text/javascript" charset="utf-8"></script>
+    <!--头部banner滚动-->
+    <!-- 顶部菜单 -->
+    <script src="/Content/Metronic/js/Sortable.min.js"></script>  
+    <!-- 图片上传 -->
+    <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+    <script src="/Content/HaoFu/plugins/FileUpLoad/js/vendor/jquery.ui.widget.js"></script>
+    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.iframe-transport.js"></script>
+    <!-- The basic File Upload plugin -->
+    <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload.js"></script>
+    <!-- The File Upload processing plugin -->
+    <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-process.js"></script>
+    <!-- The File Upload validation plugin -->
+    <script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-validate.js"></script>
+
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js"></script>
+
+<link href="/Content/Metronic/plugins/jquery.marquee/css/jquery.marquee.css" rel="stylesheet" type="text/css">
+<script src="/Content/Metronic/plugins/jquery.marquee/lib/jquery.marquee.min.js"></script>
+    
+    <script>
+    var imgpath = "@(Utils.ImageUrl("APPModule", "/"))";
+    var imgpathad = "@(Utils.ImageUrl("AdInfo", "/"))";
+    var imgpathab = "@(Utils.ImageUrl("APPBlock", "/"))";
+    var ModuleTypeSelectList = @(this.Html.Raw(JsonConvert.SerializeObject(ModuleTypeSelectList.Select(o => new { Value=o.Value,Key = o.Key }))));
+    var ModuleTypeBottomSelectList = @(this.Html.Raw(JsonConvert.SerializeObject(ModuleTypeBottomSelectList.Select(o => new { Value = o.Value, Key = o.Key }))));
+    var $ADInfo = null;
+    var $APPModule = null;
+    var switchCode = null;
+    var $APPBlock = null;
+    var IsSave = @(IsSave.ToString().ToLower());
+    var IsDelete = @(IsDelete.ToString().ToLower());
+    $(function () {
+        $("#marquee1").marquee({pauseSpeed:1000});
+        //打开系统图标窗口
+        $('.cd-popup-trigger2').on('click', function (event) {
+            event.preventDefault();
+            $(this).parents("li").find(".cd-popup2").addClass('is-visible2');
+        });
+        //关闭系统图标窗口
+        $('.SysIconClose,.cd-popup2').on('click', function (event) {
+            if ($(event.target).is('.cd-popup-close') || $(event.target).is('.cd-popup2') || $(event.target).is('.SysIconClose')) {
+                event.preventDefault();
+                $(this).removeClass('is-visible2');
+            }
+        });
+
+        $('.upLoadFile').on("click", function () {
+            var UpLoadFile = Fileupload(this);
+        });
+
+        $('.ADInfoForm').validationEngine({
+            ajaxFormValidation: true,
+            ajaxFormValidationMethod: 'post',
+            onAjaxFormComplete: ADInfoFormCallback,
+            "scroll": false,
+        });
+
+        $('.APPModuleForm').validationEngine({
+            ajaxFormValidation: true,
+            ajaxFormValidationMethod: 'post',
+            onAjaxFormComplete: APPModuleFormCallback,
+            "scroll": false,
+        });
+
+        $('.APPBlockForm').validationEngine({
+            ajaxFormValidation: true,
+            ajaxFormValidationMethod: 'post',
+            onAjaxFormComplete: APPBlockFormCallback,
+            "scroll": false,
+        });
+
+        $ADInfo = new ADInfo();
+        $ADInfo.Show();
+
+        $APPModule = new APPModule();
+        $APPModule.ShowHome();
+        $APPModule.ShowBottom();
+
+        $APPBlock = new APPBlock();
+        $APPBlock.Show();
+    });
+
+    function ADInfoFormCallback(status, form, json, options){
+
+        if(status === true)
+        {
+            if(json.IsSucceed == true)
+            {
+                $ADInfo.Data = json.Result;
+                $ADInfo.Show();
+                ShowFormDiv("xxxxxx");
+                parent.showdialog("操作成功");
+            }
+            else
+            {
+                parent.showdialog(json.Message);
+            }
+        }
+    };
+
+    function APPModuleFormCallback(status, form, json, options)
+    {
+        if(status === true)
+        {
+            if(json.IsSucceed == true)
+            {
+                var DisplaySite = $("#DisplaySite").val();
+                if(DisplaySite == 1)
+                {
+                    $APPModule.HomeData = json.Result;
+                    $APPModule.ShowHome();
+                }
+                else
+                {
+                    $APPModule.BottomData = json.Result;
+                    $APPModule.ShowBottom();
+                }
+                ShowFormDiv("xxxxxx");
+                parent.showdialog("操作成功");
+            }
+            else
+            {
+                parent.showdialog(json.Message);
+            }
+        }
+    };
+
+    function APPBlockFormCallback(status, form, json, options)
+    {
+        if(status === true)
+        {
+            if(json.IsSucceed == true)
+            {
+                $APPBlock.Data = json.Result;
+                $APPBlock.Show();
+                ShowFormDiv("xxxxxx");
+                parent.showdialog("操作成功");
+            }
+            else
+            {
+                parent.showdialog(json.Message);
+            }
+        }
+    };
+    /*-----------start介面方法函数-----------*/
+
+    function ShowInsideValue(me)
+    {
+        var li = $(me).parents("li");
+        var Value1 = li.find("#Value1");
+        var Value2 = li.find("#Value2");
+        if($(me).val() == "1")
+        {
+            Value1.show();
+            Value1.attr("disabled",false);
+            Value1.val("0");
+            Value2.hide();
+            Value2.attr("disabled",true);
+        }
+        else
+        {
+            Value1.hide();
+            Value1.attr("disabled",true);
+            Value2.show();
+            Value2.attr("disabled",false);
+            Value2.val("");
+        }
+    }
+
+    //div:传入.upLoadFileDiv
+    function ShowUploadImg(div,img)
+    {
+        div.find("#imglink").attr("href",img);
+        div.find("#preview").attr("src",img);
+        div.find("#imglink").show();
+    }
+    function HideUploadImg(div)
+    {
+        div.find("#imglink").hide();
+    }
+    function SysIconConfirm(me)
+    {
+        var div = $(me).parents(".upLoadFileDiv");
+        var selectli = div.find(".SysIconActivate");
+        var id = selectli.attr("Id");
+        if(jQuery.isEmptyObject(id))
+        {
+            alert("请选择图片");
+            return;
+        }
+        div.find(".input_loadpic").val(id);
+        ShowUploadImg(div,imgpath + id);
+    }
+
+    function dangqian(me)
+    {
+        $(me).parents("li").find("a").removeClass("SysIconActivate");
+        $(me).addClass("SysIconActivate");
+    }
+
+    function ShowMore()
+    {
+        document.getElementById("testDiv").style.display = "none";
+        document.getElementById("testDiv2").style.display = "block";
+    }
+
+    function MoreBack()
+    {
+        document.getElementById("testDiv").style.display = "block";
+        document.getElementById("testDiv2").style.display = "none";
+    }
+
+    //内置外链动作
+    function ShowValue(me)
+    {
+        var Value1 = $(me).parents("form").find(".Value1");
+        var Value2 = $(me).parents("form").find(".Value2");
+        if($(me).val() == "1")
+        {
+            Value1.show();
+            Value1.find("#Url").attr("disabled",false);
+            Value1.find("#Url").val("0");
+            Value2.hide();
+            Value2.find("#Url").attr("disabled",true);
+        }
+        else
+        {
+            Value1.hide();
+            Value1.find("#Url").attr("disabled",true);
+            Value2.show();
+            Value2.find("#Url").attr("disabled",false);
+            Value2.find("#Url").val("");
+
+        }
+    }
+
+    //显示表单
+    function ShowFormDiv(id) {
+        var divs = document.getElementsByName("dv")
+        var FormDiv;
+        for (var i = 0 ; i < divs.length ; i++) {
+            if (divs[i].id == "FormDiv-" + id) {
+                divs[i].style.display = ""
+                FormDiv = divs[i];
+            } else {
+                divs[i].style.display = "none"
+            }
+        }
+
+        return FormDiv;//返回表单区域对象
+    }
+    /*-----------end介面方法函数----------*/
+
+    /*-----------start数据方法函数-----------*/
+    function ADInfo() {
+        this.Data = @(this.Html.Raw(JsonConvert.SerializeObject(BannerInfos)));
+
+        this.Show = function Show() {
+            var html = '';
+            if(this.Data.length != 0)
+            {
+                $.each(this.Data, function (i, n) {
+                    html += '<li><img src="' + imgpathad + n.Pic + '"  alt="" /></li>';
+                });
+            }
+            else
+            {
+                html += '<li><div style="height:180px;"></div></li>';
+            }
+            $("#ADHtml li").remove();
+            $("#ADHtml").append(html);
+            $(".hd ul li").remove();
+
+            if(switchCode != null)
+            {
+                clearInterval(switchCode);
+            }
+            switchCode = TouchSlide({
+                slideCell: "#slideBox",
+                titCell: ".hd ul",
+                mainCell: ".bd ul",
+                effect: "leftLoop",
+                autoPage: true,
+                autoPlay: true,
+                defaultIndex:0,
+            });
+        }
+
+        this.ShowForm = function ShowForm(id) {
+            var json = new JsonClass(this.Data);
+            //数据初始化
+            var model = {};
+            if(jQuery.isEmptyObject(id))
+            {
+                id = 0;
+            }
+
+            if(id == 0)
+            {
+                model.Id = id;
+                model.ModuleType = 1;
+                model.Name= "";
+                model.Url = "";
+                model.Sort = 0;
+                model.Pic = "";
+            }
+            else
+            {
+                model = json.Find(id);
+            }
+
+            //显示表单
+            var html = '<option value="0"  >添加广告</option>';
+            for (var i = 0; i < this.Data.length; i++) {
+                var n = this.Data[i];
+                html += '<option value="'+n.Id+'">' + (i+1) + '</option>';
+            }
+            $("#AD-Index").empty();
+            $("#AD-Index").append(html);
+
+            if(model.Id == 0)
+            {
+                $(".tijiao_btn2").hide();
+            }
+            else
+            {
+                $(".tijiao_btn2").show();
+            }
+
+            //设置表单数据
+            var $FormDiv = $(ShowFormDiv("ADInfo"));
+            $FormDiv.find("#AD-Index").val(model.Id);
+            $FormDiv.find("#Name").val(model.Name);
+            $FormDiv.find("#ModuleType").val(model.ModuleType);
+            $FormDiv.find("#ModuleType").trigger("change",model.ModuleType);
+            $FormDiv.find("[name=Url]").val(model.Url);
+            $FormDiv.find("#Sort").val(model.Sort);
+            $FormDiv.find("#Pic").val(model.Pic);
+            if(model.Pic != "")
+            {
+                $FormDiv.find("#preview").attr("src",imgpathad + model.Pic);
+                $FormDiv.find("#imglink").attr("href",imgpathad + model.Pic);
+                $FormDiv.find("#imglink").show();
+            }
+            else
+            {
+                $FormDiv.find("#imglink").hide();
+            }
+        }
+
+        this.Del = function Del(me)
+        {
+            var id = $(me).parents(".ADInfoForm").find("#AD-Index").val();
+            if(id == 0)
+            {
+                alert("参数错误");
+                return;
+            }
+            if (!window.confirm('确定要删除？')) {
+                return;
+            }
+            $.post("/Agent/APPModule2/DeleteAdinfo.html", { "id": id },
+               function(result){
+                   if(result.IsSucceed == true)
+                   {
+                       var json = new JsonClass($ADInfo.Data);
+                       json.Del(id);
+                       $ADInfo.Data = json.Data;
+                       ShowFormDiv("xxxxxxxxxx");
+                       $ADInfo.Show();
+                       parent.showdialog("删除成功");
+                   }
+                   else
+                   {
+                       parent.showdialog(result.Message);
+                   }
+
+               }
+            , "json");
+
+        }
+    }
+
+    function APPModule() 
+    {
+        this.HomeData = @(this.Html.Raw(JsonConvert.SerializeObject(Home)));
+        this.BottomData = @(this.Html.Raw(JsonConvert.SerializeObject(Boot)));
+
+        this.ShowHome = function ShowHome()
+        {
+            var HomeHtml = '';
+            var MoreHtml = '';
+            var AddHtml = '<li>\
+                    <a class="zengjia_mored" onclick="$APPModule.ShowForm(0,1)">+</a>\
+                </li>';
+
+            for(var i = 0; i < this.HomeData.length; i++)
+            {
+                var n = this.HomeData[i];
+                var lockhtml = "";
+                var DeleteHtml = '';
+                var SaveHtml = '';
+                var edithtml = '';
+                var draglistcss = "";
+                var IsMoreItem = false;
+                if(IsDelete || IsSave)
+                {
+                    if(IsDelete)
+                    {
+                        DeleteHtml = '<a class="red_abtn" onclick="$APPModule.Del(' + n.Id + ')">删除</a>';
+                    }
+                    if(IsSave)
+                    {
+                        draglistcss = "draglist"
+                        SaveHtml = '<a class="green_abtn" onclick="$APPModule.ShowForm(' + n.Id + ',1)">修改</a>';
+                    }
+                
+                    edithtml = '<div class="lasy"> ' + SaveHtml + ' ' + DeleteHtml + ' </div>';
+                }
+                
+                
+                if(n.IsLock == 1)
+                {
+                    edithtml = "";
+                    draglistcss = "";
+                    lockhtml = '<img src="/Content/Manage/APPModule2/images/all_Img_05.png" width="10" height="10" alt="" />';
+                }
+
+                //循环到第12个 并 总数>12
+                if( (i+1) == 12 && this.HomeData.length > 12 )
+                {
+                    HomeHtml += '<li>\
+                             <span>\
+                                 <a id="test" onclick="ShowMore()">\
+                                     <i><img src="/Content/Manage/APPModule2/images/all_Img_32.png" width="32" height="32" alt="" /></i>\
+                                     <p>更多</p>\
+                                 </a>\
+                             </span>\
+                         </li>';
+                    IsMoreItem = true
+                }
+
+                if((i+1) <= 12 && !IsMoreItem)
+                {
+                    HomeHtml += '<li id="'+n.Id+'" class="'+draglistcss+'">\
+                        <div class="suoicon">'+lockhtml+'</div>'+edithtml+
+                        '<span>\
+                            <i><img src="'+ imgpath +  n.PictureUrl +'" width="32" height="32" alt="" /></i>\
+                            <p>'+ n.Name +'</p>\
+                        </span>\
+                    </li>';
+                }
+                else
+                {
+                    MoreHtml += '<li id="'+n.Id+'" class="'+draglistcss+'">\
+                            <div class="suoicon">'+lockhtml+'</div>'+edithtml+
+                            '<span>\
+                                <i><img src="'+ imgpath +  n.PictureUrl +'" width="32" height="32" alt="" /></i>\
+                                <p>'+ n.Name +'</p>\
+                            </span>\
+                        </li>';
+                }
+
+            }
+            if(IsSave){
+                if(this.HomeData.length <= 12)
+                {
+                    HomeHtml += AddHtml;
+                }
+                else
+                {
+                    MoreHtml += AddHtml;
+                }
+            }
+            $("#homeDiv").empty();
+            $("#homeDiv").append(HomeHtml);
+            var homeDivli = document.getElementById("homeDiv");
+            new Sortable(homeDivli, {
+                draggable: ".draglist"
+            });
+
+            $(".gbin1-listb").empty();
+            $(".gbin1-listb").append(MoreHtml);
+            var MoreBackDivli = document.getElementById("MoreBackDiv");
+            new Sortable(MoreBackDivli, {
+                draggable: ".draglist"
+            });
+        }
+
+        this.ShowBottom = function ShowBottom()
+        {
+            var Html = '';
+            for(var i = 0; i < this.BottomData.length; i++)
+            {
+                var n = this.BottomData[i];
+                var defimg = imgpath +  n.PictureUrl;
+                var actimg = imgpath +  n.PicUrl;
+                var lockhtml = "";
+
+                var DeleteHtml = '';
+                var SaveHtml = '';
+                var edithtml = '';
+                var draglistcss = "";
+                if(IsDelete || IsSave)
+                {
+                    if(IsDelete)
+                    {
+                        DeleteHtml = '<a class="red_abtn" onclick="$APPModule.Del(' + n.Id + ')">删除</a>';
+                    }
+                    if(IsSave)
+                    {
+                        draglistcss = "draglist"
+                        SaveHtml = '<a class="green_abtn" onclick="$APPModule.ShowForm(' + n.Id + ',2)">修改</a>';
+                    }
+                    edithtml = '<div class="lasy"> ' + SaveHtml + ' ' + DeleteHtml + ' </div>';
+                }
+
+                if(n.IsLock == 1)
+                {
+                    edithtml = "";
+                    draglistcss = "";
+                    lockhtml = '<img src="/Content/Manage/APPModule2/images/all_Img_05.png"  style="width:10px;height:10px;" />';
+                }
+
+                Html += '<li onmouseout="$APPModule.MouseOut(this,\''+ defimg +'\')" onmousemove="$APPModule.MouseMove(this,\''+ actimg +'\')" id="'+n.Id+'" class="'+draglistcss+'">\
+                        <div class="suoicon">'+lockhtml+'</div>'+ edithtml +'\
+                        <a class="a1"><img class="defimg" src="'+ defimg +'" ><p>'+ n.Name +'</p></a>\
+                    </li>';
+            }
+            if(this.BottomData.length < 5 && IsSave)
+            {
+                Html += '<li><a class="a6" onclick="$APPModule.ShowForm(0,2)">+</a></li>';
+            }
+            $("#BottomUl").empty();
+            $("#BottomUl").append(Html);
+            var BottomUlli = document.getElementById("BottomUl");
+            new Sortable(BottomUlli, {
+                draggable: ".draglist"
+            });
+        }
+
+        //home模式:model=1 底部模式：model=2
+        this.ShowForm = function ShowForm(id,showModel)
+        {
+            var json = null;
+            if(showModel == 1)
+            {
+                json = new JsonClass(this.HomeData);
+            }
+            else
+            {
+                json = new JsonClass(this.BottomData);
+            }
+
+            //数据初始化
+            var model = {};
+            var title = "修改功能图标";
+            if(id == 0)
+            {
+                id = 0;
+                title = "添加功能图标";
+            }
+            if(id == 0)
+            {
+                model.Id = id;
+            }
+            else
+            {
+                model = json.Find(id);
+            }
+
+            //显示表单
+            var $FormDiv = $(ShowFormDiv("AppModel"));
+            $("#AppModel-title").text(title);
+            var home_upfile = $FormDiv.find("#home_upfile");
+            var bottom_upfile = $FormDiv.find("#bottom_upfile");
+            var bottom_upfile2 = $FormDiv.find("#bottom_upfile2");
+            $FormDiv.find("#preview").attr("src",imgpath + model.PictureUrl);
+            $FormDiv.find("#imglink").attr("href",imgpath + model.PictureUrl);
+
+            if(showModel==1)
+            {
+                //显示或隐藏
+                home_upfile.show();
+                bottom_upfile.hide();
+                bottom_upfile2.hide();
+
+                var selectValue = $FormDiv.find(".selectValue");
+                var selecthtml = "";
+                $.each( ModuleTypeSelectList, function(i, n){
+                    selecthtml += '<option value="'+n.Value+'">'+n.Key+'</option>';
+
+                });
+                selectValue.empty();
+                selectValue.append(selecthtml);
+
+                if(id != 0)
+                {
+                    ShowUploadImg(home_upfile,imgpath + model.PictureUrl);
+                }
+                else
+                {
+                    HideUploadImg(home_upfile);
+                }
+                $FormDiv.find("#Sort").parents("li").show();
+                //处理数据
+                home_upfile.find("#PictureUrl").attr('disabled',false);
+                bottom_upfile.find("#PictureUrl").attr('disabled',true);
+                bottom_upfile2.find("#PicUrl").attr('disabled',true);
+                $FormDiv.find("#DisplaySite").val(1);
+                $FormDiv.find("#Sort").attr('disabled',false);
+            }
+            else
+            {
+                //显示或隐藏
+                home_upfile.hide();
+                bottom_upfile.show();
+                bottom_upfile2.show();
+
+                var selectValue = $FormDiv.find(".selectValue");
+                var selecthtml = "";
+                $.each( ModuleTypeBottomSelectList, function(i, n){
+                    selecthtml += '<option value="'+n.Value+'">'+n.Key+'</option>';
+                });
+                selectValue.empty();
+                selectValue.append(selecthtml);
+
+                if(id != 0)
+                {
+                    ShowUploadImg(bottom_upfile,imgpath + model.PictureUrl);
+                    ShowUploadImg(bottom_upfile2,imgpath + model.PicUrl);
+                }
+                else
+                {
+                    HideUploadImg(bottom_upfile);
+                    HideUploadImg(bottom_upfile2);
+                }
+                $FormDiv.find("#Sort").parents("li").hide();
+                //处理数据
+                bottom_upfile.find("#PictureUrl").attr('disabled',false);
+                bottom_upfile2.find("#PicUrl").attr('disabled',false);
+                home_upfile.find("#PictureUrl").attr('disabled',true);
+                $FormDiv.find("#DisplaySite").val(2);
+                $FormDiv.find("#Sort").attr('disabled',true);
+            }
+
+            //设置数据
+            $FormDiv.find("#Id").val(model.Id);
+            $FormDiv.find("#Name").val(model.Name);
+            $FormDiv.find("#ModuleType").val(model.ModuleType);
+            $FormDiv.find("#ModuleType").trigger("change",model.ModuleType);
+            $FormDiv.find("[name=Value]").val(model.Value);
+            $FormDiv.find("[Id=PictureUrl]").val(model.PictureUrl);
+            $FormDiv.find("[Id=PicUrl]").val(model.PicUrl);
+            $FormDiv.find("#Sort").val(model.Sort);
+        }
+
+        this.Del =  function Del(id)
+        {
+            if(id == 0)
+            {
+                alert("参数错误");
+                return;
+            }
+            if(id==17)
+            {
+                alert("该模块不能删除");
+                return;
+            }
+            if (!window.confirm('确定要删除？')) {
+                return;
+            }
+           
+            var json = new JsonClass($APPModule.HomeData);
+            var appmodule = json.Find(id);
+            if(appmodule == null)
+            {
+                json = new JsonClass($APPModule.BottomData);
+                appmodule = json.Find(id);
+                if(appmodule == null)
+                {
+                    alert("本地数据不存在");
+                    return;
+                }
+            }
+
+            $.post("/Agent/APPModule2/DeleteAPPModule.html", { "id": id },
+               function(result){
+                   if(result.IsSucceed == true)
+                   {
+                       json.Del(id);
+                       if(appmodule.DisplaySite == 1)
+                       {
+                           $APPModule.HomeData = json.Data;
+                           $APPModule.ShowHome();
+                       }
+                       else
+                       {
+                           $APPModule.BottomData = json.Data;
+                           $APPModule.ShowBottom();
+                       }
+                       ShowFormDiv("xxxxxxxxxx");
+                       parent.showdialog("删除成功");
+                   }
+                   else
+                   {
+                       parent.showdialog(result.Message);
+                   }
+
+               }
+            , "json");
+        }
+
+        this.MouseMove = function MouseMove(me,img)
+        {
+            $(me).find(".defimg").attr("src",img);
+        }
+
+        this.MouseOut = function MouseOut(me,img)
+        {
+            $(me).find(".defimg").attr("src",img);
+        }
+
+        this.Sort = function Sort(me)
+        {
+
+            var homeids = "";
+            $.each( $("#homeDiv").children("li"), function(i, n){
+                var val = $(n).attr("id");
+                if($.isNumeric(val))
+                {
+                    homeids += val + ",";
+                }
+            });
+
+            $.each( $(".gbin1-listb").children("li"), function(i, n){
+                var val = $(n).attr("id");
+                if($.isNumeric(val))
+                {
+                    homeids += val + ",";
+                }
+            });
+            homeids = homeids.substr(0, homeids.length - 1);
+
+            var bottomids = "";
+            $.each( $("#BottomUl").children("li"), function(i, n){
+                var val = $(n).attr("id");
+                if($.isNumeric(val))
+                {
+                    bottomids += val + ",";
+                }
+            });
+            bottomids = bottomids.substr(0, bottomids.length - 1);
+
+            $.post("/Agent/APPModule2/SaveSort.html", { "homeids": homeids,"bottomids":bottomids },
+               function(result){
+                   if(result.IsSucceed == true)
+                   {
+                       $APPModule.HomeData = result.Result.home;
+                       $APPModule.ShowHome();
+                       $APPModule.BottomData = result.Result.bottom;
+                       $APPModule.ShowBottom();
+
+                       ShowFormDiv("xxxxxxxxxx");
+                       parent.showdialog("操作成功");
+                   }
+                   else
+                   {
+                       parent.showdialog(result.Message);
+                   }
+
+               }
+            , "json");
+        }
+    }
+
+    function APPBlock()
+    {
+        this.Data =  @(this.Html.Raw(JsonConvert.SerializeObject(APPBlockList)));
+
+        this.Show = function Show()
+        {
+            var Html = '';
+            for(var i = 0; i < this.Data.length; i++)
+            {
+                var n = this.Data[i];
+                var LinkName1 = "";
+                var LinkName2 = "";
+                if(!jQuery.isEmptyObject(n.LinkName1))
+                {
+                    if(!jQuery.isEmptyObject(n.LinkName2))
+                    {
+                        LinkName1 += "<span>"+ n.LinkName1 +"</span>"
+                    }
+                    else
+                    {
+                        LinkName1 = n.LinkName1;
+                    }
+                }
+                if(!jQuery.isEmptyObject(n.LinkName2))
+                {
+                    LinkName2 += "<span>"+ n.LinkName2 +"</span>"
+                }
+
+                var DeleteHtml = '';
+                var SaveHtml = '';
+                var edithtml = '';
+                if(IsDelete || IsSave)
+                {
+                    if(IsDelete)
+                    {
+                        DeleteHtml = '<a class="red_abtn" onclick="$APPBlock.Del(' + n.Id + ')">删除</a>';
+                    }
+                    if(IsSave)
+                    {
+                        SaveHtml = '<a class="green_abtn" onclick="$APPBlock.ShowForm(' + n.Id + ')">修改</a>';
+                    }
+                    edithtml = '<div class="lasy"> '+ SaveHtml +' ' + DeleteHtml + '</div>';
+                }
+
+                Html +='<div class="charge_box"> '+edithtml+'\
+                        <div class="charge_tit" style="background:url('+ imgpathab + n.IconUrl +') no-repeat 9px 12px;background-size:22px;" >\
+                        <h1>'+ n.Name +' </h1><h2>'+ n.SubName +'</h2><i></i>\
+                        <span><img src="/Content/Manage/APPModule2/images/all_Img_38.png" width="50" height="50" alt="" /></span></div>\
+                        <div class="charge_imgbox" style="background: url('+ imgpathab + n.PicUrl +') no-repeat center center;background-size:302px 119px;"></div>\
+                        <div class="charge_more">'+LinkName1+LinkName2+'</div>\
+                    </div>';
+            }
+            if(IsSave)
+            {
+                Html += '<a class="add_block" onclick="$APPBlock.ShowForm(0)">+</a>';
+            }
+            $("#APPBlockDiv").empty();
+            $("#APPBlockDiv").append(Html);
+        }
+
+        this.ShowForm = function ShowForm(id)
+        {
+            var json = new JsonClass(this.Data);
+            //数据初始化
+            var model = {};
+            var title = "修改内容块";
+            if(id == 0)
+            {
+                id = 0;
+                title = "添加内容块";
+            }
+            if(id == 0)
+            {
+                model.Id = id;
+            }
+            else
+            {
+                model = json.Find(id);
+            }
+
+            //显示表单
+            var $FormDiv = $(ShowFormDiv("APPBlock"));
+            $("#APPBlock-title").text(title);
+
+            $FormDiv.find("#Id").val(model.Id);
+            $FormDiv.find("#Name").val(model.Name);
+            $FormDiv.find("#Sort").val(model.Sort);
+            $FormDiv.find("#SubName").val(model.SubName);
+            $FormDiv.find("#LinkName2").val(model.LinkName2);
+            $FormDiv.find("#LinkName1").val(model.LinkName1);
+
+            $FormDiv.find("#LinkType").val(model.LinkType);
+            $FormDiv.find("#LinkType").trigger("change",model.LinkType);
+            $FormDiv.find("#LinkType1").val(model.LinkType1);
+            $FormDiv.find("#LinkType1").trigger("change",model.LinkType1);
+            $FormDiv.find("#LinkType2").val(model.LinkType2);
+            $FormDiv.find("#LinkType2").trigger("change",model.LinkType2);
+
+            $FormDiv.find("[name=LinkUrl]").val(model.LinkUrl);
+            $FormDiv.find("[name=LinkUrl1]").val(model.LinkUrl1);
+            $FormDiv.find("[name=LinkUrl2]").val(model.LinkUrl2);
+
+            $FormDiv.find("[Id=IconUrl]").val(model.IconUrl);
+            $FormDiv.find("[Id=PicUrl]").val(model.PicUrl);
+
+            var IconUrl_upfile = $FormDiv.find("#IconUrl_upfile");
+            var PicUrl_upfile = $FormDiv.find("#PicUrl_upfile");
+            IconUrl_upfile.find("#preview").attr("src",imgpathab + model.IconUrl);
+            IconUrl_upfile.find("#imglink").attr("href",imgpathab + model.IconUrl);
+            PicUrl_upfile.find("#preview").attr("src",imgpathab + model.PicUrl);
+            PicUrl_upfile.find("#imglink").attr("href",imgpathab + model.PicUrl);
+
+            if(id == 0)
+            {
+                IconUrl_upfile.find("#imglink").hide();
+                PicUrl_upfile.find("#imglink").hide();
+            }
+            else
+            {
+                IconUrl_upfile.find("#imglink").show();
+                PicUrl_upfile.find("#imglink").show();
+            }
+
+        }
+
+        this.Del = function Del(id)
+        {
+            if(id == 0)
+            {
+                alert("参数错误");
+                return;
+            }
+            if (!window.confirm('确定要删除？')) {
+                return;
+            }
+
+            var json = new JsonClass(this.Data);
+
+            $.post("/Agent/APPModule2/DeleteAPPBlock.html", { "id": id },
+               function(result){
+                   if(result.IsSucceed == true)
+                   {
+                       json.Del(id);
+                       $APPBlock.Data = json.Data;
+                       $APPBlock.Show();
+                       ShowFormDiv("xxxxxxxxxx");
+                       parent.showdialog("删除成功");
+                   }
+                   else
+                   {
+                       parent.showdialog(result.Message);
+                   }
+
+               }
+            , "json");
+        }
+    }
+
+    function JsonClass(Data) {
+        this.Data = Data;
+
+        //按Id查询数据
+        this.Find = function Find(id)
+        {
+            var result = null;
+            for (var i = 0; i < this.Data.length; i++) {
+                if (this.Data[i].Id == id) {
+                    result = this.Data[i];
+                    break;
+                }
+            }
+            return result;
+        }
+
+        //按Id删除数据
+        this.Del = function Del(id) {
+            for (var i = 0; i < this.Data.length; i++) {
+                if (this.Data[i].Id == id) {
+                    this.Data.splice(i, 1);
+                    break;
+                }
+            }
+        }
+
+        //按Id更新数据,找不到会变成添加
+        this.UpDate = function UpDate(value) {
+            var IsUpdate = false;
+            for (var i = 0; i < this.Data.length; i++) {
+                if (this.Data[i].Id == value.Id) {
+                    this.Data[i] = value;
+                    IsUpdate = true;
+                    break;
+                }
+            }
+            if(!IsUpdate)
+            {
+                this.Add(value);
+            }
+        }
+
+        //添加数据
+        this.Add = function Add(value) {
+            this.Data.push(value);
+        }
+    }
+    /*-----------end数据方法函数-----------*/
+
+    function Fileupload(binding) {
+        var This = $(binding);
+        var MaxHigh = 0,MaxWidth= 0,MinHigh =0,MinWidth=0;
+        var Size = This.attr("Size") != null ? This.attr("Size") : "";
+        var SizeArr = Size.split(",");
+        if(SizeArr.length == 4)
+        {
+            var MinHigh = SizeArr[0];
+            var MinWidth = SizeArr[1];
+            var MaxHigh = SizeArr[2];
+            var MaxWidth = SizeArr[3];
+        }
+        var Url = This.attr("Url") != null ? This.attr("Url") : "";
+        var Savepath = This.attr("Savepath") != null ? This.attr("Savepath") : "";
+        if(Url=="" ||Savepath =="")
+        {
+            alert("设置错误");
+            return;
+        }
+        return This.fileupload({
+            url: Url,
+            dataType: 'json',
+            maxFileSize: 2000000,
+            acceptFileTypes: new RegExp("(\.|\/)(png)$", "i"),
+            formData: { "MaxHigh": MaxHigh, "MaxWidth": MaxWidth, "MinHigh": MinHigh, "MinWidth": MinWidth,"Savepath":Savepath,"Name":"upLoadFile" },
+            //多语言支付
+            messages: {
+                maxNumberOfFiles: '最多能上传文件10个',
+                acceptFileTypes: '文件类型不正确',
+                maxFileSize: '上传文件最大2M',
+                minFileSize: '上传文件最小1KB'
+            },
+            //上传成功后调用
+            done: function (e, data) {
+                var result = data.result;
+                var div = $(this).parents(".upLoadFileDiv");
+                var root = "/UpLoadFiles/";
+                if (result.Status == true) {
+                    div.find("#preview").attr("src",root + Savepath + "/"  + result.Result.SaveFileName);
+                    div.find("#imglink").attr("href",root + Savepath + "/"  + result.Result.SaveFileName);
+                    div.find("#imglink").show();
+                    div.find("#Pic,#PicUrl,#PictureUrl,#IconUrl").val(result.Result.SaveFileName);
+                }
+                else { parent.showdialog(result.Message); }
+            },
+            //处理出错时调用
+            processalways: function (e, data) {
+                if (data.files.error) {
+                    $.each(data.files, function (index, file) {
+                        parent.showdialog(file.error);
+                    });
+                }
+            }
+        });
+    }
+
+    </script>
+}

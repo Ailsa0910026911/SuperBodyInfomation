@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1644D2DA-E541-470A-87E9-F622C0BC3DC8}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LokFu</RootNamespace>
+    <AssemblyName>LokFu.API</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AopSdk, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\AopSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="LokFu.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\LokFu.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="LokFu.PayMent.ALF2FPAY, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\LokFu.PayMent.ALF2FPAY.dll</HintPath>
+    </Reference>
+    <Reference Include="LokFu.PayMent.WxPayAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\LokFu.PayMent.WxPayAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="LokFu.WeiXin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\LokFu.WeiXin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseFun\Tools.cs" />
+    <Compile Include="Controllers\2.0\GetPayPassByBankController.cs" />
+    <Compile Include="Controllers\2.0\SMSCodeController.cs" />
+    <Compile Include="Controllers\2.0\UsersGetPassCodeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\2.0\UsersGetPass_2_0Controller.cs" />
+    <Compile Include="Controllers\2.0\UsersGetPayPassCodeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\2.0\UsersGetPayPass_2_0Controller.cs" />
+    <Compile Include="Controllers\2.0\UsersRegCodeController.cs" />
+    <Compile Include="Controllers\2.0\UsersRegController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\2.0\UsersTrueNameByAPIController.cs" />
+    <Compile Include="Controllers\2.0\UsersTrueNameController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\AgentTypeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\MyQRCodeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\NoteInviteRegController.cs" />
+    <Compile Include="Controllers\3.0\OrderProfitLogController.cs" />
+    <Compile Include="Controllers\3.0\QRCodeBindController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\QRCodeCancelController.cs" />
+    <Compile Include="Controllers\3.0\QRCodeCheckController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\QRCodeLoginController.cs" />
+    <Compile Include="Controllers\3.0\ShareTotal2Controller.cs" />
+    <Compile Include="Controllers\3.0\ShareTotalController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\UsersReplaceMobileCodeController.cs" />
+    <Compile Include="Controllers\3.0\UsersReplaceMobileController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\3.0\UsersYaoYaoController.cs" />
+    <Compile Include="Controllers\4.0\DaiLiOrderController.cs" />
+    <Compile Include="Controllers\4.0\Receipt_2_0Controller.cs" />
+    <Compile Include="Controllers\4.0\ReceiptController.cs" />
+    <Compile Include="Controllers\4.0\ShareTotal3Controller.cs" />
+    <Compile Include="Controllers\4.0\SysConfig_4_0Controller.cs" />
+    <Compile Include="Controllers\4.0\UpFileController.cs" />
+    <Compile Include="Controllers\4.0\VIPOrderController.cs" />
+    <Compile Include="Controllers\AdInfoController.cs" />
+    <Compile Include="Controllers\AgreementController.cs" />
+    <Compile Include="Controllers\ApplyCreditAddController.cs" />
+    <Compile Include="Controllers\ApplyCreditController.cs" />
+    <Compile Include="Controllers\ApplyLoanAddController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ApplyLoanController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AppUpdateController.cs" />
+    <Compile Include="Controllers\AuthConfigController.cs" />
+    <Compile Include="Controllers\Auto\AutoBaoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Auto\AutoCashController.cs" />
+    <Compile Include="Controllers\BanKaListController.cs" />
+    <Compile Include="Controllers\BanKaTypeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Bao\BaoController.cs" />
+    <Compile Include="Controllers\Bao\BaoListController.cs" />
+    <Compile Include="Controllers\Bao\BaoUsersController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Bao\BaoUsersInController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Bao\BaoUsersOutController.cs" />
+    <Compile Include="Controllers\BasicBankCardController.cs" />
+    <Compile Include="Controllers\BasicBankController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BasicBankInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BasicCarBrandController.cs" />
+    <Compile Include="Controllers\BasicCityController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BasicDistrictController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BasicProvinceController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\BizExt.cs" />
+    <Compile Include="Controllers\CardRegController.cs" />
+    <Compile Include="Controllers\DaiLiInfoController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HuanKuanAddController.cs" />
+    <Compile Include="Controllers\4.0\IndexController.cs" />
+    <Compile Include="Controllers\InitController.cs" />
+    <Compile Include="Controllers\Job\CardBinController.cs" />
+    <Compile Include="Controllers\Job\CreditCardAddCodeController.cs" />
+    <Compile Include="Controllers\Job\CreditCardAddController.cs" />
+    <Compile Include="Controllers\Job\JobCreateController.cs" />
+    <Compile Include="Controllers\Job\CancelJobController.cs" />
+    <Compile Include="Controllers\Job\JobOrderInfoController.cs" />
+    <Compile Include="Controllers\Job\JobOrdersController.cs" />
+    <Compile Include="Controllers\Job\JobPayController.cs" />
+    <Compile Include="Controllers\MsgAboutController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgAboutInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgCallBackAddController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgCallBackController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgCallBackInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgDownController.cs" />
+    <Compile Include="Controllers\MsgHelpController.cs" />
+    <Compile Include="Controllers\MsgNoticeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgNoticeInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgUserClearController.cs" />
+    <Compile Include="Controllers\MsgUserController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgUserDeleteController.cs" />
+    <Compile Include="Controllers\MsgUserInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MsgUserNewController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\MyUsersController.cs" />
+    <Compile Include="Controllers\PayConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\4.0\FastOrderIndexController.cs" />
+    <Compile Include="Controllers\Pays\FastOrderController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\FastOrderQueryController.cs" />
+    <Compile Include="Controllers\Pays\FastOrdersController.cs" />
+    <Compile Include="Controllers\Pays\FastOrdersInfoController.cs" />
+    <Compile Include="Controllers\Pays\FastPayWayController.cs" />
+    <Compile Include="Controllers\Pays\FastSetBankController.cs" />
+    <Compile Include="Controllers\Pays\IPayController.cs" />
+    <Compile Include="Controllers\Pays\IPayQueryController.cs" />
+    <Compile Include="Controllers\Pays\OrderBanKaController.cs" />
+    <Compile Include="Controllers\Pays\OrderCashController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrderDaiLi_3_0Controller.cs" />
+    <Compile Include="Controllers\Pays\OrderF2FController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrderHouseController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrderNFCController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrderPayConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrderQCController.cs" />
+    <Compile Include="Controllers\Pays\OrderRechargeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrdersCancelController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrdersCheckController.cs" />
+    <Compile Include="Controllers\Pays\Orders_2_0Controller.cs" />
+    <Compile Include="Controllers\Pays\OrdersController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrdersInfo_2_0Controller.cs" />
+    <Compile Include="Controllers\Pays\OrdersInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Pays\OrdersPicController.cs" />
+    <Compile Include="Controllers\Pays\OrderTransferController.cs" />
+    <Compile Include="Controllers\Pays\PayController.cs" />
+    <Compile Include="Controllers\Pays\UserLogController.cs" />
+    <Compile Include="Controllers\QQController.cs" />
+    <Compile Include="Controllers\RegEquipmentController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ShopEditController.cs" />
+    <Compile Include="Controllers\ShopPicController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ShopPicDelController.cs" />
+    <Compile Include="Controllers\JobSetController.cs" />
+    <Compile Include="Controllers\SpreadUsersController.cs" />
+    <Compile Include="Controllers\SysConfigController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ClearCacheController.cs" />
+    <Compile Include="Controllers\UserCardAddController.cs" />
+    <Compile Include="Controllers\UserCardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UserCardDeleteController.cs" />
+    <Compile Include="Controllers\UserCardInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ShopInfosController.cs" />
+    <Compile Include="Controllers\UserMaillistController.cs" />
+    <Compile Include="Controllers\UsersCheckController.cs" />
+    <Compile Include="Controllers\UsersEditController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersGetPassSetController.cs" />
+    <Compile Include="Controllers\MsgCountController.cs" />
+    <Compile Include="Controllers\BankCardScanController.cs" />
+    <Compile Include="Controllers\UsersIdCardController.cs" />
+    <Compile Include="Controllers\UsersListController.cs" />
+    <Compile Include="Controllers\UsersPassWordChkController.cs" />
+    <Compile Include="Controllers\UsersPassWordController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPayPwdChkController.cs" />
+    <Compile Include="Controllers\UsersGetPayPassSetController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersInfoByNameController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersLoginController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPayPwdController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPayPwdEditController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPay\PayConfigChangeController.cs" />
+    <Compile Include="Controllers\UsersPay\UsersCashController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPay\UsersHouseController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPay\UsersPayController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPay\UsersPayInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\UsersPicController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ZhouBian\ZhouBianDailyController.cs" />
+    <Compile Include="Controllers\ZhouBian\ZhouBianInfoController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ZhouBian\ZhouBianUpdateController.cs" />
+    <Compile Include="Models\DataObj.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="App_Themes\主题1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\aa.pubxml" />
+    <None Include="Properties\PublishProfiles\LokFu.API.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LokFu.FastPay\PC29.FastPay.csproj">
+      <Project>{6b589cb3-e087-4c78-8832-21d618a48475}</Project>
+      <Name>PC29.FastPay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LokFu.Repositories\PC29.Repositories.csproj">
+      <Project>{0466128a-24d6-46d8-9f58-ba8770021af6}</Project>
+      <Name>PC29.Repositories</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1900</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2610/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

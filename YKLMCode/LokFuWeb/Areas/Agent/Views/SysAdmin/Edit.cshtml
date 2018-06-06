@@ -1,0 +1,180 @@
+﻿@{
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysSet BasicSet = ViewBag.BasicSet;
+    SysAdmin BasicAdminUser = ViewBag.AdminUser;
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    ViewBag.SMUid = 129;
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    if (SysAdmin.Id.IsNullOrEmpty())
+    {
+        SysAdmin.PowerID = string.Empty;
+    }
+    //如果当前不是代理商操作员，则按照代理商操作员的可配置权限去获取
+    //if(BasicAgent.AdminId == BasicAdminUser.Id)
+    //{
+    //    SysPowerList = ViewBag.SysPowerList_;
+    //}
+    //else
+    //{
+    //    //使用代理商操作员的可配置权限去获取
+    //    var agentAdmin = Entity.SysAdmin.FirstOrDefault(o => o.Id == BasicAgent.AdminId);
+    //    string[] Sub = agentAdmin.PowerID.Split(',');
+    //    List<int> ID = new List<int>();
+    //    foreach (var s in Sub)
+    //    {
+    //        if (!s.IsNullOrEmpty())
+    //        {
+    //            ID.Add(Int32.Parse(s));
+    //        }
+    //    }
+    //    SysPowerList = Entity.SysPower.Where(n => n.State == 1 && n.PType == 2 && ID.Contains(n.Id)).OrderBy(n => n.Sort).ToList();
+    //}
+}
+<style>
+    .proxy-top-a {
+      background: #cecece none repeat scroll 0 0;
+      color: #fff;
+      font-size: 18px;
+    }
+</style>
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix">
+		<div class="proxy-top">@(ViewBag.Title) <a href="javascript:history.go(-1);" class="pull-right proxy-top-a" >返回</a></div>									
+		<div class="information">
+		<div class="proxy-con inquiry-cont operator">
+			<form action="@(SysAdmin.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+				<input type="hidden" name="Id" value="@(SysAdmin.Id)" />
+                <table>
+					<tbody>
+						<tr>
+							<td width="100" align="right">登录账号<b class="text-red"> * </b> : </td>
+                            <td width="300">
+                            @if (SysAdmin.Id.IsNullOrEmpty())
+                            {
+                                  <input type="text" class="input-text validate[required,custom[mobile],ajax[check]]" data-ext="SysAdmin" name="UserName" id="UserName" value="@(SysAdmin.UserName)" />
+                            }
+                            else
+                            {
+                                  <input type="text" class="input-text" value="@(SysAdmin.UserName)" disabled="disabled" />
+                            }
+							</td>
+							<td width="100" align="right">密码 @if (SysAdmin.Id.IsNullOrEmpty())
+                                        { <span class="text-red"> * </span>} : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text validate[@(SysAdmin.Id.IsNullOrEmpty() ? "required" : ""),custom[pwd]]" name="PassWord" id="PassWord" alert="密码不符合规则" />
+							</td>
+						</tr>
+						<tr>
+							<td width="100" align="right">姓名<b class="text-red"> * </b> : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text validate[required]" name="TrueName" id="TrueName" value="@(SysAdmin.TrueName)" alert="请输入姓名" />
+							</td>
+							<td width="100" align="right">手机号 : </td>
+							<td width="300"> <input type="text" class="input-text validate[custom[mobile]]" name="Mobile" id="Mobile" value="@(SysAdmin.Mobile)" alert="请输入正确手机号" /> </td>
+						</tr>
+						<tr>
+							<td width="100" align="right">邮箱 : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text input-max validate[custom[email]]" name="Email" id="Email" value="@(SysAdmin.Email)" alert="请输入正确邮箱地址" />
+							</td>
+							<td align="right">状态   <b class="text-red"> * </b> : </td>
+							<td width="400"> 
+                                <select class="input-md" name="State" id="State">
+                                    <option value="1"@(SysAdmin.State == 1 ? " selected" : "")>开通</option>
+                                    <option value="0"@(SysAdmin.State != 1 ? " selected" : "")>禁止</option>
+                                </select>
+							</td>					
+						</tr>
+					</tbody>
+				</table>
+				<hr>
+				<br>
+				<h2>权限</h2>
+                @foreach (var p in SysPowerList.Where(n => n.PId == 0))
+                {
+                    IList<SysPower> List = SysPowerList.Where(n => n.PId == p.Id).ToList();
+                    int i = 1;
+				<table class="operator-table">	
+                    <tbody class="tbody">	
+                    @foreach (var pp in List)
+                    {	
+                        <tr>						
+					    @if (i == 1)
+                        {
+							<td width="150" align="center" rowspan="@(List.Count)">
+                                <label>
+                                    <input type="checkbox" name="PId" class="p" id="P@(p.Id)" value="@(p.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", p.Id)) != -1 ? "checked" : "") /> @(p.Name)
+                                </label>
+							</td>				
+                        }
+                        <td width="150" align="left">
+                            <label>
+                                <input type="checkbox" name="PId" class="pp" id="P@(pp.Id)" data-p="@(p.Id)" value="@(pp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", pp.Id)) != -1 ? "checked" : "") /> @(pp.Name)
+                            </label>
+                        </td>
+                        <td width="620" align="left">
+                        @foreach(var ppp in SysPowerList.Where(n => n.PId == pp.Id))
+                        {												
+                            <label>
+                                <input type="checkbox" name="PId" class="ppp" id="P@(ppp.Id)" data-p="@(p.Id)" data-pp="@(pp.Id)" value="@(ppp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", ppp.Id)) != -1 ? "checked" : "") /> @(ppp.Name)　
+                            </label>										
+                        }
+                        </td>
+					    </tr>
+                        i++;
+                    }
+                    </tbody>
+				</table>
+				<br>
+                }
+				<div class="text-center warning"><button type="submit" class="sub">确认</button></div>
+			</form>
+			<br>
+		</div>
+	</div>
+	</div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604261603"></script>
+    <script>
+        $(function () {
+            $(".p").click(function () {
+                var T = $(this).prop("checked");
+                var C = "";
+                if (T) C = "checked";
+                $(this).closest("table").find(".pp").prop("checked", T).parent().attr("class", C);
+                $(this).closest("table").find(".ppp").prop("checked", T).parent().attr("class", C);
+            });
+            $(".pp").click(function () {
+                var T = $(this).prop("checked");
+                var C = "";
+                if (T) C = "checked";
+                $(this).closest("tr").find(".ppp").prop("checked", T).parent().attr("class", C);
+                var L = $(this).closest("table").find(".pp:checked").length;
+                if (L > 0) {
+                    $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                }
+            });
+            $(".ppp").click(function () {
+                var LL = $(this).closest("td").find(".ppp:checked").length;
+                if (LL > 0) {
+                    $(this).closest("td").prev("td").find(".pp").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("td").prev("td").find(".pp").prop("checked", false).parent().attr("class", "");
+                }
+                var L = $(this).closest("table").find(".pp:checked").length;
+                if (L > 0) {
+                    $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                }
+            });
+        });
+    </script>    
+}

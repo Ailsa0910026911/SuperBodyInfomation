@@ -1,0 +1,115 @@
+﻿@{
+    BanKaList BanKaList = ViewBag.BanKaList;
+    ViewBag.SMUid = 186;
+    IList<BanKaType> BanKaTypeList = ViewBag.BanKaTypeList;
+    if (BanKaList.Id.IsNullOrEmpty())
+    {
+        BanKaList.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(BanKaList.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(BanKaList.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">所属产品 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <select name="BKTId" id="BKTId" class="form-control input-small input-inline input-sm  validate[required]" type="select-one" alert="请选择广告位">
+                                        <option value="" data-tag="">请选择</option>
+                                        @foreach (var p in BanKaTypeList)
+                                        {
+                                            <option value="@(p.Id)" @(p.Id == BanKaList.BKTId ? "selected" : "")>@(p.Title)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">标题 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Title" id="Title" value="@(BanKaList.Title)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">图片 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "Pic", FilePath = "BanKaList", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!BanKaList.Pic.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("BanKaList", BanKaList.Pic))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("BanKaList", BanKaList.Pic))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">链接 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Url" id="Url" value="@(BanKaList.Url)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1"@(BanKaList.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0"@(BanKaList.State != 1 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">排序 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required,custom[int]] input-xsmall" name="Sort" id="Sort" value="@(BanKaList.Sort)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">@(BanKaList.Id.IsNullOrEmpty() ? "确认添加":"确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

@@ -1,0 +1,10 @@
+﻿@{
+    Layout = null;
+    decimal SumAmoney = ViewBag.SumAmoney ?? decimal.Zero;
+    decimal SumProfit = ViewBag.SumProfit ?? decimal.Zero;
+}
+<div class="point">
+    
+    总交易额：<b>@(SumAmoney.ToString("f2"))</b>，
+    总分润：<b>@(SumProfit.ToString("f2"))</b>。
+</div>

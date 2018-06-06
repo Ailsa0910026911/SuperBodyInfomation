@@ -1,0 +1,98 @@
+﻿@{
+    IList<UserLog> UserLogList = ViewBag.UserLogList;
+    ViewBag.SMUid = 38;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    Users Users = ViewBag.Users;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 850px; height:620px; overflow-x: hidden;overflow-y:auto; margin: 0px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey" style="margin:10px;">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-scrollable">
+        <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+          <thead>
+            <tr>
+              <th rowspan="2"> 交易单号 </th>
+              <th rowspan="2"> 交易类型 </th>
+              <th rowspan="2"> 交易金额 </th>
+              <th colspan="2"> 交易前 </th>
+              <th colspan="2"> 交易后 </th>
+              <th rowspan="2"> 交易时间 </th>
+            </tr>
+            <tr>
+              <th> 余额 </th>
+              <th> 不可用金额 </th>
+              <th> 余额 </th>
+              <th> 不可用金额 </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var p in UserLogList){
+            <tr class="odd gradeX">
+                <td class="center"> @(p.OId) </td>
+                <td class="center"> @switch (p.OType) { 
+                                        case 1:
+                                            @:收款
+                                            break;
+                                        case 2:
+                                            @:付款
+                                            break;
+                                        case 3:
+                                            @:申请提现
+                                            break;
+                                        case 4:
+                                            @:提现
+                                            break;
+                                        case 5:
+                                            @:提现失败
+                                            break;
+                                        case 6:
+                                            @:退款冲正
+                                            break;
+                                        case 7:
+                                            @:奖金
+                                            break;
+                                        case 8:
+                                            @:分润
+                                            break;
+                                        case 9:
+                                            @:冻结
+                                            break;
+                                        case 10:
+                                            @:解冻
+                                            break;
+                                        case 11:
+                                            @:退款
+                                            break;
+                                        case 12:
+                                            @:扣款
+                                            break;
+                                    } </td>
+                <td class="center price"> @(p.Amount.ToString("F2")) </td>
+                <td class="center price"> @(p.BeforAmount.ToString("F2")) </td>
+                <td class="center price"> @(p.BeforFrozen.ToString("F2")) </td>
+                <td class="center price"> @(p.AfterAmount.ToString("F2")) </td>
+                <td class="center price"> @(p.AfterFrozen.ToString("F2")) </td>
+                <td class="center"> @(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        </div>
+        <div  class="inquiry">
+            <div class="main-content">
+                <link rel="stylesheet" href="/Content/HaoFu/css/style.css" />
+                @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml",UserLogList)
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+</div>
+<!-- END PAGE CONTENT-->

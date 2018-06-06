@@ -1,0 +1,38 @@
+﻿   @font-face {
+            font-family: 'iconfont';  /* project id："167621" */
+            src: url('//at.alicdn.com/t/font_zt4wceiez8alwhfr.eot');
+            src: url('//at.alicdn.com/t/font_zt4wceiez8alwhfr.eot') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_zt4wceiez8alwhfr.woff') format('woff'),
+            url('//at.alicdn.com/t/font_zt4wceiez8alwhfr.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_zt4wceiez8alwhfr.svg#iconfont') format('svg');
+        }
+        .iconfont{font-family:"iconfont"; font-size:16px;font-style:normal;}
+        body{ margin: 0; padding: 0; background: #ffffff}
+        .clearfix:before,
+        .clearfix:after {
+            content: " ";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+    
+        a,button,input,textarea,select{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+        img{ max-width: 100%; max-height: 100%}
+        .content-obtain{ margin: 0.7rem 1rem 0.8rem 1rem; text-align: center; padding-bottom: 1rem; box-sizing: border-box}
+        .list-unstyled{ list-style: none; margin: 0; padding: 0}
+        .content-obtain li{ margin: .6rem 0; position: relative; }
+        .content-obtain li img{ position: absolute; width: 1.2rem; z-index: 100; left: .6rem; top: .6rem}
+        .content-obtain li span{ text-align: left; float: left}
+        .content-obtain li a.font{ float: right; color: #000}
+        .content-obtain li a.font i{ color: #1ea9ea}
+        .content-obtain input{ width: 100%; border-radius: .3rem; font-size: .8rem; height: 2.4rem;background: #e8f6fd; padding-left: 3rem; border: none; box-sizing: border-box; outline: none; background-size: 90%;}
+        .content-obtain .verification{ width: 60%; padding-left: 1rem; float: left}
+        .content-obtain .verification-code{ position: relative; top: .1rem; width:35%; margin-left: .5rem;  background: #ee4e4e;}
+        .verification-code .noused{background:rgba(0,0,0,.3);}
+        .content-obtain .link{ text-decoration: none; border-radius: .3rem; display: inline-block;height: 2.2rem; line-height: 2.2rem;text-align: center; color: #fff}
+        .content-obtain .nextsetp{ width:75%; margin-top: 1rem; background: #1ea9ea; box-sizing: border-box }
+        .text-blur{ color: #1ea9ea}
+        .font{ font-size: .8rem}
+        .hide{ display: none}

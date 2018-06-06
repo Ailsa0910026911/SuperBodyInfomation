@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link href="/Content/Metronic/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+
+    <link href="/Content/Metronic/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/css/style-metronic.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js"></script>
+
+     <script src="/Content/Metronic/scripts/custom/public.js" type="text/javascript"></script>
+@*    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox-plus-jquery.js"></script>
+    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox.js"></script>
+    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox.min.js"></script>*@
+    <script src="/Content/HaoFu/js/iframe.js"></script>
+
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="/Content/Metronic/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+
+    <!-- END PAGE LEVEL PLUGINS -->
+
+    <script src="/Content/Metronic/scripts/custom/public.js" type="text/javascript"></script>
+    @RenderSection("HeaderScripts", false)
+    <link rel="stylesheet" href="/Content/HaoFu/css/custom.css" />
+
+    <title>@this.ViewBag.Title</title>
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("FooterScripts", false)
+    <script>
+        $(function () {
+            var height = $("body").height();
+            var frameId = window.frameElement && window.frameElement.id || '';
+            $(top.frames[frameId]).attr("height", height);
+        });
+    </script>
+</body>
+</html>

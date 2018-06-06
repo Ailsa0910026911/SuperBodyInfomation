@@ -1,0 +1,271 @@
+﻿@{
+    SalesLog SalesLog = ViewBag.SalesLog;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysSet BasicSet = ViewBag.BasicSet;
+    List<Attach> Contract = this.ViewBag.Contract;
+    List<Attach> Certificate = this.ViewBag.Certificate;
+    List<Attach> IDCard_Front = this.ViewBag.IDCard_Front;
+    List<Attach> IDCard_Hand = this.ViewBag.IDCard_Hand;
+    List<Attach> IDCard_Reverse = this.ViewBag.IDCard_Reverse;
+}
+<style>
+    .proxy-top-a {
+      background: #cecece none repeat scroll 0 0;
+      color: #fff;
+      font-size: 18px;
+    }
+    .cont {
+        height: 40px;
+    }
+    .cont .ad-title {
+        margin-right:25px;
+        background:none;
+        border-bottom:none;
+        width: 80px;
+        position: relative;
+        left:10px;
+        white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+    }
+     .cont .delete {
+         position: relative;
+         left: 10px;
+      }
+    .adddiv li {
+        border-bottom: 1px solid #ddd;
+        line-height: 42px;
+    }
+    .adddiv .progress {
+        position: relative;
+        top: 10px;
+        right: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset !important;
+    }
+    .adddiv {
+        width: 580px;
+    }
+    .adddiv .container {
+        width: 620px;
+        padding: 0;
+    }
+    .adddiv .progress {
+        padding: 0;
+    }
+    .td-title {
+        vertical-align: top;
+    }
+</style>
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix">
+		<div class="proxy-top">@(SalesLog.AddTime.ToString())</div>		
+		<div class="information">
+		<div class="proxy-con inquiry-cont operator">
+			<form class="form-horizontal" >
+                <input type="hidden" name="Id" value="@(SalesLog.Id)" />
+                <table>
+					<tbody>
+						<tr>
+                            <td width="100" align="right">变动时间 <b class="text-red"> * </b> : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text" value="@(SalesLog.AddTime.ToString())" disabled />
+							</td>
+							<td width="100" align="right">销售人员 <b class="text-red"> * </b> : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text" value="@(SalesLog.Salesman)" disabled />
+							</td>
+						</tr>
+						<tr>
+                            <td width="100" align="right">到期时间 <b class="text-red"> * </b> : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text" value="@(SalesLog.ExpireTime.ToString("yyyy-MM-dd"))" disabled  />
+							</td>
+							<td width="100" align="right">代理费<b class="text-red"> * </b> : </td>
+							<td width="300"> 
+                                <input type="text" class="input-text" value="@(SalesLog.AgentFee.ToString("f2"))" />
+							</td>
+						</tr>
+						<tr>
+                            <td class="td-title" width="200" align="right">代理合同(多张)<b class="text-red"> * </b> : </td>
+                            <td width="300" colspan="3" class="UpLoadDiv"> &nbsp;
+                                <div  class="adddiv">  
+                                    <ul style="list-style:none; margin:0; padding:0">
+                                    @if (Contract.Count > 0)
+                                    {
+                                        for (int i = 0; i < Contract.Count; i++)
+                                        {
+                                            var item = Contract[i]; 
+                                            <li >
+                                                <div class="cont clearfix">
+                                                    <span class="ad-title inline-block">
+                                                        <a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a>
+                                                    </span>
+                                                    <span class="inline-block">
+                                                    @if (item.RemoveSLogId > 0)
+                                                    {
+                                                        <span>删除</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>新增</span>
+                                                    }
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                    </ul>
+                                </div>
+                            </td>		
+						</tr>
+                        <tr>
+                            <td class="td-title" width="200" align="right">身份证正面<b class="text-red"> * </b> : </td>
+                            <td width="300" colspan="3" class="UpLoadDiv"> &nbsp;
+                                <div  class="adddiv">  
+                                    <ul style="list-style:none; margin:0; padding:0">
+                                    @if (IDCard_Front.Count > 0)
+                                    {
+                                        foreach(var item in IDCard_Front)
+                                        {
+                                        <li >
+                                            <div class="cont clearfix">
+                                                <span class="ad-title inline-block">
+                                                    <a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a>
+                                                </span>
+                                                <div class="inline-block">
+                                                @if (item.RemoveSLogId > 0)
+                                                {
+                                                    <span>删除</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>新增</span>
+                                                }
+                                                </div>
+                                            </div>
+                                        </li>
+                                        }
+                                    }
+                                    </ul>
+                                </div>
+                            </td>		
+						</tr>
+                        <tr>
+                            <td class="td-title" width="200" align="right">身份证反面<b class="text-red"> * </b> : </td>
+                            <td width="300" colspan="3" class="UpLoadDiv"> &nbsp;
+                                <div  class="adddiv">  
+                                    <ul style="list-style:none; margin:0; padding:0">
+                                    @if (IDCard_Reverse.Count > 0)
+                                    {
+                                        foreach(var item in IDCard_Reverse)
+                                        {
+                                        <li >
+                                            <div class="cont clearfix">
+                                                <span class="ad-title inline-block">
+                                                    <a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a>
+                                                </span>
+                                                <div class="inline-block">
+                                                @if (item.RemoveSLogId > 0)
+                                                {
+                                                    <span>删除</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>新增</span>
+                                                }
+                                                </div>
+                                            </div>
+                                        </li>
+                                        }
+                                    }
+                                    </ul>
+                                </div>
+                            </td>		
+						</tr>
+                        <tr>
+                            <td class="td-title" width="200" align="right">身份证手持<b class="text-red"> * </b> : </td>
+                            <td width="300" colspan="3" class="UpLoadDiv"> &nbsp;
+                                <div  class="adddiv">  
+                                    <ul style="list-style:none; margin:0; padding:0">
+                                    @if (IDCard_Hand.Count > 0)
+                                    {
+                                        foreach(var item in IDCard_Hand)
+                                        {
+                                        <li >
+                                            <div class="cont clearfix">
+                                                <span class="ad-title inline-block">
+                                                    <a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a>
+                                                </span>
+                                                <div class="inline-block">
+                                                    @if (item.RemoveSLogId > 0)
+                                                    {
+                                                        <span>删除</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>新增</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </li>
+                                        }
+                                    }
+                                    </ul>
+                                </div>
+                            </td>		
+						</tr>
+                        <tr>
+                            <td class="td-title" width="200" align="right">营业执照或其它证件(多张)<b class="text-red">*</b>:</td>
+                            <td width="300" colspan="3" class="UpLoadDiv"> &nbsp;
+                                <div  class="adddiv">  
+                                    <ul style="list-style:none; margin:0; padding:0">
+                                    @if (Certificate.Count > 0)
+                                    {
+                                        for (int i = 0; i < Certificate.Count; i++)
+                                        {
+                                            var item = Certificate[i]; 
+                                        <li >
+                                            <div class="cont clearfix">
+                                                <span class="ad-title inline-block">
+                                                    <a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a>
+                                                </span>
+                                                <div class="inline-block">
+                                                    @if (item.RemoveSLogId > 0)
+                                                    {
+                                                        <span>删除</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>新增</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </li>
+                                        }
+                                    }
+                                    </ul>
+                                </div>
+                            </td>		
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			<br>
+		</div>
+	    </div>
+	</div>
+</div>
+<link rel="stylesheet" href="/Content/Metronic/plugins/bootstrap/css/bootstrap.min.css">
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            //整理行
+            listTidy();
+            function listTidy() {
+                $(".adddiv").find("li:nth-child(odd)").css({ background: "#f9f9f9" });
+                $(".adddiv").find("li:nth-child(1)").css({ "border-top": "1px solid #ddd" });
+            }
+        });
+    </script>  
+}

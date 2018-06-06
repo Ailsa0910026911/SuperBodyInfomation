@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.SMUid = 200;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    IPageOfItems<SalesLog> SalesLogList = ViewBag.SalesLogList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow: hidden; margin: 0;">
+    <div class="">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>变动时间 </th>
+                                <th>销售人员 </th>
+                                <th>代理费用 </th>
+                                <th>到期时间 </th>
+                                <th>操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (SalesLogList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in SalesLogList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td class="center">@(item.AddTime.ToString()) </td>
+                                    <td class="center">@(item.Salesman) </td>
+                                    <td class="center price">@(item.AgentFee.ToString("f2"))</td>
+                                    <td class="center">@(item.ExpireTime.ToShortDateString()) </td>
+                                    <td class="center"><a href="EditSalesLog.html?Id=@(item.Id)" target="_blank">查看</a> </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", SalesLogList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

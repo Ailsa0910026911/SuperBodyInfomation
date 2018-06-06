@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.SMUid = 0;
+    ViewBag.Title = "调单";
+    Orders Orders = ViewBag.Orders;
+    IList<BasicDesc> BasicDescList = ViewBag.BasicDescList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style type="text/css">
+    #r_main * {
+        font-size: 12px;
+    }
+</style>
+<div class="row" style="width: 500px; padding-top: 15px; margin: 0 auto;" id="r_main">
+    <div class="" style="margin: 10px;">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <form action="DiaoDanSave.html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <input type="hidden" name="Id" value="@(Orders.Id)"/>
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">订单编号</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">@(Orders.TNum)</div>
+                        </div>
+                    </div>
+                        
+                    <div class="form-group">
+                        <label class="control-label col-md-3"><span class="required">*</span>过期时间</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control validate[required,custom(date)]  Wdate" name="DDLastTime" id="DDLastTime" value="" />
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">调单说明</label>
+                        <div class="col-md-4">
+                            <select style="width: 180px;" class="form-control input-inline input-sm" id="CharCode" name="CharCode">
+                                <option value="0">--请选择--</option>
+                                @{
+                                    foreach (var item in BasicDescList)
+                                    {  
+                                        <option value="@item.DescText">@item.TitleCode</option>
+                                    }
+                                }
+                            </select>
+                            <textarea style="margin-top:5px;" class="form-control input-large validate[required,maxSize[1000]]" name="Remark" id="Remark" rows="5"></textarea>
+                            <p style="color:grey"><span style="color:red">*</span>该备注内容商户可见</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">内部备注</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control input-large validate[maxSize[1000]]" name="InternalRm" id="InternalRm" rows="5"></textarea>
+                            <p style="color:grey"><span style="color:red">*</span>该备注内容商户不可见、管理平台可见</p>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="margin-top-10">
+                    <button class="btn green" type="submit" style="margin-left: 200px;">调单</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" /> 
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    
+    <script type="text/ecmascript">
+        $("#CharCode").change(function () {
+            var checkValue = $(this).val();
+            if (checkValue == "0") {
+                $("#Remark").val("");
+            } else {
+                $("#Remark").val(checkValue);
+            }
+        });
+    </script>
+}

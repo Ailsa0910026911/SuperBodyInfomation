@@ -1,0 +1,19 @@
+﻿/*分享赚钱*/
+*{ padding: 0; margin: 0;}
+@media only screen and (min-width: 681px) {body {width: 681px;margin: 0 auto;}}
+.share01{ display: block; width: 100%;}
+.share_text{ width: 100%; position:absolute; top: 4%;  }
+.share_line{ width: 70%; height: 1px; margin: 0 auto; background-color: #69affc; text-align: center;}
+.hf_name{ background-color: #d8eeff; color: #439cf8;  display: block; text-align: center; width: 40%; margin: -1rem auto 0; height: 2rem; line-height: 2rem;}
+.share_text02{ width: 80%; text-align: left; color: #439cf8; margin: 5% auto; font-size: 0.8rem;}
+.register01{ background-color: #5b33c2; color: #ffffff; text-align: center; height: 2.5rem; line-height: 2.5rem; display: block; margin:0 auto 0;
+              width: 60%; border-radius: 5rem; font-size: 30px; cursor: pointer;}
+.register02{ display: block; text-align: center; color: #57a6f6; margin-top: 4%; font-size: 0.8rem;}
+.register03{ background-color: #ffdc73; color: #F86000; text-align: center; height: 2rem; line-height: 2rem; display: block; margin: 4% auto 0;
+              width: 40%; border-radius: 1.5rem; font-size: 0.9rem; cursor: pointer;}
+.dw_box{ position: relative; width: 100%;}
+.fx2box{ width: 70%; margin: 1rem auto; color: #57a6f6;}
+.fx2box span{ display: block; font-size: 0.9rem;}
+.fx2box table{ width: 100%; margin-top: 0.4rem; font-size: 0.9rem;}
+a{text-decoration:none}
+

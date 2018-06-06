@@ -1,0 +1,32 @@
+﻿@{
+    Layout = @"../Shared/_Layout.cshtml";
+    bool IsAjax = Request.QueryString["IsAjax"] != null ? true : false;
+    string NoPurview = ViewBag.NoPurview == null ? "您没有权限" : ViewBag.NoPurview;
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12 page-500">
+        <div class=" number">
+            <i class="fa fa-ban"></i>
+        </div>
+        <div class=" details">
+            <h3>禁止访问！！！</h3>
+            <p>
+                对不起，当前页面禁止访问<br />
+                原因是：@(NoPurview)<br />
+               @if (!IsAjax)
+               {
+                   @:请点击 <a href="javascript:window.history.go(-1);void(0);"><font color="red" style=" font-size:12px; font-weight:bold;" >返回上一页</font></a>
+               }!
+                <br />
+            </p>
+        </div>
+    </div>
+</div>
+@section HeaderScripts
+{
+    @{
+ <link href="/Content/Metronic/css/pages/error.css" rel="stylesheet" type="text/css" />
+    }
+}

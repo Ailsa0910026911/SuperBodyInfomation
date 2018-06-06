@@ -1,0 +1,227 @@
+﻿@{
+    APPModule APPModule = ViewBag.APPModule;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    ViewBag.SMUid = 271;
+    if (APPModule.Id.IsNullOrEmpty())
+    {
+        APPModule.State = 1;
+        APPModule.ModuleType = 1;
+    }
+
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(APPModule.Id.IsNullOrEmpty() ? "Add" : "Save").html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(APPModule.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  validate[required] input-large" name="Name" id="Name" value="@(APPModule.Name)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">默认图标 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge control">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "PictureUrl", FilePath = "APPModule", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPModule.PictureUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none;" id="SelPic">
+                            <label class="control-label col-md-3">选中图标 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge">
+                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "PicUrl", FilePath = "APPModule", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPModule.PicUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">功能类型 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="ModuleType" id="ModuleType">
+                                    <option value="1" @(APPModule.ModuleType == 1 ? " selected" : "")>内置</option>
+                                    <option value="2" @(APPModule.ModuleType == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                <p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group" @(APPModule.ModuleType == 1 ? "" : "style=display:none;") id="selectValue">
+                            <label class="control-label col-md-3">值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select id="SelectValueSelect" @(APPModule.ModuleType == 1 ? "name=Value" : "")
+                                            class="bs-select form-control  validate[required] input-md">
+                                        <optgroup label="Home区域">
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPModule.Value ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                        <optgroup label="底部区域">
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPModule.Value ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" @(APPModule.ModuleType == 2 ? "" : "style=display:none;") id="fillValue">
+                            <label class="control-label col-md-3">值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillValueInput"
+                                           @(APPModule.ModuleType == 2 ? "name=Value" : "") value="@(APPModule.Value)" />
+                                </div>
+                                <p class="help-block"> 请输入以"http://"开头的网址,例如"http://www.taobao.com" </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">代理商<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-smedium" name="AgentId" id="AgentId">
+                                    @if (SysAgentList != null)
+                                    {
+                                        foreach (var item in SysAgentList)
+                                        {
+                                            <option value="@(item.Id)" @(APPModule.AgentId == item.Id ? " selected" : "")>@(item.APPName)</option>
+                                        }
+                                    }
+                                </select>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">是否锁定 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="IsLock" id="IsLock">
+                                    <option value="0" @(APPModule.IsLock == false ? " selected" : "")>否</option>
+                                    <option value="1" @(APPModule.IsLock == true ? " selected" : "")>是</option>
+                                </select>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">显示位置 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="DisplaySite" id="DisplaySite" style="width: 120px !important">
+                                    <option value="1" @(APPModule.DisplaySite == 1 ? " selected" : "")>Home图标</option>
+                                    <option value="2" @(APPModule.DisplaySite == 2 ? " selected" : "")>底部图标</option>
+                                </select>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1" @(APPModule.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0" @(APPModule.State == 0 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">排序 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  validate[required] input-small" name="Sort" id="Sort" value="@(APPModule.Sort)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">确认修改</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+        <script>
+            $(function () {
+                $("#DisplaySite").change(function () {
+                    var v = $(this).val();
+                    if (v == 2) {
+                        $("#SelPic").show();
+                    } else {
+                        $("#SelPic").hide();
+                    }
+                }).change();
+                $("#ModuleType").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#selectValue").show();
+                        $("#fillValue").hide();
+
+                        $("#SelectValueSelect").attr("name", "Value");
+                        $("#FillValueInput").attr("name", "");
+
+                    }
+                    else {
+                        $("#selectValue").hide();
+                        $("#fillValue").show();
+
+                        $("#FillValueInput").attr("name", "Value");
+                        $("#SelectValueSelect").attr("name", "");
+                    }
+                });
+                var uploadSelect = $(".control").children("select").children("option");
+                $.each(uploadSelect, function (i, n) {
+                    if ($(n).val() == 0) {
+                        $(n).remove();
+                    }
+                });
+            });
+        </script>
+    }
+}

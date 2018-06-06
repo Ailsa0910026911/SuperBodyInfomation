@@ -1,0 +1,493 @@
+﻿@{
+    Orders Orders = ViewBag.Orders;
+    Orders baseOrders = ViewBag.baseOrders;
+    SysAgent SysAgent = ViewBag.BasicAgent;
+    LokFuEntity Entity = ViewBag.Entity;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+    string AppImgPath = ViewBag.AppImgPath;
+    string[] Contract = null;
+    List<LokFu.Areas.Agent.Controllers.Attachs> Attachs = new List<LokFu.Areas.Agent.Controllers.Attachs>();
+
+    if (!baseOrders.UserCardPic.IsNullOrEmpty())
+    {
+        Contract = baseOrders.UserCardPic.Split(',');
+        if (baseOrders.CardUpType != 0)
+        {
+            foreach (var item in Contract)
+            {
+                LokFu.Areas.Agent.Controllers.Attachs info = new LokFu.Areas.Agent.Controllers.Attachs();
+                info.SaveFileName = item;
+                info.Id = item;
+                Attachs.Add(info);
+            }
+        }
+    }
+    
+}
+<style>
+    .table > tbody > tr > th, .table > tbody > tr > td {
+        vertical-align: middle;
+    }
+
+    .table > tbody > tr > th {
+        text-align: right;
+    }
+
+        .table > tbody > tr > th .required {
+            color: red;
+            font-weight: normal;
+        }
+</style>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 780px; height: auto; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+        <div class="table-responsive">
+            @if (baseOrders.IdCardState > 0)
+            {
+                <form action="Add.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post" bindingdata="FromData">
+                    <input type="hidden" name="Id" value="@(baseOrders.Id)" />
+                    <input type="hidden" name="CardUpType" value="@(Orders.CardUpType)" />
+                    <input type="hidden" name="IFrameId" value="@(Request.QueryString["IFrameId"])" />
+                    <div id="FromData"></div>
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="4"><i class="fa fa-globe"></i>@(Orders.CardUpType == 2 ? "担保" : "代传凭证") <a class="pull-right" href="IndexOrdersDDLog.html?TNum=@(baseOrders.TNum)&Id=@(baseOrders.Id)" >调单历史记录</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="success" style="width: 120px">订单号：</td>
+                                <td class="active">@(baseOrders.TNum)</td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">状态：</td>
+                                <td class="active">
+                                    @switch (baseOrders.IdCardState)
+                                    {
+                                        case 1:
+                                        @("调单协查");
+                                                 break;
+                                        case 2:
+                                        @("审核中");
+                                                break;
+                                        case 3:
+                                        @("审核通过");
+                                                 break;
+                                        case 4:
+                                        @("审核失败");
+                                                 break;
+                                        case 5:
+                                        @("终止调单");
+                                                 break;
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">备注：</td>
+                                <td class="active">@(baseOrders.Remark)</td>
+                            </tr>
+                            @if (baseOrders.IdCardState == 1 || baseOrders.IdCardState == 4)
+                            {
+                                <tr>
+                                    <td class="success" style="width: 120px">@(Orders.CardUpType == 2 ? "担保书" : "代传凭证")</td>
+                                    @* <td class="active">
+                                @Html.Partial("FileLoad", new FileLoad() { StandardSize = 4, BigName = "UserCardPic", FilePath = "Orders", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png","application/x-rar-compressed","application/zip" },Class="validate[required]" })
+                                <br />
+                                <span><span style="color:red">*</span>请上传Bmp、Gif、Jpeg、Png、RAR、ZIP格式</span>
+                            </td>*@
+                                    <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                            <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>上传@(Orders.CardUpType == 2 ? "担保书" : "代传凭证")</span>
+                                 
+                                <input type="file" class="UpLoadFile" name="UpLoadFile" multiple url="/Agent/Asyn/UpLoadFilePic.html" savepath="/UpLoadFiles/Orders/" bindingid="Contract" />
+                            </span>
+                                        <span class="help-block">上传文件类型应为gif,jpg,jpeg,png</span>
+                                        <span class="has-error" style="display: none">
+                                            <p class="help-block">* 请上传@(Orders.CardUpType == 2 ? "担保书" : "代传凭证").</p>
+                                        </span>
+                                        <div>
+                                            <ul class="adddiv">
+                                                <li id="Contract">
+                                                    @if (Contract != null && Contract.Length > 0 && baseOrders.CardUpType != 0)
+                                                    {
+                                                        foreach (var item in Contract)
+                                                        {
+                                                        <span id="@(item)">
+                                                            <a href="@(Utils.ImageUrl("Orders/", item))" target="_blank">
+                                                                <img src="@(Utils.ImageUrl("Orders/", item))" /></a>
+                                                            <a class="delete" href="javascript:"><i class="fa fa-times color-red"></i></a>
+                                                        </span>
+                                                        }
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="success" style="width: 120px">凭证</td>
+                                <td class="active">
+                                    @if (!baseOrders.UserCardPic.IsNullOrEmpty())
+                                    {
+                                        if (baseOrders.CardUpType == 0)
+                                        {
+@*<a href="@(Utils.ImageUrl("Orders", baseOrders.UserCardPic, AppImgPath))" target="_blank">凭证</a>*@
+                                        <div>
+                                            <ul class="adddiv">
+                                                <li id="Contract">
+                                                    @if (Contract != null && Contract.Length > 0)
+                                                    {
+                                                        foreach (var item in Contract)
+                                                        {
+                                                        <span>
+                                                            <a href="@(Utils.ImageUrl("Orders/", item, AppImgPath))" target="_blank">
+                                                                <img src="@(Utils.ImageUrl("Orders/", item, AppImgPath))" /></a>
+
+                                                        </span>
+                                                        }
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        }
+                                        else if (baseOrders.CardUpType == 1 || baseOrders.CardUpType == 2)
+                                        {
+                                        <div>
+                                            <ul class="adddiv">
+                                                <li id="Contract">
+                                                    @if (Contract != null && Contract.Length > 0)
+                                                    {
+                                                        foreach (var item in Contract)
+                                                        {
+                                                        <span>
+                                                            <a href="@(Utils.ImageUrl("Orders/", item))" target="_blank">
+                                                                <img src="@(Utils.ImageUrl("Orders/", item))" /></a>
+
+                                                        </span>
+                                                        }
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        }
+                                    }
+                                    else
+                                    {@("暂未上传凭证")}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="success" style="width: 120px">备注信息</td>
+                                <td class="active">
+                                    <textarea class="validate[required,maxSize[1000]] form-control input-large" name="DDUserRm" id="DDUserRm" rows="5" style="width: 400px !important">@(baseOrders.DDUserRm)</textarea>
+                                </td>
+                            </tr>
+                            @if (baseOrders.IdCardState == 1 || baseOrders.IdCardState == 4)
+                            {
+                                if (baseOrders.CardUpType == 2)
+                                {
+                                    if (SysAgent.Tier == 1)
+                                    { 
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="submit" class="btn green" style="width: 100%;">确认提交</button></td>
+                                </tr>
+                                    }
+                                }
+                                else
+                                {
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="submit" class="btn green" style="width: 100%;">确认提交</button></td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            }
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+
+
+
+
+    @Html.Partial("~/Areas/Agent/Views/Shared/UpLoadFile.cshtml")
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201608191447"></script>
+    <script type="text/javascript">
+        //删除的文件数据
+        
+        var FileData = @(this.Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Attachs.ToList())));
+        
+        var FileDelData = [];
+        $(function () {
+            var UpFile = new UpLoadFileHelp($(".UpLoadFile"));
+            UpFile.FilePath = "@(Utils.ImageUrl("Orders/", "/"))";
+            UpFile.IniImg();
+            UpFile.DelFun = function (eml) {
+                var id = eml.attr("id");
+                var deldata = this.DelById(FileData, id);
+                if (deldata != null) {
+                    FileDelData.push(deldata);
+                }
+            };
+
+            UpFile.DoneFun = function (data) {
+                var result = data.result.Result;
+                FileData.push(result);
+                $("#Contract").parents("td").find(".has-error").hide();
+            };
+            $(".chkForm").submit(function (e) {
+                var BindingData = $(this).attr("BindingData");
+                target = $("#" + BindingData);
+                target.empty();
+                var html = "";
+                var num=0;
+                $.each(FileData, function (i, n) {
+                    html +=
+                    '<input type="hidden" value="' + n.SaveFileName + '" name="Contract[' + i + ']" id=Id'+i+'>'
+                    if ($.isNumeric(n.Id)) {
+                        html += '<input type="hidden" value="' + n.Id + '" name="Contract[' + i + ']">';
+                    }
+                    num++;
+                });
+                if(num>6)
+                {
+                    showdialog("最多上传六张图片");
+                    return false;
+                }
+                $("#FromData").append(html);
+
+                //var AFile = $("input[Name='Contract[0].AFile']").val();
+                var AFile = $("#Id0").val();
+                if (jQuery.isEmptyObject(AFile)) {
+                    $("#Contract").parents("td").find(".has-error").show();
+                    return false;
+                }
+            });
+        });
+        function UpLoadFileHelp(Elm) {
+            //文件路径
+            this.FilePath = "";
+            //上传控件对象
+            this.Upload = this.IniFileUpload(Elm);
+            //元素
+            this.Elm = Elm;
+            //删除回调
+            this.DelFun = null;
+            //上传成功回调
+            this.DoneFun = null;
+        };
+
+        //图片模式初始化方法
+        UpLoadFileHelp.prototype.IniImg = function () {
+            var This = this;
+
+            this.Upload.bind('fileuploadprogress', function (e, data) {
+                var BindingId = $("#" + This.Elm.attr("BindingId"));
+                var progressElem = $(BindingId).find("span[id=" + data.files[0].FileID + "]").find(".progress .progress-bar");
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                progressElem.css('width', progress + '%');
+            }).bind('fileuploadprocessalways', function (e, data) {
+                if (data.files.error) {
+                    showdialog(data.files[0].error);
+                }
+                else {
+                    data.files[0].FileID = This.newGuid();
+                    var BindingId = $("#" + $(this).attr("BindingId"));
+                    This.InsertUploading(BindingId, data.files[0]);
+                }
+            }).bind('fileuploaddone', function (e, data) {
+                if (data.result.Status == true) {
+                    This.DoneFun(data);
+                    This.InsertUploadImg(data);
+                }
+                else { showdialog(data.result.Message); }
+            });
+
+            //绑定删除动作
+            $(document).on("click", ".delete", function () {
+                var elm = $(this).parents("span");
+                This.DelFun(elm);
+                elm.remove();
+            });
+        };
+
+        /**
+        * 插入上传中
+        * 参数：
+        * target 插入目标元素
+        * data 控件数据
+        * 返回： 无
+        */
+        UpLoadFileHelp.prototype.InsertUploading = function (target, data) {
+            var html =
+            '<span id="' + data.FileID + '">\
+                上传中...\
+                <div class="progress">\
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>\
+                </div>\
+            </span>';
+            target.append(html);
+        };
+
+        /**
+        * 插入上传图片
+        * 参数：
+        * data 控件数据
+        * filepath 文件路径
+        * 返回： 无
+        */
+        UpLoadFileHelp.prototype.InsertUploadImg = function (data) {
+            var result = data.result.Result;
+            result.Id = data.files[0].FileID;
+            var fileID = $("#" + data.files[0].FileID);
+            fileID.empty();
+            var html =
+            '<a href="' + this.FilePath + '/' + result.SaveFileName + '" target="_blank">\
+                <img src="' + this.FilePath + '/' + result.SaveFileName + '"  /></a>\
+                <a class="delete" href="javascript:"> <i class="fa fa-times color-red"></i></a>';
+            fileID.append(html);
+        }
+
+        /**
+         *按Id查询数据
+         *Data:数据源
+         *id:id
+        */
+        UpLoadFileHelp.prototype.FindById = function (Data, id) {
+            var result = null;
+            $.each(Data, function (i, n) {
+                if (n.Id == id) {
+                    result = n;
+                    return;
+                }
+            });
+            return result;
+        }
+
+        /**
+         *按Id删除数据
+         *Data:数据源
+         *id:id
+         *return 被删除的数据
+        */
+        UpLoadFileHelp.prototype.DelById = function (Data, id) {
+            var result = null;
+            var reid = null;
+            $.each(Data, function (i, n) {
+                if (n.Id == id) {
+                    reid = i;
+                    result = n;
+                }
+            });
+            if (reid != null) {
+                Data.splice(reid, 1);
+            }
+            return result;
+        }
+
+        UpLoadFileHelp.prototype.newGuid = function () {
+            var guid = "";
+            for (var i = 1; i <= 32; i++) {
+                var n = Math.floor(Math.random() * 16.0).toString(16);
+                guid += n;
+                if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
+                    guid += "";
+            }
+            return guid;
+        }
+
+        /**
+         *初始化控件
+         *This:元素
+        */
+        UpLoadFileHelp.prototype.IniFileUpload = function (This) {
+            var MaxHigh = This.attr("MaxHigh") != null ? This.attr("MaxHigh") : 0;
+            var MaxWidth = This.attr("MaxWidth") != null ? This.attr("MaxWidth") : 0;
+            var MinHigh = This.attr("MinHigh") != null ? This.attr("MinHigh") : 0;
+            var MinWidth = This.attr("MinWidth") != null ? This.attr("MinWidth") : 0;
+            var MaxFileSize = This.attr("Size") != null ? This.attr("Size") : 2097152;
+            var FileType = This.attr("FileType") != null ? This.attr("FileType") : "gif|jpe?g|png";
+            var Url = This.attr("Url") != null ? This.attr("Url") : "";
+            var SavePath = This.attr("SavePath") != null ? This.attr("SavePath") : "";
+            var Name = This.attr("Name") != null ? This.attr("Name") : "";
+            var IsOriginalName = This.attr("IsOriginalName") != null ? true : false;
+            return This.fileupload({
+                url: Url + "?time" + new Date().getTime(),
+                dataType: 'json',
+                maxFileSize: MaxFileSize,
+                acceptFileTypes: new RegExp("(\.|\/)(" + FileType + ")$", "i"),
+                formData: { "MaxHigh": MaxHigh, "MaxWidth": MaxWidth, "MinHigh": MinHigh, "MinWidth": MinWidth, "SavePath": SavePath, "Name": Name, "IsOriginalName": IsOriginalName },
+                //多语言支付
+                messages: {
+                    maxNumberOfFiles: '最多能上传文件10个',
+                    acceptFileTypes: '文件类型应为gif,jpg,jpeg,png',
+                    maxFileSize: '上传文件最大' + MaxFileSize / 1024 / 1024 + 'M',
+                    minFileSize: '上传文件最小1KB'
+                },
+                //处理出错时调用
+                //processalways: function (e, data) {
+                //    if (data.files.error) {
+                //        $.each(data.files, function (index, file) {
+                //            showdialog(file.error);
+                //        });
+                //    }
+                //}
+            });
+        }
+    </script>
+
+}
+<style type="text/css">
+    .adddiv span img {
+        max-height: 80px;
+        max-width: 80px;
+    }
+
+    .adddiv span {
+        display: inline-block;
+        position: relative;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        width: 80px;
+        height: 80px;
+        float: left;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+        .adddiv span .delete {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            display: block;
+            padding: 1px;
+            background: #fff;
+            border-radius: 50% !important;
+        }
+
+        .adddiv span .progress {
+            width: 80px;
+            height: 10px;
+            border-radius: 20px !important;
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+        }
+
+    .adddiv {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,188 @@
+﻿@{
+    IList<Orders> OrdersList = ViewBag.OrdersList;
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<SysAgent> AgentList = ViewBag.AgentList;
+    Orders Orders = ViewBag.Orders;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="80" align="right">调单类型: </td>
+                            <td width="100" align="left">
+                                <select name="DDAuto" class="input-sm" id="DDAuto">
+                                    <option value="0" @(Orders.DDAuto == 0 ? "selected" : "") >所有</option>
+                                    <option value="1" @(Orders.DDAuto == 1 ? "selected" : "") >自动调单</option>
+                                    <option value="2" @(Orders.DDAuto == 2 ? "selected" : "") >调单协查</option>
+                                </select>
+                            </td>
+                            <td width="80" align="right">调单状态: </td>
+                            <td width="100" align="left">
+                                <select name="IdCardState" class="input-sm" id="IdCardState">
+                                    <option value="1" @(Orders.IdCardState == 1 ? "selected" : "") >待上传</option>
+                                    <option value="2" @(Orders.IdCardState == 2 ? "selected" : "") >审核中</option>
+                                    <option value="4" @(Orders.IdCardState == 4 ? "selected" : "") >审核失败</option>
+                                    <option value="3" @(Orders.IdCardState == 3 ? "selected" : "") >审核通过</option>
+                                    <option value="5" @(Orders.IdCardState == 5 ? "selected" : "") >终止调单</option>
+                                    <option value="99" @(Orders.IdCardState == 99 ? "selected" : "") >所有</option>
+                                </select>
+                            </td>
+                            <td width="80" align="right">交易号: </td>
+                            <td width="100" align="left">
+                                <input type="text" class="input-max" name="TNum" value="@(Orders.TNum)" /></td>
+                            </tr> <tr>
+                            <td width="80" align="right">调单时间: </td>
+                            <td width="400" align="left"  colspan="5">
+                                <input id="STime" class=" Wdate" type="text" 
+                                name="STime" value="@(Orders.STime == DateTime.MinValue ? "" : Orders.STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                - 
+                            <input id="ETime" class="Wdate" type="text" 
+                                name="ETime" value="@(Orders.ETime == DateTime.MinValue ? "" : Orders.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-table">
+            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                <thead>
+                    <tr>
+                        <th width="120">交易号 </th>
+                        <th width="140">交易商户 </th>
+                        <th width="100">交易金额 </th>
+                        <th width="100">交易类型 </th>
+                        <th width="100">所属代理 </th>
+                        <th width="80">调单类型 </th>
+                        <th width="80">调单状态 </th>
+                        <th width="80">操作类型 </th>
+                        <th width="100">调单时间 </th>
+                        <th width="120">操作 </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    @if (OrdersList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in OrdersList)
+                        {
+                            Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                        <tr class="odd gradeX">
+                            <td class="center">
+                                @if (ViewBag.Edit)
+                                {
+                                    <a href="Edit.html?Id=@(p.Id)" class="Ajax" title="交易信息">@(p.TNum)</a>
+                                }
+                                else
+                                {
+                                    @(p.TNum)
+                                }
+                            </td>
+                            <td class="center">@(Users.NeekName)</td>
+                            <td class="center price">@(p.Amoney.ToString("F2")) </td>
+                            <td class="center">[<span>@(p.GetTTName())</span>]</td>
+                            <td class="center">@(AgentList.FirstOrNew(o => o.Id == p.Agent).Name)</td>
+                            <td class="center">
+                                @switch (p.DDAuto)
+                                {
+                                    case 1:
+                                    @("自动调单")
+                                        break;
+                                    case 2:
+                                    @("调单协查")
+                                        break;
+                                }
+                            </td>
+                            <td class="center">
+                                @switch (p.IdCardState)
+                                {
+                                    case 1:
+                                    @("待上传")
+                                        break;
+                                    case 2:
+                                    @("审核中")
+                                        break;
+                                    case 3:
+                                    @("审核通过")
+                                        break;
+                                    case 4:
+                                    @("审核失败")
+                                        break;
+                                    case 5:
+                                    @("终止调单")
+                                        break;
+                                }
+                            </td>
+                            <td class="center">
+                                @{
+                                string oName = string.Empty;
+                                if (p.IdCardState >= 1)
+                                {
+                                    switch (p.CardUpType)
+                                    {
+                                        case 0:
+                                            oName = "自传凭证";
+                                            break;
+                                        case 1:
+                                            oName = "代传凭证";
+                                            break;
+                                        case 2:
+                                            oName = "担保";
+                                            break;
+                                    }
+                                }
+                                }
+                                @(oName)
+                            </td>
+                            <td class="center">@(p.CardAddTime.HasValue ? p.CardAddTime.Value.ToString("yyyy-MM-dd HH:mm") : "") </td>
+                            <td class="center">
+                                @if ((p.IdCardState == 1 || p.IdCardState == 4))
+                                {
+                                    if (ViewBag.Add)
+                                    {
+                                        if (BasicAgent.Tier == 1)
+                                        { 
+                                    <a class="label label-sm label-success Ajax" href="EditDanBao.html?Id=@(p.Id)&CardUpType=2">
+                                        <i class="fa fa-gavel"></i>担保</a>
+                                        }
+                                    <a class="label label-sm label-success Ajax" href="EditDanBao.html?Id=@(p.Id)&CardUpType=1">
+                                        <i class="fa fa-gavel"></i>代传凭证</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="label label-sm label-success Ajax" href="EditDanBao.html?Id=@(p.Id)">
+                                        <i class="fa fa-gavel"></i>查看</a>
+                                }
+
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", OrdersList)
+        </div>
+    </div>
+</div>
+</div>
+@section FooterScripts
+{
+    <script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+}

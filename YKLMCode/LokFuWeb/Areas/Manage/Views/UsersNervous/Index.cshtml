@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.SMUid = 261;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    LokFuEntity Entity = ViewBag.Entity;
+
+    DateTime? WTimes = ViewBag.WTimes;
+    IList<LokFu.Repositories.Extensions.UsersNervousModel> UsersNervousList = ViewBag.UsersNervousList;
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px; line-height: 40px;" id="ListForm" name="ListForm" method="get" action="../UsersNervous/IndexSelect.html">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>查询时间：</span>
+        <input type="text" class="pagination-panel-input form-control input-inline input-sm  Wdate"  name="WTimes" id="WTimesY" value="@(WTimes == null ? DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") : WTimes.Value.ToString("yyyy-MM-dd"))" />
+        <br />
+        <button class="btn btn-sm yellow table-group-action-submit" type="button" id="but_chaxun"><i class="fa fa-check"></i>查询</button>
+        @if (ViewBag.Xls)
+        {
+            <button class="btn btn-sm green" style="margin-left: 10px;" type="button" id="XLS"><i class="fa fa-share"></i>导出报表</button>
+        }
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" style="vertical-align: inherit;">账户 </th>
+                                <th rowspan="2" style="vertical-align: inherit;">商户名 </th>
+                                <th rowspan="2" style="vertical-align: inherit;">姓名 </th>
+                                <th rowspan="2" style="vertical-align: inherit;">状态 </th>
+                                <th colspan="2">前日余额 </th>
+                                <th colspan="7">资金流入</th>
+                                <th colspan="3">资金流出</th>
+                                @*<th rowspan="2" style="vertical-align: inherit;">房租</th>*@
+                                <th colspan="2" style="vertical-align: inherit;">当前余额</th>
+                                <th rowspan="2" style="vertical-align: inherit;">理财余额</th>
+                            </tr>
+                            <tr>
+                                <th>可用余额</th>
+                                <th>冻结余额</th>
+                                <th>银联卡</th>
+                                <th>升级</th>
+                                <th>支付宝</th>
+                                <th>微信</th>
+                                @*<th>NFC</th>*@
+                                <th>分润</th>
+                                <th>理财转出</th>
+                                <th>T1提现</th>
+                                <th>T0提现</th>
+                                <th>理财转入</th>
+                                <th>可用余额</th>
+                                <th>冻结余额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb_body">
+                            <tr>
+                                <td colspan="50" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                    <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            $("#but_chaxun").click(function () {
+                var WTimes = $("#WTimesY").val();
+                var htmlData = "";
+                $("#tb_body").empty();
+                $.ajax({
+                    type: "post",
+                    url: "../UsersNervous/IndexSelect.html?WTimes=" + WTimes,
+                    dataType: "json",
+                    beforeSend: function () {
+                        $("#tb_body").empty();
+                        $("#but_chaxun").prop('disabled', true);
+                    },
+                    success: function (json) {
+                        if (json.code != "10000") {
+                            showdialog(json.msg);
+                            return;
+                        } else {
+                            if (json.msg == "") {
+                                htmlData = '<tr>' +
+                                            '<td colspan="50" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">' +
+                                               ' <img src="/Content/Manage/images/Index_back_img_to.png" />' +
+                                    '</td>' +
+                                '</tr>';
+                                $("#tb_body").append(htmlData);
+                            } else {
+                                $.each(json.msg, function (i, item) {
+                                    htmlData = '<tr class="odd gradeX">' +
+                                            '<td style="text-align: center">' + item.UserName + '</td>' +
+                                            '<td style="text-align: center">' + item.NeekName + '</td>' +
+                                            '<td style="text-align: center">' + item.TrueName + '</td>' +
+                                            '<td style="text-align: center">' + item.State + '</td>' +
+                                            '<td style="text-align: center">' + item.BeforeAmonut + '</td>' +
+                                            '<td style="text-align: center">' + item.BeforeFrozen + '</td>' +
+                                            '<td style="text-align: center">' + item.O_PayMoney + '</td>' +
+                                            '<td style="text-align: center">' + item.P_Amoney + '</td>' +
+                                            '<td style="text-align: center">' + item.FZ_PayMoney + '</td>' +
+                                            '<td style="text-align: center">' + item.FW_PayMoney + '</td>' +
+                                            //'<td style="text-align: center">' + item.FN_PayMoney + '</td>' +
+                                            '<td style="text-align: center">' + item.Share_AMOUNT + '</td>' +
+                                            '<td style="text-align: center">' + item.BF_Amount + '</td>' +
+                                            '<td style="text-align: center">' + item.C_PayMoney_T1 + '</td>' +
+                                            '<td style="text-align: center">' + item.C_PayMoney_T0 + '</td>' +
+                                            '<td style="text-align: center">' + item.BO_Amount + '</td>' +
+                                            @*<td style="text-align: center">@(item.OH_PayMoney.ToString("F2"))</td>*@
+                                            '<td style="text-align: center">' + item.AfterAmonut + '</td>' +
+                                            '<td style="text-align: center">' + item.AfterFrozen + '</td>' +
+                                            '<td style="text-align: center">' + item.BL_Amount + '</td>' +
+                                '</tr>';
+                                    $('#tb_body').append(htmlData);
+                                });
+                                htmlData = '<tr class="totalCount">' +
+                                     '<td class="center"><b>合计：</b></td>' +
+                                     '<td class="center"></td>' +
+                                     '<td class="center price"></td>' +
+                                     '<td class="center price"></td>' +
+                                     '<td class="center price">' + json.msgTongji.BeforeAmonut + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.BeforeFrozen + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.O_PayMoney + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.P_Amoney + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.FZ_PayMoney + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.FW_PayMoney + '</td>' +
+                                     //'<td class="center price">' + json.msgTongji.FN_PayMoney + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.Share_AMOUNT + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.BF_Amount + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.C_PayMoney_T1 + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.C_PayMoney_T0 + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.BO_Amount + '</td>' +
+                                     @*<td class="center price">@(UsersNervousList.Sum(x => x.OH_PayMoney).ToString("F2"))</td>*@
+                                     '<td class="center price">' + json.msgTongji.AfterAmonut + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.AfterFrozen + '</td>' +
+                                     '<td class="center price">' + json.msgTongji.BL_Amount + '</td>' +
+                                '</tr>';
+                                $('#tb_body').append(htmlData);
+                            }
+                        }
+                        $("#but_chaxun").prop('disabled', false);
+                    }
+                });
+                return false;
+            });
+
+            $("#STimes").focus(function () {
+                WdatePicker({ maxDate: '#F{$dp.$D(\'ETimes\')|| \'%y-%M-%d\'}', dateFmt: 'yyyy-MM-dd', startDate: '%y-%M-%d' });
+            });
+            $("#ETimes").focus(function () {
+                WdatePicker({ maxDate: '%y-%M-%d', minDate: '#F{$dp.$D(\'STimes\')}', dateFmt: 'yyyy-MM-dd', startDate: '%y-%M-%d' });
+            });
+
+            var Today = new Date();
+            $("#today").click(function () {
+                $("#STimes").val(new Date(new Date() - 24 * 60 * 60 * 1000).Format("yyyy-MM-dd"));
+                $("#ETimes").val(new Date(new Date() - 24 * 60 * 60 * 1000).Format("yyyy-MM-dd"));
+            });
+            $("#toweek").click(function () {
+                var currentDay = Today.getDay();
+                if (currentDay == 0) { currentDay = 7; }
+                var mondayTime = Today.getTime() - (currentDay - 1) * 24 * 60 * 60 * 1000;
+                var sundayTime = Today.getTime() + (7 - currentDay) * 24 * 60 * 60 * 1000;
+                var monday = new Date(mondayTime);
+                var sunday = new Date(sundayTime);
+                $("#STimes").val(monday.Format("yyyy-MM-dd"));
+                $("#ETimes").val(sunday.Format("yyyy-MM-dd"));
+            });
+            $("#days7").click(function () {
+                var StartTime = Today.getTime() - 6 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STimes").val(Start.Format("yyyy-MM-dd"));
+                $("#ETimes").val(Today.Format("yyyy-MM-dd"));
+            });
+            $("#tomonth").click(function () {
+                var myyear = Today.getFullYear();
+                var mymonth = Today.getMonth();
+                var monthStartDate = new Date(myyear, mymonth, 1);
+                var days = getMonthDays(myyear, mymonth);
+                var monthEndDate = new Date(myyear, mymonth, days);
+                $("#STimes").val(monthStartDate.Format("yyyy-MM-dd"));
+                $("#ETimes").val(monthEndDate.Format("yyyy-MM-dd"));
+            });
+            $("#days30").click(function () {
+                var StartTime = Today.getTime() - 29 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STimes").val(Start.Format("yyyy-MM-dd"));
+                $("#ETimes").val(Today.Format("yyyy-MM-dd"));
+            });
+        });
+        Date.prototype.Format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        //获得某月的天数     
+        function getMonthDays(myYear, myMonth) {
+            var monthStartDate = new Date(myYear, myMonth, 1);
+            var monthEndDate = new Date(myYear, myMonth + 1, 1);
+            var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+            return days;
+        }
+    </script>
+}

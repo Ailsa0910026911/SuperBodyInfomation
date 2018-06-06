@@ -1,0 +1,36 @@
+﻿@charset "utf-8";
+/* CSS Document */
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1459907750_4571455.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1459907750_4571455.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1459907750_4571455.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1459907750_4571455.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1459907750_4571455.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+ul,li{list-style:none;}
+*{ margin: 0; padding: 0; text-decoration: none; -webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{background-color: #f2f2f2;}
+input[type=button],input[type=submit]{-webkit-appearance:none;outline:none} 
+.shopinfo{background-color: #fff;padding: 10% 0 5% 0;}
+.shop-title{text-align: center; font-size: 1.2rem;}
+.mone_box{ width: 90%; border-bottom: 1px solid #e5e5e5; margin: 5% auto 0; overflow: hidden;}
+.mone_box span{ float: left; line-height: 4rem;}
+.mone_box input{ float: right; text-align: right; line-height: 4rem; font-size: 2rem; width: 70%; border: 0; font-weight: bold; outline:none;}
+.iconfont{font-family:iconfont;font-size:1.6rem;font-style:normal; color: #3c8ff6; vertical-align: middle;}
+.prompt_box{ background-color: #fcefc7; padding: 2% 0;}
+.prompt_box img{ display: block; margin: 0 auto; width: 80%;}
+.payment{ width: 97%; padding-left: 3%; border-bottom: 1px solid #e5e5e5; border-top:0.5rem solid #f3f3f3; line-height: 2.8rem; background-color: #fff;}
+.payway li{ padding-left: 3%; background: url(../images/no_pay.png) no-repeat 96% center; background-size: 8%; background-color: #fff;}
+.payway li.active{ background: url(../images/yes_icon.png) no-repeat 96% center #fff;background-size: 8%;}
+.payway li p{ border-bottom: 1px solid #e5e5e5; display: block; padding: 5% 0; background: no-repeat left center; background-size: 10%; padding-left: 12%;}
+.payway li p span{color:#CCC; margin-left:8px;}
+.payway li p.weixin{ background-image: url(../images/weipay.png);}
+.payway li p.alipay{ background-image: url(../images/zhipay.png);}
+.payway li p.bank{ background-image: url(../images/unionpay.png); border: 0;}
+.he_text{width:100%; text-align: center; color: #999999; display: block; line-height: 3rem; font-size: 0.8rem;}
+.submit{ width: 80%; padding: 3% 0; color: #fff; border: 0; border-radius: 4px; background-color: #3c8ff6; margin: 0 auto; display: block; font-size: 1.2rem;}
+.red{color:red;}
+@media only screen and (min-width: 681px) {
+    body {width: 681px;margin: 0 auto;}
+}

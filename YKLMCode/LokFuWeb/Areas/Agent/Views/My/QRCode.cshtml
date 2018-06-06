@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.SMUid = 153;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+}
+<div style="width: 210px; height: 210px; padding: 12px; margin:auto;">
+    <img src="@(AdminUser.QRCode())" />
+</div>

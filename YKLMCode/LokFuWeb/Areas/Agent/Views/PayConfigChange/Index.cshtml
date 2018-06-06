@@ -1,0 +1,196 @@
+﻿@{
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    IList<PayConfigChange> PayConfigChangeList = ViewBag.PayConfigChangeList;
+    ViewBag.SMUid = 78;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    string AgentState = ViewBag.AgentState;
+
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    bool IsMyAdd = false;
+    bool IsMyDelete = false;
+    bool IsMyEdit = false;
+    bool IsMySave = false;
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "PayConfigChange" && SP.Method == "Add") != null)
+    {
+        IsMyAdd = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "PayConfigChange" && SP.Method == "Delete") != null)
+    {
+        IsMyDelete = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "PayConfigChange" && SP.Method == "Edit") != null)
+    {
+        IsMyEdit = true;
+    }
+    if (SysPowerList.FirstOrDefault(SP => SP.Ctrl == "PayConfigChange" && SP.Method == "Save") != null)
+    {
+        IsMySave = true;
+    }
+}
+
+<link rel="stylesheet" href="/Content/HaoFu/css/normalize.css">
+<link rel="stylesheet" href="/Content/HaoFu/css/style.css">
+<link rel="stylesheet" href="/Content/HaoFu/css/custom.css">
+<style>
+    .dropdown-menu {
+        position: absolute;
+        right: 10px;
+        width: 114px;
+        border: 1px solid #ddd;
+        text-align: left;
+        background: #fff;
+    }
+
+        .dropdown-menu li {
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+            .dropdown-menu li a {
+                color: #000;
+            }
+</style>
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <form class="frame-list" id="ListForm" name="ListForm" method="post">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="112" align="right">APP费率套餐设置 : </td>
+                            <td width="200" align="left">
+                                <select id="AgentState" name="AgentState" class="input-text input-sm">
+                                    <option value="0" @(AgentState == "0" ? " selected" : "")>显示亿卡联盟</option>
+                                    <option value="2" @(AgentState == "2" ? " selected" : "")>显示自己</option>
+                                    <option value="1" @(AgentState == "1" ? " selected" : "")> 不显示</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" id="but_baocun" class="but">保 存</button>
+                            </td>
+                            <td align="right"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                @{
+                                    if (IsMyAdd)
+                                    {
+                                        <a class="but but-xs" href="Edit.html">添加记录<i class="iconfont">&#xe631;</i></a>
+                                    }
+                                }
+
+                            </td>
+                            <td colspan="2" align="right" style="position:relative">
+                                @{
+                                    if (IsMySave)
+                                    {
+                                        <button class="btn btn-warning" type="button" data-toggle="dropdown" id="but_piliang">批量操作 <i class="iconfont">&#xe60c;</i></button>
+                                        <ul class="dropdown-menu list-unstyled hide">
+                                            <li><a href="#" class="BatSet" rev="State" rel="1">批量显示 </a></li>
+                                            <li><a href="#" class="BatSet" rev="State" rel="0">批量隐藏 </a></li>
+                                        </ul>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="list-table">
+            <table id="ListBox" width="100%">
+                <thead>
+                    <tr>
+                        <th class="table-checkbox" width="40">
+                            <input type="checkbox" class="group-checkable CheckAll" rev="list" />
+                        </th>
+                        <th>套餐名称 </th>
+                        <th>费率 </th>
+                        <th>分享 </th>
+                        <th>状态 </th>
+                        <th>价格 </th>
+                        <th>优惠价 </th>
+                        <th>代理利润 </th>
+                        <th width="140">操作 </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in PayConfigChangeList)
+                    {
+                        <tr class="odd gradeX">
+                            <td>
+                                <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" />
+                            </td>
+                            <td class="center">@(p.Title) </td>
+                            <td class="center">@(p.ShowTip) </td>
+                            <td class="center">@(p.ShareNumber == 0 ? "不可用" : p.ShareNumber.ToString() + "人") </td>
+                            <td class="center">
+                                @if (p.State == 1)
+                                {
+                                    <i class="iconfont color-green">&#xe60d;</i>
+                                }
+                                else
+                                {
+                                    <i class="iconfont color-red">&#xe611;</i>
+                                }
+                            </td>
+                            <td class="center">@((p.APrice.GetValueOrDefault()).ToString("F2")) </td>
+                            <td class="center">@((p.BPrice.GetValueOrDefault()).ToString("F2")) </td>
+                            <td class="center">@((p.BPrice.GetValueOrDefault()-p.CPrice.GetValueOrDefault()).ToString("F2")) </td>
+                            <td class="center">
+                                @{
+                        if (IsMyEdit)
+                        {
+                            <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>查看</a>
+                        }
+
+                        if (IsMyDelete)
+                        {
+                            <a class="label label-sm label-success Delete" href="Delete.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>删除</a>
+                        }
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", PayConfigChangeList)
+    </div>
+</div>
+<script src="~/Content/HaoFu/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#but_baocun").click(function () {
+            $.ajax({
+                type: "post",
+                url: "/Agent/PayConfigChange/EditUpdateAgentId.html",
+                data: "AgentState=" + $("#AgentState").val(),
+                success: function (data) {
+                    switch (data) {
+                        case "10005":
+                            alert("参数有误,请联系管理员！");
+                            break;
+                        case "10004":
+                            alert("数据查询有误，请联系管理员！");
+                            break;
+                        default:
+                            alert("数据保存成功！");
+                            break;
+                    }
+                }
+            });
+        });
+        $("#but_piliang").click(function (event) {
+            event.stopPropagation();
+            $(".dropdown-menu").toggleClass("hide");
+        });
+        $(document).click(function () {
+            $(".dropdown-menu").addClass("hide");
+        })
+    });
+</script>
+<!-- END EXAMPLE TABLE PORTLET-->

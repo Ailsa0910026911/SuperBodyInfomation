@@ -1,0 +1,156 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    ViewBag.SMUid = 42;
+    string Remark = ViewBag.Remark;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow:hidden; margin:0;">
+    <div class="">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(Users.Id)" />
+                    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                    <div class="form-body">
+                         @if (Remark == "Log")
+                    {
+                        int i = 1;
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>时间</th>
+                                        <th>内容</th>
+                                        <th>人员</th>
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Users.Remark.IsNullOrEmpty())
+                                    { 
+                                        <tr class="odd gradeX">
+                                            <td class="center" colspan="5">暂无跟进记录</td>
+                                        </tr>
+                                    }else{
+                                        foreach (var p in Users.Remark.Split('№'))
+                                        {
+                                            string[] Arr = p.Split('§');
+                                            if(Arr.Length==4){
+                                            <tr class="odd gradeX">
+                                                <td class="center">@(i) </td>
+                                                <td class="center">@(Arr[0]) </td>
+                                                <td class="center">@(Arr[1]) </td>
+                                                <td class="center">@(Arr[3]) </td>
+                                                <td class="center">@(Arr[2]) </td>
+                                            </tr>
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">商户名称</label>
+                            <div class="col-md-4" style="width:33.3%">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[maxSize[20]]" name="NeekName" id="NeekName" value="@(Users.NeekName)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">密码 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[custom[pwd],maxSize[32]] input-small" name="PassWord" id="PassWord" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">手机号 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large validate[custom[mobile]]" name="Mobile" id="Mobile" value="@(Users.Mobile)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">QQ号 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large validate[custom[qq]]" name="QQ" id="QQ" value="@(Users.QQ)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">邮箱 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large validate[custom[email]" name="Email" id="Email" value="@(Users.Email)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">地址 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large validate[maxSize[200]]" name="Address" id="Address" value="@(Users.Address)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1"@(Users.State == 1 ? " selected" : "")>正常</option>
+                                    <option value="0"@(Users.State != 1 ? " selected" : "")>锁定</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">维护记录 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <textarea class="form-control validate[required,maxSize[1000]]" name="Remark" style="height:60px; margin:10px 10px 0 0; width:300px;" id="Remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">确认修改</button>
+                            </div>
+                        </div>
+                     }
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

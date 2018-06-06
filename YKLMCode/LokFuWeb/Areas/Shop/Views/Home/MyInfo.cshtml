@@ -1,0 +1,46 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers;
+    int Nav = 30;
+    Page.Name = BasicUsers.NeekName + "的帐户信息";
+}
+<div class="cash over">
+    @Html.Partial("Header", Nav)
+    <div class="main">
+        <div class="container">
+            <div class="main-top">
+                <p><a href="/shop/">首页 </a>&gt; <a href="javascript:">帐户信息</a></p>
+            </div>
+        </div>
+        <div class="container border">
+            <div class="account">
+                <h3 class="inline-block">帐户余额 : </h3>
+                <p class="inline-block"><i class="iconfont">&#xe61f;</i><span class="text-warning">@(BasicUsers.Amount.ToString("F2"))</span>元</p>
+                <p class="available">不可用余额:<span>@(BasicUsers.Frozen.ToString("F2"))</span> 元</p>
+            </div>
+            <div class="border-top"><span>提现流程</span></div>
+            <div class="process">
+                <div class="process-con">
+                    <ul class="list-unstyled clearfix">
+                        <li>
+                            <span class="round"><b></b></span>
+                        </li>
+                        <li><span class="round"><b></b></span></li>
+                        <li class="last"><span class="round"><b></b></span></li>
+                    </ul>
+                    <ul class="list-unstyled character clearfix">
+                        <li>
+                            <p>在手机客户端点击"提现"功能进入提现页面</p>
+                        </li>
+                        <li>
+                            <p>在"提现"页面按照提现输入信息，选择到账类型</p>
+                        </li>
+                        <li class="last">
+                            <p>提现支持"T+0",即快速到账;支持"T+1",即明天到账</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Footer")
+</div>

@@ -1,0 +1,45 @@
+﻿@charset "utf-8";
+.haoym_box{width: 100%; height: auto; background-color: #fff;margin-top:0rem;}
+.jf_mxbox{width: 100%; height: auto; background-color: #fff;padding:1.5rem 0;border-bottom:  0.1rem #cecece;}
+.haoym_list {display: block;background: #fff;border-bottom:  1rem #f2f2f2;}
+.haoym_list:hover{display: block;background: #f7f7f7;}
+.haoym_list dl{ display: block; height: 100%; width: 100%;padding-top:1rem; padding-bottom: 1rem;}
+.haoym_list dl dd{ width:6rem;height: 6rem; overflow: hidden;float: right;margin-right: 10px;}
+ul, ol, li {list-style: none; border-bottom: 10px solid #f2f2f2;}
+
+/*.haoym_list dl dd img{ width: 100%;height: auto;}*/
+.haoym_list dl dt{ width:70%;float: left;}
+.haoym_list dl dt h1{ font-size: 1.2rem; height: 3.2rem; overflow: hidden;padding-left: 1rem; line-height:3.2rem;}
+.haoym_list dl dt p{ font-size:0.8rem;padding-left: 1rem;padding-top:0rem; color: #7e7e7e; }
+.haoym_list dl dt span{ font-size:2.2rem;padding-left: 2rem;  color: #7e7e7e; }
+.jf_mxbox{width: 100%; height: auto;position: fixed;top:0;background-color: #fff;padding:1rem 0;border-bottom: solid 1rem #f2f2f2;z-index:9999;}
+.haoym_box{width: 100%; height: auto; background-color: #fff;}
+.haoym_list dl dt a{ width: 12rem; height: 4.2rem; line-height: 4.2rem; text-align: center; font-size: 1.8rem; color: #fff; background-color:#ff5858; display: block;border-radius: 3px; margin-left: 2rem; clear: both;}
+/*.haoym_box .haoym_list:last-child{border-bottom:none;}*/
+
+.header_glass {z-index: 10;background: #000;border-radius: 200px;
+    display: inline-block;
+    position: absolute;
+	right:2%;
+    width: 3rem;
+    height:3rem;
+    background:#ddd url(/Content/Mobile/images/sousuo.png) no-repeat center center; background-size: 100%;
+  
+}
+
+.header_search { width:96%; display: block;margin: 0 auto; text-indent: 3rem;
+    box-sizing: border-box; height: 3rem; line-height: normal; border-radius: 200px; font-size: 1rem;
+    background: rgba(221,221,221,0.9);
+    color: #999;
+   
+      
+}
+input, select, textarea {
+   
+    outline: none;
+    border: none;
+}
+.gg_tit{ width: 96%; margin: 0 auto; padding:0 2%; height: 8rem; font-size: 2.8rem; line-height: 8rem; }
+
+ @media only screen and (min-width: 681px) {body {width: 681px; margin: 0 auto;}}
+

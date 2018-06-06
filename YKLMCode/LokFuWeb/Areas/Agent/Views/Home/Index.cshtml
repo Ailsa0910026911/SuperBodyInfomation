@@ -1,0 +1,434 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+    SysAgent SysAgent = ViewBag.BasicAgent;
+    SysSet BasicSet = ViewBag.BasicSet;
+    ViewBag.NoShowDel = true;
+    int count1 = 0, count2 = 0, count3 = 0;
+    DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+    DateTime ToMonty = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01"));
+    DateTime Yesterday = DateTime.Now.AddDays(-1);
+    DateTime YesterdayStart = new DateTime(Yesterday.Year, Yesterday.Month, Yesterday.Day);
+    DateTime YesterdayEnd = new DateTime(Yesterday.Year, Yesterday.Month, Yesterday.Day, 23, 59, 59);
+    var msgNotices = Entity.MsgNotice.Where(o => o.State == 1 && (o.NType == 0 || o.NType == 2)).OrderByDescending(o => o.AddTime).Select(o => new { o.Id, o.Name, o.AddTime }).Take(6).ToList();
+    string SysAdmin = string.Format(",{0},", AdminUser.Id);
+    int MsgNum = 0;
+    var MsgList = Entity.MsgAdmin.Where(n => n.State == 1 && (n.AId == AdminUser.Id || n.SendUsers.Contains(SysAdmin)) && n.AddTime > AdminUser.AddTime).ToList();
+    foreach (var item in MsgList)
+    {
+        bool newMsg = true;
+        if (!item.ReadUsers.IsNullOrEmpty())
+        {
+            if (item.ReadUsers.Contains(SysAdmin)) { newMsg = false; };
+        }
+        if (!item.DeleteUsers.IsNullOrEmpty())
+        {
+            if (item.DeleteUsers.Contains(SysAdmin)) { newMsg = false; };
+        }
+        if (newMsg) { MsgNum++; }
+    }
+    IList<SysMenu> SysMenuList = ViewBag.BaseMenu;
+    var oneMen = SysMenuList.Where(o => o.PId == 0).OrderBy(o => o.Sort).ToList();
+    this.Layout = null;
+
+    //风险总数
+    int FengXianCount = 0;
+    //风险金额
+    decimal FengXianMoney = 0M;
+    //获取下级代理
+    var AgentList = SysAgent.GetSupAgent(Entity);
+    //组合代理商ID
+    IList<int> AgentId = new List<int>();
+    foreach (var p in AgentList)
+    {
+        AgentId.Add(p.Id);
+    }
+
+    FengXianCount = Entity.Orders.Count(n => n.IdCardState == 1 && AgentId.Contains(n.Agent));
+    if (FengXianCount > 0)
+    {
+        FengXianMoney = Entity.Orders.Where(n => n.IdCardState == 1 && AgentId.Contains(n.Agent)).Sum(x => x.Amoney);
+    }
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="/Content/HaoFu/css/normalize.css" />
+    <link rel="stylesheet" href="/Content/HaoFu/css/style.css?201608101504" />
+    <link rel="stylesheet" href="/Content/HaoFu/css/custom.css" />
+    <title>@(BasicSet.AgentName)商户管理系统</title>
+    <!--[if IE]><style>.index .nav .nav-list li{width:80px;float:left; }</style><![endif]-->
+</head>
+<body class="index" style="background: #e3e3e3;">
+    <div class="header">
+        <div class="conter clearfix">
+            <div class="pull-right">
+                <ul class="list-unstyled inline-block">
+                    <li><a class="text-suesse display-name" href="javascript:void(0);">@(SysAgent.Name)&nbsp;&nbsp;@(AdminUser.TrueName)&nbsp;&nbsp;@*<i class="icon-1"></i>*@</a></li>
+                    <li><a href="./">回首页</a></li>
+                </ul>
+                <ul class="list-unstyled clearfix inline-block top-list">
+                    <li><i class="icon-3"></i><a data-site="/Agent/My/Notice.html" data-num="15" href="javascript:void(0);">业务公告</a></li>
+                    <li><i class="icon-4"></i><a data-site="/Agent/My/Msg.html" data-num="16" href="javascript:void(0);" title="消息中心">您有(<span>@MsgNum</span>)条未读消息</a></li>
+                    @*<li><i class="icon-5"></i><a data-site="http://www.sina.com" data-num="17"  href="javascript:void(0);">使用帮助</a></li>	*@
+                </ul>
+                <ul class="list-unstyled inline-block">
+                    <li><a href="/Agent/Login/RemoveLogin.html">安全退出</a></li>
+                    <li><a class="out" href="javascript:void(0);"><i class="icon-6"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="conter clearfix">
+            <div class="logo pull-left">
+                @if (!SysAgent.CompanyLogo.IsNullOrEmpty())
+                {
+                    <img src="@("Http://" + Utils.GetHostName() + SysAgent.CompanyLogo)" alt="" />
+                }
+            </div>
+            <div class="nav-list pull-left">
+                <ul class="list-unstyled clearfix flex-container">
+                    @{
+                        int itemOn = 1;
+                        foreach (var item in oneMen)
+                        {
+                        <li data-index = "@item.Id">
+                            <a @(itemOn == 1 ? "class='active'" : "") href="javascript:void(0);">@item.Name</a>
+                        </li>
+                            itemOn++;
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-main">
+        <div class="conter">
+            <div class="main clearfix">
+                <div class="main-left pull-left">
+                    <div class="title">
+                        <h2><i class="icon-7"></i>功能列表 </h2>
+                    </div>
+                    @{
+                        int oneitem = 1;
+                        foreach (var one in oneMen)
+                        {
+                        <div class="list side @(oneitem == 1 ? "" : "hide")" data-index = "@one.Id">
+                            <ul class="list-unstyled list-ul">
+                                @foreach (var tow in SysMenuList.Where(o => o.PId == one.Id).OrderBy(o => o.Sort).ToList())
+                                {
+                                    if (tow.Url == "###")
+                                    {
+                                    <li class="lison" data-fater="lison">
+                                        <a href="javascript:">@tow.Name</a><i class='iconfont text-blue'>&#xe60c;</i>
+                                        <div class="two-tank hide">
+                                            <ul class="list-unstyled">
+                                                @foreach (var three in SysMenuList.Where(o => o.PId == tow.Id).OrderBy(o => o.Sort).ToList())
+                                                {
+                                                    <li><a href="javascript:void(0);" data-site="@three.Url" data-num="@three.Id">@three.Name</a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    }
+                                    else
+                                    {
+                                    <li><a href="javascript:void(0);" data-site="@tow.Url" data-num="@tow.Id">@tow.Name</a><i class="iconfont">&#xe60b;</i></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                                oneitem++;
+                        }
+                    }
+                    <div class="title">
+                        <h2><i class="icon-8"></i>常用功能 </h2>
+                    </div>
+                    <div class="list common">
+                        <ul class="list-unstyled list-ul">
+                            <!--							<li><a data-site="http://www.php100.com" data-num="5" href="#">已读消息</a> </li>-->
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><a href="/Agent/My/Info.html?type=view" class="Ajax" awidth="650px" aheight="500px" title="个人信息">个人信息</a></li>
+                            <li><a href="/Agent/My/Pass.html" class="Ajax" awidth="650px" aheight="520px" title="修改密码">修改密码</a></li>
+                            <li><a href="/Agent/Login/RemoveLogin.html">安全退出</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="main-right pull-right">
+                    <div class="mainrig-top">
+                        <a class="index-list pull-left active" href="javascript:void(0);">主页</a>
+                        <ul class="list-unstyled clearfix ul-list">
+                        </ul>
+                    </div>
+                    <div class="main-content clearfix">
+                        <div class="ifarm-index clearfix">
+                            <div class="cont-left pull-left">
+                                <div class="box-warp">
+                                    <ul class="list-unstyled clearfix">
+                                        <li>
+                                            @{
+                                                count1 = Entity.Users.Count(n => n.State == 1 && n.AddTime > Today && n.Agent == AdminUser.AgentId);
+                                                count2 = Entity.Users.Count(n => n.State == 1 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId);
+                                            }
+                                            <div class="main-box box1">
+                                                <div class="icon-img pull-left img1"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@(count1)</h2>
+                                                    <p>今日新增商户</p>
+                                                </div>
+                                                <a><span>本月新增商户 : @(count2)</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            @{
+                                                count1 = Entity.Orders.Count(n => n.PayState == 1 && n.TType != 2 && n.AddTime > Today && n.Agent == AdminUser.AgentId);
+                                                count2 = Entity.Orders.Count(n => n.PayState == 1 && n.TType != 2 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId);
+                                            }
+                                            <div class="main-box box2">
+                                                <div class="icon-img pull-left img2"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@count1</h2>
+                                                    <p>今日新增订单</p>
+                                                </div>
+                                                <a><span>本月新增订单 : @count2</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                        <li class="last">
+                                            @{
+                                                count1 = Entity.Orders.Count(n => n.PayState >= 1 && n.TType == 2 && n.AddTime > Today && n.Agent == AdminUser.AgentId);
+                                                count2 = Entity.Orders.Count(n => n.PayState >= 1 && n.TType == 2 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId);
+                                            }
+                                            <div class="main-box box3">
+                                                <div class="icon-img pull-left img3"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@count1</h2>
+                                                    <p>今日新增提现</p>
+                                                </div>
+                                                <a><span>本月新增提现 : @count2</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            @{
+                                                count1 = 0;
+                                                count2 = 0;
+                                                try
+                                                {
+                                                    count1 = Int32.Parse(Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > Today && n.Agent == AdminUser.AgentId).Sum(n => n.Amoney).ToString("F0"));
+                                                }
+                                                catch (Exception) { }
+                                                try
+                                                {
+                                                    count2 = Int32.Parse(Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId).Sum(n => n.Amoney).ToString("F0"));
+                                                }
+                                                catch (Exception) { }
+                                            }
+                                            <div class="main-box box4">
+                                                <div class="icon-img pull-left img4"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@count1</h2>
+                                                    <p>今日交易量</p>
+                                                </div>
+                                                <a><span>本月交易量 : @count2</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            @{
+                                                count1 = Entity.Orders.Count(n => n.PayState >= 1 && n.TrunType == 0 && n.TType == 2 && n.AddTime > Today && n.Agent == AdminUser.AgentId);
+                                                count2 = Entity.Orders.Count(n => n.PayState >= 1 && n.TrunType == 0 && n.TType == 2 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId);
+                                            }
+                                            <div class="main-box box5">
+                                                <div class="icon-img pull-left img2"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@count1</h2>
+                                                    <p>今日T0提现</p>
+                                                </div>
+                                                <a><span>本月T0提现 : @count2</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                        <li class="last">
+                                            @{
+                                                var paidCount1 = (double)Entity.Orders.Count(n => n.PayState >= 1 && n.AddTime > Today && n.Agent == AdminUser.AgentId);
+                                                var noCount1 = (double)Entity.Orders.Count(n => n.AddTime > Today);
+                                                var paidCount2 = (double)Entity.Orders.Count(n => n.PayState >= 1 && n.AddTime > ToMonty && n.Agent == AdminUser.AgentId);
+                                                var noCount2 = (double)Entity.Orders.Count(n => n.AddTime > ToMonty);
+                                            }
+                                            <div class="main-box box6">
+                                                <div class="icon-img pull-left img3"></div>
+                                                <div class="text-box pull-right">
+                                                    <h2>@( noCount1 != 0 ? (paidCount1 / noCount1 * 100).ToString("f2") : "0")%</h2>
+                                                    <p>今日订单转化率</p>
+                                                </div>
+                                                <a><span>本月订单转化率: @( noCount2 != 0 ? (paidCount2 / noCount2 * 100).ToString("f2") : "0")%</span><b>></b></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="business">
+                                    <div class="business-top">
+                                        <h2><i class="icon-9"></i>业务公告</h2>
+                                    </div>
+                                    <div class="business-cont">
+                                        @if (msgNotices.Count > 0)
+                                        {
+                                            int index = 1;
+                                            <ul class="list-unstyled">
+                                                @foreach (var item in msgNotices)
+                                                {
+                                                    <li>
+
+                                                        <p class="list-unstyled"><span class="business-num">@(index)</span><a href="/Agent/My/NoticeInfo.html?Id=@(item.Id)" class="Ajax" title="业务公告">@item.Name</a><span class="pull-right">@item.AddTime.ToShortDateString()</span></p>
+
+                                                    </li>
+                                                    index++;
+                                                }
+                                                <li class="clearfix last-li"><a class="more pull-right" href="javascript:void(0);" onclick="OpenNewIFarme('业务公告','/Agent/My/Notice.html')">查看更多>></a></li>
+                                            </ul>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cont-right pull-right">
+                                <div class="module">
+                                    <div class="business-top">
+                                        <h2><i class="icon-10"></i>我的交易</h2>
+                                    </div>
+                                    <div class="module-cont">
+                                        @{
+                                            decimal yesterdaySum = 0;
+                                            int yesterdayCount = 0;
+                                            try
+                                            {
+                                                yesterdaySum = Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > YesterdayStart && n.AddTime < YesterdayEnd && n.Agent == AdminUser.AgentId).Sum(n => n.Amoney);
+                                                yesterdayCount = Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > YesterdayStart && n.AddTime < YesterdayEnd && n.Agent == AdminUser.AgentId).Count();
+                                            }
+                                            catch (Exception) { }
+                                        }
+                                        <ul class="list-unstyled">
+                                            <li>昨日交易</li>
+                                            <li><b class="text-suesse">@yesterdaySum.ToString("n2") 元</b></li>
+                                            <li>昨日交易 <span class="text-suesse">@yesterdayCount 笔</span></li>
+                                            <li>昨日单笔平均 <span class="text-suesse">@( yesterdayCount != 0 ? (yesterdaySum / yesterdayCount).ToString("n2") : "0.00") 元</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="module">
+                                    <div class="business-top">
+                                        <a href="javascript:void(0);" onclick="OpenNewIFarme('调单管理','/Agent/Orders/OrdersRiskIndex.html')">
+                                            <h2 class="text-red"><i class="icon-14"></i>我的风险</h2>
+                                        </a>
+                                    </div>
+                                    <div class="module-cont">
+
+                                        <ul class="list-unstyled">
+
+                                            <li>风险统计 <span class="text-suesse">@FengXianCount 笔</span></li>
+                                            <li>风险金额统计 <span class="text-suesse">@(FengXianMoney.ToString("F2")) 元</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                @*									<div class="module">
+										<div class="business-top">
+											<h2><i class="icon-11"></i>我的商户</h2>
+										</div>
+										<div class="module-cont">
+                                            @{
+                                                int CardStae1 = 0;
+                                                int CardStae2 = 0;
+                                                int CardStae3 = 0;
+                                                try
+                                                {
+                                                    CardStae1 = Entity.Users.Where(o => o.CardStae == 1).Count();
+                                                    CardStae2 = Entity.Users.Where(o => o.CardStae == 2).Count();
+                                                    CardStae3 = Entity.Users.Where(o => o.CardStae == 3).Count();
+                                                }
+                                                catch (Exception) { }
+                                            }
+											<ul class="list-unstyled">
+												<li>审核拒绝商户 <span class="text-suesse">@CardStae1</span></li>
+												<li>待审核商户 <span class="text-suesse">@CardStae2</span></li>
+												<li>已开通商户 <span class="text-suesse">@CardStae3</span></li>
+											</ul>
+										</div>
+									</div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer text-center">
+    </div>
+</body>
+<script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Content/HaoFu/js/index.js"></script>
+<link href="/Content/HaoFu/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+<script src="/Content/HaoFu/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+<script src="/Content/HaoFu/plugins/artdialog/iframeTools.js" type="text/javascript"></script>
+<script src="/Content/HaoFu/js/iframe.js" type="text/javascript"></script>
+<script language="javascript">
+    var currentAtr = null;
+    //打开一个新IFarme
+    function OpenNewIFarme(title, src) {
+        OpentIfarme(title, src);
+    }
+    //刷新指定iframe
+    function reloadFrame(id) {
+        console.log(id);
+        top.frames[id].location.reload();
+    }
+    //关闭iframe
+    function ColseIFarme(id) {
+        console.log(id);
+        var num = ReplaceIfarmeid(id);
+        IndexColseIFarme(GetNumList(num));
+    }
+    //刷新指定iframe,去除前缀
+    function reloadFrameNum(id) {
+        console.log(id);
+        var num = ReplaceIfarmeid(id);
+        top.frames[id].location.reload(num);
+    }
+    function ArtDialog(option) {
+        return art.dialog(option);
+    }
+    function ArtDialogOpen(url, json) {
+        return art.dialog.open(url, json);
+    }
+    function iFrameHeight(iframeId) {
+
+        var ifm = document.getElementById(iframeId);
+        var subWeb = document.frames ? document.frames[iframeId].document : ifm.contentDocument;
+        if (ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
+
+    function showdialog(Text, Title) {
+        if (Title == "" || Title == undefined) {
+            Title = "温馨提示";
+        }
+        art.dialog({
+            title: Title,
+            content: Text,
+            icon: 'warning',
+            lock: true,
+            button: [{
+                name: "确定",
+                callback: function () {
+                    this.close();
+                },
+                focus: true,
+                disabled: false
+            }
+            ]
+        });
+    }
+</script>
+</html>

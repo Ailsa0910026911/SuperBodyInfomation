@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+    decimal SumAmoney = ViewBag.SumAmoney;
+    decimal SumPoundage = ViewBag.SumPoundage;
+    decimal SumAgentPayGet = ViewBag.SumAgentPayGet;
+    decimal Count = ViewBag.Count;
+}
+<div class="alert alert-danger">
+    <button data-close="alert" class="close"></button>
+    总金额：<b>@(SumAmoney.ToString("f2"))</b> 
+    总笔数：<b>@(Count)</b> 
+    总手续费：<b>@(SumPoundage.ToString("f2"))</b> 
+    总分润：<b>@(SumAgentPayGet.ToString("f2"))</b> 
+</div>

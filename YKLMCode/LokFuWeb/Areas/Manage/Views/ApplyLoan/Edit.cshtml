@@ -1,0 +1,229 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    ApplyLoan ApplyLoan = ViewBag.ApplyLoan;
+    ViewBag.SMUid = 70;
+    BasicProvince BasicProvince = ViewBag.BasicProvince;
+    BasicCity BasicCity = ViewBag.BasicCity;
+    BasicDistrict BasicDistrict = ViewBag.BasicDistrict;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(ApplyLoan.Id)" />
+          <div class="form-body">
+            <div class="form-group">
+              <label class="control-label col-md-3">姓名</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-small" value="@(ApplyLoan.TrueName)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">性别</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xsmall">
+                  <input type="text" class="form-control input-xsmall" value="@(ApplyLoan.Sex)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">身份证号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.IDcard)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">贷款金额</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.Amount.ToString("F0"))" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">手机号</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.Mobile)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公司名</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.Company)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公司地址</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(BasicProvince.Name)、@(BasicCity.Name)、@(BasicDistrict.Name)、@(ApplyLoan.ComAddress)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公司电话</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-small" value="@(ApplyLoan.ComTel)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+              <div class="form-group">
+              <label class="control-label col-md-3">工作单位性质</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-small" value="@(ApplyLoan.CompanyNature)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">程度</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-small" value="@(ApplyLoan.Education)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">社保情况</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xsmall">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.SheBao)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">婚姻情况</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.Marry==1?"已婚":(ApplyLoan.Marry==2?"其它":"未婚"))" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">是否有车</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.HasCar==1?"有":"无")" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            @if (ApplyLoan.HasCar==1){
+                BasicCarBrand CB=Entity.BasicCarBrand.FirstOrNew(n=>n.Id==ApplyLoan.CarBrand);
+            <div class="form-group">
+              <label class="control-label col-md-3">汽车品牌</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(CB.Name)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            }
+            <div class="form-group">
+              <label class="control-label col-md-3">性房性质</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control  input-large" value="@(ApplyLoan.House)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">年收入</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control  input-small input-inline" value="@(ApplyLoan.Income)" disabled="disabled" />万元
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">发放方式  </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control  input-large" value="@(ApplyLoan.Payment)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">有信用卡</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xsmall"> <i class="fa"></i>
+                  <input type="text" class="form-control input-xsmall" value="@(ApplyLoan.HasCredit==1?"有":"无")" disabled="disabled" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+              @if (ApplyLoan.HasCredit==1){
+                  BasicBank BB=Entity.BasicBank.FirstOrNew(n=>n.Id==ApplyLoan.CreditBankId);
+            <div class="form-group">
+              <label class="control-label col-md-3">信用卡银行</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(BB.Name)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+              }
+            <div class="form-group">
+              <label class="control-label col-md-3">申请日期</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <input type="text" class="form-control input-large" value="@(ApplyLoan.AddTime)" disabled="disabled" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">评定分值</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-large" name="MyScore" id="MyScore" value="@(ApplyLoan.MyScore)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">申请进度</label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-small" name="State" id="State">
+                    <option value="1"@(ApplyLoan.State==1?" selected":"")>申请中</option>
+                    <option value="2"@(ApplyLoan.State==2?" selected":"")>已跟进</option>
+                    <option value="3"@(ApplyLoan.State==3?" selected":"")>已审核</option>
+                    <option value="4"@(ApplyLoan.State==4?" selected":"")>已放款</option>
+                    <option value="5"@(ApplyLoan.State==5?" selected":"")>失败</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

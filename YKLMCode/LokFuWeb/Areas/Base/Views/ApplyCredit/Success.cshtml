@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+    string comeurl = ViewBag.ComeUrl;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>申请成功</title>
+    <link href="/Content/Base/ApplyLoan/css/dddk.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="/Content/Metronic/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+    <script src="/Content/Metronic/plugins/artdialog/iframeTools.js" type="text/javascript"></script>
+    @if (comeurl == "www.haodaiwang.net.cn")
+    {
+	<style>
+        .title1{display:none;}
+	</style>
+    }
+</head>
+<body>
+    <div class="k1">
+        <div class="title1">完成</div>
+		<div class="wwll"></div>
+		<div style="text-align:center;color:#5e6a94; margin-top:30px;">温馨提示：所有业务申请不需要任何费用，谨防电话诈骗</div>
+		<div class="wzts">你已成功提交申请，我们会在2个工作日之内和你取得联系！<br />如有任何疑问，请致电我们的客服热线：@(BasicSet.Tel)</div>
+    </div>
+</body>
+</html>
+<iframe id="IC" src="" style="display:none;"></iframe>
+<script>
+    function closeSelf() {
+        $("#IC").attr("src", "http://@(comeurl)/closeiframe.html");
+    }
+</script>

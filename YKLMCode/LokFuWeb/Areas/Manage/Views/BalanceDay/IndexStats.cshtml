@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+    IList<LokFu.Areas.Manage.Controllers.SP_Statistics_InterestSUM> StatsList = ViewBag.StatsList;
+}
+<div class="alert alert-danger">
+    <button data-close="alert" class="close"></button>
+    @foreach (var item in StatsList)
+    {
+        if(item.LType == 1)
+        {
+            @("理财利息：")<b>@(item.Interest.ToString("f2"))</b>
+        }
+        else if(item.LType == 2)
+        {
+            @("余额奖励金利息：")<b>@(item.Interest.ToString("f2"))</b>
+        }
+    }
+</div>

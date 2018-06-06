@@ -1,0 +1,163 @@
+﻿@{
+    DeductMoney DeductMoney = ViewBag.DeductMoney;
+    ViewBag.SMUid = 78;
+    string ActionName = ViewBag.ActionName;
+    Users Users = ViewBag.Users;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 650px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="Audit.html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(DeductMoney.Id)" />
+                <input type="hidden" name="TState" id="TState" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">商户名</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @DeductMoney.UserName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">金额</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @DeductMoney.Amoney.ToString("f2")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">审核状态</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (DeductMoney.TState)
+                                {
+                                    case 1: 
+                                    @("待审核")
+                                        break;
+                                    case 2: 
+                                    @("审核通过")
+                                        break;
+                                    case 3: 
+                                    @("审核失败")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">手机号</label>
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <div class="input-icon right" style="width: 400px;">
+                                @(Users != null ? Users.Mobile : "")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <div class="input-icon right" style="width: 400px;">
+                                @(DeductMoney.Remark)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">发起人</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @DeductMoney.CreateAdminName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">发起时间</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @DeductMoney.AddTime.ToString("yyyy-MM-dd HH:mm:ss")
+                            </div>
+                        </div>
+                    </div>
+                    @if (DeductMoney.TState == 1 && ActionName == "Audit")
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-3">审核备注</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control input-large validate[required,maxSize[1000]]" name="AuditRemark" id="AuditRemark" rows="3">@(DeductMoney.AuditRemark)</textarea>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn green" onclick="javascript:Audit(2)">审核通过</button>
+                                <button type="button" class="btn red" onclick="javascript:Audit(3)">审核失败</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-3">审核备注</label>
+                            <div class="col-md-4" style="margin-top: 8px;">
+                                <div class="input-icon right" style="width: 400px;">
+                                    @(DeductMoney.AuditRemark)
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="form-group">
+                            <label class="control-label col-md-3">审核人</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large" style="margin-top: 8px">
+                                    @(DeductMoney.AuditAdminName)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">审核时间</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large" style="margin-top: 8px">
+                                    @(DeductMoney.AuditTime.HasValue ? DeductMoney.AuditTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script>
+        function Audit(type) {
+            $("#TState").val(type);
+            var value = $("#TState").val();
+            $('#chkForm').validationEngine('detach');
+            $('#chkForm').validationEngine('hideAll');
+            if (value == "2") {
+                $("#AuditRemark").removeClass("validate[required,maxSize[1000]]");
+                $("#AuditRemark").addClass("validate[maxSize[1000]]");
+            }
+            else {
+                $("#AuditRemark").removeClass("validate[maxSize[1000]]");
+                $("#AuditRemark").addClass("validate[required,maxSize[1000]]");
+            }
+            $('#chkForm').validationEngine('attach');
+            $("#chkForm").submit();
+        }
+    </script>
+}

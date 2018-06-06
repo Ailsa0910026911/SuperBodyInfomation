@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "";
+    Users Users = ViewBag.Users;
+}
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=11db03cf7d6a4d080deae6364e84305d"></script>
+	<title>地址解析</title>
+<style type="text/css">
+/* 定义自定义点样式 */
+.markerContentStyle { position:relative; }
+.markerContentStyle span { background-color: #FFFFFF; color:#FF1493; width:120px; heigth:80px; border:2px solid #D8BFD8; FONT-FAMILY:华文行楷; position:absolute; top:-10px; left:25px;  white-space:nowrap  -webkit-border-radius:5px;
+border-radius:5px; }
+.amap-logo{display:none;}
+.amap-copyright{display:none;}
+</style>
+</head>
+<body>
+<div id="MapBox" style="width:600px; height:400px;"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var map, marker;
+    //初始化地图对象，加载地图
+    map = new AMap.Map("MapBox", {
+        resizeEnable: true,
+        //二维地图显示视口
+        view: new AMap.View2D({
+            center:new AMap.LngLat(@(Users.X),@(Users.Y)),//地图中心点
+            zoom:13 //地图显示的缩放级别
+        })
+    });
+    updateMarker();
+    function updateMarker(){
+        //自定义点标记内容   
+        var markerContent = document.createElement("div");
+        markerContent.className = "markerContentStyle";
+        //点标记中的图标
+        var markerImg = document.createElement("img");
+        markerImg.className = "markerlnglat";
+        markerImg.src = "https://webapi.amap.com/images/3.png";	
+        markerContent.appendChild(markerImg);
+        //点标记中的文本
+        var markerSpan = document.createElement("span");
+        markerSpan.innerHTML = "@(Users.RegAddress)";
+        markerContent.appendChild(markerSpan);
+        marker = new AMap.Marker({				  
+            icon:"https://webapi.amap.com/images/3.png",
+            position:new AMap.LngLat(@(Users.X),@(Users.Y))
+        });
+        marker.setMap(map);//在地图上添加点
+        marker.setContent(markerContent);//更新点标记内容
+    }
+</script>

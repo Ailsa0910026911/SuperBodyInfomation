@@ -1,0 +1,237 @@
+﻿@{
+    Layout = null;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    IList<BasicCarBrand> BasicCarBrandList = ViewBag.BasicCarBrandList;
+    IList<BasicBank> BasicBankList = ViewBag.BasicBankList;
+    Users BasicUsers = ViewBag.BasicUsers;
+    string comeurl = ViewBag.ComeUrl;
+    string TrueName = "", Mobile = "", IdCard = "";
+    if (BasicUsers.CardStae==2){
+        TrueName = BasicUsers.TrueName;
+        Mobile = BasicUsers.Mobile;
+        IdCard = BasicUsers.CardId;
+    }
+}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/Content/Mobile/css/normalize.css" />
+		<link rel="stylesheet" href="/Content/Mobile/ApplyLoan/style.css" />
+        <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<title>申请贷款</title>
+	</head>
+	<body>
+        <form action="/mobile/ApplyLoan/Add.html" id="ApplyLoanForm" name="ApplyLoanForm" class="ApplyLoanForm" method="post">
+        <div id="index">
+		<header class="text-center head">
+            <div class="porp hide"  id="index-message"></div>
+			<span>基本信息</span>
+		</header>
+		<div class="main">
+			<ul class="list-unstyled">
+				<li class="text-center title-warp">
+					<span class="title">性别</span>
+				</li>
+				<li class="sex list">
+					<ul class="list-unstyled clearfix">
+						<li><label><input type="radio" name="Sex" value="男"  /><div >男</div></label></li>
+						<li><label><input type="radio" name="Sex" value="女" /><div>女</div></label></li>
+					</ul>
+				</li>
+				<li class="text-center title-warp">
+					<span class="title">学历</span>
+				</li>
+				<li class="record list text-center formal">
+					<ul class="list-unstyled clearfix">
+						<li><label><input type="radio" name="Education" value="高中" /><div >高中</div></label></li>
+                        <li><label><input type="radio" name="Education" value="中专" /><div>中专</div></label></li>
+                        <li><label><input type="radio" name="Education" value="大专" /><div>大专</div></label></li>
+                        <li><label><input type="radio" name="Education" value="本科" /><div>本科</div></label></li>
+                        <li><label><input type="radio" name="Education" value="本科以上" /><div>本科以上</div></label></li>
+					</ul>
+				</li>			
+				<li class="text-center title-warp">
+					<span class="title">婚姻状况</span>
+				</li>
+				<li class="record list text-center marriage">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" name="Marry" value="0" /><div>未婚</div></label></li>
+                        <li><label><input type="radio" name="Marry" value="1" /><div>已婚</div></label></li>
+                        <li><label><input type="radio" name="Marry" value="2" /><div>未婚其他</div></label></li>
+					</ul>
+				</li>
+                @*<li><span class="porp" id="index-message"></span></li>*@		
+			</ul>
+		</div>
+        <footer class="footer">			
+            <button type="button" class="btn-index btn btn-block" onfocus="this.blur()"  >下一步</button>
+		</footer>
+        </div>
+        <div id="jobs" style="display:none">
+        <header class="text-center head">
+            <div class="porp hide"  id="jobs-message"></div>
+            <span class="fhl Prev" onclick="Prev('index','jobs')" ></span>
+			<span>工作信息</span>
+		</header>
+        <div class="main">
+			<div class="firm">
+				<ul class="list-unstyled">
+					<li><span class="firm-title">公司名称 : </span><div class="input-warp"><input class="input-block type="text" name="Company"  /></div></li>
+				</ul>
+			</div>
+			<ul class="list-unstyled">
+				<li class="text-center title-warp">
+					<span class="title">工作单位性质</span>
+				</li>
+				<li class="record list work">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" name="CompanyNature" value="国有" /><div>国有</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="机关事业" /><div>机关事业</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="外商独资" /><div class="last">外商独资</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="民营" /><div>民营</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="合资/合作" /><div>合资/合作</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="股份制" /><div class="last">股份制</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="个体私营" /><div>个体私营</div></label></li>
+                        <li><label><input type="radio" name="CompanyNature" value="其他" /><div class="last">其他</div></label></li>
+					</ul>
+				</li>
+				<li class="text-center title-warp">
+					<span class="title">社保情况</span>
+				</li>
+				<li class="record list text-center social">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" name="SheBao" value="无"  /><div>无</div></label></li>
+                        <li><label><input type="radio" name="SheBao" value="连续3个月"  /><div>连续3个月</div></label></li>
+                        <li><label><input type="radio" name="SheBao" value="连续半年"  /><div class="last">连续半年</div></label></li>
+                        <li><label><input type="radio" name="SheBao" value="连续1年"  /><div>连续1年</div></label></li>
+                        <li><label><input type="radio" name="SheBao" value="连续1年以上"  /><div>连续1年以上</div></label></li>
+					</ul>
+				</li>	
+			</ul>
+		</div>
+        <footer class="footer">
+			<button  type="button" class="btn-jobs btn btn-block" onfocus="this.blur()" >下一步</button>
+		</footer>
+        </div>
+        <div id="assets" style="display:none">
+        <header class="text-center head">
+            <div class="porp hide"  id="assets-message"></div>
+            <span class="fhl Prev" onclick="Prev('jobs','assets')" ></span>
+			<span>资产信息</span>
+		</header>
+		<div class="main">
+			<div class="firm clearfix">
+				<ul class="list-unstyled">
+					<li>
+						<span class="firm-title">年收入 : </span><div class="input-warp">
+                            <input class="input-block" type="tel" placeholder="请填写您的年收入" name="Income" />
+                        </div><span class="pull-right year text-block">万元/年</span>
+					</li>
+				</ul>
+			</div>
+			<ul class="list-unstyled">
+				<li class="text-center title-warp">
+					<span class="title">是否有车</span>
+				</li>
+				<li class="sex list car">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" value="1" name="HasCar" /><div>有</div></label></li>
+                        <li><label><input type="radio" value="0" name="HasCar" /><div class="last">无</div></label></li>		
+					</ul>
+				</li>
+				<li class="text-center title-warp">
+					<span class="title">房产信息</span>
+				</li>
+				<li class="record list text-center estate">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" value="商品房全款" name="House" /><div>商品房全款</div></label></li>
+                        <li><label><input type="radio" value="商品房按揭" name="House" /><div>商品房按揭</div></label></li>
+                        <li><label><input type="radio" value="无房产" name="House" /><div class="last">无房产</div></label></li>	
+					</ul>
+				</li>			
+				<li class="text-center title-warp">
+					<span class="title">是否有信用卡</span>
+				</li>
+				<li class="sex list credit">
+					<ul class="list-unstyled clearfix">
+                        <li><label><input type="radio" value="1" name="HasCredit" /><div>有</div></label></li>
+                        <li><label><input type="radio" value="0" name="HasCredit" /><div class="last">无</div></label></li>				
+					</ul>
+				</li>
+			</ul>
+		</div>
+        <footer class="footer">
+			<button type="button" class="btn-assets btn btn-block" onfocus="this.blur()">下一步</button>
+		</footer>
+        </div>
+        <div id="subdata" style="display:none">
+        <header class="text-center head">
+            <div class="porp hide"  id="subdata-message"></div>
+            <span class="fhl Prev" onclick="Prev('assets','subdata')" ></span>
+			<span>提交资料</span>
+		</header>
+		<div class="main">
+			<div class="firm">
+				<ul class="list-unstyled">
+					<li><span class="firm-title">姓名 : </span>
+                        <div class="input-warp">
+                            <input class="input-block"  name="TrueName" type="text" placeholder="请填写您的真实姓名" />
+                        </div>
+					</li>
+					<li>
+                        <span class="firm-title">身份证号 : </span>
+                        <div class="input-warp">
+                        <input class="input-block identity" type="text" 
+                            placeholder="请填写您的身份证号" maxlength="18" name="IDcard" />
+                        </div>
+					</li>
+					<li class="city-li"><span class="firm-title">所在城市 : </span>
+						<div class="input-warp">
+                            <select class="province" name="ComProvince" id="ComProvince">
+                                <option value="">请选择</option>
+                                @foreach (var p in BasicProvinceList)
+                                {
+                                    <option value="@(p.Id)">@(p.Name)</option>
+                                }
+                            </select>
+                            <br />
+                            <select class="city-two hide" name="ComCity" id="ComCity"></select>
+						</div>
+					</li>
+					<li><span class="firm-title">公司地址 : </span><div class="input-warp"><input class="input-block" name="ComAddress" type="text" placeholder="请填写您的公司地址" /></div></li>
+					<li><span class="firm-title">手机号 : </span><div class="input-warp"><input class="input-block phone" maxlength="11" name="Mobile" type="tel" placeholder="请填写您的手机号码" /></div></li>
+					<li class="load"><span class="firm-title">贷款金额 : </span><div class="input-warp"><input class="input-block" name="Amount" type="tel" placeholder="请填写您要贷款的金额" /></div></li>					
+				    <li class="load"><span class="firm-title">验证码 : </span><div class="input-warp">
+                        <input placeholder="点击图片刷新验证码" name="code" id="code" style="width:150px;" title="" type="text"  />
+                        <img src="/mobile/ApplyLoan/SecurityCode.html" id="img" style="width:60px; height:28px; " onclick="this.src='/mobile/ApplyLoan/SecurityCode.html?d='+Math.random();" />
+				    </div></li>
+                </ul>
+			</div>		
+            <div class="point"><i class="iconfont">&#xe607;</i>请务必全部填写且填写真实内容真实有效,否则无法提交</div>
+		</div>
+        <footer class="footer">
+            <button type="button" class="btn-subdata btn btn-block">提交</button>
+		</footer>
+		</div>
+		</form>
+	    <script src="/Content/Mobile/js/applyLoan.js" type="text/javascript"></script>
+        <script>
+            var BasicCityList = @(this.Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(BasicCityList.Select(o => new { Id=o.Id,PId = o.PId,Name= o.Name }))));
+            $(function () {
+                $("#ComProvince").change( function() {
+                    var temp = $(this).val();
+                    $("#ComCity").empty();
+                    $.each( BasicCityList, function(i, n){
+                        if(n.PId == temp)
+                        {
+                            $("#ComCity").append('<option value="'+n.Id+'">' + n.Name + '</option>');
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,554 @@
+﻿@{
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    ViewBag.SMUid = 200;
+    List<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    if (SysAgent.Tier != 1)
+    {
+        SysPowerList.RemoveAll(o => o.Ctrl == "APPModule");
+        SysPowerList.RemoveAll(o => o.Ctrl == "PayConfigChange");
+    }
+    if (SysAdmin.Id.IsNullOrEmpty())
+    {
+        SysAdmin.PowerID = string.Empty;
+    }
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    string check = SysAgent.Id.IsNullOrEmpty() ? ",ajax[checkAdminUserName]" : "";
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysSet BasicSet = ViewBag.BasicSet;
+    List<Attach> Contract = this.ViewBag.Contract;
+    List<Attach> Certificate = this.ViewBag.Certificate;
+    Attach IDCard_Front = this.ViewBag.IDCard_Front;
+    Attach IDCard_Hand = this.ViewBag.IDCard_Hand;
+    Attach IDCard_Reverse = this.ViewBag.IDCard_Reverse;
+
+    ViewBag.Title = "我的代理商——查看";
+
+    bool MySysAgentMoney = ViewBag.MySysAgentMoney;
+}
+<style>
+.proxy-top-a { background: #cecece none repeat scroll 0 0; color: #fff; font-size: 18px; }
+.cont { height: 40px; }
+.cont .ad-title { margin-right: 25px; background: none; border-bottom: none; width: 280px; position: relative; top: -15px; left: 10px; }
+.cont .delete { position: relative; top: -15px; left: 10px; }
+.adddiv li { border-bottom: 1px solid #ddd; line-height: 42px; }
+.adddiv .progress { position: relative; top: 10px; right: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset !important; }
+.adddiv { width: 580px; }
+.adddiv .container { width: 620px; padding: 0; }
+.adddiv .progress { padding: 0; }
+.td-title { vertical-align: top; }
+</style>
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="proxy-top">@(ViewBag.Title)</div>
+        <div class="information">
+            <div class="proxy-con inquiry-cont operator">
+                <form action="/agent/SysAgent/Info.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysAgent.Id)" />
+                    <input type="hidden" name="AgentState" value="@(SysAgent.AgentState)" />
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="100" align="right">机构名称<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="Name" id="Name" value="@(SysAgent.Name)" />
+                                </td>
+                                @if (!SysAgent.Id.IsNullOrEmpty())
+                                {
+                                    <td width="100" align="right">登录密码 : </td>
+                                    <td width="300">
+                                        <input type="text" class="input-text" name="PassWord" id="PassWord" />
+                                    </td>
+                                }
+                            </tr>
+                            <tr>
+                                <td width="100" align="right">客服电话<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="Tel" id="Tel" value="@(SysAgent.Tel)" />
+                                </td>
+                                <td width="100" align="right">传真号码</td>
+                                <td width="300">
+                                    <input type="text" class="input-text" name="Fax" id="Fax" value="@(SysAgent.Fax)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100" align="right">联系人<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="Linker" id="Linker" value="@(SysAgent.Linker)" />
+                                </td>
+                                <td width="100" align="right">联系手机<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required,custom[mobile]@(check)]" name="LinkMobile" id="LinkMobile" @(SysAgent.MyUId.IsNullOrEmpty() ? "" : "readonly") value="@(SysAgent.LinkMobile)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td width="350" style="font-size: 12px; padding: 0; color: #999">该手机号用于关联钱包帐号，请准确填写，绑定后不可更改。</td>
+                            </tr>
+                            <tr>
+                                <td width="100" align="right">地址<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="Address" id="Address" value="@(SysAgent.Address)" />
+                                </td>
+                                <td width="100" align="right">状态   <b class="text-red">* </b>: </td>
+                                <td width="300">
+                                    <select class="input-text" name="State" id="State">
+                                        <option value="1" @(SysAgent.State == 1 ? " selected" : "")>正常</option>
+                                        <option value="0" @(SysAgent.State != 1 ? " selected" : "")>锁定</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100" align="right">区域: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text" name="AgentRegion" id="AgentRegion" maxlength="200" value="@(SysAgent.AgentRegion)" />
+                                </td>
+                                <td width="100" align="right"> </td>
+                                <td width="300">
+                              
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="130" align="left">交易分润比例<b class="text-red"> * </b>:</td>
+                                <td width="300">
+                                    <input type="text" class="input-text input-md validate[required,custom[int],max[100],min[0]]" name="PayGet" id="PayGet" value="@(SysAgent.PayGet * 100)" />%
+                                </td>
+                            </tr>
+                            @if (MySysAgentMoney){
+                            <tr>
+                                <td align="left">商户T0提现费<b class="text-red"> * </b>:</td>
+                                <td class="short">
+                                  <b class="text-red">@((SysAgent.ECash0).ToString("F2"))</b>元/笔
+                                  +
+                                  <b class="text-red">@((SysAgent.Cash0*1000).ToString("F1"))</b>‰
+                              　　    免费:<b class="text-red">@(SysAgent.Cash0Times)</b>次/月
+                                </td>
+                            </tr>
+                            <tr class="short">
+                                <td align="left">商户T1提现费<b class="text-red"> * </b>:</td>
+                                <td>
+                                  <b class="text-red">@((SysAgent.ECash1).ToString("F2"))</b>元/笔
+                                  +
+                                  <b class="text-red">@((SysAgent.Cash1 * 1000).ToString("F1"))</b>‰
+                              　　    免费:<b class="text-red">@(SysAgent.Cash1Times)</b>次/天
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h2 style="margin-bottom: 10px;">权限</h2>
+                    @{
+                        if (BasicAgent.Tier >= BasicAgent.AgentLevelMax - 1)//倒数第二层时，他的下层没有再开通下级代理权限
+                        {
+                            SysPowerList = SysPowerList.Where(n => n.Ctrl != "SysAgent" && n.Ctrl != "AgentAdmin" && n.Ctrl != "NextAgent" && n.Ctrl != "FinAgent").ToList();
+                        }
+                        if (SysAgent.Tier == BasicAgent.AgentLevelMax)
+                        {
+                            SysPowerList = SysPowerList.Where(n => n.Ctrl != "FinAgent").ToList();
+                        }
+                        if (SysAgent.Tier != 1)
+                        {
+                            SysPowerList = SysPowerList.Where(n => n.Ctrl != "PayConfigChange" && n.Method != "SaveAssureImg" && !(n.Ctrl == "UserPayChange" && (n.Method == "Change" || n.Method == "Save"))).ToList();
+                        }
+                    }
+                    @foreach (var p in SysPowerList.Where(n => n.PId == 0))
+                    {
+                        IList<SysPower> List = SysPowerList.Where(n => n.PId == p.Id).ToList();
+                        int i = 1;
+                        <table class="operator-table" style="margin-top: 10px;">
+                            <tbody class="tbody">
+                                @foreach (var pp in List)
+                                {
+                                    <tr>
+                                        @if (i == 1)
+                                        {
+                                            <td width="150" align="center" rowspan="@(List.Count)">
+                                                <input type="checkbox" name="PId" class="p" id="P@(p.Id)" value="@(p.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", p.Id)) != -1 ? "checked" : "") />
+                                                @(p.Name)
+                                            </td>
+                                        }
+                                        <td width="150" align="left">
+                                            <input type="checkbox" name="PId" class="pp" id="P@(pp.Id)" data-p="@(p.Id)" value="@(pp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", pp.Id)) != -1 ? "checked" : "") />
+                                            @(pp.Name)
+                                        </td>
+                                        <td width="620" align="left">
+                                            @foreach (var ppp in SysPowerList.Where(n => n.PId == pp.Id))
+                                            {
+                                                <input type="checkbox" name="PId" class="ppp" id="P@(ppp.Id)" data-p="@(p.Id)" data-pp="@(pp.Id)" value="@(ppp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},", ppp.Id)) != -1 ? "checked" : "") /> @(ppp.Name)　
+                                            }
+                                        </td>
+                                    </tr>
+                                            i++;
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    <hr>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="100" align="right">销售人员 : <b class="text-red">* </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="Salesman" id="Salesman" value="@(SysAgent.Salesman)" />
+                                </td>
+                                <td width="100" align="right">到期时间 : <b class="text-red">* </b></td>
+                                <td width="300">
+                                    <input type="text" class="input-text Wdate" name="ExpireTime" id="DDLastTime"  style="width:200px" value="@(SysAgent.ExpireTime == DateTime.MinValue ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : SysAgent.ExpireTime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="100" align="right">代理费<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text validate[required]" name="AgentFee" id="AgentFee" value="@(SysAgent.AgentFee.ToString("f2"))" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-title" width="200" align="right">代理合同(多张)<b class="text-red"> * </b>: </td>
+                                <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                                    <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上传文件</span>
+                                        <input type="file" class="UpLoadFile" name="UpLoadFile" multiple data-name="Contract" />
+                                    </span>
+                                    <div class="adddiv">
+                                        <input type="@(Contract.Count > 0 ? "hidden" : "text")" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;" id="Contract" class="validate[required] validateinput">
+                                        <ul style="list-style: none; margin: 0; padding: 0">
+                                            @if (Contract.Count > 0)
+                                            {
+                                                for (int i = 0; i < Contract.Count; i++)
+                                                {
+                                                    var item = Contract[i];
+                                                <li id="@(item.Id)">
+                                                    <div class="cont clearfix">
+                                                        <span class="ad-title inline-block"><a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a></span>
+                                                        <div class="progress inline-block" style="width: 30%">
+                                                            <div style="width: 100%;" class="progress-bar">100%</div>
+                                                        </div>
+                                                        <input type="hidden" name="Contract[@(i)].Id" value="@(item.Id)">
+                                                        <div class="inline-block">
+                                                            <button data-id="@(item.Id)" class="btn btn-danger delete" type="button"><span>删除</span></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-title" width="200" align="right">身份证正面<b class="text-red"> * </b>: </td>
+                                <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                                    <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上传文件</span>
+                                        <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Front" />
+                                    </span>
+                                    <div class="adddiv">
+                                        <input type="@(!IDCard_Front.Id.IsNullOrEmpty() ? "hidden" : "text")" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;" id="IDCard_Front" class="validate[required] validateinput">
+                                        <ul style="list-style: none; margin: 0; padding: 0">
+                                            @if (!IDCard_Front.Id.IsNullOrEmpty())
+                                            {
+                                                <li id="@(IDCard_Front.Id)">
+                                                    <div class="cont clearfix">
+                                                        <span class="ad-title inline-block"><a href="@(Utils.ImageUrl("Attach/", IDCard_Front.AFile))" target="_blank">@(IDCard_Front.UpLoadFile)</a></span>
+                                                        <div class="progress inline-block" style="width: 30%">
+                                                            <div style="width: 100%;" class="progress-bar">100%</div>
+                                                        </div>
+                                                        <input type="hidden" name="IDCard_Front.Id" value="@(IDCard_Front.Id)">
+                                                        <div class="inline-block">
+                                                            <button data-id="@(IDCard_Front.Id)" class="btn btn-danger delete" type="button"><span>删除</span></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-title" width="200" align="right">身份证反面<b class="text-red"> * </b>: </td>
+                                <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                                    <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上传文件</span>
+                                        <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Reverse" />
+                                    </span>
+                                    <div class="adddiv">
+                                        <input type="@(!IDCard_Reverse.Id.IsNullOrEmpty() ? "hidden" : "text")" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;" id="IDCard_Reverse" class="validate[required] validateinput">
+                                        <ul style="list-style: none; margin: 0; padding: 0">
+                                            @if (!IDCard_Reverse.Id.IsNullOrEmpty())
+                                            {
+                                                <li id="@(IDCard_Reverse.Id)">
+                                                    <div class="cont clearfix">
+                                                        <span class="ad-title inline-block"><a href="@(Utils.ImageUrl("Attach/", IDCard_Reverse.AFile))" target="_blank">@(IDCard_Reverse.UpLoadFile)</a></span>
+                                                        <div class="progress inline-block" style="width: 30%">
+                                                            <div style="width: 100%;" class="progress-bar">100%</div>
+                                                        </div>
+                                                        <input type="hidden" name="IDCard_Reverse.Id" value="@(IDCard_Reverse.Id)">
+                                                        <div class="inline-block">
+                                                            <button data-id="@(IDCard_Reverse.Id)" class="btn btn-danger delete" type="button"><span>删除</span></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-title" width="200" align="right">身份证手持<b class="text-red"> * </b>: </td>
+                                <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                                    <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上传文件</span>
+                                        <input type="file" class="UpLoadFile" name="UpLoadFile" data-name="IDCard_Hand" />
+                                    </span>
+                                    <div class="adddiv">
+                                        <input type="@(!IDCard_Hand.Id.IsNullOrEmpty() ? "hidden" : "text")" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;" id="IDCard_Hand" class="validate[required] validateinput">
+                                        <ul style="list-style: none; margin: 0; padding: 0">
+                                            @if (!IDCard_Hand.Id.IsNullOrEmpty())
+                                            {
+                                                <li id="@(IDCard_Hand.Id)">
+                                                    <div class="cont clearfix">
+                                                        <span class="ad-title inline-block"><a href="@(Utils.ImageUrl("Attach/", IDCard_Reverse.AFile))" target="_blank">@(IDCard_Hand.UpLoadFile)</a></span>
+                                                        <div class="progress inline-block" style="width: 30%">
+                                                            <div style="width: 100%;" class="progress-bar">100%</div>
+                                                        </div>
+                                                        <input type="hidden" name="IDCard_Hand.Id" value="@(IDCard_Hand.Id)">
+                                                        <div class="inline-block">
+                                                            <button data-id="@(IDCard_Hand.Id)" class="btn btn-danger delete" type="button"><span>删除</span></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-title" width="200" align="right">营业执照或其它证件(多张)<b class="text-red">*</b>:</td>
+                                <td width="300" colspan="3" class="UpLoadDiv">&nbsp;
+                                    <span class="btn btn-success fileinput-button" style="margin-bottom: 10px;">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上传文件</span>
+                                        <input type="file" class="UpLoadFile" name="UpLoadFile" multiple data-name="Certificate" />
+                                    </span>
+                                    <div class="adddiv">
+                                        <input type="@(Certificate.Count > 0 ? "hidden" : "text")" style="width: 1px; height: 1px; border-width: 0px; padding: 0px;" id="Certificate" class="validate[required] validateinput">
+                                        <ul style="list-style: none; margin: 0; padding: 0">
+                                            @if (Certificate.Count > 0)
+                                            {
+                                                for (int i = 0; i < Certificate.Count; i++)
+                                                {
+                                                    var item = Certificate[i];
+                                                <li id="@(item.Id)">
+                                                    <div class="cont clearfix">
+                                                        <span class="ad-title inline-block"><a href="@(Utils.ImageUrl("Attach/", item.AFile))" target="_blank">@(item.UpLoadFile)</a></span>
+                                                        <div class="progress inline-block" style="width: 30%">
+                                                            <div style="width: 100%;" class="progress-bar">100%</div>
+                                                        </div>
+                                                        <input type="hidden" name="Certificate[@(i)].Id" value="@(item.Id)">
+                                                        <div class="inline-block">
+                                                            <button data-id="@(item.Id)" class="btn btn-danger delete" type="button"><span>删除</span></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="display: none" class="deleteA"></div>
+                    <br>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201608191442"></script>
+    <script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+    @Html.Partial("~/Areas/Agent/Views/Shared/UpLoadFile.cshtml")
+    <script>
+        var sub;
+        var count = 0;
+        $(function () {
+
+            $("form[id='chkForm'] :text").attr("disabled", true);
+            $("form[id='chkForm'] textarea").attr("disabled", true);
+            $("form[id='chkForm'] select").attr("disabled", true);
+            $("form[id='chkForm'] :radio").attr("disabled", true);
+            $("form[id='chkForm'] :checkbox").attr("disabled", true);
+            $("form[id='chkForm'] :button").attr("disabled", true);
+            $("form[id='chkForm'] :file").attr("disabled", true);
+
+            $(".p").click(function () {
+                var T = $(this).prop("checked");
+                var C = "";
+                if (T) C = "checked";
+                $(this).closest("table").find(".pp").prop("checked", T).parent().attr("class", C);
+                $(this).closest("table").find(".ppp").prop("checked", T).parent().attr("class", C);
+            });
+            $(".pp").click(function () {
+                var T = $(this).prop("checked");
+                var C = "";
+                if (T) C = "checked";
+                $(this).closest("tr").find(".ppp").prop("checked", T).parent().attr("class", C);
+                var L = $(this).closest("table").find(".pp:checked").length;
+                if (L > 0) {
+                    $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                }
+            });
+            $(".ppp").click(function () {
+                var LL = $(this).closest("td").find(".ppp:checked").length;
+                if (LL > 0) {
+                    $(this).closest("td").prev("td").find(".pp").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("td").prev("td").find(".pp").prop("checked", false).parent().attr("class", "");
+                }
+                var L = $(this).closest("table").find(".pp:checked").length;
+                if (L > 0) {
+                    $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+                } else {
+                    $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+                }
+            });
+        });
+        var imgpathad = "@(Utils.ImageUrl("Attach/", "/"))";
+        sub = $("#sub");
+        $('.chkForm').bind('jqv.form.result', function (event, errorFound) {
+            if (errorFound == false) {
+                sub.attr("disabled", true);
+                sub.text("提交中...");
+                sub.css("background", "gray none repeat scroll 0 0");
+            }
+        });
+        //整理行
+        listTidy();
+        function listTidy() {
+            $(".adddiv").find("li:nth-child(odd)").css({ background: "#f9f9f9" });
+            $(".adddiv").find("li:nth-child(1)").css({ "border-top": "1px solid #ddd" });
+        }
+        //删除行
+        $("body").on("click", ".delete", function () {
+            var adddiv = $(this).parents(".adddiv");
+            var id = $(this).attr("data-id");
+            pushDel(id);
+            $(this).parents("li").remove();
+            var li = adddiv.find("li");
+            //删除之后判断是否最后一个
+            if (li.length == 0) {
+                adddiv.find(".validateinput").attr("type", "text");
+            }
+            listTidy();
+        });
+        //已存在数据添加进删除列表
+        function pushDel(id) {
+            if (id != null) {
+                var delHtml = '<input type="hidden" name="DelIds" value="' + id + '">';
+                $(".deleteA").append(delHtml);
+            }
+        }
+        //File元素
+        $(".UpLoadFile").fileupload({
+            url: 'EditUpLoadAttach.html',
+            dataType: 'json',
+            maxFileSize: 1000000,
+            acceptFileTypes: new RegExp("(\.|\/)(gif|jpe?g|png)$", "i"),
+            //多语言支付
+            messages: {
+                maxNumberOfFiles: '最多能上传文件10个',
+                acceptFileTypes: '文件类型不正确,格式:gif,jpeg,png',
+                maxFileSize: '上传文件最大1M',
+                minFileSize: '上传文件最小1KB'
+            },
+            //上传成功后调用
+            done: function (e, data) {
+                var Return = data.result;
+                var multiple = $(this).attr("multiple");
+                var adddiv = $(this).parents(".UpLoadDiv").find(".adddiv");
+                var li = adddiv.find("li[id=" + data.files[0].FileID + "]");
+                var dn = $(this).attr("data-name");
+                adddiv.find(".validateinput").attr("type", "hidden");
+                if (Return.Status == true) {
+                    //上传多个的处理
+                    if (multiple != null) {
+                        dn = dn + '[' + (data.files[0].Index - 1) + ']';
+                    }
+                    var inputHtml = '<input type="hidden" name="' + dn + '.AFile" value="' + Return.Result.SaveFileName + '">';
+                    var inputHtml2 = '<input type="hidden" name="' + dn + '.UpLoadFile" value="' + Return.Result.UpLoadFileName + '">';
+                    var delhtml = ' <div class="inline-block"> <button class="btn btn-danger delete" type="button"> <span>删除</span></button></div>';
+                    li.find(".UpLoadTitle").html('<a href="' + imgpathad + Return.Result.SaveFileName + '" target="_blank" >' + Return.Result.UpLoadFileName + '</a>');
+                    li.find(".cont").append(inputHtml + inputHtml2 + delhtml);
+                }
+                else { alert(Return.Message); }
+            },
+            //处理出错时调用
+            processalways: function (e, data) {
+                if (data.files.error) {
+                    alert(data.files[0].error);
+                }
+                else {
+                    data.files[0].FileID = newGuid();
+                    var adddiv = $(this).parents(".UpLoadDiv").find(".adddiv");
+                    data.files[0].Index = adddiv.find("li").length + 1;
+                    var html = '<li id="' + data.files[0].FileID + '" ><div class="cont clearfix"><span class="ad-title inline-block UpLoadTitle">' + data.files[0].name + '</span> <div class="progress inline-block" style="width:30%" ><div style="width: 0%;" class="progress-bar">0%</div></div></div></li>'
+                    var ul = adddiv.find("ul");
+                    //处理上传多个与单个
+                    if ($(this).attr("multiple") == null) {
+                        var id = $(ul).find(".delete").attr("data-id");
+                        pushDel(id);
+                        ul.empty();
+                    }
+                    //写入html与调整
+                    ul.append(html);
+                    listTidy();
+                    //parent.iFrameHeight(iframeId);
+                    //parent.reloadFrame('@(this.Request.QueryString["iframeId"])');
+                }
+            },
+            always: function (e, data) {
+                count--;
+                if (count == 0) {
+                    sub.attr("disabled", false);
+                    sub.text("确认");
+                    sub.css("background", "#ff8e28 none repeat scroll 0 0");
+                }
+            },
+            submit: function (e, data) {
+                count++;
+                if (count > 0) {
+                    sub.attr("disabled", true);
+                    sub.text("上传文件中...");
+                    sub.css("background", "gray none repeat scroll 0 0");
+                }
+            }
+            //单个进程的进度条
+        }).on('fileuploadprogress', function (e, data) {
+            var progressElem = $(this).parents(".UpLoadDiv").find(".adddiv").find("li[id=" + data.files[0].FileID + "]").find(".progress .progress-bar");
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            progressElem.css(
+                'width',
+                progress + '%'
+            ).text(progress + '%');
+        });
+    </script>
+}

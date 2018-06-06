@@ -1,0 +1,155 @@
+﻿@{
+    JobPayWay JobPayWay = ViewBag.JobPayWay;
+    ViewBag.SMUid = 101;
+    string names = "";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 820px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+             <form action="@(JobPayWay.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(JobPayWay.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">名称 <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" name="Name" id="Name" value="@(JobPayWay.Name)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">描述</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-xlarge" name="Description" id="Description" value="@(JobPayWay.Description)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">交易金额<span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-xlarge">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control inline input-small validate[required,custom[money]]" name="SNum" id="SNum" value="@(JobPayWay.SNum .ToString("f2"))" /> - 
+                                <input type="text" class="form-control inline input-small validate[required,custom[money]]" name="ENum" id="ENum" value="@(JobPayWay.ENum .ToString("f2"))" />元
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">成本费率<span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control inline input-small validate[required,custom[float],min[0],max[1000]]" name="Cost" id="Cost" value="@((JobPayWay.Cost * 1000).ToString("f2"))" />‰
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">手续费限额<span class="required">* </span></label>
+                        <div class="col-md-6">
+                            <div class="input-icon right">
+                            <div class="input-icon right input-xlarge">
+                                <i class="fa"></i>最低:
+                                <input  style=" width: 100px !important;" type="text" class="form-control inline input-small input-inline validate[required,custom[money]]" name="MinCost" id="MinCost" value="@(JobPayWay.MinCost.ToString("F2"))" />封顶:
+                                <input  style=" width: 100px !important;" type="text" class="form-control inline input-small input-inline validate[required,custom[money]]" name="MaxCost" id="MaxCost" value="@(JobPayWay.MaxCost.ToString("F2"))" />元
+                            </div>
+                                </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    @* <div class="form-group">
+                        <label class="control-label col-md-3">代理商费率<span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control inline input-small validate[required,custom[float],min[0],max[1000]]" name="CostAgent" id="CostAgent" value="@((JobPayWay.CostAgent * 1000).ToString("f2"))" />‰
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>*@
+                     @*<div class="form-group">
+                        <label class="control-label col-md-3">代理商手续费限额<span class="required">* </span></label>
+                        <div class="col-md-6">
+                             <div class="input-icon right">
+                            <div class="input-icon right input-xlarge">
+                                <i class="fa"></i>最低:
+                                <input  style=" width: 100px !important;" type="text" class="form-control inline input-small input-inline validate[required,custom[money]]" name="MinAgentCost" id="MinAgentCost" value="@(JobPayWay.MinAgentCost.ToString("F2"))" />封顶:
+                                <input  style=" width: 100px !important;" type="text" class="form-control inline input-small input-inline validate[required,custom[money]]" name="MaxAgentCost" id="MaxAgentCost" value="@(JobPayWay.MaxAgentCost.ToString("F2"))" />元
+                            </div>
+                                  </div>
+                            <p class="help-block"></p>
+                        </div>
+                           
+                    </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3">排序 <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-small validate[required,custom[int],min[0],max[1000]]" name="Sort" id="Sort" value="@(JobPayWay.Sort)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <select class="bs-select form-control input-small" name="State" id="State">
+                                    <option value="1" @(JobPayWay.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0" @(JobPayWay.State != 1 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9" style="text-align:center">
+                        <button type="submit" class="btn green">确认</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script type="text/ecmascript">
+        function start(me) {
+            if ($(me).attr('checked')) {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", false);
+            }
+            else {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", true);
+            }
+        }
+        $(function () {
+
+            $.each($(".has-checkbox"), function (i, n) {
+                start(n);
+            });
+            $(".has-checkbox").change(function () {
+                start(this);
+            });
+        });
+    </script>
+}

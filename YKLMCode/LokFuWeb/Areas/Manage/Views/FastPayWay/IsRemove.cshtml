@@ -1,0 +1,51 @@
+﻿@{
+    FastPayWay FastPayWay = ViewBag.FastPayWay;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 820px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>删除页面</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="Remove.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(FastPayWay.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"].IsNullOrEmpty()?"":"IsAjax=0")"/>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9" style="text-align:center;">
+                        <button type="submit" class="btn green">确认删除</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script type="text/ecmascript">
+        function start(me) {
+            if ($(me).attr('checked')) {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", false);
+            }
+            else {
+                $(me).parents(".input-icon").find("input:not(.has-checkbox)").attr("disabled", true);
+            }
+        }
+
+        $(function () {
+
+            $.each($(".has-checkbox"), function (i, n) {
+                start(n);
+            });
+            $(".has-checkbox").change(function () {
+                start(this);
+            });
+        });
+    </script>
+}

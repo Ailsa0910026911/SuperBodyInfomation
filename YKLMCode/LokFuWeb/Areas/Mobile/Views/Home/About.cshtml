@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+    MsgAbout MsgAbout = ViewBag.MsgAbout;
+    //禁用代理及所有下级的操作员和代理数据
+    LokFuEntity Entity = ViewBag.Entity;
+    //left join
+    //Entity.CommandTimeout = 300;
+    //Entity.ContextOptions.LazyLoadingEnabled = false;
+    //int[] TradeOrderType = new int[] { 1, 7, 8, 9 };
+    //var query = Entity.Orders.Where(o => o.LagEntryDay == 0 && TradeOrderType.Contains(o.TType) && System.Data.Objects.SqlClient.SqlFunctions.DateDiff("day", o.InTimed, new DateTime(2016, 10, 1)) == 0);
+    //var a = (from o in query
+    //         join u in Entity.UserLog on o.TNum equals u.OId into ul
+    //         from c in ul.Where(b => b.OType == 1).DefaultIfEmpty()
+    //         group c by new { o.TNum, o.Poundage, o.Amoney, o.TType, o.UId } into g
+    //         select new
+    //         {
+    //             AMoney = (g.Key.Amoney - g.Key.Poundage),
+    //             TNum = g.Key.TNum,
+    //             TType = g.Key.TType,
+    //             UId = g.Key.UId,
+    //             AMoneyLog = g.Sum(d => (decimal?)d.Amount) ?? 0m,
+    //         }).ToList();
+    //for (int a = 1; a < 32; a++)
+    //{
+    //    var tdate = new DateTime(2016, 12, a);
+    //    var temp = new CheckTask()
+    //    {
+    //        IsComplete = false,
+    //        Progress = 0,
+    //        RunBeginTime = DateTime.Now,
+    //        TaskDate = tdate,
+    //    };
+    //    Entity.CheckTask.AddObject(temp);
+    //}
+    //Entity.SaveChanges();
+}
+
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="MobileOptimized" content="240">
+    <title>@(MsgAbout.Name)</title>
+    <link href="/Content/Mobile/css/op.css?2016060205" rel="stylesheet" type="text/css" />
+    <script src="/Content/Metronic/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div style="padding:1rem;">@Html.Raw(MsgAbout.Info)</div>
+</body>
+</html>

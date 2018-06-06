@@ -1,0 +1,151 @@
+﻿@{
+    Layout = null;
+    Turntable Turntable = ViewBag.Turntable;
+    bool IsApple = ViewBag.IsApple;
+    SysSet BasicSet = ViewBag.BasicSet;
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    Users users = Entity.Users.FirstOrNew(n => n.Id == Users.MyPId);
+    string NoteDownload = "/mobile/down/index-0.html";
+    string AppName = BasicSet.Name;
+    //if (!users.Id.IsNullOrEmpty())
+    //{
+    //    var CurrentAgent = Entity.SysAgent.FirstOrNew(o => o.Id == users.Agent);//当前代理
+    //    if (CurrentAgent.Tier == 1)
+    //    {
+    //        if (CurrentAgent.IsTeiPai == 1)
+    //        {
+    //            AppName = CurrentAgent.APPName.IsNullOrEmpty() ? AppName : CurrentAgent.APPName;
+    //            NoteDownload = CurrentAgent.NoteDownload.IsNullOrEmpty() ? NoteDownload : CurrentAgent.NoteDownload;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        var TreeAgent = CurrentAgent.GetAgentsById(Entity);
+    //        SysAgent RootAgent = TreeAgent.FirstOrDefault(o => o.Tier == 1);
+    //        if (RootAgent.IsTeiPai == 1)
+    //        {
+    //            AppName = RootAgent.APPName.IsNullOrEmpty() ? AppName : RootAgent.APPName;
+    //            NoteDownload = RootAgent.NoteDownload.IsNullOrEmpty() ? NoteDownload : RootAgent.NoteDownload;
+    //        }
+    //    }
+    //}
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@(users.NeekName)的分享</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/Content/Mobile/share/css/money.css?V=3" />
+
+</head>
+
+<body>
+    <img class="share01" src="~/Content/Mobile/reg/images/p7.png" />
+    @*<img class="share01" src="/Content/Mobile/share/image/fenxiang03.png" />*@
+    <div class="dw_box">
+        <img class="share01" src="~/Content/Mobile/reg/images/p8.png" />
+
+        @*<img class="share01" src="/Content/Mobile/share/image/fenxiang02.png" />*@
+        <div class="share_text">
+            @*<div class="share_line"></div>*@
+            @*<span class="hf_name">分享赚不停</span>*@
+            <div class="fx2box" style="margin-top:95px;color:#ffffff;">
+                @*<span style="color:#ffffff;margin-left:40px;">
+                        最低仅需账单总额6%的资金
+                    </span>
+                    <span style="color:#ffffff">
+                        即可全自动还完账单,省去用POS机来回倒卡的繁琐；
+                        自动化的小金额多笔数消费，美化账单、是增加银行授信额度的好帮手，VIP专区，普洱茶，数字货币等您来拿。
+                    </span>*@
+                <div style="width:100%;text-align:center;">
+                    <div style="height:45px">
+                        <img style="display:none" id="s1" src="~/Content/Mobile/reg/images/down.png" />
+                        @*<span style="font-size:20px">↓</span>*@
+                    </div>
+                    <div>
+                        @*<span style="font-size:16px">使用流程</span><br />*@
+                        <a href="reg.html?mypid=@(Users.MyPId)&sharetype=3">
+                            <span class="register01" style="font-size:20px;font-weight:bold;">
+                                <span style="font-size:30px;width:10%;float:left;padding-left:10px;">☞</span><span style="width:80%;float:left;font-size:20px;">免费注册</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div style="height:45px">
+                        <img style="display:none" id="s2" src="~/Content/Mobile/reg/images/down.png" />
+                        @*<span style="font-size:20px">↓</span>*@
+                    </div>
+                    <div>
+                        <span style="font-size:20px;font-weight:bold;color:red">注册成功</span>
+                    </div>
+                    <div style="height:45px">
+                        <img style="display:none" id="s3" src="~/Content/Mobile/reg/images/down.png" />
+                        @*<span style="font-size:20px">↓</span>*@
+                    </div>
+                    <a href="@(NoteDownload)">
+                        <span class="register01" style="font-size:20px;font-weight:bold;">
+                        <span style="font-size:30px;width:10%;float:left;padding-left:10px;">☞</span><span style="width:80%;float:left;font-size:20px;">app下载</span></span>
+                    </a>
+                </div>
+
+                @*<table>
+
+                        <tr>
+                            <td>1.点击免费注册</td>
+
+                        </tr>
+                        <tr>
+                            <td>2.注册后下载APP</td>
+                        </tr>
+                        <tr>
+                            <td>3.注册后升级VIP，享受自动还款加永久代理权</td>
+                        </tr>
+                    </table>*@
+            </div>
+           
+            @*<a class="register01" href="reg.html?mypid=@(Users.MyPId)&sharetype=3">立即免费注册</a>
+                <a class="register03" href="@(NoteDownload)">已注册用户下载</a>*@
+        </div>
+    </div>
+    <div style="width:100%;text-align:center;background-image:url('../../../../Content/Mobile/reg/images/p8.png')">
+        <span style="font-size:16px;color:red;font-weight:bold;">温馨提示：先注册，后下载，否则无法登录体验！</span>
+    </div>
+</body>
+</html>
+<script src="~/Content/Mobile/js/jquery.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+</script>
+<script type="text/javascript">
+    function funcTest() {
+
+        //每隔3秒执行一次timelyFun方法
+
+        window.setInterval("Time()", 1000);
+
+    }
+
+    //window.onload = funcTest;
+    $(function () {
+        funcTest();
+    });
+    function alert1()
+    {
+        alert(1);
+    }
+    function Time() {
+        $("#s1").fadeIn(1000);
+        $("#s2").fadeIn(1500);
+        $("#s3").fadeIn(2000);
+        $("#s1").fadeOut(1000);
+        $("#s2").fadeOut(1000);
+        $("#s3").fadeOut(1000);
+    }
+    function Out()
+    {
+        $("#s1").fadeOut(1000);
+        $("#s2").fadeOut(1500);
+        $("#s3").fadeOut(2000);
+    }
+</script>
+

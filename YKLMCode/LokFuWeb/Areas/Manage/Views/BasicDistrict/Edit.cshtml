@@ -1,0 +1,106 @@
+﻿@{
+    BasicDistrict BasicDistrict = ViewBag.BasicDistrict;
+    ViewBag.SMUid = 15;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(BasicDistrict.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BasicDistrict.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属省 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <select name="PId" id="PId" class="form-control input-small input-inline input-sm validate[required]" type="select-one" rev="@(BasicDistrict.PId)" alert="请选择省">
+                      <option value="">==请选择==</option>
+                      @foreach (var p in BasicProvinceList)
+                      {
+                          <option value="@(p.Id)"@(BasicDistrict.PId==p.Id?" selected":"")>@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">所属市 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large">
+                  <select name="CId" id="CId" class="form-control input-small input-inline input-sm validate[required]" type="select-one" rev="@(BasicDistrict.CId)" alert="请选择市">
+                      <option value="">==请选择==</option>
+                  </select>
+                  <select id="CId-Sel" style="display:none;">
+                      @foreach (var p in BasicCityList)
+                      {
+                          <option value="@(p.Id)"@(BasicDistrict.CId==p.Id?" selected":"") rev="@(p.PId)">@(p.Name)</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(BasicDistrict.Name)" alert="请填写地区名称" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(BasicDistrict.State==1?" selected":"")>显示</option>
+                    <option value="0"@(BasicDistrict.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(BasicDistrict.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#PId").change(function () {
+            var PId = $(this).val();
+            if (PId == "") { PId = 0; }
+            if (PId > 0) {
+                var CIds = $("#CId-Sel option[rev=" + PId + "]").clone(true);
+                var CId = $("#CId").attr("rev");
+                $("#CId").html("<option value=\"\">==请选择==</option>").append(CIds);
+                $("#CId").find("option[value=" + CId + "]").attr("selected", true);
+            } else {
+                $("#CId").html("<option value=\"\">==请选择==</option>");
+            }
+        }).change();
+    });
+</script>
+    }
+}

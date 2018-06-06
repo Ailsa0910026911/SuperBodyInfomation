@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1459158620_8032756.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1459158620_8032756.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1459158620_8032756.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1459158620_8032756.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1459158620_8032756.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+@media only screen and (min-width: 681px) {body {width: 681px;margin: 0 auto;}}
+* { max-width:681px; margin:0 auto;}
+.iconfont{font-family:"iconfont"; font-size:16px; font-style:normal;}       
+.index{ padding-bottom: 2rem;}
+img{ max-width: 100%; max-height: 100%;}
+.top img{display: block; margin: 0 auto;}
+.main{ background: url(../image/bg.png) no-repeat; background-size: 100%; padding-bottom: 8rem;}
+.main .line{ text-align: center; margin: 5rem auto 0; width: 60%; border-top: .1rem solid #69affc;}
+.main .line span{ position: relative; top: -1.2rem; background: #d8eeff; padding: 0 1rem; color: #267ed8; font-size: 2rem;}
+.main .text-warp{ color: #3689e4; line-height: 2.6rem;}
+.main .form-group .btn{ margin-top: 2rem; border-radius: 2rem;padding:0.8rem 0; color:#F86000; background:#ffdc73; font-size:18px;}
+.main .away{ display: block; text-align: center; color: #57a6f6;}
+.money .main .text-warp{ font-size: 1.8rem; font-weight: bold; line-height: 1.8; padding: 0 1.6rem; font-weight: normal;}
+.money .main .text-left{  padding: 0 1.6rem; line-height: 2rem; font-size: 1.6rem; color: #3689e4;}
+.money .list li{ float: left; padding: .5rem 0; color: #3689e4;width: 33%; text-align: left;}
+.money .main .form-group{ padding: 0 2rem;}
+.money .col-md-4{ padding-right: 0; padding-left: 10px; }
+.register{ padding-top: 2rem;}
+.register li{ position: relative; padding: .5rem 0;}
+.register .sub .form-group{ padding: 0 2rem; margin-top: 2rem;}
+.register .sub button{ background: #ffdc73; border: .1rem solid #f8cc49; color:#f86000;}
+.register li input{ height: 4rem;}
+.register .godes{ position: absolute;  height: 4rem;
+    line-height: 4rem;width: 28%;text-align: center;border-radius: 4px; background: #ff6a43; color: #fff; top: .4rem; right: 0; text-decoration: none;}
+.yanzheng {width:70%;}
+.register .layer-bg{ position: fixed; top: 0; width: 681px; height: 100%; background: rgba(0,0,0,.3);}
+.register .layer{ width: 60%; height: 16rem; background: #fff; border-radius: 1rem; overflow: hidden;}
+.register .layer .layer-top{ height: 2rem; background: #3e97f8;}
+.register .layer-main span{ display: block; font-size: 1.6rem; margin-top: 2rem;}
+.register .layer .form-group{ padding: 0 5rem; }
+.register a.btn{ background: #ffdc73; border: .1rem solid #f8cc49; margin-top: 2rem;color:#f86000}
+.register .red p{ font-weight: normal;}
+.register .noused{background:rgba(0,0,0,.3);}
+.register .check {  vertical-align: middle;   margin: 0; margin-right: 10px;}
+.reg_cg { width:100%; position:fixed; top:30%;}

@@ -1,0 +1,212 @@
+﻿@{
+    Layout = "";
+    IPageOfItems<HaoWool> HaoWoolList = ViewBag.HaoWoolList;
+    HaoWool HaoWool = ViewBag.HaoWool;
+    string ShowTitle = "hāo羊毛";
+    if (this.Request["ShowTitle"] != null)
+    {
+        ShowTitle = this.Request["ShowTitle"];
+    }
+    ViewBag.Title = ShowTitle;
+    var AbsolutePath =this.Request.Url.Authority+this.Request.Url.AbsolutePath;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/Content/Mobile/HaoWool/css/reset.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/Content/Mobile/HaoWool/css/style-index.css?v=2017062011" />
+    <link href="/Content/Mobile/HaoWool/css/wool.css?v=2017061915" rel="stylesheet" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+    <script src="/Content/Mobile/Fast/js/zepto-iscroll.js"></script>
+    <script src="/Content/Mobile/Fast/js/xmsCore.js"></script>
+    <script src="/Content/Mobile/Fast/js/xmsMobile.js?2"></script>
+    <title>@(ViewBag.Title)</title>
+</head>
+
+<body class="frame-wrapper">
+    <div class="jf_mxbox">
+        <a href="#" class="header_glass" id="btsearch"></a>
+        <input type="search" class="header_search" id="search" placeholder="请输入关键词搜索" value="@ViewBag.titles">
+    </div>
+    <div class="frame-scroller" >
+
+
+        <div class="frame-indicator"></div>
+        <div class="frame-content" id="wrapper">
+            <div class="frame-container iScroll-instance" style="min-height: 556px; transition-duration: 0ms; transform: translate(0px, 0px);" id="main">
+
+                <div class="frame-scroll-down-ele" style="font-size: 1rem;">下拉刷新</div>
+
+                <div class="haoym_box">
+                    <ul id="DataBox">
+                        @foreach (var p in HaoWoolList)
+                        {
+                            <li>
+                                <a class="haoym_list"  href="Info.html?Id=@p.Id">
+                                    <dl>
+                                        <dt>
+                                            <h1>@(p.Title.Length > 12 ? p.Title.Substring(0, 12) + "..." : p.Title)</h1>
+                                            <p>@(p.SmallTitle.Length > 30 ? p.SmallTitle.Substring(0, 30) + "..." : p.SmallTitle)</p>
+
+                                        </dt>
+                                        @*<dd  style="display: block;background: url(@Utils.ImageUrl("HaoWool", p.SmallPic)) no-repeat center center;background-size: 200%;"></dd>*@
+                                        <dd style="display: block;background: url(@Utils.ImageUrl("HaoWool", p.SmallPic)) no-repeat center center; background-size: 200%;"></dd>
+
+                                        <div class="cl"></div>
+                                    </dl>
+
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="frame-scroll-up-ele" id="up" style="bottom: 0px; position: absolute; font-size: 1rem;">上拉加载更多</div>
+                <input id="lenId" type="hidden" value="@HaoWoolList.PageSize" />
+            </div>
+        </div>
+        <div class="frame-footer footer">&nbsp;</div>
+        <img src="~/Content/Mobile/images/no_result.png" id="imges" style="display: block; width: 34%; margin: 50% auto 0;" />
+    </div>
+</body>
+</html>
+<script>
+    //框架的结构计算。
+    var Page = 1;
+    var PageSize = @(HaoWoolList.TotalPage);
+    var Type = 0;
+    var Show = 0;
+    xmsCore.xmsFrameInit();
+    var scrollFrime = xmsCore.XMSScrollFrame("#wrapper",{
+        mouseWheel: true,
+        click:true,
+        downFn:_downFn,
+        upFn:_upFn
+    });
+    if(PageSize==0)
+    {
+        $("#main").hide();
+    }
+
+    document.addEventListener('touchmove', function (e) { e.preventDefault(); $("#search").blur(); }, false);
+    //document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+    function _downFn(){
+        //刷新
+        $("#lenId").val(0);
+        Page = 1;
+        var title=$("#search").val();
+        $("#imges").hide();
+        $("#up").show();
+        $("#main").show();
+        $(".frame-scroll-up-ele").text("上拉加载更多");
+        $(".frame-scroll-up-ele").removeClass("nonedata");
+        $.ajax({
+            url: "Index.html",
+            data: { PageIndex: Page,title:title, IsAjax: 1},
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                var li = $(data).find("ul").html();
+               
+                $("#DataBox").html(li);
+               
+                var temp=li.replace(/^\s+|\s+$/g, '')
+                if(temp=="")
+                {
+                    $("#imges").show();
+                    $("#main").hide();
+                    $(".frame-scroll-up-ele").text("没有更多数据了");
+                    $(".frame-scroll-up-ele").addClass("nonedata");
+                }
+                var len_temp= $("#DataBox li").length;
+                if((len_temp%10!=0||len_temp==$("#lenId").val())&&len_temp!=0)
+                { 
+                    $(".frame-scroll-up-ele").text("没有更多数据了");
+                    $(".frame-scroll-up-ele").addClass("nonedata");}
+                $("#lenId").val(len_temp);
+                scrollFrime.downSucc();
+            }
+        });
+    }
+    function _upFn(){
+        //更多
+       
+        Page++;
+        var title=$("#search").val();
+        $.ajax({
+            url: "Index.html",
+            data: { PageIndex: Page,title:title, IsAjax: 1 },
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                var li = $(data).find("ul").html();
+                $("#DataBox").append(li);
+                scrollFrime.upSucc();
+                var temp=li.replace(/^\s+|\s+$/g, '')
+                if(temp=="")
+                {
+                    $(".frame-scroll-up-ele").text("没有更多数据了");
+                    $(".frame-scroll-up-ele").addClass("nonedata");
+                }
+                var len_temp= $("#DataBox li").length;
+                if(len_temp%10!=0||len_temp==$("#lenId").val())
+                { 
+                    $(".frame-scroll-up-ele").text("没有更多数据了");
+                    $(".frame-scroll-up-ele").addClass("nonedata");}
+                $("#lenId").val(len_temp);
+            }
+        })
+    }
+    $(function () {
+        $("#imges").hide();  
+        framescrollupele = $(".framescrollupele").clone(true);
+        $("#btsearch").click(function(){
+           @* var url=window.location.href.replace("#",'');
+            location.href = 'http://@AbsolutePath'+"?title="+$("#search").val();*@
+            $("#lenId").val(0);
+            Page = 1;
+            var title=$("#search").val();
+            $("#imges").hide();
+            $("#up").show();
+            $("#main").show();
+            $(".frame-scroll-up-ele").text("上拉加载更多");
+            $(".frame-scroll-up-ele").removeClass("nonedata");
+            $.ajax({
+                url: "Index.html",
+                data: { PageIndex: Page,title:title, IsAjax: 1},
+                type: "GET",
+                dataType: "html",
+
+                success: function (data) {
+                    var li = $(data).find("ul").html();
+                   
+                    $("#DataBox").html(li);
+                    var temp=li.replace(/^\s+|\s+$/g, '')
+                    if(temp=="")
+                    {
+                        $("#imges").show();
+                        $("#main").hide();
+                        $(".frame-scroll-up-ele").text("没有更多数据了");
+                        $(".frame-scroll-up-ele").addClass("nonedata");
+                    }
+                    var len_temp= $("#DataBox li").length;
+                    if((len_temp%10!=0||len_temp==$("#lenId").val())&&len_temp!=0)
+                    { 
+                        $(".frame-scroll-up-ele").text("没有更多数据了");
+                        $(".frame-scroll-up-ele").addClass("nonedata");}
+                    $("#lenId").val(len_temp);
+                    scrollFrime.myScroll.refresh();
+                    $(window).scrollTop(0,0);
+                    
+                  
+                }
+            });
+          
+        })
+        
+       
+   
+    });
+</script>

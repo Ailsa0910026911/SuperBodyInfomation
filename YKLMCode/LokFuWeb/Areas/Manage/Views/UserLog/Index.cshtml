@@ -1,0 +1,136 @@
+﻿@{
+    UserLog UserLog = ViewBag.UserLog;
+    IList<UserLog> UserLogList = ViewBag.UserLogList;
+    ViewBag.SMUid = 38;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    Users Users = ViewBag.Users;
+    DateTime STime = ViewBag.STime ?? DateTime.MinValue;
+    DateTime ETime = ViewBag.ETime ?? DateTime.MinValue;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 850px; height: 650px; overflow-x: hidden; overflow-y: auto; margin: 0px;">
+    <form style="padding: 10px" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" name="UId" value="@(UserLog.UId)" />
+        <input type="hidden" name="IsAjax" value="1" />
+        <span>交易号：</span>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-sm" name="OId" value="@(UserLog.OId)" />
+        <span class="seperator">|</span>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text"  name="STime" id="STime" value="@(STime == DateTime.MinValue ? "" : STime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~<input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="ETime" id="ETime" value="@(ETime == DateTime.MinValue ? "" : ETime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+          @if (ViewBag.Xls)
+        {
+         <button class="btn btn-sm yellow table-group-action-submit" type="button" id="XLS"><i class="fa fa-check"></i>导出</button>
+          }
+
+    </form>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey" style="margin: 5px;">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body" style="padding: 2px;">
+            <div class="table-scrollable" style="margin-top: 2px !important;">
+                <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">交易单号 </th>
+                            <th rowspan="2">交易类型 </th>
+                            <th rowspan="2">交易金额 </th>
+                            <th colspan="2">交易前 </th>
+                            <th colspan="2">交易后 </th>
+                            <th rowspan="2">交易时间 </th>
+                        </tr>
+                        <tr>
+                            <th>余额 </th>
+                            <th>不可用金额 </th>
+                            <th>余额 </th>
+                            <th>不可用金额 </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (UserLogList.Count() <= 0)
+                        {
+                            <tr>
+                                <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                    <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var p in UserLogList)
+                            {
+                                string ProfitName = "分润";
+                                if (p.OType == 8)
+                                {
+                                   
+                                    OrderProfitLog OrderProfitLog = Entity.OrderProfitLog.FirstOrDefault(o => o.UId == p.UId && o.TNum == p.OId);
+                                    OrderProfitLog.ProfitName = ProfitName;
+                                    ProfitName = OrderProfitLog.GetProfitName(Entity).ProfitName;
+                                }
+                            <tr class="odd gradeX">
+                                <td class="center">@(p.OId) </td>
+                                <td class="center">
+                                   @if(p.OType==1)
+                                   {
+                                     @("收款")
+                                   }else if(p.OType==2)
+                                   {
+                                     @("付款")
+                                   }else if(p.OType==3)
+                                   {
+                                     @("申请提现")
+                                   }else if(p.OType==4)
+                                   {
+                                     @("提现")
+                                   }else if(p.OType==5)
+                                   {
+                                     @("提现失败")
+                                   }else if(p.OType==6)
+                                   {
+                                     @("提现退款")
+                                   }else if(p.OType==7)
+                                   {
+                                     @("奖金")
+                                   }else if(p.OType==8)
+                                   {
+                                     @(ProfitName)
+                                   }else if(p.OType==9)
+                                   {
+                                     @("冻结")
+                                   }else if(p.OType==10)
+                                   {
+                                     @("解冻")
+                                   }else if(p.OType==11)
+                                   {
+                                     @("退款")
+                                   }else if(p.OType==12)
+                                   {
+                                     @("扣款")
+                                   }else if(p.OType==15)
+                                   {
+                                     @("余额生息")
+                                   }  
+                                </td>
+                                <td class="center price">@(p.Amount.ToString("F2")) </td>
+                                <td class="center price">@(p.BeforAmount.ToString("F2")) </td>
+                                <td class="center price">@(p.BeforFrozen.ToString("F2")) </td>
+                                <td class="center price">@(p.AfterAmount.ToString("F2")) </td>
+                                <td class="center price">@(p.AfterFrozen.ToString("F2")) </td>
+                                <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", UserLogList)
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+<!-- END PAGE CONTENT-->

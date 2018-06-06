@@ -1,0 +1,175 @@
+﻿@{
+    IList<StopPayAudit> StopPayAuditList = ViewBag.StopPayAuditList;
+    ViewBag.SMUid = 246;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    StopPayAudit StopPayAudit = ViewBag.StopPayAudit;
+    ViewBag.NoShowDel = true;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+    List<Users> UserSelect = ViewBag.UserSelect;
+    bool IsAudit = ViewBag.IsAudit;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="UId" class="form-control input-inline input-sm">
+            <option value="1" @(StopPayAudit.UId == 1 ? "selected" : "")>登录帐户</option>
+            <option value="2" @(StopPayAudit.UId == 2 ? "selected" : "")>手机</option>
+            <option value="2" @(StopPayAudit.UId == 3 ? "selected" : "")>姓名</option>
+        </select>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="CreateAdminName" value="@(StopPayAudit.CreateAdminName)" />
+        <span class="seperator">|</span>
+        <select name="TState" class="form-control input-inline input-sm">
+            <option value="0" @(StopPayAudit.TState == 0 ? "selected" : "")>审核状态</option>
+            <option value="1" @(StopPayAudit.TState == 1 ? "selected" : "")>待审核</option>
+            <option value="2" @(StopPayAudit.TState == 2 ? "selected" : "")>审核通过</option>
+            <option value="3" @(StopPayAudit.TState == 3 ? "selected" : "")>审核不通过</option>
+        </select>
+        <span class="seperator">|</span>
+        <select class="form-control input-medium select2me input-sm" data-placeholder="==分支机构==" name="Agent" id="Agent">
+            <option value="">==分支机构==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(StopPayAudit.Agent == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>帐户</th>
+                                <th>商户名</th>
+                                <th>姓名</th>
+                                <th>所属代理</th>
+                                <th>发起时间</th>
+                                <th>审核状态</th>
+                                <th>审核人</th>
+                                <th>审核时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (StopPayAuditList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in StopPayAuditList)
+                                {
+                                    var users = UserSelect.FirstOrNew(o => o.Id == p.UId);
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td class="center"><a class="Ajax" href="/Manage/Users/Info.html?Id=@(users.Id)">@(users.UserName)</a></td>
+                                    <td class="center">@(users.NeekName) </td>
+                                    <td class="center">@(users.TrueName) </td>
+                                    <td class="center">@(Entity.SysAgent.FirstOrNew(o=>o.Id == p.Agent).Name) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm:ss")) </td>
+                                    <td class="center">
+                                        @if (p.TState == 1)
+                                        {
+                                            @("待审核")
+                                        }
+                                        else if (p.TState == 2)
+                                        {
+                                            @("审核通过")
+                                        }
+                                        else if (p.TState == 3)
+                                        {
+                                            @("审核不通过")
+                                        }
+                                    </td>
+                                    <td class="center">@(p.AuditAdminName) </td>
+                                    <td class="center">@(p.AuditTime.HasValue ? p.AuditTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--") </td>
+                                    <td class="center">
+                                        @if (IsAudit)
+                                        {
+                                            if (p.TState == 1)
+                                            {
+                                            <a class="label label-sm label-danger Ajax" href="Audit.html?Id=@(p.Id)" title="审核" save="save"><i class="fa fa-wrench"></i>审核</a>
+                                            }
+                                            else if (p.TState != 1)
+                                            {
+                                            <a class="label label-sm label-success Ajax" href="Audit.html?Id=@(p.Id)" title="查看" save="save"><i class="fa fa-wrench"></i>查看</a>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", StopPayAuditList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <script>
+            $(function () {
+                if ($("#Agent").val() != "") {
+                    $("#S_IsShowSupAgent").show();
+                    $("#IsShowSupAgent").show();
+                }
+                else {
+                    $("#S_IsShowSupAgent").hide();
+                    $("#IsShowSupAgent").hide();
+                }
+                $("#Agent").change(function () {
+                    if ($("#Agent").val() != "") {
+                        $("#S_IsShowSupAgent").show();
+                        $("#IsShowSupAgent").show();
+                    }
+                    else {
+                        $("#S_IsShowSupAgent").hide();
+                        $("#IsShowSupAgent").hide();
+                    }
+                });
+                $('#Agent').select2({
+                    allowClear: false
+                });
+            });
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+    }
+}

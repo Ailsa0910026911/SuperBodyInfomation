@@ -1,0 +1,202 @@
+﻿@{
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysSet BasicSet = ViewBag.BasicSet;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    ViewBag.SMUid = 200;
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    if (SysAdmin.Id.IsNullOrEmpty()){
+        SysAdmin.PowerID = string.Empty;
+    }
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width:100% !important;">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(SysAdmin.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(SysAdmin.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">登录帐户 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-medium"> <i class="fa"></i>
+                  @if (SysAdmin.Id.IsNullOrEmpty()){
+                      <input type="text" class="form-control input-medium validate[required,custom[mobile],ajax[check]]" data-ext="SysAdmin" name="UserName" id="UserName" value="@(SysAdmin.UserName)" />
+                  }else{
+                      <input type="text" class="form-control input-medium" value="@(SysAdmin.UserName)" disabled="disabled" />
+                  }
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">密码 @if(SysAdmin.Id.IsNullOrEmpty()){
+                                                          <span class="required"> * </span>
+                                                          } </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-medium"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[@(SysAdmin.Id.IsNullOrEmpty() ? "required" : ""),custom[pwd]] input-medium" name="PassWord" id="PassWord" alert="请输入用户密码" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">姓名 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-medium"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-medium" name="TrueName" id="TrueName" value="@(SysAdmin.TrueName)" alert="请输入姓名" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">手机号 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-medium"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[custom[mobile]] input-medium" name="Mobile" id="Mobile" value="@(SysAdmin.Mobile)" alert="请正确输入手机号" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">邮箱 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-medium"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[custom[email]] input-medium" name="Email" id="Email" value="@(SysAdmin.Email)" alert="请正确输入邮箱地址" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+              @if(SysAdmin.Id.IsNullOrEmpty()){
+              <div class="form-group">
+              <label class="control-label col-md-3">所属机构 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select name="AgentId" id="AgentId" class="form-control validate[required] input-small input-inline input-sm" type="select-one" alert="请选择所属于机构">
+                  <option value="">请选择</option>
+                  @foreach(var p in SysAgentList){
+                  <option value="@(p.Id)" @(SysAdmin.AgentId==p.Id?"selected":"")>@(p.Name)</option>
+                  }
+              </select>
+              </div>
+            </div>
+              }
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(SysAdmin.State==1?" selected":"")>显示</option>
+                    <option value="0"@(SysAdmin.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+            @*<div class="form-group">
+              <label class="control-label col-md-3">分润比例 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxxlarge" style="padding-top:7px;">
+                  @(SysAdmin.PayGet*100)%　　<span class="help-block">网站管理员不能修改，由分支机构管理员设置！</span>
+                </div>
+              </div>
+            </div>*@
+            <div class="form-group">
+              <label class="control-label col-md-3">权限 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxxlarge">
+                @{
+                    if (BasicAgent.Tier >= BasicAgent.AgentLevelMax - 1)//倒数第二层时，他的下层没有再开通下级代理权限
+                    {
+                        SysPowerList = SysPowerList.Where(n => n.Ctrl != "SysAgent" && n.Ctrl != "AgentAdmin" && n.Ctrl != "NextAgent").ToList();
+                    }
+                    }
+                  @foreach( var p in SysPowerList.Where(n=>n.PId==0)){
+                    IList<SysPower> List=SysPowerList.Where(n=>n.PId==p.Id).ToList();
+                    int i=1;
+                    <table class="table table-striped table-hover table-bordered">
+                    @foreach(var pp in List)
+                    {
+                        <tr>
+                        @if(i==1){
+                    <th rowspan="@(List.Count)" style="width:140px;">
+                        <input type="checkbox" name="PId" class="p" id="P@(p.Id)" value="@(p.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",p.Id))!=-1?"checked":"") />@(p.Name)
+                    </th>
+                    }
+                    <td class="title" style="width:175px;">
+                        <input type="checkbox" name="PId" class="pp" id="P@(pp.Id)" data-p="@(p.Id)" value="@(pp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",pp.Id))!=-1?"checked":"") />@(pp.Name)
+                    </td><td>
+                        @foreach (var ppp in SysPowerList.Where(n => n.PId == pp.Id))
+                        {
+                            <input type="checkbox" name="PId" class="ppp" id="P@(ppp.Id)" data-p="@(p.Id)" data-pp="@(pp.Id)" value="@(ppp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",ppp.Id))!=-1?"checked":"") />@(ppp.Name)　
+                        }
+                    </td>
+                        </tr>
+                        i++;
+                    }
+                   </table>
+                }
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $(".p").click(function () {
+            var T = $(this).prop("checked");
+            var C = "";
+            if (T) C = "checked";
+            $(this).closest("table").find(".pp").prop("checked", T).parent().attr("class", C);
+            $(this).closest("table").find(".ppp").prop("checked", T).parent().attr("class", C);
+        });
+        $(".pp").click(function () {
+            var T = $(this).prop("checked");
+            var C = "";
+            if (T) C = "checked";
+            $(this).closest("tr").find(".ppp").prop("checked", T).parent().attr("class", C);
+            var L = $(this).closest("table").find(".pp:checked").length;
+            if (L > 0) {
+                $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+            }
+        });
+        $(".ppp").click(function () {
+            var LL = $(this).closest("td").find(".ppp:checked").length;
+            if (LL > 0) {
+                $(this).closest("td").prev("td").find(".pp").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("td").prev("td").find(".pp").prop("checked", false).parent().attr("class", "");
+            }
+            var L = $(this).closest("table").find(".pp:checked").length;
+            if (L > 0) {
+                $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+            }
+        });
+    });
+</script>       
+    }
+}

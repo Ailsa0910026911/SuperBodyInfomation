@@ -1,0 +1,38 @@
+﻿@{
+    List<QRCode> QRCodeList = ViewBag.QRCodeList;
+    this.Layout = null;
+}
+<table class="table table-striped table-bordered table-hover" id="QRCode">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>入库时间</th>
+            <th>状态</th>
+            <th>绑定时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in QRCodeList)
+        {
+        <tr class="odd gradeX">
+            <td>@(item.Num)</td>
+            <td>@(item.AddTime.ToString("yyyy-MM-dd HH:mm"))</td>
+            <td>
+                @if (item.State == 0)
+                { 
+                    <span class="gray">已失效</span>
+                }
+                @if (item.State == 1)
+                { 
+                    <span class="green">未绑定</span>
+                }
+                @if (item.State == 2)
+                { 
+                    <span class="red">已绑定</span>
+                }
+            </td>
+            <td class="center"> @(item.EditTime.IsNullOrEmpty()?"--":item.EditTime.Value.ToString("yyyy-MM-dd HH:mm")) </td>
+        </tr>
+        }
+    </tbody>
+</table>

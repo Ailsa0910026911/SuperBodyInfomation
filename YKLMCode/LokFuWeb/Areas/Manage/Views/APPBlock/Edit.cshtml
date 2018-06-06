@@ -1,0 +1,377 @@
+﻿@{
+    APPBlock APPBlock = ViewBag.APPBlock;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    ViewBag.SMUid = 272;
+    if (APPBlock.Id.IsNullOrEmpty())
+    {
+        APPBlock.State = 1;
+    }
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+    
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(APPBlock.Id.IsNullOrEmpty() ? "Add" : "Save").html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(APPBlock.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">标题<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required,minSize[1],maxSize[20]] input-large " name="Name" id="Name" value="@(APPBlock.Name)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">小标题</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-large" name="SubName" id="SubName" value="@(APPBlock.SubName)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">小图标<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge control">
+                                    @Html.Partial("FileLoad", new FileLoad() {  BigName = "IconUrl", FilePath = "APPBlock", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPBlock.IconUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPBlock", APPBlock.IconUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPBlock", APPBlock.IconUrl))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">广告图<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-xlarge control">
+                                    @Html.Partial("FileLoad", new FileLoad() { StandardSize = 4, BigName = "PicUrl", FilePath = "APPBlock", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPBlock.PicUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPBlock", APPBlock.PicUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPBlock", APPBlock.PicUrl))" height="25" />
+                                        </a>
+                                    }
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">链接类型</label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="LinkType" id="LinkType">
+                                    <option value="1" @(APPBlock.LinkType == 1 ? " selected" : "")>内置</option>
+                                    <option value="2" @(APPBlock.LinkType == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                <p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p>
+                            </div>
+                        </div>
+                        <div class="form-group" @(!APPBlock.LinkType.HasValue || APPBlock.LinkType == 1 ? "" : "style=display:none;") id="LinkTypeselect1">
+                            <label class="control-label col-md-3">链接地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select id="SelectLinkUrlSelect" @(APPBlock.LinkType == 1 ? "name=LinkUrl" : "")
+                                            class="bs-select form-control  validate[required] input-md">
+                                        <optgroup label="Home区域">
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                        <optgroup label="底部区域">
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" @(APPBlock.LinkType == 2 ? "" : "style=display:none;") id="LinkTypeselect2">
+                            <label class="control-label col-md-3">链接地址 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillLinkUrlInput"
+                                           @(APPBlock.LinkType == 2 ? "name=LinkUrl" : "") value="@(APPBlock.LinkUrl)" />
+                                </div>
+                                <p class="help-block">请输入以"http://"开头的网址,例如"http://www.taobao.com" </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">代理商<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-large" name="AgentId" id="AgentId">
+                                    @if (SysAgentList != null)
+                                    {
+                                        foreach (var item in SysAgentList)
+                                        {
+                                            <option value="@(item.Id)" @(APPBlock.AgentId == item.Id ? " selected" : "")>@(item.APPName)</option>
+                                        }
+                                    }
+                                </select>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1" @(APPBlock.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0" @(APPBlock.State == 0 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">排序 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  validate[required] input-small" name="Sort" id="Sort" value="@(APPBlock.Sort)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="padding-left: 13%;">
+                            <div class="col-md-6">
+                                <hr />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">按键1链接名称</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large" name="LinkName1" id="LinkName1" value="@(APPBlock.LinkName1)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">按键1链接类型</label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="LinkType1" id="LinkType1">
+                                    <option value="1" @(APPBlock.LinkType1 == 1 ? " selected" : "")>内置</option>
+                                    <option value="2" @(APPBlock.LinkType1 == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                <p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p>
+                            </div>
+                        </div>
+                        <div class="form-group" @(!APPBlock.LinkType1.HasValue || APPBlock.LinkType1 == 1 ? "" : "style=display:none;") id="LinkType1select1">
+                            <label class="control-label col-md-3">按键1链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select id="SelectLinkUrl1Select" @(APPBlock.LinkType1 == 1 ? "name=LinkUrl1" : "")
+                                            class="bs-select form-control  validate[required] input-md">
+                                        <optgroup label="Home区域">
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                        <optgroup label="底部区域">
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" @(APPBlock.LinkType1 == 2 ? "" : "style=display:none;") id="LinkType1select2">
+                            <label class="control-label col-md-3">按键1链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillLinkUrl1Input"
+                                           @(APPBlock.LinkType1 == 2 ? "name=LinkUrl1" : "") value="@(APPBlock.LinkUrl1)" />
+                                </div>
+                                <p class="help-block">请输入以"http://"开头的网址,例如"http://www.taobao.com" </p>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="padding-left: 13%;">
+                            <div class="col-md-6">
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">按键2链接名称</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control   input-large" name="LinkName2" id="LinkName2" value="@(APPBlock.LinkName2)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">按键2链接类型</label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="LinkType2" id="LinkType2">
+                                    <option value="1" @(APPBlock.LinkType2 == 1 ? " selected" : "")>内置</option>
+                                    <option value="2" @(APPBlock.LinkType2 == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                <p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p>
+                            </div>
+                        </div>
+                        <div class="form-group" @(!APPBlock.LinkType2.HasValue || APPBlock.LinkType2 == 1 ? "" : "style=display:none;") id="LinkType2select1">
+                            <label class="control-label col-md-3">按键2链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select id="SelectLinkUrl2Select" @(APPBlock.LinkType2 == 1 ? "name=LinkUrl2" : "")
+                                            class="bs-select form-control  validate[required] input-md">
+                                        <optgroup label="Home区域">
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                        <optgroup label="底部区域">
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPBlock.LinkUrl ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" @(APPBlock.LinkType2 == 2 ? "" : "style=display:none;") id="LinkType2select2">
+                            <label class="control-label col-md-3">按键2链接值 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillLinkUrl2Input"
+                                           @(APPBlock.LinkType2 == 2 ? "name=LinkUrl2" : "") value="@(APPBlock.LinkUrl2)" />
+                                </div>
+                                <p class="help-block">请输入以"http://"开头的网址,例如"http://www.taobao.com" </p>
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding-left: 13%;">
+                            <div class="col-md-6">
+                                <hr />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">确认修改</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+        <script>
+            $(function () {
+                //广告链接切换
+                $("#LinkType").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#LinkTypeselect1").show();
+                        $("#LinkTypeselect2").hide();
+
+                        $("#SelectLinkUrlSelect").attr("name", "LinkUrl");
+                        $("#FillLinkUrlInput").attr("name", "");
+
+                    }
+                    else {
+                        $("#LinkTypeselect1").hide();
+                        $("#LinkTypeselect2").show();
+
+                        $("#FillLinkUrlInput").attr("name", "LinkUrl");
+                        $("#SelectLinkUrlSelect").attr("name", "");
+                    }
+                });
+                //按键1
+                $("#LinkType1").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#LinkType1select1").show();
+                        $("#LinkType1select2").hide();
+
+                        $("#SelectLinkUrl1Select").attr("name", "LinkUrl1");
+                        $("#FillLinkUrl1Input").attr("name", "");
+
+                    }
+                    else {
+                        $("#LinkType1select1").hide();
+                        $("#LinkType1select2").show();
+
+                        $("#FillLinkUrl1Input").attr("name", "LinkUrl1");
+                        $("#SelectLinkUrl1Select").attr("name", "");
+                    }
+                });
+                //按键2
+                $("#LinkType2").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#LinkType2select1").show();
+                        $("#LinkType2select2").hide();
+
+                        $("#SelectLinkUrl2Select").attr("name", "LinkUrl2");
+                        $("#FillLinkUrl2Input").attr("name", "");
+
+                    }
+                    else {
+                        $("#LinkType2select1").hide();
+                        $("#LinkType2select2").show();
+
+                        $("#FillLinkUrl2Input").attr("name", "LinkUrl2");
+                        $("#SelectLinkUrl2Select").attr("name", "");
+                    }
+                });
+
+                var uploadSelect = $(".control").children("select").children("option");
+                $.each(uploadSelect, function (i, n) {
+                    if ($(n).val() == 0) {
+                        $(n).remove();
+                    }
+                });
+
+            });
+        </script>
+    }
+}

@@ -1,0 +1,112 @@
+﻿<link rel="stylesheet" href="/Content/HaoFu/css/normalize.min.css" />
+<style>
+    .list-unstyled {
+      list-style: outside none none;
+      margin: 0;
+      padding-left: 0;
+      color: #808080;
+      font-size: 14px;
+      line-height: 24px;
+    }
+    li {
+      margin-bottom: 20px;
+    }
+    .theme {
+      border: 1px solid #ececec;
+      border-radius: 5px;
+      height: 28px;
+      padding-left: 20px;
+      width: 380px;
+    }
+    .theme-text {
+        border: 1px solid #ececec;
+        border-radius: 5px;
+        height: 180px;
+        padding-left: 20px;
+        resize: none;
+        width: 380px;
+    }
+    li .yzm {
+      border: 1px solid #ececec;
+      height: 38px;
+      padding-left: 10px;
+      width: 100px;
+    }
+    a, input, btn, textarea {
+      outline: medium none;
+    }
+    button {
+      border: medium none;
+      border-radius: 10px;
+      height: 30px;
+      outline: medium none;
+      width: 180px;
+    }
+    .btn-warging {
+      background: #fa852b none repeat scroll 0 0;
+      color: #fff;
+    }
+    /*验证插件*/
+        .inputContainer { position: relative; float: left; }
+        .formError { position: absolute; top: 300px; left: 300px; display: block; z-index: 5000; cursor: pointer; }
+        .ajaxSubmit { padding: 20px; background: #55ea55; border: 1px solid #999; display: none; }
+        .formError .formErrorContent { width: 100%; background: #ee0101; position:relative; z-index:5001; color: #fff; width: 150px; font-size: 12px; border: 2px solid #ddd; box-shadow: 0 0 6px #000; -moz-box-shadow: 0 0 6px #000; -webkit-box-shadow: 0 0 6px #000; padding: 4px 10px 4px 10px; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
+        .greenPopup .formErrorContent { background: #33be40; }
+        .blackPopup .formErrorContent { background: #393939; color: #FFF; }
+        .formError .formErrorArrow { width: 15px; margin: -2px 0 0 13px; position:relative; z-index: 5006; }
+        .formError .formErrorArrowBottom { box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; margin: 0px 0 0 12px; top:2px; }
+        .formError .formErrorArrow div { border-left: 2px solid #ddd; border-right: 2px solid #ddd; box-shadow: 0 2px 3px #444; -moz-box-shadow: 0 2px 3px #444; -webkit-box-shadow: 0 2px 3px #444; font-size: 0px; height: 1px; background: #ee0101; margin: 0 auto; line-height: 0; font-size: 0; display: block; }
+        .formError .formErrorArrowBottom div { box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; }
+        .greenPopup .formErrorArrow div { background: #33be40; }
+        .blackPopup .formErrorArrow div { background: #393939; color: #FFF; }
+        .formError .formErrorArrow .line10 { width: 15px; border: none; }
+        .formError .formErrorArrow .line9 { width: 13px; border: none; }
+        .formError .formErrorArrow .line8 { width: 11px; }
+        .formError .formErrorArrow .line7 { width: 9px; }
+        .formError .formErrorArrow .line6 { width: 7px; }
+        .formError .formErrorArrow .line5 { width: 5px; }
+        .formError .formErrorArrow .line4 { width: 3px; }
+        .formError .formErrorArrow .line3 { width: 1px; border-left: 2px solid #ddd; border-right: 2px solid #ddd; border-bottom: 0 solid #ddd; }
+        .formError .formErrorArrow .line2 { width: 3px; border: none; background: #ddd; }
+        .formError .formErrorArrow .line1 { width: 1px; border: none; background: #ddd; }
+</style>
+<form action="Add.html" id="chkForm" name="chkForm" class="chkForm" method="post">
+<ul class="list-unstyled">
+	<li><input type="text" placeholder="您的主题" class="theme validate[required]" name="Name" id="Name"></li>
+	<li><textarea class="theme-text validate[required]" placeholder="您的宝贵意见，就是我们进步的源泉" name="Info" id="Info"></textarea></li>
+	<li><input type="text" class="yzm validate[required]" placeholder="点击获取" name="code" id="code">
+        <img id="img" alt="看不清？请点我" src="/Content/Metronic/img/none.gif" style="cursor: pointer; vertical-align: middle;width:100px;margin-left:5px; margin-top:-2px; width:auto; height:32px;" id="valiCode"></li>
+	<li><button type="submit" class="btn-warging" id="submit"> 提交 </button></li>
+</ul>
+</form>
+<script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+<script>
+    $(function () {
+        $("#img").click(function () {
+            $(this).fadeOut(0).attr("src", "/Content/Metronic/img/none.gif").attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+        });
+        $("#code").focus(function () {
+            if ($("#img").attr("src") == "/Content/Metronic/img/none.gif") {
+                $("#img").fadeOut(0).attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+                $(this).val("");
+            }
+        });
+        $("#submit").click(function () {
+            var ret = true;
+            if ($("#chkForm").validationEngine("validate")) {
+                var code = $("#code").val();
+                var data = $.ajax({ url: "/home/CheckCode.html?code=" + code, async: false }).responseText;
+                if (data != "1") {
+                    $("#code").validationEngine('showPrompt', '验证码错误！', 'error')
+                    ret = false;
+                } else {
+                    ret = true;
+                }
+            } else {
+                ret = false;
+            }
+            return ret;
+        });
+    });
+</script>

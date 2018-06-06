@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+    Users Users = ViewBag.Users;
+    SysSet BasicSet = ViewBag.BasicSet;
+        //LokFuEntity Entity=ViewBag.Entity;
+        //string BackGround = "/Content/Mobile/Turntable/img/bg_shape.png";
+        //string CardBg = "/template/card2.png";
+        //if (!Users.Id.IsNullOrEmpty())
+        //{
+        //    SysAgent SysAgent = Entity.SysAgent.FirstOrNew(n => n.Id == Users.Agent && n.State == 1 && n.IsTeiPai == 1);
+        //    if (!SysAgent.Id.IsNullOrEmpty())
+        //    {
+        //        BasicSet.IosYYB = SysAgent.IosYYB;
+        //        BasicSet.IosUrl = SysAgent.IosUrl;
+        //        BasicSet.ApkYYB = SysAgent.ApkYYB;
+        //        BasicSet.ApkUrl = SysAgent.ApkUrl;
+        //        BackGround = Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.ShareBg);
+        //        CardBg = Utils.ImageUrl("SysAgent/" + SysAgent.Id, SysAgent.CradBg);
+        //    }
+        //}
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/Content/Mobile/css/bootstrap.css" />
+    <link rel="stylesheet" href="/Content/Mobile/share/css/style.css" />
+    <title>@(Users.NeekName)的分享</title>
+</head>
+<body class="money red">
+    <section>
+        <div class="top">
+            <img src="/Content/Mobile/share/image/top-3.jpg" alt="" /></div>
+        <div class="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="line"><span>幸运大转盘</span></div>
+                        <div class="text-warp">
+                            <p>1.点击下方“立即注册体验”按钮按提示注册。</p>
+                            <p>2.注册完下载钱包登录，便可参加抽奖中现金大礼包。</p>
+                            <p>3.去个人中心进行实名认证便可提现到绑定的银行卡中。</p>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-block" href="/mobile/reg/reg.html?mypid=@(Users.Id)&sharetype=1">立即注册体验</a>
+                        </div>
+                        <a class="away" href="/mobile/reg/reg.html?mypid=@(Users.Id)&sharetype=1">马上注册还能抽大奖哦</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,209 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    MsgAdmin MsgAdmin = ViewBag.MsgAdmin;
+    ViewBag.SMUid = 19;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+
+    Dictionary<int, string> userName = ViewBag.UserName;
+    int PId = 0;
+    bool isAdd = MsgAdmin.Id.IsNullOrEmpty();
+    if (isAdd)
+    {
+        MsgAdmin.State = 1;
+    }
+    else
+    {
+        PId = SysAdminList.FirstOrNew(n => n.Id == MsgAdmin.AId).AgentId;
+    }
+    ViewBag.Title = "发送消息";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(MsgAdmin.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(MsgAdmin.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        @{
+                            if (isAdd)
+                            {
+                            <div class="form-group" id="div_fasongduixiang">
+                                <label class="control-label col-md-3">发送对象</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon right input-large">
+                                        <select name="IsObj" id="IsObj" class="form-control input-small input-inline input-sm">
+                                            <option value="0">后台管理员</option>
+                                            <option value="1">一级代理商</option>
+                                        </select>
+                                    </div>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div class="form-group" id="div_guanliyuan">
+                                <label class="control-label col-md-3">选择管理员</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon right input-large">
+                                        <select name="IsAdmin" id="IsAdmin" class="form-control input-small input-inline input-sm" rev="@(PId)">
+                                            <option value="0">--所有--</option>
+                                            @foreach (var p in SysAdminList)
+                                            {
+                                                <option value="@(p.Id)"@(PId == p.Id ? " selected" : "")>@(p.TrueName)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            <div id="div_dailishang" class="form-group" style="display: none">
+                                <label class="control-label col-md-3">选择代理商</label>
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <select name="IsPId" id="IsPId" class="form-control input-small input-inline input-sm">
+                                                <option value="0">--所有--</option>
+                                                @foreach (var p in SysAgentList)
+                                                {
+                                                    <option value="@(p.Id)"@(PId == p.Id ? " selected" : "")>@(p.Name)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <label class="control-label col-md-3">是否发送至下级</label>
+                                            <select name="IsLevel" id="IsLevel" class="form-control input-small input-inline input-sm">
+                                                <option value="0">否</option>
+                                                <option value="1">是</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <p class="help-block"></p>
+
+                                </div>
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">接收管理</label>
+                                <div class="col-md-4">
+                                    <div class="input-icon right input-large">
+                                        <i class="fa"></i>
+                                        <select name="" class="form-control input-small input-inline input-sm">
+                                            @{
+                                foreach (var item in userName)
+                                {
+                                                <option value="@(item.Key)">@(item.Value)</option>
+                                }
+                                            }
+                                        </select>
+                                        @* <input type="text" class="form-control  input-large" disabled="disabled" value="@(UserName)" />*@
+                                    </div>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            }
+
+                        }
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">消息标题 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control  input-large  validate[required]" name="Name" id="Name" style="width:253px;" maxlength="100" value="@(MsgAdmin.Name)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">消息内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="xyeditor input-xxlarge" name="Info" id="Info" rows="12" data-path="/Manage/Home/UpFile.html">@(MsgAdmin.Info)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        @{
+                            if (!isAdd)
+                            {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">消息状态 <span class="required">* </span></label>
+                                <div class="col-md-4">
+                                    @{
+                                if (MsgAdmin.AId > 0)
+                                {
+                                        <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                            <option value="1"@(MsgAdmin.State == 1 ? " selected" : "")>未读</option>
+                                            <option value="2"@(MsgAdmin.State == 2 ? " selected" : "")>已读</option>
+                                            <option value="0"@(MsgAdmin.State == 0 ? " selected" : "")>取消</option>
+                                        </select>
+                                }
+                                else
+                                {
+                                        @:==
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            }
+                            else
+                            {
+                            <input type="hidden" value="1" name="State" />
+                            }
+                        }
+
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">@(isAdd==true?"确认发布":"确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+        <script>
+            $(function () {
+                $("#IsObj").change(function () {
+                    var isObj = $(this).val();
+                    if (isObj == "0") {
+                        $("#div_guanliyuan").show();
+                        $("#div_dailishang").hide();
+                    } else {
+                        $("#div_guanliyuan").hide();
+                        $("#div_dailishang").show();
+                    }
+                });
+
+                //$("#PId").change(function () {
+                //    var PId = $(this).val();
+                //    if (PId == "") { PId = 0; }
+                //    var AIds = $("#AId-Sel option[rev=" + PId + "]").clone(true);
+                //    var AId = $("#AId").attr("rev");
+                //    $("#AId").html("<option value=\"\">==请选择==</option>").append(AIds);
+                //    $("#AId").find("option[value=" + AId + "]").attr("selected", true);
+                //}).change();
+            });
+        </script>
+    }
+}

@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    string comeurl = ViewBag.ComeUrl;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="~/Content/Mobile/css/normalize.min.css" rel="stylesheet" />
+    <link href="~/Content/Mobile/css/style.css" rel="stylesheet" />
+    <title>申请成功</title>
+</head>
+<body>
+@*<div class="wc_img"></div>
+<div class="gxn">恭喜您，你已成功提交申请，我们会在2个工作日之内和您取得联系，请您耐心等候，谢谢！</div>
+<div class="zdwm">如有任何疑问，请致电我们的客户热线：@(BasicSet.Tel)</div>*@
+    <section class="suess text-center">
+		<span class="round"><i class="iconfont">&#xe619;</i></span>
+		<div class="text">
+			<p>恭喜您，您已成功提交申请，我们会在2个工作日之内和您取得联系，请您耐心等候，谢谢!</p>
+		</div>
+	</section>	
+</body>
+</html>

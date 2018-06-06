@@ -1,0 +1,10 @@
+﻿@charset "utf-8";
+.online_sev{width:162px; position:relative; display:none;}
+.online_sev .tc{text-align:center;}
+.online_sev .b{font-weight:bold;}
+.online_sev .clear{ clear:both;}
+.online_sev dl{height:100%;}
+.online_sev dl p{height:28px; line-height:30px;}
+.online_sev dl p.title{background:#55c9ff; color:#fff; text-indent:5px;}
+.online_sev dl dt{width:126px; border:#55c9ff 3px solid; float:right; padding-bottom:30px; background:#fff; border-top:0;}
+.online_sev dl dd{background:url(../images/qq_left.gif) no-repeat center center; width:30px; height:135px; display:block; float:right; margin-top:25%; text-indent:-9999px; overflow:hidden;}

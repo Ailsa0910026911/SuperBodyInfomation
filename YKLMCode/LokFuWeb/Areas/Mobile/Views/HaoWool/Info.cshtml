@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "";
+    HaoWool HaoWool = ViewBag.HaoWool;
+    ViewBag.Title = HaoWool.Title;
+}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/Content/Mobile/css/normalize.css?v=201604281129" />
+        <link rel="stylesheet" href="/Content/Mobile/HaoWool/css/style.css?v=201604281129" />
+        <script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js" ></script>
+		<title>@(ViewBag.Title)</title>
+	</head>
+	<body>
+		<div class="hao-deta">
+			<div class="hao-title">
+				<h2>@(HaoWool.Title)</h2>
+				<span>@(HaoWool.AddTime)</span>
+			</div>
+            @if (!HaoWool.Pic.IsNullOrEmpty()){
+            <div class="ad">
+                <a href="@(HaoWool.Url.IsNullOrEmpty() ? "" : HaoWool.Url)">
+				<img src="@Utils.ImageUrl("HaoWool", HaoWool.Pic)" /></a>
+			</div>
+            }
+			<div class="hao-content">
+				<p>@(Html.Raw(HaoWool.Content))</p>
+			</div>
+		</div>
+	</body>
+</html>

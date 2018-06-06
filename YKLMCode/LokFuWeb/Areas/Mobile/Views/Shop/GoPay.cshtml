@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+    Orders Orders = ViewBag.Orders;
+    //Users Users = ViewBag.Users;
+
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    bool IsAlipayBrowser = ViewBag.IsAlipayBrowser;
+    bool NotWeiXinAndAliPay = true;
+    if (IsWeiXinBrowser || IsAlipayBrowser)
+    {
+        NotWeiXinAndAliPay = false;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>请使用扫一扫付款</title>
+    <link href="/Content/Mobile/Fast/css/main.css?2017010602" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body>
+    <span class="ewm_name">@(Orders.PayName)</span>
+    @if (Orders.TState == 1 && Orders.PayState == 0 && !Orders.PayId.IsNullOrEmpty())
+    {
+        <div class="sk_qr">
+            <img src="@(Orders.QRCode())" />
+        </div>
+    }
+    @if (NotWeiXinAndAliPay)
+    {
+        <span class="ewm_text01">请使用@(Orders.TType == 7 ? "支付宝" : "")@(Orders.TType == 8 ? "微信" : "")扫一扫进行付款</span>
+    }
+    @if (Orders.TType == 8)
+    {
+        if (IsWeiXinBrowser)
+        {
+            <span class="ewm_text01">请使用微信扫描二维码。</span>
+        }
+        else
+        {
+            <span class="ewm_text01">请使用微信扫描二维码！</span>
+        }
+    }
+    @if (Orders.TType == 7)
+    {
+        if (IsAlipayBrowser)
+        {
+            <span class="ewm_text01">自动跳转到支付界面！</span>
+        }
+        else
+        {
+            <span class="ewm_text01">请使用支付宝扫描二维码！</span>
+        }
+    }
+    <div class="ewm_xian"></div>
+    <span class="ewm_je"><span class="sp01">￥</span><span class="sp02">@(Orders.Amoney.ToMoney())</span></span>
+    <a href="index-@(Orders.UId).html" class="clear_je">清除金额</a>
+</body>
+</html>
+@if (Orders.TState == 1 && Orders.PayState == 0 && !Orders.PayId.IsNullOrEmpty())
+{
+    <script>
+        var Interval;
+        $(function () {
+            Interval = setInterval("Get()", 15000);
+        });
+        var Get = function () {
+            $.get("PayState.html?code=@(LokFu.Infrastructure.LokFuEncode.Base64Encode(Orders.TNum))", function (data) {
+                if (data == "S") {
+                    location.href = "Success.html?code=@(LokFu.Infrastructure.LokFuEncode.Base64Encode(Orders.TNum))";
+                } else if (data == "G") {
+                    //继续查
+                } else {
+                    clearInterval(Interval);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,112 @@
+﻿@{
+    UsersFace UsersFace = ViewBag.UsersFace;
+    ViewBag.SMUid = 189;
+    string Remark = ViewBag.Remark;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 600px; height: 400px; overflow-x: hidden; overflow-y: auto; margin: 0px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="@(UsersFace.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(UsersFace.Id)" />
+                <div class="form-body">
+                    @if (Remark == "Time")
+                    {
+                        int i = 1;
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                                <thead>
+                                    <tr>
+                                        <th>序号 </th>
+                                        <th>时间 </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var p in UsersFace.When.Split('|'))
+                                    {
+                                        <tr class="odd gradeX">
+                                            <td class="center">@(i) </td>
+                                            <td class="center">@(p) </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else if (Remark == "Log")
+                    {
+                        int i = 1;
+                        <div class="table-scrollable">
+                            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>时间</th>
+                                        <th>内容</th>
+                                        <th>人员</th>
+                                        <th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (UsersFace.Remark.IsNullOrEmpty()) { 
+                                        <tr class="odd gradeX">
+                                            <td class="center" colspan="4">暂无跟进记录</td>
+                                        </tr>
+                                    }else{
+                                        foreach (var p in UsersFace.Remark.Split('№'))
+                                        {
+                                            string[] Arr = p.Split('§');
+                                            if(Arr.Length==4){
+                                            <tr class="odd gradeX">
+                                                <td class="center">@(i) </td>
+                                                <td class="center">@(Arr[0]) </td>
+                                                <td class="center">@(Arr[1]) </td>
+                                                <td class="center">@(Arr[3]) </td>
+                                                <td class="center">@(Arr[2]) </td>
+                                            </tr>
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-scrollable">
+                            <input type="hidden" name="IsAjax" value="1" />
+                            <textarea class="form-control" name="Remark" style="height:120px; margin:10px 10px 0 10px; width:550px;" id="Remark"></textarea>
+                            <br />
+                            @if (UsersFace.State == 3){
+                                <input type="checkbox" name="State" id="State2" value="2" />@:有意向
+                            }else{
+                                <input type="checkbox" name="State" id="State3" value="3" />@:无意向
+                            }
+                        </div>
+                    }
+                </div>
+                @if (Remark.IsNullOrEmpty())
+                {
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">提交保存记录</button>
+                        </div>
+                    </div>
+                }
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

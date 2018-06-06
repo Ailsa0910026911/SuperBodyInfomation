@@ -1,0 +1,125 @@
+﻿@{
+    DownFile DownFile = ViewBag.DownFile;
+    ViewBag.SMUid = 221;
+    IList<DownFileTag> DownFileTagList = ViewBag.DownFileTagList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(DownFile.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(DownFile.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">资料文件 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="right input-xlarge">
+@*                                    @Html.Partial("FileLoad", new FileLoad() { BigName = "Pic", FilePath = "DownFile", IsSmall = false,FileName = "NOChange", StandardSize = 4, FileContentType = 
+                                   new string[] { 
+                                       "application/zip","application/pdf"
+                                       ,"application/msword","application/msexcel","application/mspowerpoint"
+                                       ,"application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","application/vnd.openxmlformats-officedocument.presentationml.presentation" } })
+                                </div>
+                                @if (!DownFile.Pic.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("DownFile", DownFile.Pic))" target="_blank">
+                                        @(DownFile.Pic)
+                                    </a>
+                                }*@
+                                
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>上传文件</span>
+                                    <input type="file" class="UpLoadFile" name="UpLoadFile" Url="/Manage/Asyn/UpLoadFile.html" SavePath="/UpLoadFiles/DownFile/" BindingId="fileDiv" FileType="docx|doc|xlsx|xls|pdf|zip|ppt|pptx" IsOriginalName="true" />
+                                </span>
+                                <span id="fileDiv">
+                                @if (!DownFile.Pic.IsNullOrEmpty())
+                                { 
+                                    <a href="@(Utils.ImageUrl("DownFile", DownFile.Pic))" target="_blank">
+                                        @(DownFile.Pic)
+                                    </a>
+                                    
+                                }
+                                </span>
+                                <input type="hidden" name="Pic" id="Pic" />
+                                <p class="help-block"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">类型标识 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <select name="TId" id="TId" class="form-control input-small input-inline input-sm  validate[required]" type="select-one" alert="请选择类型标识">
+                                        <option value="" data-tag="">请选择</option>
+                                        @foreach (var p in DownFileTagList)
+                                        {
+                                            <option value="@(p.Id)" @(p.Id == DownFile.TId ? "selected" : "") >@(p.Name)</option>
+                                        }
+                                    </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">排序 <span class="required"> * </span> </label>
+                            <div class="col-md-4">
+                            <div class="input-icon right input-large"> <i class="fa"></i>
+                                <input type="text" class="form-control validate[required] input-large" name="Sort" id="Sort" value="@(DownFile.Sort)" alert="请填写排序" />
+                            </div>
+                            <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 </label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1"@(DownFile.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0"@(DownFile.State != 1 ? " selected" : "")>隐藏</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">@(DownFile.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@Html.Partial("UpLoadFile")
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script type="text/javascript">
+        var UpFile = new UpLoadFileHelp($(".UpLoadFile"));
+        UpFile.FilePath = "@(Utils.ImageUrl("DownFile/", "/"))";
+        UpFile.IniFile();
+        UpFile.DoneFun = function (data) {
+            var result = data.result.Result;
+            var BindingId = UpFile.Elm.attr("BindingId");
+            var file = $("#" + BindingId);
+            $("#Pic").val(result.SaveFileName);
+            file.empty();
+            var html =
+                '<a href="' + this.FilePath + '/' + result.SaveFileName + '" target="_blank">' + result.SaveFileName + '</a>';
+            file.append(html);
+        };
+        console.log(UpFile);
+    </script>
+}

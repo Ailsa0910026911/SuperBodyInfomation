@@ -1,0 +1,160 @@
+﻿@{
+    IList<SysLog> SysLogList = ViewBag.SysLogList;
+    ViewBag.SMUid = 32;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    SysLog SysLog = ViewBag.SysLog;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    IList<SysAdmin> AgentSysAdminList = ViewBag.AgentSysAdminList;
+    ViewBag.NoShowDel = true;
+    int AgentSysAdminId = ViewBag.AgentSysAdminId ?? 0;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>日志类型：</span>
+        <select name="PType" class="form-control input-small input-inline input-sm" id="PType">
+            <option value="1" @(SysLog.PType == 1 ? "selected" : "")>管理后台</option>
+            <option value="2" @(SysLog.PType == 2 ? "selected" : "")>代理后台</option>
+        </select>
+        <span style="display: none" id="A">
+            <span class="seperator">|</span>
+            <span>后台操作员：</span>
+            <select name="AId" class="form-control input-small input-inline input-sm" id="AId">
+                <option value="0">不限制</option>
+                @foreach (var p in SysAdminList)
+                {
+                    <option value="@(p.Id)" @(p.Id == SysLog.AId ? "selected" : "") >@(p.TrueName.IsNullOrEmpty() ? p.UserName : p.TrueName)</option>
+                }
+            </select>
+        </span>
+        <span style="display: none" id="ASAI">
+            <span class="seperator">|</span>
+            <span>代理操作员：</span>
+            <select name="AgentSysAdminId" class="form-control input-small input-inline input-sm" id="AgentSysAdminId">
+                <option value="0">不限制</option>
+                @foreach (var p in AgentSysAdminList)
+                {
+                    <option value="@(p.Id)" @(p.Id == AgentSysAdminId ? "selected" : "") >@(p.TrueName.IsNullOrEmpty() ? p.UserName : p.TrueName)</option>
+                }
+            </select>
+        </span>
+        <span class="seperator">|</span>
+        <span>操作内容：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Title" value="@(SysLog.Title)" />
+        <span class="seperator">|</span>
+        <span>控制器：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="ControllerName" value="@(SysLog.ControllerName)" />
+        <span class="seperator">|</span>
+        <span>方法名：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="ActionName" value="@(SysLog.ActionName)" />
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>类型 </th>
+                                <th>姓名 </th>
+                                <th>操作内容 </th>
+                                <th>控制器 </th>
+                                <th>方法名 </th>
+                                <th>提交数据 </th>
+                                <th>POST数据 </th>
+                                <th>IP </th>
+                                <th>添加时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (SysLogList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in SysLogList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" /></td>
+                                    <td class="center">
+                                        @if (p.PType == 1)
+                                        {
+                                            @("管理后台")
+                                        }
+                                        else if (p.PType == 2)
+                                        { 
+                                            @("代理后台")
+                                        }
+                                    </td>
+                                    <td class="center">@(p.TrueName) </td>
+                                    <td class="center">@(p.Title) </td>
+                                    <td class="center">@(p.ControllerName) </td>
+                                    <td class="center">@(p.ActionName) </td>
+                                    <td class="center" title="@(p.RQData)">@(p.RQData.IsNullOrEmpty() ? "--" : "数据") </td>
+                                    <td class="center" title="@(p.POSTData)">@(p.POSTData.IsNullOrEmpty() ? "--" : "数据") </td>
+                                    <td class="center">@(p.IP) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm:ss")) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", SysLogList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}
+
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    <script>
+        $(function () {
+            PType($("#PType").val());
+            $('#AId').select2({
+                allowClear: false
+            });
+            $('#AgentSysAdminId').select2({
+                allowClear: false
+            });
+            $("#PType").change(function () {
+                PType($(this).val());
+            });
+        });
+        function PType(PType) {
+            if (PType == 1) {
+                $("#ASAI").hide();
+                $("#A").show();
+            }
+            else {
+                $("#A").hide();
+                $("#ASAI").show();
+            }
+        }
+    </script>
+}

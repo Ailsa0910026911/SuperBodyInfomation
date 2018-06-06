@@ -1,0 +1,146 @@
+﻿@{
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    ViewBag.SMUid = 249;
+    SysSet BasicSet = ViewBag.BasicSet;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    IList<UserPayAgent> UserPayAgentList = ViewBag.UserPayAgentList;
+    LokFuEntity Entity = ViewBag.Entity;
+    ViewBag.Title = "商户入网费率设置";
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="proxy-top">@(ViewBag.Title)</div>
+        <div class="information">
+            <div class="proxy-con inquiry-cont operator">
+                <form action="@(this.Url.Action("Save"))" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <table class="operator-table">
+                        <tbody class="tbody">
+                            <tr>
+                                <td width="280" align="center">通道名称 </td>
+                                <td width="120" align="center">最低设置</td>
+                                <td width="240" align="center">当前设置</td>
+                            </tr>
+                            @foreach (var p in PayConfigList)
+                            {
+                                double Cost = p.CostUser.GetValueOrDefault() * 1000;
+                                UserPayAgent PCT = UserPayAgentList.FirstOrNew(n => n.AId == BasicAgent.Id && n.PId == p.Id);
+                                if (!PCT.Id.IsNullOrEmpty())
+                                {
+                                    Cost = PCT.Cost * 1000;
+                                }
+                                <tr class="odd gradeX">
+                                    <td align="center">@(p.Name)<input type="hidden" name="PId" value="@(p.Id)" /></td>
+                                    <td align="center"><span class="permillage">@(p.CostAgent * 1000)</span>‰ </td>
+                                    <td align="center">
+                                        <input type="text" class="input-text validate[required,custom[float],min[@(p.CostAgent * 1000)],max[1000]]" name="Cost" id="Cost@(p.Id)" value="@(Cost)" />‰ </td>
+                                </tr>
+                            }
+                            @if (ViewBag.Save)
+                            {
+                                <tr>
+                                    <td align="center">同步设置：</td>
+                                    <td align="left" colspan="2">
+                                        @if (BasicAgent.Tier < BasicAgent.AgentLevelMax)
+                                        {
+                                        <input type="checkbox" name="AnsyNext" id="AnsyNext" value="1" /><a>同步下级代理</a>
+                                        }
+                                        <input type="checkbox" name="AnsyCash" id="AnsyCash" value="1" /><a>同步到老用户</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                    @if (ViewBag.Save)
+                    {
+                        <div class="text-center warning">
+                            <button type="submit" class="sub">保存设置</button>
+                        </div>
+                    }
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js"></script>
+    <script>
+        $(function () {
+            $("#AnsyCash").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = parent.ArtDialog({
+                        title: '温馨提示',
+                        content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+            $("#AnsyNext").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = parent.ArtDialog({
+                        title: '温馨提示',
+                        content: '下级代理商自行设置的配置将会被覆盖，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+            @if (Request.QueryString["success"] != null)
+            {
+            <text>
+            parent.ArtDialog({
+                title: '温馨提示',
+                content: '保存成功！',
+                icon: 'success',
+                lock: true,
+                ok: function () {
+                    this.close();
+                }
+            });
+            </text>
+            }
+        })
+    </script>
+}

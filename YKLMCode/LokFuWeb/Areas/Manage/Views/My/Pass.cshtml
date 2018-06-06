@@ -1,0 +1,76 @@
+﻿@*<style>
+    .form-horizontal .form-group{ margin:0px;}
+</style>
+<div class="row" style="width:500px; padding-top:15px; margin:0 auto;">
+    <div class="" style="margin:10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+        <form action="PassSave.html?@(Request.QueryString["IsAjax"].IsNullOrEmpty()?"":"IsAjax=1")" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+          <div class="form-group">
+            <label class="control-label">请输入原密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd]]" name="PassWord" id="p0" alert="请填写原密码" />
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label class="control-label">请输入新密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd]]" name="PassWord1" id="p1" alert="请填写新密码" />
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label class="control-label">请重复输入新密码 <span class="required"> * </span> </label>
+            <input type="password" class="form-control validate[required,custom[pwd],equals[p1]]" name="PassWord2" id="p2" alert="与新密码不相同" />
+            <p class="help-block"></p>
+          </div>
+          <div class="margin-top-10"> <button class="btn green" type="submit"> 确认并修改密码 </button> </div>
+        </form>
+    </div>
+  </div>
+</div>*@
+<style type="text/css">
+    #ListBox label {
+        font-size: 12px;
+    }
+</style>
+<form action="PassSave.html?@(Request.QueryString["IsAjax"].IsNullOrEmpty() ? "" : "IsAjax=1")" id="chkForm" name="chkForm" class="chkForm" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+    <div class="row" style="width: 450px; margin: 15px auto; height: 200px;">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered table-hover tablethr" id="ListBox">
+                <tbody>
+                    <tr class="form-group">
+                        <th width="150"><label class="control-label"><span class="required">* </span>请输入原密码</label>：</th>
+                        <td>
+                            <input type="password" class="form-control validate[required,custom[pwd]] input-small" name="PassWord" id="p0" alert="请填写原密码" />
+                            <p class="help-block"></p>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <th><label class="control-label"><span class="required">* </span>请输入新密码</label>：</th>
+                        <td>
+                            <input type="password" class="form-control validate[required,custom[pwd]] input-small" name="PassWord1" id="p1" alert="请填写新密码" />
+                            <p class="help-block"></p>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <th><label class="control-label"><span class="required">* </span>请重复输入新密码</label>：</th>
+                        <td>
+                            <input type="password" class="form-control validate[required,custom[pwd],equals[p1]] input-small" name="PassWord2" id="p2" alert="与新密码不相同" />
+                            <p class="help-block"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="center"><button class="btn green" type="submit">确认保存 </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

@@ -1,0 +1,505 @@
+﻿@{
+    ViewBag.SMUid = 55;
+    ViewBag.Title = "设置可快速提现时间";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<link href="~/Content/Manage/Task/css/tast.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <div class="p20">
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="vertical-align: top;">
+                                <div id="GetDaysTable" style="width: 100%;">
+                                    @Html.Partial("GetDay")
+                                </div>
+                                <p class="lh24 pt10 g6 b_line_d pb5">
+                                    单击日历中的日期新增与修改想要指定的日期，在弹出层中输入当天设置，点击确定既可！单击<img src="~/Content/Manage/Task/images/ico_ar.png" />删除指定日期的设置
+                                </p>
+                                <p class="lh22 pt10 pb10 g6">
+                                    <span class="b">使用说明</span><br />
+                                    1、未进行配置的日期不支持快速提现；<br />
+                                    2、以上操作系统会自动保存，即时生效。 
+                                </p>
+                            </td>
+                            <td width="10px">&nbsp;
+                            </td>
+                            <td style="width: 350px; vertical-align: top;">
+                                <div class="edit_date_info p10">
+                                    <form action="Save.html" id="SaveForm" method="post">
+                                    <div class="line_height_1 p10">
+                                        <p class="b g6">
+                                            批量编辑指定日期价格
+                                        </p>
+                                        <p class="lh24 g6 pt5">
+                                            第一步：指定日期范围
+                                        </p>
+                                        <p class="lh24 pt5">
+                                            <input type="text" value="@(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))" class="ipt h20 lh20 date_sel mr5 g9" style="width:165px" name="SDate" id="SDate">
+                                            到
+                                            <input type="text" value="@(DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd HH:mm:ss"))" class="ipt h20 lh20 date_sel ml5 g9" style="width:165px" name="EDate" id="EDate">
+                                        </p>
+                                        <p class="lh24 pt5 g6">
+                                            第二步：选择配置规则
+                                        </p>
+                                        <div class="line_height pt5">
+                                            <p class="lh24 pt5">
+                                                <input type="radio" name="SendBy" value="1" class="SendBy" id="SendBy1" checked="checked" />按周
+                                                <input type="radio" name="SendBy" value="2" class="SendBy" id="SendBy2" />按月
+                                            </p>
+                                            <p id="SendByBox1" class="lh24 pt5 line_height_2 pl5 ml2 mr2 SendByBox">
+                                                <input type="checkbox" value="1" name="Week" class="Week" id="Week1" />周一
+                                                <input type="checkbox" value="2" name="Week" class="Week" id="Week2" />周二
+                                                <input type="checkbox" value="3" name="Week" class="Week" id="Week3" />周三
+                                                <input type="checkbox" value="4" name="Week" class="Week" id="Week4" />周四
+                                                <input type="checkbox" value="5" name="Week" class="Week" id="Week5" />周五
+                                                <input type="checkbox" value="6" name="Week" class="Week" id="Week6" />周六
+                                                <input type="checkbox" value="0" name="Week" class="Week" id="Week7" />周日
+                                            </p>
+                                            <p id="SendByBox2" class="lh24 pt5 line_height_2 pl5 ml2 mr2 SendByBox dn">
+                                                @for (int i = 1; i <= 31; i++)
+                                                {
+                                                    <label class="mr5"><input type="checkbox" value="@(i)" name="SendDay" class="SendDay" id="SendDay@(i)" />@(i<10?"0":"")@(i)</label>
+                                                }
+                                            </p>
+                                            <div style="background: #fff;" class="p10">
+                                                <table class="bcc lh24" style="width: 100%;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td height="30" width="70" class="tr">开始时间：</td>
+                                                            <td>
+                                                                <select name="sH" id="sH" class="ml5">
+                                                                    <option value="">HH</option>
+                                                                    @for (int i = 0; i <= 23; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                                :
+                                                                <select name="sM" id="sM">
+                                                                    <option value="">MM</option>
+                                                                    @for (int i = 0; i <= 59; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                                :
+                                                                <select name="sS" id="sS">
+                                                                    <option value="">SS</option>
+                                                                    @for (int i = 0; i <= 59; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="30" class="tr">结束时间：</td>
+                                                            <td>
+                                                                <select name="eH" id="eH" class="ml5">
+                                                                    <option value="">HH</option>
+                                                                    @for (int i = 0; i <= 24; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                                :
+                                                                <select name="eM" id="eM">
+                                                                    <option value="">MM</option>
+                                                                    @for (int i = 0; i <= 59; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                                :
+                                                                <select name="eS" id="eS">
+                                                                    <option value="">SS</option>
+                                                                    @for (int i = 0; i <= 59; i++)
+                                                                    {
+                                                                        <option value="@(i)">@(i)</option>
+                                                                    }
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="30" class="tr">配额：</td>
+                                                            <td>
+                                                                <input type="text" id="AllMoney" name="AllMoney" class="ipt" />元
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <p class="lh24 pt10 g9">
+                                            <a class="ml10" href="Delete.html" id="Delete">清空所有配置</a>
+                                            <input type="button" class="btn-success btn" id="submitForm" value="保存" />
+                                        </p>
+                                    </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="cl"></div>
+                </div>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+<div class="price_open_edit ico_close_do dn w230 abs l0 t0" id="AddNewPlanByDate">
+    <div class="rel pt10 pr10 pb10 pl10">
+        <form id="AddPlan" name="AddPlan" method="post" action="Save.html">
+            <input type="hidden" value="" id="ODate" name="SDate">
+            <input type="hidden" value="" id="eDate" name="EDate">
+            <input type="hidden" value="0" name="SendBy">
+            <h3 class="lh24"><span class="gray2 f14"><em class="red mr5" id="BoxText"></em>设置</span><a title="点击关闭" class="r hand h14 lh14" id="closeDiv"><em class="fa fa-times-circle-o"></em></a></h3>
+            <p class="lh24 pt5">开始时间：<select name="sH" id="SH" class="ml5">
+                <option value="">HH</option>
+                @for (int i = 0; i <= 23; i++)
+                {
+                    <option value="@(i)">@(i)</option>
+                }
+            </select>:<select name="sM" id="SM">
+                <option value="">MM</option>
+                @for (int i = 0; i <= 59; i++)
+                {
+                    <option value="@(i)">@(i)</option>
+                }
+            </select>:<select name="sS" id="SS">
+                <option value="">SS</option>
+                @for (int i = 0; i <= 59; i++)
+                {
+                    <option value="@(i)">@(i)</option>
+                }
+            </select>
+            </p>
+            <p class="lh24 pt5">结束时间：<select name="eH" id="EH" class="ml5">
+              <option value="">HH</option>
+              @for (int i = 0; i <= 24; i++)
+              {
+                  <option value="@(i)">@(i)</option>
+              }
+          </select>:<select name="eM" id="EM">
+              <option value="">MM</option>
+              @for (int i = 0; i <= 59; i++)
+              {
+                  <option value="@(i)">@(i)</option>
+              }
+          </select>:<select name="eS" id="ES">
+              <option value="">SS</option>
+              @for (int i = 0; i <= 59; i++)
+              {
+                  <option value="@(i)">@(i)</option>
+              }
+          </select>
+            </p>
+            <p class="lh24 pt5">　　配额：<input type="text" id="allMoney" name="AllMoney" class="ipt w100" />元</p>
+            <p class="lh24 pt5">　　已用：<input type="text" id="UsedMoney" class="ipt w100" disabled="disabled" />元</p>
+            <p class="lh24 pt10 tr">
+                <input type="submit" class="btn-success btn" value="保存修改">
+            </p>
+        </form>
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        @*<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+        <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+        <script>
+            var EditTd;
+            $(function () {
+                $("body").click(function () {
+                    $("#SaveForm").validationEngine('hide');
+                    $("#AddPlan").validationEngine('hide');
+                });
+                $("#submitForm").click(function () {
+                    var href = $(this).attr("action");
+                    var SDate = $("#SDate").val();
+                    if (SDate == "") {
+                        $("#SDate").validationEngine('showPrompt', '请选择开始时间', 'nopass');
+                        return false;
+                    }
+                    var EDate = $("#EDate").val();
+                    if (EDate == "") {
+                        $("#EDate").validationEngine('showPrompt', '请选择结束时间', 'nopass');
+                        return false;
+                    }
+                    var SendBy = $(".SendBy:checked").val();
+                    if (SendBy == 1) {//按周
+                        var Week = $("input[name=Week]:checked").length;
+                        if (Week == 0) {
+                            $("input[name=Week]").validationEngine('showPrompt', '请选择发布时间', 'nopass');
+                            return false;
+                        }
+                    } else if (SendBy == 2) {//按月
+                        var SendDay = $("input[name=SendDay]:checked").length;
+                        if (SendDay == 0) {
+                            $("input[name=SendDay]").validationEngine('showPrompt', '请选择发布时间', 'nopass');
+                            return false;
+                        }
+                    } else {//出错
+                        $("#SendBy1").validationEngine('showPrompt', '请选择发布方式', 'nopass');
+                        return false;
+                    }
+                    var sH = $("#sH").val();
+                    if (sH == "") {
+                        $("#sH").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var sM = $("#sM").val();
+                    if (sM == "") {
+                        $("#sM").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var sS = $("#sS").val();
+                    if (sS == "") {
+                        $("#sS").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var eH = $("#eH").val();
+                    if (eH == "") {
+                        $("#eH").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    if (eH == 24) {
+                        $("#eM").val(0);
+                        $("#eS").val(0);
+                    }
+                    var eM = $("#eM").val();
+                    if (eM == "") {
+                        $("#eM").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var eS = $("#eS").val();
+                    if (eS == "") {
+                        $("#eS").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var AllMoney = $("#AllMoney").val();
+                    if (AllMoney == "") {
+                        $("#AllMoney").validationEngine('showPrompt', '请设置配额', 'nopass');
+                        return false;
+                    }
+                    if (!/^(0|[1-9][0-9]*)(.[0-9]{1,2})?$/.test(AllMoney)) {
+                        $("#AllMoney").validationEngine('showPrompt', '请正确填写金额', 'nopass');
+                        return false;
+                    }
+                    var form = $("#SaveForm").serialize();
+                    var href = $("#SaveForm").attr("action");
+                    $.post(href, form, function () {
+                        var year = $("#selYear").val();
+                        var month = $("#selMonth").val();
+                        GetDay(year, month);
+                    })
+                    return false;
+                })
+                initDateTable();
+                $("#Delete").click(function () {
+                    Url = $(this).attr("href");
+                    DeleteItemDialog = art.dialog({
+                        title: '温馨提示',
+                        content: '清空配置将<font color="red"><b>无法恢复</b></font>，您确定要操作吗？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '清空配置',
+                            callback: function () {
+                                $.get(Url, function () {
+                                    var year = $("#selYear").val();
+                                    var month = $("#selMonth").val();
+                                    GetDay(year, month);
+                                });
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消',
+                            callback: function () {
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                    return false;
+                });
+                $(".deleteItem").click(function (event) {
+                    event.stopPropagation();
+                    Url = "Delete.html";
+                    var obj = $(this);
+                    var date = obj.attr("rev");
+                    Url += "?date=" + date;
+                    DeleteItemDialog = art.dialog({
+                        title: '温馨提示',
+                        content: '删除配置将<font color="red"><b>无法恢复</b></font>，您确定要操作吗？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '删除配置',
+                            callback: function () {
+                                $.get(Url, function () {
+                                    obj.closest("td").removeClass("edit_date_in").find(".price").html("&nbsp;").end().find(".text").remove().end().find(".deleteItem").remove();
+                                });
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消',
+                            callback: function () {
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                    return false;
+                });
+                //$("#SDate").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                //$("#EDate").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                $(".SendBy").click(function () {
+                    var i = $(this).val();
+                    $(".SendByBox").hide();
+                    $("#SendByBox" + i).show();
+                })
+                $("#closeDiv").click(function () {
+                    $("#AddNewPlanByDate").hide();
+                });
+                $("#AddPlan").submit(function () {
+                    var href = $(this).attr("action");
+                    var sH = $("#SH").val();
+                    if (sH == "") {
+                        $("#SH").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var sM = $("#SM").val();
+                    if (sM == "") {
+                        $("#SM").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var sS = $("#SS").val();
+                    if (sS == "") {
+                        $("#SS").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var eH = $("#EH").val();
+                    if (eH == "") {
+                        $("#EH").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    if (eH == 24) {
+                        $("#EM").val(0);
+                        $("#ES").val(0);
+                    }
+                    var eM = $("#EM").val();
+                    if (eM == "") {
+                        $("#EM").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var eS = $("#ES").val();
+                    if (eS == "") {
+                        $("#ES").validationEngine('showPrompt', '请选择', 'nopass');
+                        return false;
+                    }
+                    var AllMoney = $("#allMoney").val();
+                    if (AllMoney == "") {
+                        $("#allMoney").validationEngine('showPrompt', '请设置配额', 'nopass');
+                        return false;
+                    }
+                    if (!/^(0|[1-9][0-9]*)(.[0-9]{1,2})?$/.test(AllMoney)) {
+                        $("#allMoney").validationEngine('showPrompt', '请正确填写金额', 'nopass');
+                        return false;
+                    }
+                    var form = $(this).serialize();
+                    var href = $(this).attr("action");
+                    $.post(href, form, function () {
+                        var year = $("#selYear").val();
+                        var month = $("#selMonth").val();
+                        GetDay(year, month);
+                        $("#AddNewPlanByDate").hide();
+                    })
+                    return false;
+                })
+            })
+            var initDateTable = function () {
+                $("#selYear").change(function () {
+                    var y = $(this).val();
+                    //var ny = @(DateTime.Now.Year);
+                    //var nm = @(DateTime.Now.Month);
+                    if (y > ny) {
+                        nm = 1;
+                    }
+                    $("#selMonth option").remove();
+                    for (var i = nm; i <= 12; i++) {
+                        $("#selMonth").append("<option value=\"" + i + "\">" + i + "</option>");
+                    }
+                });
+                $("#selMonth").change(function () {
+                    var y = $("#selYear").val();
+                    var m = $(this).val();
+                    GetDay(y, m);
+                });
+                $(".date_box").click(function () {
+                    EditTd = $(this);
+                    var off = EditTd.offset();
+                    var left = off.left;
+                    var top = off.top-38;
+                    var date = EditTd.attr("data-date");
+                    $("#BoxText").text(date);
+                    $("#ODate").val(date);
+                    $("#eDate").val(date);
+                    var stime = EditTd.attr("data-stime");
+                    var etime = EditTd.attr("data-etime");
+                    if (stime && etime) {
+                        var money = EditTd.attr("data-money");
+                        var used = EditTd.attr("data-used");
+                        var timearr = stime.split(' ')[1].split(':');
+                        $("#SH").val(parseInt(timearr[0])); $("#SM").val(parseInt(timearr[1])); $("#SS").val(parseInt(timearr[2]));
+                        timearr = etime.split(' ')[1].split(':');
+                        $("#EH").val(parseInt(timearr[0])); $("#EM").val(parseInt(timearr[1])); $("#ES").val(parseInt(timearr[2]));
+                        $("#allMoney").val(money); $("#UsedMoney").val(used);
+                    } else {
+                        $("#SH").val(""); $("#SM").val(""); $("#SS").val("");
+                        $("#EH").val(""); $("#EM").val(""); $("#ES").val("");
+                        $("#allMoney").val(""); $("#UsedMoney").val("");
+                    }
+                    $("#AddNewPlanByDate").css({ top: top, left: left }).show();
+                })
+            }
+            var GetDay = function (y, m) {
+                $.get("getday.html?year=" + y + "&month=" + m, function (html) {
+                    $("#GetDaysTable").html(html);
+                    initDateTable();
+                });
+            }
+        </script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+        @*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />*@ 
+    }
+}

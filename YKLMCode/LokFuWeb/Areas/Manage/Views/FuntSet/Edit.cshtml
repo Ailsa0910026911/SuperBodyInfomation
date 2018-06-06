@@ -1,0 +1,305 @@
+﻿@{
+    SysSet SysSet = ViewBag.SysSet;
+    ViewBag.SMUid = 235;
+    ViewBag.Title = "功能设置";
+    
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <p>&nbsp;</p>
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysSet.Id)" />
+                    <div class="form-group">
+                        <label class="control-label col-md-3">人工审核认证 </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet1" id="ApkSet1">
+                                    <option value="1"@(SysSet.ApkSet1 == 1 ? " selected" : "")>全开放</option>
+                                    <option value="0"@(SysSet.ApkSet1 == 0 ? " selected" : "")>只开放自动</option>
+                                    <option value="2"@(SysSet.ApkSet1 == 2 ? " selected" : "")>只开放人工</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet1" id="IosSet1">
+                                    <option value="1"@(SysSet.IosSet1 == 1 ? " selected" : "")>全开放</option>
+                                    <option value="0"@(SysSet.IosSet1 == 0 ? " selected" : "")>只开放自动</option>
+                                    <option value="2"@(SysSet.IosSet1 == 2 ? " selected" : "")>只开放人工</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">自动认证通道</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet10" id="ApkSet10">
+                                    <option value="6"@(SysSet.ApkSet10 == 6 ? " selected" : "")>六要素</option>
+                                    <option value="4"@(SysSet.ApkSet10 == 4 ? " selected" : "")>四要素</option>
+                                    <option value="3"@(SysSet.ApkSet10 == 3 ? " selected" : "")>三要素</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet10" id="IosSet10">
+                                    <option value="6"@(SysSet.IosSet10 == 6 ? " selected" : "")>六要素</option>
+                                    <option value="4"@(SysSet.IosSet10 == 4 ? " selected" : "")>四要素</option>
+                                    <option value="3"@(SysSet.IosSet10 == 3 ? " selected" : "")>三要素</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">认证支持卡片</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet11" id="ApkSet11">
+                                    <option value="0"@(SysSet.ApkSet11 == 0 ? " selected" : "")>任意卡</option>
+                                    <option value="1"@(SysSet.ApkSet11 == 1 ? " selected" : "")>信用卡</option>
+                                    <option value="2"@(SysSet.ApkSet11 == 2 ? " selected" : "")>借记卡</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet11" id="IosSet11">
+                                    <option value="0"@(SysSet.IosSet11 == 0 ? " selected" : "")>任意卡</option>
+                                    <option value="1"@(SysSet.IosSet11 == 1 ? " selected" : "")>信用卡</option>
+                                    <option value="2"@(SysSet.IosSet11 == 2 ? " selected" : "")>借记卡</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <label class="control-label col-md-3">红包功能</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet2" id="ApkSet2">
+                                    <option value="1"@(SysSet.ApkSet2 == 1 ? " selected" : "")>启用</option>
+                                    <option value="0"@(SysSet.ApkSet2 == 0 ? " selected" : "")>关闭</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet2" id="IosSet2">
+                                    <option value="1"@(SysSet.IosSet2 == 1 ? " selected" : "")>启用</option>
+                                    <option value="0"@(SysSet.IosSet2 == 0 ? " selected" : "")>关闭</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="form-group">
+                        <label class="control-label col-md-3">分享功能</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small  input-inline" name="ApkSet4" id="ApkSet4">
+                                    <option value="0"@(SysSet.ApkSet4 == 0 ? " selected" : "")>关闭</option>
+                                    <option value="1"@(SysSet.ApkSet4 == 1 ? " selected" : "")>仅开分享挣钱</option>
+                                    <option value="2"@(SysSet.ApkSet4 == 2 ? " selected" : "")>仅开分享降费率</option>
+                                    <option value="3"@(SysSet.ApkSet4 == 3 ? " selected" : "")>全部开启</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet4" id="IosSet4">
+                                    <option value="0"@(SysSet.IosSet4 == 0 ? " selected" : "")>关闭</option>
+                                    <option value="1"@(SysSet.IosSet4 == 1 ? " selected" : "")>仅开分享挣钱</option>
+                                    <option value="2"@(SysSet.IosSet4 == 2 ? " selected" : "")>仅开分享降费率</option>
+                                    <option value="3"@(SysSet.IosSet4 == 3 ? " selected" : "")>全部开启</option>
+                                </select>
+                                <input type="checkbox" name="AnsyAgent4" id="AnsyAgent4" value="1" class="one-check" />同步到代理商
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3">注册功能</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet5" id="ApkSet5">
+                                    <option value="1"@(SysSet.ApkSet5 == 1 ? " selected" : "")>开放注册</option>
+                                    <option value="0"@(SysSet.ApkSet5 == 0 ? " selected" : "")>关闭注册</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet5" id="IosSet5">
+                                    <option value="1"@(SysSet.IosSet5 == 1 ? " selected" : "")>开放注册</option>
+                                    <option value="0"@(SysSet.IosSet5 == 0 ? " selected" : "")>关闭注册</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                   @* <div class="form-group">
+                        <label class="control-label col-md-3">激活码功能</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet3" id="ApkSet3">
+                                    <option value="1"@(SysSet.ApkSet3 == 1 ? " selected" : "")>必填</option>
+                                    <option value="2"@(SysSet.ApkSet3 == 2 ? " selected" : "")>不填</option>
+                                    <option value="3"@(SysSet.ApkSet3 == 3 ? " selected" : "")>选填</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet3" id="IosSet3">
+                                    <option value="1"@(SysSet.IosSet3 == 1 ? " selected" : "")>必填</option>
+                                    <option value="2"@(SysSet.IosSet3 == 2 ? " selected" : "")>不填</option>
+                                    <option value="3"@(SysSet.IosSet3 == 3 ? " selected" : "")>选填</option>
+                                </select>
+                                <input type="checkbox" name="AnsyAgent3" id="AnsyAgent3" value="1" class="one-check" />同步到代理商
+                            </div>
+                        </div>
+                    </div>*@
+                   @* <div class="form-group">
+                        <label class="control-label col-md-3">摇一摇功能</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                安卓：<select class="bs-select form-control input-small input-inline" name="ApkSet7" id="ApkSet7">
+                                    <option value="1"@(SysSet.ApkSet7 == 1 ? " selected" : "")>启用</option>
+                                    <option value="0"@(SysSet.ApkSet7 == 0 ? " selected" : "")>关闭</option>
+                                </select>
+                                IOS:<select class="bs-select form-control input-small input-inline" name="IosSet7" id="IosSet7">
+                                    <option value="1"@(SysSet.IosSet7 == 1 ? " selected" : "")>启用</option>
+                                    <option value="0"@(SysSet.IosSet7 == 0 ? " selected" : "")>关闭</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+                   
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-3">自动分润</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="AutoPay" id="AutoPay0" @(SysSet.AutoPay != 1 ? "checked" : "") />关闭
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="AutoPay" id="AutoPay1" @(SysSet.AutoPay == 1 ? "checked" : "") />启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">提现审核</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="CashChecked" id="CashChecked0" @(SysSet.CashChecked != 1 ? "checked" : "") />人工
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="CashChecked" id="CashChecked1" @(SysSet.CashChecked == 1 ? "checked" : "") />自动
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">提现付款</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="CashPayWay" id="CashPayWay0" @(SysSet.CashPayWay != 1 ? "checked" : "") />人工
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="CashPayWay" id="CashPayWay1" @(SysSet.CashPayWay == 1 ? "checked" : "") />自动
+                                </label>
+                                <p>只有审核后才能出款，如果自动审核没开启，则T0需要后台审核后且金额满足条件才能自动快捷自动出款，T0金额超过快捷自动出款金额的，需要人工点出款才能完成自动付款，T1需要审核且人工点付款才能完成自动付款。</p>
+                            </div>
+                        </div>
+                    </div>
+                   @* <div class="form-group">
+                        <label class="control-label col-md-3">每天累计最多提现金额 </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control validate[required,custom[money],min[0]] input-small input-inline" name="EveryDayMaxCash" id="EveryDayMaxCash" value="@(SysSet.EveryDayMaxCash)" />/元
+                                <p>如果用户当前提现金额大于"每天累计最多提现金额",则转入人工审核流程。设置为0则不做限制。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-3">启用T+n免手续费</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="LagEntry" id="LagEntry0" @(SysSet.LagEntry != 1 ? "checked" : "") />关闭
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="LagEntry" id="LagEntry1" @(SysSet.LagEntry == 1 ? "checked" : "") />启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">入帐天数（显示） <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control validate[required,custom[int],min[1]] input-xsmall" name="LagEntryDay" id="LagEntryDay" value="@(SysSet.LagEntryDay)" />
+                                <p>9月之后的版本将不起效果,后面将删除这个配置</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">入帐天数（计算） <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control validate[required,custom[int],min[1]] input-xsmall" name="LagEntryNum" id="LagEntryNum" value="@(SysSet.LagEntryNum)" />
+                                <p>9月之后的版本将不起效果,后面将删除这个配置</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">代理商分润<span class="required"> * </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control validate[required,custom[int],min[0],max[10000]] input-xsmall input-inline" name="AgentGet" id="AgentGet" value="@((SysSet.AgentGet * 10000).ToMoney())" />‱(万分比)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">邀请短信限制<span class="required"> * </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control validate[required,custom[int],min[0]] input-xsmall input-inline" name="YaoQingIntervalTime" id="YaoQingIntervalTime" value="@(SysSet.YaoQingIntervalTime)" />
+                                秒内，每个商户只能发送
+                                <input type="text" class="form-control validate[required,custom[int],min[0]] input-xsmall input-inline" name="YaoQingIntervalNumber" id="YaoQingIntervalNumber" value="@(SysSet.YaoQingIntervalNumber)" />条
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr />*@
+                    @*<div class="form-group">
+                        <label class="control-label col-md-3">余额生息公告 </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large" name="BaoUserAlert" id="BaoUserAlert" value="@(SysSet.BaoUserAlert)" />
+                            </div>
+                        </div>
+                    </div>*@
+            
+            <div class="form-actions fluid">
+                <div class="col-md-offset-3 col-md-9">
+                    @if (ViewBag.Save)
+                    {
+                        <button type="submit" class="btn green">确认修改</button>
+                    }
+                    
+                </div>
+            </div>
+            </form>
+                <!-- END FORM-->
+        </div>
+</div>
+<!-- END VALIDATION STATES-->
+</div>
+    </div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+
+            })
+        </script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+    }
+}

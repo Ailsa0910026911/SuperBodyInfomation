@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+    string comeurl = ViewBag.ComeUrl;
+    bool IsLokFu = ViewBag.IsLokFu;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>申请信用卡</title>
+    <link href="/Content/Mobile/css/op.css" rel="stylesheet" type="text/css" />
+</head>
+<body style="background-color: #f2f2f2;">
+    <div class="tmu">
+        <div style="width: 14%; float: left; height: 100%;"></div>
+        <div class="fh2">&nbsp;</div>
+        <div class="tmu2">申请成功</div>
+    </div>
+    <div class="sc_icon">
+        <img src="/Content/Mobile/images/wccz.png" width="100px" /></div>
+    <div class="wzxx">
+        <span>您已成功提交申请，我们会在2个工作日之内和您取得联系！</span>
+        @*<span>如有任何疑问，请致电我们的客服热线：@(BasicSet.Tel)</span>*@
+    </div>
+    @if (!IsLokFu){
+    <a href="http://down.goodpay.net.cn/down.html" class="xzhfqb">下载@(BasicSet.Name)</a>
+    }
+    <iframe id="IC" src="" style="display: none;"></iframe>
+    <script>
+        function closeSelf() {
+            $("#IC").attr("src", "http://@(comeurl)/closeiframe.html");
+        }
+    </script>
+</body>
+</html>

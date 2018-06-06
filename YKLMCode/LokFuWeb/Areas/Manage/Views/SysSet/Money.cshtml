@@ -1,0 +1,340 @@
+﻿@{
+    SysSet SysSet = ViewBag.SysSet;
+    ViewBag.SMUid = 55;
+    ViewBag.Title = "系统费率设置";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .control_label {
+        text-align: right;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="MoneySave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysSet.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">房租费率 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[float],min[0],max[1000]]" name="House" id="House" value="@(SysSet.House * 1000)" />‰
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                        <!-------提现成本-------->
+                        <div class="form-group">
+                            <label class="control_label col-md-3 red">T0提现成本 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="SysECash0" id="SysECash0" value="@((SysSet.SysECash0).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="SysCash0" id="SysCash0" value="@((SysSet.SysCash0 * 1000).ToString("F1"))" />‰
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <!-------T1提现成本-------->
+                        <div class="form-group">
+                            <label class="control_label col-md-3 red">T1提现成本 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="SysECash1" id="SysECash1" value="@((SysSet.SysECash1).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="SysCash1" id="SysCash1" value="@((SysSet.SysCash1 * 1000).ToString("F1"))" />‰
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control_label col-md-3 green">T0提现代理 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="AgentECash0" id="AgentECash0" value="@((SysSet.AgentECash0).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="AgentCash0" id="AgentCash0" value="@((SysSet.AgentCash0 * 1000).ToString("F1"))" />‰
+                  免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int]]" name="AgentCash0Times" id="AgentCash0Times" value="@(SysSet.AgentCash0Times)" />次/月
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control_label col-md-3 green">T1提现代理 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="AgentECash1" id="AgentECash1" value="@((SysSet.AgentECash1).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="AgentCash1" id="AgentCash1" value="@((SysSet.AgentCash1 * 1000).ToString("F1"))" />‰
+                  免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int]]" name="AgentCash1Times" id="AgentCash1Times" value="@(SysSet.AgentCash1Times)" />次/天
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control_label col-md-3 blue">T0提现用户默认 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="ECash0" id="ECash0" value="@((SysSet.ECash0).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="Cash0" id="Cash0" value="@((SysSet.Cash0 * 1000).ToString("F1"))" />‰
+                  免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int]]" name="Cash0Times" id="Cash0Times" value="@(SysSet.Cash0Times)" />次/月
+                  <input type="checkbox" name="AnsyCash0" id="AnsyCash0" value="1" />同步到老用户
+                  <input type="checkbox" name="AnsyAgent0" id="AnsyAgent0" value="1" />同步到代理商
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control_label col-md-3 blue">T1提现用户默认 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" name="ECash1" id="ECash1" value="@((SysSet.ECash1).ToString("F2"))" />元/笔
+                  +
+                  <input type="text" class="form-control input-inline input-xsmall validate[required,min[0],max[1000],custom[float1]]" name="Cash1" id="Cash1" value="@((SysSet.Cash1 * 1000).ToString("F1"))" />‰
+                  免费:<input type="text" class="form-control input-inline input-xsmall validate[required,custom[int]]" name="Cash1Times" id="Cash1Times" value="@(SysSet.Cash1Times)" />次/天
+                  <input type="checkbox" name="AnsyCash1" id="AnsyCash1" value="1" />同步到老用户
+                  <input type="checkbox" name="AnsyAgent1" id="AnsyAgent1" value="1" />同步到代理商
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+
+                       @* <div class="form-group">
+                            <label class="control-label col-md-3 red"><b>加急提现条件：</b></label>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">注册天数 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[int],min[0]]" name="CashDay" id="CashDay" value="@(SysSet.CashDay)" />天以上
+                                </div>
+                                <span class="help-block">0为不限制</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">提现笔数 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[int],min[0]]" name="CashNum" id="CashNum" value="@(SysSet.CashNum)" />笔以上
+                                </div>
+                                <span class="help-block">0为不限制</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">提现金额 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[int],min[0]]" name="CashMoney" id="CashMoney" value="@(SysSet.CashMoney.GetValueOrDefault().ToString("F0"))" />元以上
+                                </div>
+                                <span class="help-block">0为不限制</span>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">免审金额 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[int],min[0]]" name="QCash0" id="QCash0" value="@(SysSet.QCash0.ToString("F0"))" />元以下
+                                </div>
+                                <span class="help-block">免审金额，指T0提现直接到帐金额。</span>
+                            </div>
+                        </div>
+                       @* <div class="form-group">
+                            <label class="control-label col-md-3">时间及配额 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right control-label">
+                                    <a href="/Manage/TaskTimeSet/Edit.html">配置可快速提现时间段及配额</a>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">T0提现提示信息 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xlarge" name="CashAlertMsgT0" id="CashAlertMsgT0" value="@(SysSet.CashAlertMsgT0)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">T1提现提示信息 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xlarge" name="CashAlertMsgT1" id="CashAlertMsgT1" value="@(SysSet.CashAlertMsgT1)" />
+                                </div>
+                            </div>
+                        </div>
+                        @if (SysSet.CtrlMoney1 != 999999999)
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-md-3 red"><b>银联风控：</b></label>
+                                <div class="col-md-4">&nbsp;</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">传证件金额 <span class="required">* </span></label>
+                                <div class="col-md-4">
+                                    <div class="input-icon right">
+                                        <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="CtrlMoney1" id="CtrlMoney1" value="@(SysSet.CtrlMoney1.ToString("F2"))" />元（含）
+                                    </div>
+                                    <span class="help-block"></span>
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-3 red"><b>费率套餐：</b></label>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">手续费 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money],min[0],max[100]]" name="PayConfigAgent" id="PayConfigAgent" value="@((SysSet.PayConfigAgent * 100).ToString("F2"))" />%
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 red"><b>自动提现：</b></label>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">最低提现金额 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money],min[1]]" name="AutoCashMoney" id="AutoCashMoney" value="@(SysSet.AutoCashMoney.ToString("F2"))" />
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 red"><b>取回密码：</b></label>
+                            <div class="col-md-4">&nbsp;</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">
+                                <select class="bs-select form-control input-small  input-inline" name="AuthType" id="AuthType">
+                                    <option value="0"@(SysSet.AuthType == 0 ? " selected" : "")>通道关闭</option>
+                                    <option value="1"@(SysSet.AuthType == 1 ? " selected" : "")>仅绑卡取回</option>
+                                    <option value="2"@(SysSet.AuthType == 2 ? " selected" : "")>仅鉴权取回</option>
+                                    <option value="3"@(SysSet.AuthType == 3 ? " selected" : "")>全部开启</option>
+                                </select>
+                                <span class="required">* </span>
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    鉴权费用：<input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="AuthPrice" id="AuthPrice" value="@(SysSet.AuthPrice.ToString("F2"))" />元
+                                </div>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        @*<hr />
+            <div class="form-group">
+              <label class="control-label col-md-3">金牌代理费用 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right">
+                  <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="Level3Price" id="Level3Price" value="@(SysSet.Level3Price.ToString("F2"))" />元（含）
+                </div>
+                <span class="help-block"></span>
+              </div>
+            </div>*@
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.MoneySave)
+                            {
+                                <button type="submit" class="btn green">确认修改</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+        <script>
+            $(function () {
+                $("#chkForm").submit(function () {
+                })
+                $("#AnsyCash0,#AnsyCash1").click(function () {
+                    var Obj = $(this);
+                    var Chk = Obj.prop("checked");
+                    if (Chk) {
+                        var Dialog = art.dialog({
+                            title: '温馨提示',
+                            content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                            icon: 'warning',
+                            lock: true,
+                            button: [{
+                                name: '确定同步变更',
+                                callback: function () {
+                                },
+                                focus: true,
+                                disabled: false
+                            }, {
+                                name: '取消同步变更',
+                                callback: function () {
+                                    Obj.prop("checked", false);
+                                    Obj.closest("span").removeClass("checked");
+                                    this.close();
+                                }
+                            }
+                            ]
+                        });
+                    }
+                });
+                $("#AnsyAgent0,#AnsyAgent1").click(function () {
+                    var Obj = $(this);
+                    var Chk = Obj.prop("checked");
+                    if (Chk) {
+                        var Dialog = art.dialog({
+                            title: '温馨提示',
+                            content: '同步更新到代理商将所有代理商的设置变更为此设置，代理商自行设置配置会被覆盖，是否同步更新？',
+                            icon: 'warning',
+                            lock: true,
+                            button: [{
+                                name: '确定同步变更',
+                                callback: function () {
+                                },
+                                focus: true,
+                                disabled: false
+                            }, {
+                                name: '取消同步变更',
+                                callback: function () {
+                                    Obj.prop("checked", false);
+                                    Obj.closest("span").removeClass("checked");
+                                    this.close();
+                                }
+                            }
+                            ]
+                        });
+                    }
+                });
+            })
+        </script>    
+    }
+}
+@section HeaderScripts
+{
+    @{
+    }
+}

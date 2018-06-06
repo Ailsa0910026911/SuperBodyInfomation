@@ -1,0 +1,211 @@
+﻿@{
+    Layout = null;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    string comeurl = ViewBag.ComeUrl;
+    LokFuEntity Entity = ViewBag.Entity;
+    //string OneRelu = string.Empty;
+    //string TPRelu = string.Empty;
+    ////一级代理
+    //var OneSysAgent = Entity.SysAgent.Where(o => o.Tier == 1 && o.IsTeiPai != 1 ).ToList();
+    //foreach (var item in OneSysAgent)
+    //{
+    //    var SysAdmin = Entity.SysAdmin.FirstOrDefault(o => o.Id == item.AdminId);
+    //    if (SysAdmin != null)
+    //    {
+    //        SysAdmin.PowerID = SysAdmin.PowerID + "610,611,612,606,607,608,619,620,621,";
+    //    }
+    //    OneRelu = OneRelu + "," + SysAdmin.Id;
+    //}
+
+    ////贴牌
+    //var TPSysAgent = Entity.SysAgent.Where(o => o.IsTeiPai == 1).ToList();
+    
+    //foreach (var item in TPSysAgent)
+    //{
+    //    var SysAdmin = Entity.SysAdmin.FirstOrDefault(o => o.Id == item.AdminId);
+    //    if (SysAdmin != null)
+    //    {
+    //        SysAdmin.PowerID = SysAdmin.PowerID + "610,611,612,606,607,608,609,";
+    //    }
+    //    TPRelu = TPRelu + "," + SysAdmin.Id;
+    //}
+   
+    //var DeductMoney = Entity.DeductMoney.Where(o => o.TType == 3 && o.TState == 2).ToList();
+    //foreach (var item in DeductMoney)
+    //{
+    //    var OrdersRepair = new OrdersRepair()
+    //    {
+    //        AddTime = item.AddTime,
+    //        Amoney = item.Amoney,
+    //        CreateAdminId = item.CreateAId,
+    //        CreateAdminName = item.CreateAName,
+    //        AuditAdminId = item.AuditAId,
+    //        AuditAdminName = item.AuditAName,
+    //        AuditRemark = item.AuditRemark,
+    //        RepairType = 2,
+    //        Pic = item.Pic,
+    //        AuditTime = item.AuditTime,
+    //        Remark = item.Remark,
+    //        TNum = item.TNum,
+    //        TState = item.TState,
+    //    };
+    //    Entity.OrdersRepair.AddObject(OrdersRepair);
+    //}
+    //var DeductMoney = Entity.DeductMoney.Where(o => o.TType == 1 && o.TState == 2).ToList();
+    //foreach (var item in DeductMoney)
+    //{
+    //    var OrdersRefund = new OrdersRefund()
+    //    {
+    //        AddTime = item.AddTime,
+    //        Amoney = item.Amoney,
+    //        CreateAdminId = item.CreateAId,
+    //        CreateAdminName = item.CreateAName,
+    //        AuditAdminId = item.AuditAId,
+    //        AuditAdminName = item.AuditAName,
+    //        AuditRemark = item.AuditRemark,
+    //        Pic = item.Pic,
+    //        AuditTime = item.AuditTime,
+    //        Remark = item.Remark,
+    //        TNum = item.TNum,
+    //        TState = item.TState,
+    //        TDLastTime = item.TDLastTime,
+    //    };
+    //    Entity.OrdersRefund.AddObject(OrdersRefund);
+    //}
+    
+    //Entity.SaveChanges();
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>诚邀加盟</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="~/Content/Mobile/css/normalize.min.css" rel="stylesheet" />
+    <link href="~/Content/Mobile/css/style.css" rel="stylesheet" />
+    <link href="~/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" />
+</head>
+<body>
+    <section class="invite">
+        <header>
+            <img src="~/Content/Mobile/images/header.png" alt="" />
+        </header>
+        <section class="invite-main">
+            <form action="Add.html" id="chkForm" name="chkForm" class="chkForm" method="post">
+                <div class="popter"><i class="iconfont">&#xe607;</i>请将以下信息填写完整后并提交审核</div>
+                <div class="invite-list">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="pull-left invite-left"><b class="text-red">* </b>姓名 : </span>
+                            <div class="pull-left">
+                                <input class="inp block validate[required]" type="text" id="Linker" name="Linker" /> 
+                            </div>
+                        </li>
+                        <li>
+                            <span class="pull-left invite-left"><b class="text-red">* </b>联系电话 : </span>
+                            <div class="pull-left">
+                                <input class="inp block validate[required,custom[mobile]]" type="tel" id="Mobile" name="Mobile" maxlength="11" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="invite-list last">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="pull-left invite-left"><b class="text-red">* </b>公司名称 : </span>
+                            <div class="pull-left">
+                                <input class="inp block validate[required,custom[chinese]]" type="text" name="ComName" id="ComName" />
+                            </div>
+                        </li>
+                        <li>
+                            <span class="pull-left invite-left"><b class="text-red">* </b>地区 : </span>
+                            <div class="pull-left">
+                                <select name="Province" id="Province" class="validate[required]" type="select-one">
+                                    <option value="">请选择</option>
+                                    @foreach (var p in BasicProvinceList)
+                                    {
+                                        <option value="@(p.Id)">@(p.Name)</option>
+                                    }
+                                </select>
+                                <select name="City" id="City" class="validate[required]" type="select-one">
+                                    <option>请选择</option>
+                                    @foreach (var p in BasicCityList)
+                                    {
+                                        <option value="@(p.Id)" rev="@(p.PId)">@(p.Name)</option>
+                                    }
+                                </select>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="pull-left invite-left"><b class="text-red">* </b>验证码 : </span>
+                            <div class="pull-left">
+                                <input class="inp block codes validate[required]" type="text" maxlength="4" name="code" id="code" /><img src="/Content/Metronic/img/none.gif" id="img" alt="验证码" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-warp text-center">
+                    <button class="btn" type="submit" id="submit">提交申请</button>
+                </div>
+            </form>
+            <div class="affiliate">
+                <div class="top">
+                    <h2>加盟要求</h2>
+                </div>
+                <ul class="list-unstyled">
+                    <li>必须为已获工商年检的合法合规企业，并需提供以下资质：</li>
+                    <li>1.营业执照原件（照片）和复印件（加盖公章），并提供给我公司存档。</li>
+                    <li>2.组织机构代码证副本原件（照片）和复印件（加盖公章）并提供给我公司存档。</li>
+                    <li>3.税务登记证副本原件（照片）和复印件（加盖公章），并提供给我公司存档。</li>
+                    <li>4.法人身份证原件（照片）和复印件（加盖公章），并提供给我公司存档。</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+    <script type="text/javascript" src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <script type="text/javascript">
+        var selects;
+        $(function () {
+            selects = $("#City").clone();
+            $("#City option:gt(0)").remove();
+            $("#Province").change(function () {
+                $("#City").val("");
+                $("#City option:gt(0)").remove();
+                if ($(this).val() != "") {
+                    var rev = selects.find("option:[rev=" + $(this).val() + "]").clone();
+                    $("#City").append(rev);
+                }
+            });
+            $("#img").click(function () {
+                $(this).fadeOut(0).attr("src", "/Content/Metronic/img/none.gif").attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+            });
+            $("#code").focus(function () {
+                if ($("#img").attr("src") == "/Content/Metronic/img/none.gif") {
+                    $("#img").fadeOut(0).attr("src", "/Home/ImgCode.html?rand=" + Math.random()).fadeIn(500);
+                    $(this).val("");
+                }
+            });
+            $("#submit").click(function () {
+                var ret = true;
+                if ($("#chkForm").validationEngine("validate")) {
+                    var code = $("#code").val();
+                    var data = $.ajax({ url: "/home/CheckCode.html?code=" + code, async: false }).responseText;
+                    if (data != "1") {
+                        $("#code").validationEngine('showPrompt', '验证码错误！', 'error')
+                        ret = false;
+                    } else {
+                        ret = true;
+                    }
+                } else {
+                    ret = false;
+                }
+                return ret;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+﻿@{
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    ViewBag.SMUid = 29;
+    IList<SysPower> SysPowerList = ViewBag.SysPowerList_;
+    if (SysAdmin.Id.IsNullOrEmpty()){
+        SysAdmin.PowerID = string.Empty;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(SysAdmin.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(SysAdmin.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">登录帐户 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager"> <i class="fa"></i>
+                  @if (SysAdmin.Id.IsNullOrEmpty()){
+                      <input type="text" class="form-control input-medium validate[required,custom[username],ajax[check]]" data-ext="SysAdmin" name="UserName" id="UserName" value="@(SysAdmin.UserName)" />
+                  }else{
+                      <input type="text" class="form-control input-medium" value="@(SysAdmin.UserName)" disabled="disabled" />
+                  }
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">密码 @if(SysAdmin.Id.IsNullOrEmpty()){
+                                                          <span class="required"> * </span>
+                                                          } </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[@(SysAdmin.Id.IsNullOrEmpty() ? "required" : ""),custom[pwd]] input-medium" name="PassWord" id="PassWord" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">姓名 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-medium" name="TrueName" id="TrueName" value="@(SysAdmin.TrueName)"  alert="请填写姓名" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">手机号 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[custom[mobile]] input-medium" name="Mobile" id="Mobile" value="@(SysAdmin.Mobile)" alert="请写正确填手机号" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">邮箱 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[custom[email]] input-medium" name="Email" id="Email" value="@(SysAdmin.Email)" alert="请正确填写邮箱地址" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">QQ </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-lager">
+                  <input type="text" class="form-control input-medium input-inline validate[maxSize[20]] " name="QQName" id="QQName" value="@(SysAdmin.QQName)" placeholder="QQ昵称" alert="请输入20个字符以内的QQ昵称"/>
+                  <input type="text" class="form-control input-medium input-inline validate[custom[qq]]" name="QQNum" id="QQNum" value="@(SysAdmin.QQNum)" placeholder="QQ号码" alert="请正确填写QQ号码" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(SysAdmin.State==1?" selected":"")>开通</option>
+                    <option value="0"@(SysAdmin.State!=1?" selected":"")>禁止</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">权限 </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxxlarge">
+                  @foreach( var p in SysPowerList.Where(n=>n.PId==0))
+                {
+                    IList<SysPower> List=SysPowerList.Where(n=>n.PId==p.Id).ToList();
+                    int i=1;
+                    <table class="table table-striped table-hover table-bordered">
+                    @foreach(var pp in List)
+                    {
+                        <tr>
+                        @if(i==1){
+                    <th rowspan="@(List.Count)" style="width:140px;">
+                        <input type="checkbox" name="PId" class="p" id="P@(p.Id)" value="@(p.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",p.Id))!=-1?"checked":"") />@(p.Name)
+                    </th>
+                    }
+                    <td class="title" style="width:175px;">
+                        <input type="checkbox" name="PId" class="pp" id="P@(pp.Id)" data-p="@(p.Id)" value="@(pp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",pp.Id))!=-1?"checked":"") />@(pp.Name)
+                    </td><td>
+                        @foreach (var ppp in SysPowerList.Where(n => n.PId == pp.Id))
+                        {
+                            <input type="checkbox" name="PId" class="ppp" id="P@(ppp.Id)" data-p="@(p.Id)" data-pp="@(pp.Id)" value="@(ppp.Id)" @(SysAdmin.PowerID.IndexOf(string.Format(",{0},",ppp.Id))!=-1?"checked":"") />@(ppp.Name)　
+                        }
+                    </td>
+                        </tr>
+                        i++;
+                    }
+                   </table>
+                }
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(SysAdmin.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $(".p").click(function () {
+            var T = $(this).prop("checked");
+            var C = "";
+            if (T) C = "checked";
+            $(this).closest("table").find(".pp").prop("checked", T).parent().attr("class", C);
+            $(this).closest("table").find(".ppp").prop("checked", T).parent().attr("class", C);
+        });
+        $(".pp").click(function () {
+            var T = $(this).prop("checked");
+            var C = "";
+            if (T) C = "checked";
+            $(this).closest("tr").find(".ppp").prop("checked", T).parent().attr("class", C);
+            var L = $(this).closest("table").find(".pp:checked").length;
+            if (L > 0) {
+                $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+            }
+        });
+        $(".ppp").click(function () {
+            var LL = $(this).closest("td").find(".ppp:checked").length;
+            if (LL > 0) {
+                $(this).closest("td").prev("td").find(".pp").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("td").prev("td").find(".pp").prop("checked", false).parent().attr("class", "");
+            }
+            var L = $(this).closest("table").find(".pp:checked").length;
+            if (L > 0) {
+                $(this).closest("table").find(".p").prop("checked", true).parent().attr("class", "checked");
+            } else {
+                $(this).closest("table").find(".p").prop("checked", false).parent().attr("class", "");
+            }
+        });
+    });
+</script>       
+    }
+}

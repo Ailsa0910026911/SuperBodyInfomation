@@ -1,0 +1,73 @@
+﻿@{
+    IList<BaoLog> BaoLogList = ViewBag.BaoLogList;
+    ViewBag.SMUid = 194;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = "true";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<style>
+    .table > thead > tr > th{vertical-align:middle;}
+</style>
+<div class="row" style="width: 720px; overflow:hidden; margin:0;">
+    <div class="">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">类型 </th>
+                                <th rowspan="2">交易金额</th>
+                                <th colspan="2">交易前帐户信息</th>
+                                <th colspan="2">交易后帐户信息</th>
+                                <th rowspan="2">交易时间</th>
+                            </tr>
+                            <tr>
+                                <th>计息帐户</th>
+                                <th>转入帐户</th>
+                                <th>计息帐户</th>
+                                <th>转入帐户</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in BaoLogList)
+                            {
+                                <tr class="odd gradeX">
+                                    <td class="center" data-lt="@(p.LType)">
+                                        @if (p.LType == 1)
+                                        {
+                                            <span class="btn btn-xs green">转入</span>
+                                        }
+                                        @if (p.LType == 2)
+                                        {
+                                            <span class="btn btn-xs blue">转出</span>
+                                        }
+                                        @if (p.LType == 3)
+                                        {
+                                            <span class="btn btn-xs red">收益</span>
+                                        }
+                                        @if (p.LType == 4)
+                                        {
+                                            <span class="btn btn-xs purple">计息</span>
+                                        }
+                                    </td>
+                                    <td class="center">@(p.Amount.ToMoney()) </td>
+                                    <td class="center">@(p.BeforAmount.ToMoney()) </td>
+                                    <td class="center">@(p.BeforFrozen.ToMoney()) </td>
+                                    <td class="center">@(p.AfterAmount.ToMoney()) </td>
+                                    <td class="center">@(p.AfterFrozen.ToMoney()) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", BaoLogList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->

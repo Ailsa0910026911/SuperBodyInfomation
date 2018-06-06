@@ -1,0 +1,72 @@
+﻿@{
+    FastConfig FastConfig = ViewBag.FastConfig;
+    ViewBag.SMUid = 263;
+    //ViewBag.Title = "系统费率设置";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .control_label {text-align: right;}
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="FastSetSave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+                      @*  <div class="form-group">
+                            <label class="control-label col-md-3">默认入网费率 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[float],min[0],max[1000]]" name="UserCost" id="UserCost" value="@((double)FastConfig.UserCost * 1000)" />‰
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                        <!-------提现成本-------->
+                        <div class="form-group">
+                            <label class="control_label col-md-3">默认提现费用 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-xsmall validate[required,custom[money]]" readonly="readonly" name="UserCash" id="UserCash" value="@((FastConfig.UserCash).ToString("F2"))" />元/笔
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control_label col-md-3">分润结算方式 <span class="required">* </span></label>
+                            <div class="col-md-4" style="width: auto;">
+                                <div class="input-icon right">
+                                    <select class="bs-select form-control input-small  input-inline" name="AgentWay" id="AgentWay">
+                                    <option value="0"@(FastConfig.AgentWay == 0 ? " selected" : "")>人工结算</option>
+                                    <option value="1"@(FastConfig.AgentWay == 1 ? " selected" : "")>自动分润</option>
+                                </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.FastSetSave)
+                            {
+                                <button type="submit" class="btn green">确认修改</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script> 
+}

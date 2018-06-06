@@ -1,0 +1,32 @@
+﻿/*该文件，主要用于移动端的CSS，基础是xmsCore.css*/
+body,p,pre,button,input,textarea{margin:0;padding:0;}
+html{overflow-y:scroll;overflow:-moz-scrollbars-vertical;}
+body,button,input,select,textarea{font-size:12px;font-family: 'FZLTXHKM' '微软雅黑',arial, 'Hiragino Sans GB', 'Microsoft Yahei', '宋体', \5b8b\4f53, Tahoma, Arial, Helvetica, STHeiti;}
+a{text-decoration:none;}
+img{-ms-interpolation-mode:bicubic;border:0;}
+ul{margin:0px;padding:0px;list-style:none;}
+/*页面结构相关的CSS开始*/
+.frame-wrapper {position: fixed;z-index: 1;top: 0px;bottom: 0px;left: 0px;width: 100%;overflow: hidden;}
+.frame-scroller {position: absolute;z-index: 1;top:0px;left:0px;right:0px;width: 100%;bottom:0px;-webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-transform: translateZ(0);-moz-transform: translateZ(0);-ms-transform: translateZ(0);-o-transform: translateZ(0);transform: translateZ(0);-webkit-touch-callout: none;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-webkit-text-size-adjust: none;-moz-text-size-adjust: none;-ms-text-size-adjust: none;-o-text-size-adjust: none;text-size-adjust: none;overflow:hidden;background-color:#f5f5f9;}
+.frame-header,.frame-indicator,.frame-content,.frame-footer{position:fixed;left:0px;right:0px;z-index:1;}
+.frame-header{top:0px;line-height:44px;text-overflow: ellipsis;white-space: nowrap;z-index:3;}
+.frame-indicator{z-index: 2;top: 44px;overflow: hidden;}
+.frame-content{z-index: 1;top:0px;bottom:0px;top: 44px; bottom: 28px;}
+.frame-footer{bottom:0px;display:none;}
+.frame-container{position:relative;padding-bottom:0px;}
+.frame-scroll-down-ele,frame-scroll-up-none, .frame-scroll-up-ele {position: absolute;left: 0px;width: 100%;background-color: #efeff4;color:#AAA;text-align: center; height:28px; line-height:28px;}
+.frame-scroll-down-ele {top: -1000px;}
+.frame-scroll-up-ele {bottom: -1000px;}
+/*页面结构相关的CSS结束*/
+
+/*CSS*/
+.line-bottom-e5 {background-repeat: repeat-x;background-size: 100% 20px;background-position: left bottom;}
+.frame-scroll-load.frame-scroll-down-ele,.frame-scroll-load.frame-scroll-up-ele{color:#fff; background:#67B5FF}
+.frame-scroll-loadding.frame-scroll-down-ele,.frame-scroll-loadding.frame-scroll-up-ele{color:#fff; background:#67B5FF}
+
+.header{text-align:center;background-color:#3595F2; color:#FFF; font-size:18px; height:44px;}
+.footer{height:28px;}
+.header .sel{position:absolute; right:20px;top:9px; padding-left:26px; height:26px; line-height:26px; background:url(../images/x.png) no-repeat 3px 3px; background-size:18px 18px; font-size:13px;}
+.header ul{ position:absolute; right:0; top:44px; width:120px; background:#FFF;  border-left: 1px solid #DEDEDE;border-right: 1px solid #DEDEDE; z-index:10; display:none;}
+.header li {color:#555; border-bottom:solid 1px #DEDEDE; font-size:13px; height:36px; line-height:36px;}
+.header li.on { background:#EFEFEF;}

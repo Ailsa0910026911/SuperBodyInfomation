@@ -1,0 +1,34 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers == null ? new Users() : ViewBag.BasicUsers;
+    Page.Nav = Model;
+    int Nav = Page.Nav == null ? 0 : Page.Nav;
+}
+@if (BasicUsers.Id.IsNullOrEmpty())
+{
+    <div class="header">
+        <h1>超级收银台</h1>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="top">
+            <p><i class="iconfont">&#xe620; </i><span class="phone">@(BasicUsers.TrueName), </span>Hi! 欢迎来到超级收银台，[<a href="/Shop/Login/RemoveLogin.html"> 退出 </a>] </p>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="container">
+            <div class="pull-left logo">
+                <h2>超级收银台</h2>
+            </div>
+            <div class="nav">
+                <ul class="list-unstyled" data-nav="@(Nav)">
+                    <li class="@(Nav==10?"active":"")"><a href="/shop/home/index.html">收银台 </a></li>
+                    <li class="@(Nav==20?"active":"")"><a href="/shop/home/mycode.html">专属二维码 </a></li>
+                    <li class="@(Nav==30?"active":"")"><a href="/shop/home/myinfo.html">帐户信息 </a></li>
+                    <li class="@(Nav==40?"active":"")"><a href="/shop/home/myorders.html">交易明细 </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}

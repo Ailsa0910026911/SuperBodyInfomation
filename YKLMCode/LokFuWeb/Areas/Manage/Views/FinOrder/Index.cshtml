@@ -1,0 +1,530 @@
+﻿@{
+    IList<Orders> OrdersList = ViewBag.OrdersList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    Orders Orders = ViewBag.Orders;
+    ViewBag.NoShowDel = true;
+    ViewBag.SMUid = 80;
+    int TimeType = ViewBag.TimeType;
+    LokFuEntity Entity = ViewBag.Entity;
+    //获取机构及管理员
+    decimal Totle = 0, JTotle = 0, LTotle = 0, MTotle = 0; double NTotle = 0;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+    List<SysAgent> OrdersListSysAgent = ViewBag.OrdersListSysAgent;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px; line-height: 40px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>交易类型：</span>
+        <select name="TType" class="form-control input-small input-inline input-sm" id="TType">
+            <option value="0">汇总所有</option>
+            @foreach (var p in Utils.GetOrdersModel().Where(n => n.Id != 10))
+            {
+                if (p.Id != 3 && p.Id != 5 && p.Id != 9) 
+                {
+                <option value="@(p.Id)" @(Orders.TType == p.Id ? "selected" : "")>@(p.Name)</option>
+            }
+            }
+        </select>
+          <span class="seperator">|</span>
+        <select name="TState" class="form-control input-small input-inline input-sm" id="TState">
+            <option value="0">所有</option>
+        </select>
+        <br />
+        <select name="TimeType" id="TimeType" class="form-control input-small input-inline input-sm" style="width: 95px !important">
+            <option value="1" @(TimeType == 1 ? "selected" : "")>交易时间</option>
+            <option value="2" @(TimeType == 2 ? "selected" : "")>入账时间</option>
+        </select>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="STime" id="STime" value="@(Orders.STime == DateTime.MinValue ? "" : Orders.STime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="ETime" id="ETime" value="@(Orders.ETime == DateTime.MinValue ? "" : Orders.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="today"><i class="fa fa-clock-o"></i>今天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="toweek"><i class="fa fa-clock-o"></i>本周</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days7"><i class="fa fa-clock-o"></i>近七天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="tomonth"><i class="fa fa-clock-o"></i>本月</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days30"><i class="fa fa-clock-o"></i>近30天</button>
+        <br />
+        <span>分支机构：</span>
+        <select class="form-control input-medium select2me" data-placeholder="==分支机构==" name="Agent" id="Agent">
+            <option value="">==不限制==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(Orders.Agent == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <div>
+            <span>交易商户：</span>
+            <input type="text" id="UsersTrueName" class="pagination-panel-input form-control input-small input-inline input-sm">
+            <button type="button" class="btn btn-sm yellow" id="SearchUsers">查询</button>
+            <div id="UsersBox">
+                <span></span>
+                @if (Orders.UId.IsNullOrEmpty())
+                {
+                    <span>
+                        <input type="radio" name="UId" id="UId0" value="" checked="checked" /><label>不限制</label></span>
+                }
+                else
+                {
+                    Users Users = Entity.Users.FirstOrNew(n => n.Id == Orders.UId);
+                    <span>
+                        <input type="radio" name="UId" id="UId0" value="" /><label>不限制</label></span>
+                    <span>
+                        <input type="radio" name="UId" id="UId@(Users.Id)" value="@(Users.Id)" checked="checked" /><label>@(Users.TrueName)</label></span>
+                }
+            </div>
+        </div>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+        @if (ViewBag.Xls)
+        {
+            <button class="btn btn-sm green" style="margin-left: 10px;" type="button" id="XLS"><i class="fa fa-share"></i>导出报表</button>
+        }
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>交易号 </th>
+                                <th>分支机构 </th>
+                                <th>交易商户</th>
+                                <th>交易类型 </th>
+                                <th>交易内容 </th>
+                                <th>交易金额</th>
+                                <th>交易时间 </th>
+                                <th>入账时间</th>
+                                <th>支付方式 </th>
+                                <th>订单状态 </th>
+                                <th>接收方式 </th>
+                                <th>用户费率</th>
+                                @*<th>用户手续费 </th>*@
+                                <th>系统费率 </th>
+                                @*<th>支出手续费</th>*@
+                                <th>利润 </th>
+                                <th>结算金额 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (OrdersList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in OrdersList)
+                                {
+                                    string AName = "--";
+                                    if (p.AId > 0)
+                                    {
+                                        SysAgent SA = OrdersListSysAgent.FirstOrNew(n => n.Id == p.Agent);
+                                        if (!SA.Name.IsNullOrEmpty())
+                                        {
+                                            AName = SA.Name;
+                                        }
+                                    }
+                                    string BName = "--";
+                                    Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                                    if (!Users.TrueName.IsNullOrEmpty())
+                                    {
+                                        BName = Users.TrueName;
+                                    }
+                                    PayConfig PayConfig = PayConfigList.FirstOrNew(n => n.Id == p.PayWay);
+                                    //用户费率	用户手续费	系统费率	支出手续费	利润	结算金额
+                                <tr class="odd gradeX">
+                                    <td class="center">
+                                        <a href="Info.html?Id=@(p.Id)" class="Ajax">@(p.TNum)</a>
+                                    </td>
+                                    <td class="center">@(AName)</td>
+                                    <td class="center">@(Users.NeekName)[@(Users.TrueName)]</td>
+                                    <td class="center">@(p.GetTTName())</td>
+                                    <td class="">@(p.GetPayNameWithTName())</td>
+                                    <td class="center price">@(p.Amoney.ToString("F2")) </td>
+                                    <td class="center">@(((DateTime)p.PayTime).ToString("yyyy-MM-dd HH:mm")) </td>
+                                       <td class="center">@(p.InTimed!=null?((DateTime)p.InTimed).ToString("MM-dd HH:mm"):"") </td>
+                                    <td class="center">@(PayConfig.Name)</td>
+                                    <td class="center">@(p.GetState())</td>
+                                    <td class="center">
+                                        @if (p.TType == 2 || p.TType == 5)
+                                        {
+                                            @("T+" + p.TrunType)
+                                        }
+                                        @if (p.TType == 1 || p.TType == 7 || p.TType == 8 || p.TType == 9)
+                                        {
+                                            @("T+" + p.LagEntryDay)
+                                        }
+                                    </td>
+                                    @{
+                                        double I = 0, K = 0, N = 0;
+                                        decimal J = 0, L = 0, M = 0;
+                                        if (p.TType == 1)
+                                        { //银联卡支付订单
+                                            OrderRecharge OrderRecharge = Entity.OrderRecharge.FirstOrNew(n => n.OId == p.TNum);
+                                            I = OrderRecharge.UserRate;//商户费率
+                                            J = OrderRecharge.Poundage;//手续费
+                                            K = OrderRecharge.SysRate; //第三方费率
+                                            L = (decimal)OrderRecharge.SysRate * OrderRecharge.Amoney;//第三方手续费
+                                            N = OrderRecharge.AgentPayGet; //分支机构提成
+                                            M = OrderRecharge.Poundage - (decimal)OrderRecharge.SysRate * OrderRecharge.Amoney - (decimal)OrderRecharge.AgentPayGet; //利润
+                                        }
+                                        if (p.TType == 2)
+                                        { //提现订单
+                                            OrderCash OrderCash = Entity.OrderCash.FirstOrNew(n => n.OId == p.TNum);
+                                            //if (OrderCash.TrunType == 0)
+                                            //{
+                                            //    I = (double)Users.Cash;
+                                            //}
+                                            //else
+                                            //{
+                                            //    I = 0;//商户费率
+                                            //}
+                                            J = (decimal)OrderCash.UserRate;//手续费
+                                            K = 0;//第三方费率
+                                            L = OrderCash.CashRate;//第三方手续费
+                                            N = OrderCash.AgentCashGet; //分支机构提成
+                                            M = (decimal)OrderCash.UserRate - OrderCash.CashRate - (decimal)OrderCash.AgentCashGet; //利润
+                                        }
+                                        if (p.TType == 3)
+                                        { //转帐订单
+                                            OrderTransfer OrderTransfer = Entity.OrderTransfer.FirstOrNew(n => n.OId == p.TNum);
+                                            I = OrderTransfer.UserRate;//商户费率
+                                            J = OrderTransfer.Poundage;//手续费
+                                            K = OrderTransfer.SysRate;//第三方费率
+                                            L = (decimal)OrderTransfer.SysRate * OrderTransfer.Amoney;//第三方手续费
+                                            N = OrderTransfer.AgentPayGet; //分支机构提成
+                                            M = OrderTransfer.Amoney - OrderTransfer.PayMoney - L - (decimal)OrderTransfer.AgentPayGet; //利润
+                                        }
+                                        if (p.TType == 5)
+                                        { //付房租订单
+                                            OrderHouse OrderHouse = Entity.OrderHouse.FirstOrNew(n => n.OId == p.TNum);
+                                            I = OrderHouse.UserRate + (double)OrderHouse.CashRate;//商户费率
+                                            J = OrderHouse.Poundage;//手续费
+                                            K = OrderHouse.SysRate;//第三方费率
+                                            L = (decimal)OrderHouse.SysRate * OrderHouse.Amoney;//第三方手续费
+                                            N = OrderHouse.AgentPayGet; //分支机构提成
+                                            M = OrderHouse.Amoney - OrderHouse.PayMoney - L - (decimal)OrderHouse.AgentPayGet; //利润
+                                        }
+                                        if (p.TType == 6)
+                                        { //升级订单
+                                            PayConfigOrder PayConfigOrder = Entity.PayConfigOrder.FirstOrNew(n => n.OId == p.TNum);
+                                            I = 0;//商户费率
+                                            J = 0;//手续费
+                                            K = 0;//第三方费率
+                                            L = 0;//第三方手续费
+                                            N = PayConfigOrder.AgentGet; //分支机构提成
+                                            M = PayConfigOrder.Amoney - (decimal)PayConfigOrder.AgentGet; //利润
+                                        }
+                                        if (p.TType == 7 || p.TType == 8 || p.TType == 9)
+                                        { //付房租订单
+                                            OrderF2F OrderF2F = Entity.OrderF2F.FirstOrNew(n => n.OId == p.TNum);
+                                            I = OrderF2F.UserRate;//商户费率
+                                            J = OrderF2F.Poundage;//手续费
+                                            K = OrderF2F.SysRate; //第三方费率
+                                            L = (decimal)OrderF2F.SysRate * OrderF2F.Amoney;//第三方手续费
+                                            N = OrderF2F.AgentPayGet; //分支机构提成
+                                            M = OrderF2F.Poundage - (decimal)OrderF2F.SysRate * OrderF2F.Amoney - (decimal)OrderF2F.AgentPayGet; //利润
+                                        }
+                                        if (p.TType == 10)
+                                        { //升级订单
+                                            DaiLiOrder DaiLiOrder = Entity.DaiLiOrder.FirstOrNew(n => n.OId == p.TNum);
+                                            I = 0;//商户费率
+                                            J = 0;//手续费
+                                            K = 0;//第三方费率
+                                            L = 0;//第三方手续费
+                                            N = DaiLiOrder.AgentGet; //分支机构提成
+                                            M = DaiLiOrder.Amoney - (decimal)DaiLiOrder.AgentGet; //利润
+                                        }
+                                    }
+                                    <td class="center price ">@((I*1000).ToString("F2")) </td>
+                                    @*<td class="center price">@(J.ToString("F2")) </td>*@
+                                    <td class="center price">@((K*1000).ToString("F2")) </td>
+                                    @*<td class="center price">@(L.ToString("F2")) </td>*@
+                                    <td class="center price">@(M.ToString("F2")) </td>
+                                    <td class="center price">@(N.ToString("F2")) </td>
+                                </tr>
+                                        Totle += p.Amoney;
+                                        JTotle += J;
+                                        LTotle += L;
+                                        MTotle += M;
+                                        NTotle += N;
+                                }
+                            }
+                            <tr style="background: #FF0;">
+                                <td class="center" colspan="4"><b>合计：</b></td>
+                                <td class=""><b>@(OrdersList.Count)笔</b></td>
+                                <td class="center price">@(Totle.ToString("F2")) </td>
+                                <td class="center" colspan="6">&nbsp;</td>
+                                @*<td class="center price">@(ITotle.ToString("F2")) </td>*@
+                                @*<td class="center price">@(LTotle.ToString("F2")) </td>*@
+                                <td class="center price">@(MTotle.ToString("F2")) </td>
+                                <td class="center price">@(NTotle.ToString("F2")) </td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+               
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", OrdersList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>@*
+        <script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <script>
+            $(function () {
+                if ($("#Agent").val() != "") {
+                    $("#S_IsShowSupAgent").show();
+                    $("#IsShowSupAgent").show();
+                }
+                else {
+                    $("#S_IsShowSupAgent").hide();
+                    $("#IsShowSupAgent").hide();
+                }
+                $("#Agent").change(function () {
+                    if ($("#Agent").val() != "") {
+                        $("#S_IsShowSupAgent").show();
+                        $("#IsShowSupAgent").show();
+                    }
+                    else {
+                        $("#S_IsShowSupAgent").hide();
+                        $("#IsShowSupAgent").hide();
+                    }
+                });
+                $("#SearchUsers").click(function () {
+                    var v = $("#UsersTrueName").val();
+                    if (v == "") {
+                        showdialog("请填写关键词");
+                        return false;
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "/manage/asyn/getusers.html",
+                        data: "username=" + v,
+                        dataType: "json",
+                        beforeSend: function () {
+                            $("#UsersBox").html("");
+                        },
+                        success: function (json) {
+                            $("#UsersBox").append('<span>　　　　　</span>');
+                            $("#UsersBox").append('<span><input type="radio" checked="checked" name="UId" id="UId0" value="" /><label>不限制</label></span>');
+                            for (var i = 0; i < json.length; i++) {
+                                var obj = json[i];
+                                var html = "<span class=\"NewData\"><input class=\"validate[required]\" type=\"radio\" name=\"UId\" id=\"UId" + obj.id + "\" value=\"" + obj.id + "\" /><label>" + obj.truename + "</label></span>";
+                                $("#UsersBox").append(html);
+                            }
+                            App.initUniform();//updateUniform();
+                        }
+                    })
+                });
+                $('#Agent').select2({
+                    allowClear: false
+                });
+
+                //$("#STime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                //$("#ETime").datepicker({
+                //    format: "yyyy-mm-dd",
+                //    showAnim: "fadeIn",
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    onSelect: function (dateText, inst) {
+                //    }
+                //});
+                var Today = new Date();
+                $("#today").click(function () {
+                    $("#STime").val(Today.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#toweek").click(function () {
+                    var currentDay = Today.getDay();
+                    if (currentDay == 0) { currentDay = 7; }
+                    var mondayTime = Today.getTime() - (currentDay - 1) * 24 * 60 * 60 * 1000;
+                    var sundayTime = Today.getTime() + (7 - currentDay) * 24 * 60 * 60 * 1000;
+                    var monday = new Date(mondayTime);
+                    var sunday = new Date(sundayTime);
+                    $("#STime").val(monday.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(sunday.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#days7").click(function () {
+                    var StartTime = Today.getTime() - 6 * 24 * 60 * 60 * 1000;
+                    var Start = new Date(StartTime);
+                    $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#tomonth").click(function () {
+                    var myyear = Today.getFullYear();
+                    var mymonth = Today.getMonth();
+                    var monthStartDate = new Date(myyear, mymonth, 1);
+                    var days = getMonthDays(myyear, mymonth);
+                    var monthEndDate = new Date(myyear, mymonth, days);
+                    $("#STime").val(monthStartDate.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(monthEndDate.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#days30").click(function () {
+                    var StartTime = Today.getTime() - 29 * 24 * 60 * 60 * 1000;
+                    var Start = new Date(StartTime);
+                    $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+                });
+            });
+            Date.prototype.Format = function (fmt) { //author: meizz 
+                var o = {
+                    "M+": this.getMonth() + 1, //月份 
+                    "d+": this.getDate(), //日 
+                    "h+": this.getHours(), //小时 
+                    "m+": this.getMinutes(), //分 
+                    "s+": this.getSeconds(), //秒 
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                    "S": this.getMilliseconds() //毫秒 
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
+            //获得某月的天数     
+            function getMonthDays(myYear, myMonth) {
+                var monthStartDate = new Date(myYear, myMonth, 1);
+                var monthEndDate = new Date(myYear, myMonth + 1, 1);
+                var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+                return days;
+            }
+
+        </script>
+        
+         <script>
+        //     var sjson =
+        //     '{\
+        //    "1":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"3","Value":"待传证照"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"},{"Key":"6","Value":"退单"},{"Key":"7","Value":"待入账"}],\
+        //    "2":[{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"提现失败"},{"Key":"4","Value":"出款中"}],\
+        //    "3":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"3","Value":"待传证照"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"}],\
+        //    "5":[{"Key":"99","Value":"未付"},{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"审核失败"},{"Key":"4","Value":"出款中"},{"Key":"5","Value":"退款中"},{"Key":"6","Value":"已退款"},{"Key":"7","Value":"待传身份证"},{"Key":"8","Value":"已传身份证"}],\
+        //    "6":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],\
+        //    "7":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"3","Value":"退单"},{"Key":"4","Value":"待入账"},{"Key":"5","Value":"待审核"},{"Key":"6","Value":"待传证照"},{"Key":"7","Value":"审核失败"}],\
+        //    "8":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"3","Value":"退单"},{"Key":"4","Value":"待入账"},{"Key":"5","Value":"待审核"},{"Key":"6","Value":"待传证照"},{"Key":"7","Value":"审核失败"}],\
+        //    "9":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"3","Value":"退单"},{"Key":"4","Value":"待入账"},{"Key":"5","Value":"待审核"},{"Key":"6","Value":"待传证照"},{"Key":"7","Value":"审核失败"}],\
+        //    "10":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}]\
+             //}';
+             var sjson =
+     '{\
+            "1":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"}],\
+            "2":[{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"提现失败"},{"Key":"4","Value":"出款中"}],\
+            "3":[{"Key":"1","Value":"未付"},{"Key":"2","Value":"已付"},{"Key":"4","Value":"待审核"},{"Key":"5","Value":"审核失败"}],\
+            "5":[{"Key":"99","Value":"未付"},{"Key":"1","Value":"处理中"},{"Key":"2","Value":"已汇出"},{"Key":"3","Value":"审核失败"},{"Key":"4","Value":"出款中"},{"Key":"5","Value":"退款中"},{"Key":"6","Value":"已退款"}],\
+            "6":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}],\
+            "7":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"5","Value":"待审核"},{"Key":"7","Value":"审核失败"}],\
+            "8":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"5","Value":"待审核"},{"Key":"7","Value":"审核失败"}],\
+            "9":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"},{"Key":"5","Value":"待审核"},{"Key":"7","Value":"审核失败"}],\
+            "10":[{"Key":"99","Value":"交易关闭"},{"Key":"1","Value":"进行中"},{"Key":"2","Value":"已付款"}]\
+        }';
+             var obj = jQuery.parseJSON(sjson);
+             $(function () {
+                 if ($("#Agent").val() != "") {
+                     $("#S_IsShowSupAgent").show();
+                     $("#IsShowSupAgent").show();
+                 }
+                 else {
+                     $("#S_IsShowSupAgent").hide();
+                     $("#IsShowSupAgent").hide();
+                 }
+                 $("#Agent").change(function () {
+                     if ($("#Agent").val() != "") {
+                         $("#S_IsShowSupAgent").show();
+                         $("#IsShowSupAgent").show();
+                     }
+                     else {
+                         $("#S_IsShowSupAgent").hide();
+                         $("#IsShowSupAgent").hide();
+                     }
+                 });
+                 getState("@(Orders.TType)");
+            $("#TState").val("@(Orders.TState)");
+            $("#TType").change(function () {
+                var v = $(this).val();
+                if (v != "") {
+                    getState($(this).val());
+                    if (v == 2 || v == 5) {
+                        $("#spanTrunType").show();
+                        $("#LagEntryDay").val("");
+                        $("#spanLagEntryDay").hide();
+                    } else if (v == 1 || v == 7 || v == 8 || v == 9) {
+                        $("#TrunType").val("");
+                        $("#spanTrunType").hide();
+                        $("#spanLagEntryDay").show();
+                    } else {
+                        $("#TrunType").val("");
+                        $("#LagEntryDay").val("");
+                        $("#spanTrunType").hide();
+                        $("#spanLagEntryDay").hide();
+                    }
+
+                } else {
+                    $("#TState").empty();
+                    $("#TState").append('<option value="0">所有</option>');
+                    $("#TrunType").val("");
+                    $("#LagEntryDay").val("");
+                    $("#spanTrunType").hide();
+                    $("#spanLagEntryDay").hide();
+                }
+            });
+
+            $('#Agent').select2({
+                allowClear: false
+            });
+        });
+        function getState(typeindex) {
+            $.each(obj, function (i, n) {
+                if (typeindex == i) {
+                    //清空
+                    $("#TState").empty();
+                    $("#TState").append('<option value="0">所有</option>');
+                    $.each(n, function (k, y) {
+                        $("#TState").append('<option value="' + y.Key + '" >' + y.Value + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+@*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" /> *@
+    }
+}

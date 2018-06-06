@@ -1,0 +1,158 @@
+﻿@{
+    IList<LokFu.Areas.Manage.Controllers.OrdersRetrievalViewModel> OrdersRetrievalViewModelList = ViewBag.OrdersRetrievalViewModelList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    //IList<Users> UsersList = ViewBag.UsersList;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    LokFu.Areas.Manage.Controllers.OrdersRetrievalInModel OrdersRetrievalInModel = ViewBag.OrdersRetrievalInModel;
+    ViewBag.NoShowDel = true;
+    ViewBag.Title = "交易检索";
+    ViewBag.SMUid = 218;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .bootstrap-tagsinput {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        display: inline-block;
+        padding: 4px 6px;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        max-width: 100%;
+        min-width: 200px;
+        line-height: 22px;
+        cursor: text;
+    }
+
+        .bootstrap-tagsinput input {
+            width: 250px;
+        }
+</style>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>交易地址：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline" data-role="tagsinput" 
+            name="OrderAddress" value="@(OrdersRetrievalInModel.OrderAddress)"  />
+        <span class="seperator">|</span>
+        <span>交易时间：</span>
+        <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="STime" id="STime" value="@(OrdersRetrievalInModel.STime == DateTime.MinValue ? "" : OrdersRetrievalInModel.STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ETime" id="ETime" value="@(OrdersRetrievalInModel.ETime == DateTime.MinValue ? "" : OrdersRetrievalInModel.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        <span class="seperator">|</span>
+        <select name="UsersState" class="form-control input-small input-inline input-sm" id="UsersState">
+            <option value="0" @(OrdersRetrievalInModel.UsersState == 0 ? "selected" : "") >商户开通状态</option>
+            <option value="1" @(OrdersRetrievalInModel.UsersState == 1 ? "selected" : "") >正常</option>
+            <option value="99" @(OrdersRetrievalInModel.UsersState == 99 ? "selected" : "") >锁定</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>交易号 </th>
+                                <th>交易商户 </th>
+                                <th>交易说明</th>
+                                <th>总金额 </th>
+                                <th>交易类型 </th>
+                                @*                                @if (Orders.TType == 2 || Orders.TType == 5)
+                                { 
+                                <th> 出款方式 </th>
+                                }*@
+                                <th>交易时间 </th>
+                                <th>状态</th>
+                                <th>支付信息 </th>
+                                <th>分支机构 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (OrdersRetrievalViewModelList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in OrdersRetrievalViewModelList)
+                                {
+                                    var p = item.Orders;
+                                    var Users = item.Users;
+                                    //Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                                    string PayWay = "--";
+                                    if (p.PayWay > 0 && p.PayState == 1)
+                                    {
+                                        PayWay = PayConfigList.FirstOrNew(n => n.Id == p.PayWay).Name;
+                                    }
+                                    string AgentName = SysAgentList.FirstOrNew(n => n.Id == p.Agent).Name;
+<tr class="odd gradeX">
+                                    <td class="center">
+                                        <a href="/Manage/Orders/Info.html?Id=@(p.Id)" class="Ajax">@(p.TNum)</a>
+                                    </td>
+                                    <td class="center"><a href="/Manage/Users/Info.html?Id=@(Users.Id)" class="Ajax">@(Users.NeekName)[@(Users.TrueName)]</a></td>
+                                    <td class="">@(p.GetPayNameWithTName())<br />[备注]：@(p.Remark)</td>
+                                    <td class="center price">@(p.Amoney.ToString("F2")) </td>
+                                    <td class="center">[<span>@(p.GetTTName())</span>]</td>
+                                    @*                                    @if (Orders.TType == 2 || Orders.TType == 5)
+                                    {
+                                    <td class="center"> T+@(p.TrunType) </td>
+                                    }*@
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                                    <td class="center">@(p.GetState())</td>
+                                    <td class="center">
+                                        @(PayWay)
+                                    <br />
+                                        @if (p.PayState == 1)
+                                        {
+                                            @(p.PayTime.HasValue ? ((DateTime)p.PayTime).ToString("yyyy-MM-dd HH:mm") : "--")
+                                        }
+                                        else
+                                        {
+                                            @("--")
+                                        }
+                                    </td>
+                                    <td class="center"> @(AgentName) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", OrdersRetrievalViewModelList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    @{
+@*<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="/Content/Metronic/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>*@
+        <script src="/Content/Metronic/plugins/jquery-tags-input/bootstrap-tagsinput.min.js"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <script>
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @*    <link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" /> *@
+    <link href="/Content/Metronic/plugins/jquery-tags-input/bootstrap-tagsinput.css" rel="stylesheet" />
+}

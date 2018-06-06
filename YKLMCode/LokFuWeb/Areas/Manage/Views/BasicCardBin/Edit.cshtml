@@ -1,0 +1,87 @@
+﻿@{
+    BasicCardBin BasicCardBin = ViewBag.BasicCardBin;
+    ViewBag.SMUid = 294;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(BasicCardBin.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(BasicCardBin.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">银行名称 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control validate[required] input-large" name="BankName" id="BankName" value="@(BasicCardBin.BankName)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">银行编号 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control validate[required] input-large" name="BankCode" id="BankCode" value="@(BasicCardBin.BankCode)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">卡BIN类型 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-small" name="CardType" id="CardType">
+                                    <option value="1" @(BasicCardBin.CardType == 1 ? " selected" : "")>银行卡</option>
+                                    <option value="2" @(BasicCardBin.CardType == 2 ? " selected" : "")>信用卡</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">卡BIN </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control validate[required] input-large" name="BIN" id="BIN" value="@(BasicCardBin.BIN)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">长度 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control validate[required] input-large" name="Length" id="Length" value="@(BasicCardBin.Length)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">@(BasicCardBin.Id.IsNullOrEmpty() ? "确认添加" : "确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <script>
+        $(function () {
+        });
+    </script>
+}

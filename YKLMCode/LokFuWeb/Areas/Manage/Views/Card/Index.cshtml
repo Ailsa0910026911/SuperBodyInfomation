@@ -1,0 +1,234 @@
+﻿@{
+    IList<Card> CardList = ViewBag.CardList;
+    ViewBag.SMUid = 17;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    Card Card = ViewBag.Card;
+    string Num0 = ViewBag.Num0;
+    string Num1 = ViewBag.Num1;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>卡号起止：</span>
+        @*<input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Code" value="@(Card.Code)" />*@
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Num0" value="@(Num0)" />
+        ~
+  <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Num1" value="@(Num1)" />
+        <span class="seperator">|</span>
+        <span>所属机构：</span>
+        <select name="AId" class="form-control input-medium input-inline input-sm select2me" id="AId">
+            <option value="">不限制</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)" @(Card.AId == p.Id ? "selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <span class="seperator">|</span>
+        <span>状态：</span>
+        <select name="State" class="form-control input-small input-inline input-sm">
+            <option value="">不限制</option>
+            <option value="1" @(Card.State == 1 ? "selected" : "")>未授权</option>
+            <option value="2" @(Card.State == 2 ? "selected" : "")>已授权</option>
+            <option value="99" @(Card.State == 99 ? "selected" : "")>失效</option>
+        </select>
+        <span>分配：</span>
+        <select name="Auto" class="form-control input-small input-inline input-sm">
+            <option value="">不限制</option>
+            <option value="1" @(Card.Auto == 1 ? "selected" : "")>自动</option>
+            <option value="99" @(Card.Auto == 99 ? "selected" : "")>保留</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="btn-group">
+                        @if (ViewBag.Add)
+                        {
+                            <a class="btn green" href="Edit.html">发  卡 <i class="fa fa-plus"></i></a>
+                        }
+                        @if (ViewBag.Xls)
+                        {
+                            <a class="btn green" href="Xls.html" style="margin-left: 10px;">导  出 <i class="fa fa-share"></i></a>
+                        }
+                    </div>
+                    <div class="btn-group pull-right">
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">批量操作 <i class="fa fa-angle-down"></i></button>
+                        <ul class="dropdown-menu pull-right">
+                            @if (ViewBag.Save)
+                            {
+                                <li><a href="#" class="BatSet" rev="State" rel="0">设为失效 </a></li>
+                                <li><a href="#" id="BatSetAdmin" rev="AId" rel="0">指定机构 </a></li>
+                                <li><a href="#" class="BatSet" rev="Auto" rel="1">自动分配 </a></li>
+                                <li><a href="#" class="BatSet" rev="Auto" rel="0">保留分配 </a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-danger">
+                    <button class="close" data-close="alert"></button>
+                    卡片分配方式设置为<b>自动时</b>，用户分享后可随机分享该卡片给到新用户，如果设置为<b>保留时</b>，卡片不会被分配出去.
+                </div>
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th class="table-checkbox" width="40">
+                                    <input type="checkbox" class="group-checkable CheckAll" rev="list" /></th>
+                                <th>卡号 </th>
+                                <th>密码 </th>
+                                <th>机构 </th>
+                                <th>状态 </th>
+                                <th>分配 </th>
+                                <th>时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (CardList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in CardList)
+                                {
+                                    SysAgent SysAgent = SysAgentList.FirstOrNew(n => n.Id == p.AId);
+                                <tr class="odd gradeX">
+                                    <td>
+                                        @if (p.State == 2)
+                                        {
+                                            <input type="checkbox" class="checkboxes" disabled />
+                                        }
+                                        else
+                                        { 
+                                            <input type="checkbox" class="checkboxes" value="@(p.Id)" name="list" />
+                                        }
+                                    </td>
+                                    <td class="center">@(p.Code) </td>
+                                    <td class="center">@(p.PasWd) </td>
+                                    <td class="center">@(SysAgent.Name) </td>
+                                    <td class="center">@if (p.State == 1)
+                                                       {
+                                        <i class="fa fa-check color-green">正常</i>
+                                                       }
+                                                       else if (p.State == 2)
+                                                       {
+                                        <i class="fa fa-times color-red">已用</i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-gray">失效</i>
+                                                       } </td>
+                                    <td class="center">@if (p.Auto == 1)
+                                                       {
+                                        <i class="fa fa-check color-green">自动</i>
+                                                       }
+                                                       else
+                                                       {
+                                        <i class="fa fa-times color-gray">保留</i>
+                                                       } </td>
+                                    <td class="center">@(p.AddTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm")) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", CardList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    @{
+        <script>
+            $(function () {
+                if ($("#AId").val() != "") {
+                    $("#S_IsShowSupAgent").show();
+                    $("#IsShowSupAgent").show();
+                }
+                else {
+                    $("#S_IsShowSupAgent").hide();
+                    $("#IsShowSupAgent").hide();
+                }
+                $("#AId").change(function () {
+                    if ($("#AId").val() != "") {
+                        $("#S_IsShowSupAgent").show();
+                        $("#IsShowSupAgent").show();
+                    }
+                    else {
+                        $("#S_IsShowSupAgent").hide();
+                        $("#IsShowSupAgent").hide();
+                    }
+                });
+                $('#AId').select2({
+                    allowClear: false
+                });
+                $("#BatSetAdmin").click(function () {
+                    var action = arguments[2] ? arguments[2] : "ChangeStatus.html";
+                    var ListID = "0";
+                    var allselectText = $('input[name=list]');
+                    for (var i = 0; i < allselectText.length; i++) {
+                        if (allselectText[i].checked) {
+                            ListID += "," + allselectText[i].value;
+                        }
+                    }
+                    if (ListID.split(",").length == 1) {
+                        showdialog("当前页面信息并没有任何选中项？");
+                        return false;
+                    }
+                    ListID = ListID.replace("0,", "");
+                    var option = $("#AId").html().replace("不限制", "请选择");
+                    art.dialog({
+                        title: '温馨提示',
+                        lock: true,
+                        content: "共有" + (ListID.split(",").length) + "条信息将被派给指定机构,您确定操作吗？<br />请选择机构：<select id=\"Value\">" + option + "</select>",
+                        icon: 'warning',
+                        ok: function () {
+                            var value = $("#Value").val();
+                            if (value == "") return false;
+                            var Url = action + '?value=' + value + '&Clomn=AId&InfoList=' + ListID + '&' + Math.random();
+                            $.get(Url, function (data) {
+                                GoHref(location.href);
+                            });
+                        },
+                        cancel: function () {
+                            this.close()
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+}

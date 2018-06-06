@@ -1,0 +1,166 @@
+﻿@{
+    LokFuEntity Entity = ViewBag.Entity;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+    SysSet BasicSet = ViewBag.BasicSet;
+    ViewBag.NoShowDel = true;
+    ViewBag.SMUid = 230;
+    int count1 = 0, count2 = 0, count3 = 0;
+    DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+    DateTime ToMonty = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01"));
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat blue">
+            @{
+                count1 = Entity.Users.Count(n => n.State == 1 && n.AddTime > Today);
+                count2 = Entity.Users.Count(n => n.State == 1 && n.AddTime > ToMonty);
+            }
+            <div class="visual"><i class="fa fa-user"></i></div>
+            <div class="details">
+                <div class="number">@(count1) </div>
+                <div class="desc">今日新增商户 </div>
+            </div>
+            <a class="more">本月新增商户：@(count2) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        @{
+            count1 = Entity.Orders.Count(n => n.PayState == 1 && n.TType != 2 && n.AddTime > Today);
+            count2 = Entity.Orders.Count(n => n.PayState == 1 && n.TType != 2 && n.AddTime > ToMonty);
+        }
+        <div class="dashboard-stat green">
+            <div class="visual"><i class="fa fa-shopping-cart"></i></div>
+            <div class="details">
+                <div class="number">@(count1) </div>
+                <div class="desc">今日新增订单 </div>
+            </div>
+            <a class="more">本月新增订单：@(count2) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        @{
+            count1 = Entity.Orders.Count(n => n.PayState >= 1 && n.TType == 2 && n.AddTime > Today);
+            count2 = Entity.Orders.Count(n => n.PayState >= 1 && n.TType == 2 && n.AddTime > ToMonty);
+        }
+        <div class="dashboard-stat purple">
+            <div class="visual"><i class="fa fa-gift"></i></div>
+            <div class="details">
+                <div class="number">@(count1) </div>
+                <div class="desc">今日新增提现 </div>
+            </div>
+            <a class="more">本月新增提现：@(count2) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat yellow">
+            @{
+                count1 = 0;
+                count2 = 0;
+                try
+                {
+                    count1 = Int32.Parse(Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > Today).Sum(n => n.Amoney).ToString("F0"));
+                }
+                catch (Exception) { }
+                try
+                {
+                    count2 = Int32.Parse(Entity.Orders.Where(n => n.PayState >= 1 && n.TType != 2 && n.AddTime > ToMonty).Sum(n => n.Amoney).ToString("F0"));
+                }
+                catch (Exception) { }
+            }
+            <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
+            <div class="details">
+                <div class="number">@(count1) </div>
+                <div class="desc">今日交易量 </div>
+            </div>
+            <a class="more">本月交易量：@(count2) <i class="m-icon-swapright m-icon-white"></i></a>
+        </div>
+    </div>
+</div>
+<!-- END DASHBOARD STATS -->
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet solid light-grey bordered">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-bullhorn"></i>近15天交易 </div>
+            </div>
+            <div class="portlet-body">
+                <div id="site_activities_loading">
+                    <img src="/Content/Metronic/img/loading.gif" alt="loading" />
+                </div>
+                <div id="site_activities_content" class="display-none">
+                    <div id="site_activities" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet solid bordered light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-bar-chart-o"></i>月交易量汇总 </div>
+            </div>
+            <div class="portlet-body">
+                <div id="site_statistics_loading">
+                    <img src="/Content/Metronic/img/loading.gif" alt="loading" />
+                </div>
+                <div id="site_statistics_content" class="display-none">
+                    <div id="site_statistics" class="chart"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>
+<div class="clearfix"></div>
+@section FooterScripts
+    {
+    @{
+        <script>
+            var visitors = [
+                    @for (int i = 13; i >= 0; i--)
+                    {
+                        DateTime sMonth = DateTime.Parse(DateTime.Now.AddMonths(-1 * i).ToString("yyyy-MM-01"));
+                        DateTime eMonth = DateTime.Parse(DateTime.Now.AddMonths(-1 * i + 1).ToString("yyyy-MM-01"));
+                        decimal count = 0;
+                        try
+                        {
+                            count = Entity.Orders.Where(n => n.PayState == 1 && n.AddTime > sMonth && n.AddTime < eMonth).Sum(n => n.Amoney);
+                        }
+                        catch (Exception) { }
+                        @:['@(sMonth.ToString("MM/yyyy"))', @(count.ToString("F0"))]@(i != 13 ? "," : "")
+                    }
+                ];
+            var activities = [
+                    @for (int i = 17; i >= 0; i--)
+                    {
+                        Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+                        DateTime sDay = DateTime.Parse(DateTime.Now.AddDays(-1 * i).ToString("yyyy-MM-dd"));
+                        DateTime eDay = DateTime.Parse(DateTime.Now.AddDays(-1 * i + 1).ToString("yyyy-MM-dd"));
+                        decimal count = 0;
+                        try
+                        {
+                            count = Entity.Orders.Where(n => n.PayState == 1 && n.AddTime > sDay && n.AddTime < eDay).Sum(n => n.Amoney);
+                        }
+                        catch (Exception) { }
+                        @:['@(sDay.ToString("MM月dd"))', @(count.ToString("F0"))]@(i != 17 ? "," : "")
+                    }
+                ];
+        </script>
+        <script src="/Content/Metronic/scripts/custom/index.js" type="text/javascript"></script>
+        <script>
+            $(function () {
+                Index.init();
+                //Index.initCalendar(); // init index page's custom scripts
+                Index.initCharts(); // init index page's custom scripts
+                //Index.initChat();
+                //Index.initMiniCharts();
+                //Index.initDashboardDaterange();
+                //Index.initIntro();//弹出消息
+            });
+        </script>
+    }
+}

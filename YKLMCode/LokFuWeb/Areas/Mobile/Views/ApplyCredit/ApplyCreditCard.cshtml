@@ -1,0 +1,269 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers;
+    IList<BasicBank> BasicBankList = ViewBag.BasicBankList;
+  
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>申请信用卡</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="/Content/Mobile/share/css/style.css" />
+    <link href="~/Content/Mobile/css/ApplyCreditStyle.css" rel="stylesheet" />
+    <link href="~/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" />
+    <style type="text/css">
+        .picker-items-col.picker-items-col-center {
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form class="form" method="post" action="/mobile/ApplyCredit/AddNew.html" id="regForm" name="regForm">
+        <section>
+            <input id="Agent" name="Agent" value="@(BasicUsers.Agent)" type="hidden" />
+            <input type="hidden" id="Mobile" name="Mobile" />
+            <input type="hidden" value="0" id="BankId" name="BankId" />
+            <header>
+                <img src="/Content/Mobile/images/top.png" alt="" />
+            </header>
+
+            <span style="color:#fbb123;font-size:0.72rem; text-align:center; display:block; margin-top:2%;">批卡后消费三笔（每笔金额满128元）、银行有惊喜</span>
+            <div class="content-obtain">
+                <ul class="list-unstyled">
+                    <li>
+                        <input type="text" placeholder="请选择银行" id="Bank" name="Bank" />
+
+                        <img src="/Content/Mobile/images/input_bg_4.png" />
+                    </li>
+                    <li>
+                        <input type="text" placeholder="请输入本人真实姓名" id="TrueName" name="TrueName" />
+                        <img src="/Content/Mobile/images/input_bg_1.png" alt="" />
+
+                    </li>
+                    <li>
+                        <input type="text" placeholder="请输入本人身份证号码" id="IDcard" name="IDcard" />
+                        <img src="/Content/Mobile/images/input_bg_2.png" alt="" />
+                    </li>
+                    <li class="clearfix">
+                        <span class="font">联系手机号为<b class="text-blur">@(BasicUsers.UserName.HideMobile())</b></span>
+                        <a class="font" href="javascript:">更换号码<i class="iconfont">&#xe64e;</i></a>
+                    </li>
+                    <li class="hide fires">
+                        <input type="text" placeholder="请输入本人手机号码"  maxlength="11" id="InMobile"  />
+                        <img src="/Content/Mobile/images/input_bg_3.png" alt="" />
+                    </li>
+                    <li class="hide fires">
+
+                        @* <input class="verification" maxlength="4" type="tel" id="number" name="Code" placeholder="请输入验证码" />
+                        <a class="verification-code link" id="GetCode" href="javascript:void(0);">获取验证码</a>*@
+                        <div class="form-group">
+                            <input class="verification" maxlength="4" type="tel" id="Code" name="Code" placeholder="请输入验证码" />
+                            <a class="verification-code link" id="GetCode" href="javascript:void(0);">获取验证码</a>
+                        </div>
+                    </li>
+                    <li class="point hide">
+
+                        <span style="color: #a94442;" class="text-danger">手机号码不正确！</span>
+
+                    </li>
+                    <li>
+
+                        <a class="nextsetp link" href="javascript:" id="Next">下一步</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </form>
+    
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+  
+  @*    <script type='text/javascript' src="~/Content/Mobile/js/jquery.js"></script>
+      <script type="text/javascript" src="~/Content/Metronic/plugins/jquery.validationEngine.js"></script>*@
+    <script>
+       // $(function () {
+            //$("#regForm").validationEngine("validate");
+        //});
+        ChinaId = /^[1-9]\d{5}[1-9]\d{3}(((0[13578]|1[02])(0[1-9]|[12]\d|3[0-1]))|((0[469]|11)(0[1-9]|[12]\d|30))|(02(0[1-9]|[12]\d)))(\d{4}|\d{3}[xX])$/;
+        $("#Next").click(function () {
+
+            if ($("#Bank").val() == "" || $("#Bank").val() == "请选择银行") {
+                ShowInfo("请选择银行");
+                return;
+            }
+            $("#BankId").val(json[$("#Bank").val()]);
+            if ($("#TrueName").val() == "") {
+                ShowInfo("请输入本人真实姓名");
+                return;
+            }
+            chinese=  /^[\u4e00-\u9fa5]+$/;
+            if (!chinese.test($("#TrueName").val())) {
+                ShowInfo("请输入中文");
+                return;
+            }
+            if ($("#IDcard").val() == "") {
+                ShowInfo("请输入本人身份证号码");
+                return;
+            }
+            if (!ChinaId.test($("#IDcard").val())) {
+                ShowInfo("请正确输入身份证号码");
+                return;
+            }
+            if (onoff == true) {
+                $("#Mobile").val(@(BasicUsers.UserName));
+                //$.ajax({
+                //    url: "CheckUnique.html",
+                //    data: "",
+                //    success: function (ret) {
+                //        if (ret == "OK") {
+                $("#regForm").submit();
+                //        } else if (ret == "1") {
+                //            ShowInfo("请不要重复提交！");
+                //        } 
+                //    }
+                //});
+                //$("#regForm").submit();
+            }
+            else {
+                $("#Mobile").val($("#InMobile").val());
+                if ($("#InMobile").val() == "@(BasicUsers.UserName)") {
+                        ShowInfo("请不要输入当前用户号码");
+                        return;
+                    }
+                    var Code = $("#Code").val();
+                    if (Code == "") {
+                        ShowInfo("请填写验证码");
+                        return;
+                    }
+                    $.ajax({
+                        url: "CheckSMSCode.html",
+                        data: "Code=" + $("#Code").val() + "&Mobile=" + $("#InMobile").val(),
+                        success: function (ret) {
+                            if (ret == "OK") {
+                                //$.ajax({
+                                //    url: "CheckUnique.html",
+                                //    data: "",
+                                //    success: function (ret) {
+                                //        if (ret == "OK") {
+                                $("#regForm").submit();
+                                //        } else if (ret == "1") {
+                                //            ShowInfo("请不要重复提交！");
+                                //        }
+                                //    }
+                                //});
+                            } else if (ret == "2") {
+                                ShowInfo("验证码错误！");
+                            } else if (ret == "3") {
+                                ShowInfo("请耐心等待，不要重复发送！");
+                            } else if (ret == "4") {
+                                ShowInfo("图形验证码错误！");
+                            }
+                            else if (ret == "6") {
+                                ShowInfo("暂不支持您的手机号入网！");
+                            }
+                        }
+                    });
+                }
+
+        });
+            var sec = 0;
+            var Runing1 = false;
+            var Runing2 = false;
+            var SetSec = function () {
+                if (sec > 0) {
+                    sec--;
+                    $("#GetCode").addClass("noused").html(sec + "秒后重试");
+                    setTimeout("SetSec()", 1000);
+                } else {
+                    $("#GetCode").removeClass("noused").html("重新发送");
+                }
+            }
+            $("#GetCode").click(function () {
+                ShowInfo("短信验证码已发送至您的手机，请及时查收");
+                var Mobile = $("#InMobile").val();
+                if (Mobile == "@(BasicUsers.UserName)") {
+                ShowInfo("请不要输入当前用户号码");
+                return false;
+            }
+            if (!/^((\(\d{2,3}\))|(\d{3}\-))?1[3,5,8]\d{9}$/.test(Mobile)) {
+                ShowInfo("请正确填写您的手机号");
+                return false;
+            }
+            if (sec > 0) {
+                ShowInfo("请耐心等待，不要重复发送！");
+                return false;
+            }
+            if (Runing1) {
+                ShowInfo("正在提交，请勿重复提交！");
+                return false;
+            }
+            Runing1 = true;
+            var Agent = $("#Agent").val();
+            $.ajax({
+                url: "GetCode.html",
+                data: "Mobile=" + Mobile + "&Agent=" + Agent,
+                success: function (ret) {
+                    if (ret == "OK") {
+                        sec = 60;
+                        SetSec();
+                    } else if (ret == "2") {
+                        ShowInfo("您今天重试次数已达到上限，请明天再试！");
+                    } else if (ret == "3") {
+                        ShowInfo("请耐心等待，不要重复发送！");
+                    }
+                    else if (ret == "6") {
+                        ShowInfo("暂不支持您的手机号入网！");
+                    }
+                    Runing1 = false;
+                }
+            });
+        });
+        $("#Bank").picker({
+            toolbarTemplate: '<header class="bar bar-nav">\
+            <button class="button button-link pull-right close-picker">确定</button>\
+            <h1 class="title">选择银行</h1>\
+            </header>',
+            cols: [
+                {
+                    textAlign: 'center',
+                    values: ['请选择银行'@{foreach (var item in BasicBankList)
+                                      {
+                                          @Html.Raw(",'" + item.Name + "'");
+                                      }}]
+                    }
+                ]
+            });
+                var json = {
+                    "请选择银行": "0"
+        @{foreach (var item in BasicBankList)
+          {
+                @Html.Raw(",\"" + item.Name + "\":\"" + item.Id + "\"");
+          }}
+                };
+        var ShowInfo = function (info) {
+            $(".text-danger").text(info);
+            $(".point").removeClass("hide");
+        }
+        var onoff = true;
+        $("a.font").click(function () {
+
+            $("li.fires").toggleClass("hide")
+            if (onoff) {
+                $(this).find("i").html("&#xe60c;").css("color", "#1ea9ea");
+                $("#InMobile").focus();
+                $("#InMobile").val("1");
+                onoff = false;
+            } else {
+                $(this).find("i").html("&#xe64e;").css("color", "#000");
+                onoff = true;
+               
+            }
+        })
+
+    </script>
+</body>
+</html>

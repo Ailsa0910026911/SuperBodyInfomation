@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.SMUid = 240;
+    ViewBag.Title = "缓存管理";
+
+    string[] NameArr = "广告缓存|系统设置|用户绑卡|专属客服|用户消息|支付配置".Split('|');
+    string[] KeyArr = "AdInfo|SysConfig|UserCard|UsersAgentTel|UsersMsgCount|PayConfigChange".Split('|');
+    SysAdmin SysAdmin = ViewBag.AdminUser;
+    string apk = "https://apk.goodpay.net.cn/";
+    string api = "https://api.goodpay.net.cn/";
+    
+    string LastTime = SysAdmin.LastTime.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss");
+    string Token = LastTime.GetMD5();
+    Token = string.Format("{0}|{1}", SysAdmin.Id, Token);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-container">
+                    <table class="table table-striped table-bordered table-hover" id="datatable_products">
+                        <thead>
+                            <tr role="row" class="heading" style="text-align:center;">
+                                <th width="20%" style="text-align:center;">缓存名称</th>
+                                <th width="40%" colspan="2" style="text-align:center;">安卓</th>
+                                <th colspan="2" style="text-align:center;">苹果</th>
+                            </tr>
+                            @for (int i = 0; i < KeyArr.Length; i++)
+                            {
+                            <tr role="row" class="filter">
+                                <td class="center">@(NameArr[i])</td>
+                                <td>
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom Ajax" href="@(apk)/home/clearcache?name=@(KeyArr[i])&key=@(Token)"><i class="fa fa-times"></i>清除</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm red filter-cancel Ajax" awidth="800px" aheight="600px" href="@(apk)/home/getcache?name=@(KeyArr[i])&key=@(Token)"><i class="fa fa-sitemap"></i>明细</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom Ajax" href="@(api)/home/clearcache?name=@(KeyArr[i])&key=@(Token)"><i class="fa fa-times"></i>清除</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm red filter-cancel Ajax" awidth="800px" aheight="600px" href="@(api)/home/getcache?name=@(KeyArr[i])&key=@(Token)"><i class="fa fa-sitemap"></i>明细</a>
+                                </td>
+                            </tr>
+                            }
+                            <tr role="row" class="filter">
+                                <td class="center">所有缓存</td>
+                                <td>
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom Ajax" href="@(apk)/home/clearcache?key=@(Token)"><i class="fa fa-times"></i>清除</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm red filter-cancel Ajax" awidth="800px" aheight="600px" href="@(apk)/home/getcache?key=@(Token)"><i class="fa fa-sitemap"></i>明细</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm yellow filter-submit margin-bottom Ajax" href="@(api)/home/clearcache?key=@(Token)"><i class="fa fa-times"></i>清除</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm red filter-cancel Ajax" awidth="800px" aheight="600px" href="@(api)/home/getcache?key=@(Token)"><i class="fa fa-sitemap"></i>明细</a>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>

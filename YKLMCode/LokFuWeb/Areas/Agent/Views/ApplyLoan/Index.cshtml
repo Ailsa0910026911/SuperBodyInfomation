@@ -1,0 +1,223 @@
+﻿@{
+    IList<ApplyLoan> ApplyLoanList = ViewBag.ApplyLoanList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.SMUid = 161;
+    ApplyLoan ApplyLoan = ViewBag.ApplyLoan;
+    ViewBag.NoShowDel = true;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="40" align="right">姓名 : </td>
+                            <td>
+                                <input class="input-text" name="TrueName" value="@(ApplyLoan.TrueName)" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="70" align="right">申请时间 : </td>
+                            <td align="left">
+                                <input id="STime" class=" Wdate" type="text" 
+                                name="STime" value="@(ApplyLoan.STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                - 
+                            <input id="ETime" class=" Wdate" type="text" 
+                                name="ETime" id="ETime" value="@(ApplyLoan.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+                                |<select class="input-md" data-placeholder="==不限制==" name="Education" id="Education">
+                                    <option value="">==学历==</option>
+                                    <option value="高中"@(ApplyLoan.Education == "高中" ? " selected" : "")>高中</option>
+                                    <option value="中专"@(ApplyLoan.Education == "中专" ? " selected" : "")>中专</option>
+                                    <option value="大专"@(ApplyLoan.Education == "大专" ? " selected" : "")>大专</option>
+                                    <option value="本科"@(ApplyLoan.Education == "本科" ? " selected" : "")>本科</option>
+                                    <option value="本科以上"@(ApplyLoan.Education == "本科以上" ? " selected" : "")>本科以上</option>
+                                </select>
+                                |<select name="SheBao" class="input-md">
+                                    <option value="">社保情况</option>
+                                    <option value="无" @(ApplyLoan.SheBao == "无" ? "selected" : "")>无</option>
+                                    <option value="连续3个月" @(ApplyLoan.SheBao == "连续3个月" ? "selected" : "")>连续3个月</option>
+                                    <option value="连续半年" @(ApplyLoan.SheBao == "连续半年" ? "selected" : "")>连续半年</option>
+                                    <option value="连续1年" @(ApplyLoan.SheBao == "连续1年" ? "selected" : "")>连续1年</option>
+                                    <option value="连续1年以上" @(ApplyLoan.SheBao == "连续1年以上" ? "selected" : "")>连续1年以上</option>
+                                    >
+                                </select>
+                                |<select name="HasCar" class="input-sm">
+                                    <option value="">有车</option>
+                                    <option value="1" @(ApplyLoan.HasCar == 1 ? "selected" : "")>有</option>
+                                    <option value="99" @(ApplyLoan.HasCar == 99 ? "selected" : "")>无</option>
+                                </select>
+                                |<select name="House" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">房产信息</option>
+                                    <option value="商品房全款"@(ApplyLoan.House == "商品房全款" ? " selected" : "")>商品房全款</option>
+                                    <option value="商品房按揭"@(ApplyLoan.House == "商品房按揭" ? " selected" : "")>商品房按揭</option>
+                                    <option value="无房产"@(ApplyLoan.House == "无房产" ? " selected" : "")>无房产</option>
+                                </select>
+                                |<select name="HasCredit" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">有信用卡</option>
+                                    <option value="1" @(ApplyLoan.HasCredit == 1 ? "selected" : "")>有</option>
+                                    <option value="99" @(ApplyLoan.HasCredit == 99 ? "selected" : "")>无</option>
+                                </select>
+                                |
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="70" align="right"></td>
+                            <td align="left">
+                                <select name="State" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">申请进度</option>
+                                    <option value="1" @(ApplyLoan.State == 1 ? "selected" : "")>申请中</option>
+                                    <option value="2" @(ApplyLoan.State == 2 ? "selected" : "")>已跟进</option>
+                                    <option value="3" @(ApplyLoan.State == 3 ? "selected" : "")>已审核</option>
+                                    <option value="4" @(ApplyLoan.State == 4 ? "selected" : "")>已放款</option>
+                                    <option value="5" @(ApplyLoan.State == 5 ? "selected" : "")>失败</option>
+                                </select>
+                                |<select name="PayState" class="form-control input-xsmall input-inline input-md">
+                                    <option value="">佣金结算</option>
+                                    <option value="1" @(ApplyLoan.PayState == 1 ? "selected" : "")>已结算</option>
+                                    <option value="99" @(ApplyLoan.PayState == 99 ? "selected" : "")>未结算</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        @if (ApplyLoanList != null)
+        {
+            <div class="point">
+                共有<span class="text-red">@(ApplyLoanList.Count)</span>条信息,佣金<span id="AgentMoney" class="text-red">@(ApplyLoanList.Sum(n => n.AgentMoney).ToString("n2"))</span>。
+            </div>
+            <div class="list-table">
+                <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                    <thead>
+                        <tr>
+                            <th width="80">姓名 </th>
+                            <th width="100">申请金额 </th>
+                            <th width="100">工作单位性质 </th>
+                            <th width="40">教育 </th>
+                            <th width="80">社保情况 </th>
+                            <th width="40">有车 </th>
+                            <th width="60">住房 </th>
+                            <th width="100">年收入 </th>
+                            <th width="60">有信用卡 </th>
+                            <th width="60">进度 </th>
+                            <th width="100">申请日期 </th>
+                            <th width="60">被购买 </th>
+                            <th width="100">售价 </th>
+                            <th width="100">结算金额</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ApplyLoanList.Count() <= 0)
+                        {
+                            <tr>
+                                <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                    <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var p in ApplyLoanList)
+                            {
+                                if (p.TrueName.IsNullOrEmpty())
+                                {
+                                    p.TrueName = "***";
+                                }
+                                string TrueName = p.TrueName.Substring(0, 1);
+                                if (p.TrueName.Length <= 2)
+                                {
+                                    TrueName += "*";
+                                }
+                                else
+                                {
+                                    TrueName += "********************".Substring(0, p.TrueName.Length - 2);
+                                    TrueName += p.TrueName.Substring(p.TrueName.Length - 1, 1);
+                                }
+                            <tr class="odd gradeX">
+                                <td class="center">@(TrueName) </td>
+                                <td class="center">@(p.Amount.ToString("F0")) </td>
+                                <td class="center">@(p.CompanyNature) </td>
+                                <td class="center">@(p.Education) </td>
+                                <td class="center">@(p.SheBao) </td>
+                                <td class="center">
+                                    @if (p.HasCar == 1)
+                                    {
+                                        <i class="iconfont color-green">&#xe60d;</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="iconfont color-red">&#xe611;</i>
+                                    }
+                                </td>
+                                <td class="center">@(p.House) </td>
+                                <td class="center">@(p.Income)万元 </td>
+                                <td class="center">
+                                    @if (p.HasCredit == 1)
+                                    {
+                                        <i class="iconfont color-green">&#xe60d;</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="iconfont color-red">&#xe611;</i>
+                                    }
+                                </td>
+                                <td class="center">@if (p.State == 1)
+                                                   {
+                                    <span>申请中</span>
+                                                   }
+                                                   else if (p.State == 2)
+                                                   {
+                                    <span class="color-green">已跟进</span>
+                                                   }
+                                                   else if (p.State == 3)
+                                                   {
+                                    <span class="color-green">已审核</span>
+                                                   }
+                                                   else if (p.State == 4)
+                                                   {
+                                    <span class="color-green">已放款</span>
+                                                   }
+                                                   else if (p.State == 5)
+                                                   {
+                                    <span class="color-red">失败</span>
+                                                   }
+                                </td>
+                                <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                <td class="center">@if (p.PayState == 1)
+                                                   {
+                                    <span class="color-green">已支付</span>
+                                                   }
+                                                   else
+                                                   {
+                                    <span>未支付</span>
+                                                   }
+                                </td>
+                                <td class="center">@(p.Amoney.ToString("F2")) </td>
+                                @*<td class="center"> @if (p.AgentPay == 1){
+                  <span class="color-green">已结算</span>
+                  }else{
+                  <span>未结算</span>
+                  }
+              </td>*@
+                                <td class="center">@(p.AgentMoney.ToString("F2")) </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", ApplyLoanList)
+            </div>
+        }
+    </div>
+</div>
+@section FooterScripts
+{
+    <script type="text/javascript" src="/Content/HaoFu/js/my97datepicker/4.8.0/WdatePicker.js"></script>
+}

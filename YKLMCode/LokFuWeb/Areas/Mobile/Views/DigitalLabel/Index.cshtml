@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+    Users BasicUsers = ViewBag.BasicUsers;
+}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>台签</title>
+        <link rel="stylesheet" href="/Content/Mobile/css/normalize.css" />
+		<link rel="stylesheet" href="/Content/Mobile/DigitalLabel/css/style.css" />
+	</head>
+	<body>
+		<div class="main">
+			<img src="/Content/Mobile/DigitalLabel/image/top.png" alt="" />
+			<img class="bg" src="/Content/Mobile/DigitalLabel/image/bg.jpg" alt="" />
+			<div class="conter">
+				<img src="@ViewBag.Code" alt="" /><br /><br />
+				<span>我的收银台专属二维码</span>
+			</div>
+@*			<a class="poren" href="http://taobao.com">
+				<img src="image/poren.png" alt="" />
+			</a>*@
+		</div>
+@*		<div class="year hide">
+			<div class="year-main">
+				<ul>
+					<li><a class="save" href="lokfu:saveQrcode">保存</a></li>
+					<li><a class="clos" href="javascript:">取消</a></li>
+				</ul>
+			</div>
+		</div>*@
+	</body>
+</html>

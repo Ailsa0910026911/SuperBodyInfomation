@@ -1,0 +1,105 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    ViewBag.SMUid = 42;
+    string Remark = ViewBag.Remark;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px;height:480px; overflow: hidden; margin: 0;">
+    <div class="">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box">
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="StopPaySave.html?IsAjax=true" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(Users.Id)" />
+                    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                    <div class="form-body">
+                        @if (Users.StopPayState == 1)
+                        {
+                            <div class="alert alert-danger">
+                                <button class="close" data-close="alert"></button>
+                                当前状态：部分止付，止付金额：@(Users.StopPayMoney.ToMoney())元。
+                            </div>
+                        }
+                        @if (Users.StopPayState == 2)
+                        {
+                            <div class="alert alert-danger">
+                                <button class="close" data-close="alert"></button>
+                                当前状态：全帐户止付。
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="control-label col-md-3">状态 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-small" name="StopPayState" id="StopPayState">
+                                    @if (Users.StopPayState != 0)
+                                    {
+                                        <option value="0"@(Users.StopPayState == 0 ? " selected" : "")>解除止付</option>
+                                    }
+                                    @if (Users.StopPayState != 2)
+                                    {
+                                        <option value="1"@(Users.StopPayState == 1 ? " selected" : "")>部分止付</option>
+                                    }
+                                    @if (Users.StopPayState != 2)
+                                    {
+                                        <option value="2"@(Users.StopPayState == 2 ? " selected" : "")>全止付</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="StopPayMoneySet">
+                            <label class="control-label col-md-3">止付金额 </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control input-small validate[required,custom[money],min[1]]" name="StopPayMoney" id="StopPayMoney" value="" />
+                                </div>
+                                <p class="help-block">当前帐户余额：@(Users.Amount.ToMoney()) 元</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">备注记录 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <textarea class="form-control input-xlarge validate[required,maxSize[1000]]" name="Remark" style="height:60px;margin: 10px 10px 0 0;" id="Remark" rows="5"></textarea>
+                                <p style="color:grey"><span style="color:red">*</span>该备注内容商户可见</p>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label class="control-label col-md-3">内部备注</label>
+                            <div class="col-md-4">
+                                <textarea class="form-control input-xlarge validate[maxSize[1000]]" name="CardRemark" id="CardRemark"  style="height:60px;margin: 10px 10px 0 0;" rows="5"></textarea>
+                                <p style="color:grey"><span style="color:red">*</span>该备注内容商户不可见、管理平台可见</p>
+                            </div>
+                        </div> 
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green">确认修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+                $("#StopPayState").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#StopPayMoneySet").show();
+                    } else {
+                        $("#StopPayMoneySet").hide();
+                    }
+                }).change();
+            });
+        </script>
+    }
+}

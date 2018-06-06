@@ -1,0 +1,124 @@
+﻿@{
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    ViewBag.SMUid = 129;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    ViewBag.NoShowDel = true;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    SysAdmin AdminUser = ViewBag.AdminUser;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form class="frame-list" id="ListForm" name="ListForm" method="get">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <td width="80" align="right">登录帐户 : </td>
+                        <td width="100" align="left">
+                            <input class="input-text" name="UserName" value="@(SysAdmin.UserName)" />
+                        </td>
+                        <td width="80" align="right">姓名 : </td>
+                        <td width="100" align="left">
+                            <input class="input-text" name="TrueName" value="@(SysAdmin.TrueName)" />
+                        </td>
+                        <td width="80" align="right">手机 : </td>
+                        <td width="100" align="left">
+                            <input class="input-text" name="Mobile" value="@(SysAdmin.Mobile)" />
+                        </td>
+                        <td width="60" align="right">状态 : </td>
+                        <td width="100" align="left">
+                            <select name="State" class="input-sm">
+                                <option value="">不限制</option>
+                                <option value="1" @(SysAdmin.State == 1 ? "selected" : "")>开通</option>
+                                <option value="99" @(SysAdmin.State == 99 ? "selected" : "")>禁止</option>
+                            </select>
+                        </td>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        <div class="frame-bg bg-none">
+            @if (ViewBag.Add)
+            {
+                <a class="btn btn-blue" href="Edit.html">新增操作员 <i class="fa fa-plus"></i></a>
+            }
+        </div>
+        <div class="list-table">
+            <table id="ListBox">
+                <thead>
+                    <tr>
+                        <th width="100px">登录帐户 </th>
+                        <th width="100px">姓名 </th>
+                        <th width="100px">手机号 </th>
+                        <th width="140px">邮箱 </th>
+                        <th width="80px">状态 </th>
+                        <th width="80px">登录次数 </th>
+                        <th width="100px">登录时间 </th>
+                        <th width="100px">登录IP </th>
+                        <th width="100px">注册时间 </th>
+                        <th>等级 </th>
+                        <th width="60">操作 </th>
+                    </tr>
+                </thead>
+                <tbody class="ListBox">
+                    @if (SysAdminList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in SysAdminList)
+                        {
+                        <tr class="odd gradeX">
+                            <td class="center">@(p.UserName)</td>
+                            <td class="center">@(p.TrueName) </td>
+                            <td class="center">@(p.Mobile) </td>
+                            <td class="center">@(p.Email) </td>
+                            <td class="center">
+                                @if (p.State == 1)
+                                {
+                                    <i class="iconfont color-green">&#xe60d;</i>
+                                }
+                                else
+                                {
+                                    <i class="iconfont color-red">&#xe611;</i>
+                                }
+                            </td>
+                            <td class="center">@(p.LoginTimes) </td>
+                            <td class="center">@(p.LastTime.HasValue ? p.LastTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--") </td>
+                            <td class="center">@(p.LoginIp) </td>
+                            <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                            <td class="center">@(p.Id == BasicAgent.AdminId ? "代理商" : "操作员") </td>
+                            <td class="center">
+                                @if (p.Id != BasicAgent.AdminId && p.Id != AdminUser.Id)
+                                {
+                                    if (ViewBag.Info)
+                                    {
+                                    <a class="label label-sm label-success" href="Info.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>查看</a>
+                                    }
+                                    if (ViewBag.Save)
+                                    {
+                                    <a class="label label-sm label-success" href="Edit.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>修改</a>
+                                    }
+
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", SysAdminList)
+        </div>
+    </div>
+</div>
+

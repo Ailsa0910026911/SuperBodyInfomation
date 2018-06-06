@@ -1,0 +1,341 @@
+﻿@{
+    Layout = null;
+    bool isMyPage = ViewBag.isMyPage;
+    CutAct CutAct = ViewBag.CutAct;
+    CutUsers CutPageUsers = ViewBag.CutPageUsers;
+    CutUsers CutUsers = ViewBag.CutUsers;
+    string Title = CutPageUsers.NickName + "邀请您帮他抢大闸蟹";
+    if (isMyPage)
+    {
+        Title = CutPageUsers.NickName + "邀请您的好友帮您抢大闸蟹吧";
+    }
+    string AppId = ViewBag.AppId;
+    string AppSecret = ViewBag.AppSecret;
+    bool IsOutTime = ViewBag.IsOutTime;
+    LokFuEntity Entity=ViewBag.Entity;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <title>@(Title)</title>
+    <link href="/Content/Mobile/Cut/css/xin.css?2015008" rel="stylesheet" type="text/css">
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <!--微信分享 -->
+    @{
+        string noncestr = "lokfu" + DateTime.Now.ToString("MMddhhmmss") + new Random().Next(10, 99).ToString();
+        string url = Request.Url.ToString();
+        TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        string timestamp = Convert.ToInt64(ts.TotalSeconds).ToString();
+        string JSAPISign = LokFu.WeiXin.JSAPI.GetJSAPISign(url, noncestr, timestamp);
+        //分享数据
+        string sharedTitle = CutPageUsers.NickName + "邀请您帮他砍价赢大闸蟹！";
+        string sharedPic = "http://" + Utils.GetHostName() + "/Content/Mobile/Cut/images/pangxie.png";
+        //string sharedPic = CutPageUsers.HeadImgUrl;
+        string shareddescContent = "快来帮我砍价吧，我离还抢大闸蟹还差" + ((double)CutPageUsers.MyPrice).ToString() + "元！";
+        string LinkUrl = url;
+        }
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"> </script>
+        <script type="text/javascript">
+            var appId = '@(AppId)';
+            var timestamp = @(timestamp);
+            var nonceStr = '@(noncestr)';
+            var signature = '@(JSAPISign)';
+            //要分享的详细数据
+            var shareData = {
+                title: '@(sharedTitle)',
+                desc: '@(shareddescContent)',
+                link: '@(LinkUrl)',
+                imgUrl: '@(sharedPic)',
+                trigger: function (res) {
+                    //已发送事件
+                    $(".tmc").hide();
+                    $(".friends_help").hide();
+                    $(".jubao").show();
+                },
+                success: function (res) {
+                    //已分享事件
+                    $(".tmc").show();
+                    $("#sharpbox").show();
+                    $(".jubao").hide();
+                },
+                cancel: function (res) {
+                    //已取消事件
+                    $(".tmc").show();
+                    $(".friends_help").show();
+                    $(".jubao").hide();
+                },
+                fail: function (res) {
+                    //分享失败事件
+                }
+            };
+        </script>
+        <script type="text/javascript" src="/Content/Mobile/Cut/js/page.shared.js?004"></script>
+        <!--End 微信V6.02分享 -->
+    <!--End 微信分享 -->
+</head>
+<body class="back_da">
+    <a href="javascript:void(0);" class="jubao">举报</a>
+    @if (isMyPage)
+    {
+        <div class="haoluan"><span class="xj01">现价</span><span class="xj02">RMB: <b id="MyPrice">@((double)CutPageUsers.MyPrice)</b>元</span><span class="xj03">原价：RMB@((double)CutPageUsers.AllPrice)</span></div>
+        CutLog CutLog = Entity.CutLog.FirstOrDefault(n => n.CUId == CutPageUsers.Id && n.CUIded == CutPageUsers.Id);
+        if (IsOutTime)
+        { 
+            <div class="zsane"><a href="javascript:void(0);">您的任务未能完成</a></div>
+            <div class="zsan"><a href="reset.html">重新参与活动</a></div>
+        }
+        else
+        {
+            if (CutLog == null)
+            {
+                <div class="zsan"><a href="javascript:void(0);" id="GetMoney">自砍一刀</a></div>
+            }
+            else
+            {
+                <div class="zsan"><a href="javascript:void(0);" id="sharp">邀请好友帮忙</a></div>
+            }
+            <div class="zsan"><a href="javascript:void(0);" id="checkmy">我要领奖</a></div>
+        }
+    }
+    else
+    {
+        <div class="haoluan"><span class="xj01">现价</span><span class="xj02">RMB: @((double)CutPageUsers.MyPrice)元</span><span class="xj03">原价：RMB@((double)CutPageUsers.AllPrice)</span></div>
+        if (IsOutTime)
+        {
+            <div class="zsane"><a href="javascript:void(0);">“@(CutPageUsers.NickName)”的砍价活动已结束</a></div>
+        }
+        else
+        {
+            <div class="zsan"><a href="javascript:void(0);" id="GetMoney">帮“@(CutPageUsers.NickName)”砍一刀</a></div>
+        }
+        <div class="zsan"><a href="Index-@(CutUsers.Id).html">我也要参与活动</a></div>
+    }
+    <div class="zsan"><a href="javascript:void(0);" id="ActiveInfo">活动规则</a></div>
+    <div class="tmc"></div>
+    <!--活动需知-->
+    <div class="txlj ActiveInfo Info">
+        <div class="title_lj">活动规则</div>
+        <div class="hd_text">
+            <p>规则内容：加入砍价赢大闸蟹活动后，需在@(CutAct.OutTime)天内完成邀请好友帮忙并砍价到0元，超时活动将自动关闭！</p>
+            <p>1.只能通过微信参加。</p>
+            <p>2.通过邀请好友帮忙砍价赢大闸蟹。</p>
+            <p>3.当您砍价到0元时，就可以获得价值2988元的阳澄湖大闸蟹一箱。</p>
+            <p>4.每个人只能中奖一次，我们将在两个工作日内在顺丰优选上为您订购<a class="ee_hf" style="width:80%; height:auto;" href="http://www.sfbest.com/html/products/163/9700162475.html#trackref=sfbest_s_" target="_blank">http://www.sfbest.com/html/products/163/9700162475.html#trackref=sfbest_s_</a>并由顺丰快递送至您的手中。</p>
+            <p>5.一经发现恶意作弊，取消中奖资格。领奖方式：当您的砍价到0元时，请提供您的姓名、联系电话及收货地址，我们将按照先后顺序依次订购并配送到您的手中。</p>
+            <p style="text-align:center;"><a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html" target="_blank" class="ee_hf">点此下载@(BasicSet.Name)APP抽现金</a></p>
+        </div>
+        <input type="button" value="我知道了" class="btn hidetmc" />
+    </div>
+    <!--点击抢现金-->
+    <div class="bzwbq GetMoneyInfo Info">
+        @if (isMyPage)
+        {
+        <span class="text">您已成功抢到<b></b>元现金！</span>
+        }
+        else
+        {
+        <span class="text">您已成功帮助“@(CutPageUsers.NickName)”砍掉<b></b>元！</span>
+        }
+        <p><a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html">点此下载@(BasicSet.Name)APP抽现金</a></p>
+        <span class="wzdl hidetmc">我知道了</span>
+    </div>
+    <!--第二次点击抢现金-->
+    <div class="bzwbq GetMoneyInfo1 Info">
+        @if (isMyPage)
+        { 
+        <span class="text">只能抢一次现金哦！</span>
+        }
+        else
+        {
+        <span class="text">只能帮好友一次哦！</span>
+        }
+        <p><a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html">点此下载@(BasicSet.Name)APP抽现金</a></p>
+        <span class="wzdl hidetmc">我知道了</span>
+    </div>
+    <!--邀请好友帮忙-->
+    <div class="friends_help Info"></div>
+    <!--继续邀请好友帮忙-->
+    <div class="bzwbq Info" id="sharpbox">
+        <span style="line-height:20px; color:#fff; font-size:16px; margin-top:10%;padding:0 8%;width:84%;">您已成功邀请好友帮忙，继续邀请可加快您抢现金的速度哦！</span>
+        <p><a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html">点此下载@(BasicSet.Name)APP抽现金</a></p>
+        <span class="wzdl" id="sharp2">继续邀请</span>
+    </div>
+    <!--我要领取（好友助力不够，还不够1万元）-->
+    <div class="bzwbq wylq Info checkmyInfo">
+        <span class="sorry">对不起，您的价格不为0元，还不能领取哦，邀请更多好友给您帮忙吧</span>
+        <p><a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html">点此下载@(BasicSet.Name)APP抽现金</a></p>
+        <span class="wzdl hidetmc" style="margin-top:5%;">继续努力</span>
+    </div>
+    <!--填写领奖信息-->
+    <div class="txlj TakeMyBox Info">
+	    <div class="title_lj">请如实填写您的领奖信息</div>
+        <input type="text" id="uname" class="text" placeholder="请填写您的姓名" style="margin-top:10%;" />
+        <input type="text" id="tel" class="text" placeholder="请填写您的联系电话" />
+        <input type="text" id="address" class="text" placeholder="请填写您的收货地址" />
+        <input type="submit" id="TakeMy" class="btn" value="确定" />
+    </div>
+    <!--提现申请已提交-->
+    <div class="bzwbq wylq TakeMyInfo Info">
+	    <span class="sorry">您的领奖信息已提交，价值<b>@((double)CutUsers.AllPrice)</b>元的大闸蟹我们将在两个工作日内送至您的手中！。</span>
+        <span class="wzdl hidetmc" style="margin-top:5%;">我知道了</span>
+    </div>
+    <div class="xzjbbox">
+        <div class="xzjb hidetmc" style="color:#333;">×返回</div>
+        <div class="xzjb">请选择举报原因</div>
+        <div style="width:100%; height:auto; position:relative;">
+            <div class="dxx jb" style="border-top:1px solid #ebebeb; margin-top:2%;">色情低俗</div>
+            <div class="dxx jb">谣言</div>
+            <div class="dxx jb">诱导分享</div>
+            <div class="dxx jb">政治敏感</div>
+            <div class="dxx jb">其他（收集隐私信息等）</div>
+            <div class="dxx2 jb">侵权举报（诽谤、抄袭、冒用…）</div>
+            <div class="bk"></div>
+        </div>
+        <div class="lkjb"><input type="button" id="jbbtn" value="立即举报" /></div>
+    </div>
+    <div class="xzjbok">
+        <div class="img_wc"></div>
+        <div class="submit2">已提交</div>
+        <div class="text_jb">您的举报已提交，我们会尽快处理。<br />感谢你的支持！</div>
+    </div>
+@*    <div class="ad">
+        <img src="/Content/Mobile/Cut/images/ad.png" style="width:100%;display:block;" />
+        <a href="http://sys.goodpay.net.cn/Mobile/Turntable/share-21.html"><img src="/Content/Mobile/Cut/images/ad.png" style="width:100%; position:fixed; left:0; bottom:0;display:block;" /></a>
+    </div>*@
+    <script>
+        var jubao="";
+        $(function () {
+            $("#ActiveInfo").click(function () {
+                $(".tmc").show();
+                $(".ActiveInfo").show();
+                $(".jubao").hide();
+            });
+            $(".jubao").click(function () {
+                $(".tmc").show();
+                $(".xzjbbox").animate({"height":"100%"},1000);
+                $(".jubao").hide();
+                $(".ad").hide();
+            });
+            $(".xzjbbox .jb").click(function () {
+                jubao=$(this).text();
+                $(this).addClass("addback").siblings().removeClass("addback");
+            });
+            $("#jbbtn").click(function () {
+                $.get("jubao-@(CutPageUsers.Id).html?jubao="+jubao,function(){
+                    $(".xzjbbox").height(0);
+                    $(".xzjbok").show();
+                })
+            });
+            $("#sharp").click(function () {
+                $(".tmc").show();
+                $(".friends_help").show();
+                $(".jubao").hide();
+            });
+            $("#sharp2").click(function () {
+                $("#sharpbox").hide();
+                $(".tmc").show();
+                $(".friends_help").show();
+                $(".jubao").hide();
+            });
+            $(".tmc,.hidetmc,.friends_help,.xzjbok").click(function () {
+                $(".ad").show();
+                $(".tmc").hide();
+                $(".Info").hide();
+                $(".jubao").show();
+                $(".xzjbbox").animate({"height":"0"},1000);
+                $(".xzjbok").hide();
+            });
+            $("#GetMoney").click(function () {
+                $.get("GetMoney-@(CutPageUsers.Id).html",function(ret){
+                    if(ret=="e0"){
+                        alert("发生未知错误，请重试！");
+                    }else if(ret=="e1"){
+                        $(".tmc").show();
+                        $(".GetMoneyInfo1").show();
+                        $(".jubao").hide();
+                    }else if(ret=="e9"){
+                        alert("您的活动已经超时！");
+                    }else{
+                        $(".GetMoneyInfo").find("b").text(ret);
+                        var GetMoney=parseFloat(ret);
+                        var MyPrice=parseFloat($("#MyPrice").text());
+                        MyPrice=MyPrice-GetMoney;
+                        $("#MyPrice").text(MyPrice);
+                        $(".tmc").show();
+                        $(".GetMoneyInfo").show();
+                        $(".jubao").hide();
+                        @if (isMyPage)
+                        {
+                            <text>
+                            $("#GetMoney").text("邀请好友帮忙").unbind().bind("click",function(){
+                                $(".tmc").show();
+                                $(".friends_help").show();
+                                $(".jubao").hide();
+                            });
+                            </text>
+                        }
+                    }
+                });
+            });
+            $("#checkmy").click(function(){
+                $.get("CheckMy-@(CutPageUsers.Id).html",function(ret){
+                    if(ret=="e0"){
+                        alert("发生未知错误，请重试！");
+                    }else if(ret=="e1"){
+                        $(".tmc").show();
+                        $(".checkmyInfo").show();
+                        $(".jubao").hide();
+                    }else if(ret=="e5"){
+                        alert("您已经领过奖啦，请不要重复领取！");
+                    }else if(ret=="e9"){
+                        alert("您的活动已经超时！");
+                    }else if(ret=="ok"){
+                        $(".tmc").show();
+                        $(".TakeMyBox").show();
+                        $(".jubao").hide();
+                    }
+                });
+            });
+            $("#TakeMy").click(function(){
+                var url="TakeMy-@(CutPageUsers.Id).html?state=ok";
+                var uname=$("#uname").val();
+                var tel=$("#tel").val();
+                var address=$("#address").val();
+                if( uname=="" || tel=="" || address=="" ){
+                    alert("请完善资料");
+                }
+                url+="&uname="+uname;
+                url+="&tel="+tel;
+                url+="&address="+address;
+                $.get(url,function(ret){
+                    if(ret=="e0"){
+                        alert("发生未知错误，请重试！");
+                    }else if(ret=="e1"){
+                        $(".tmc").show();
+                        $(".checkmyInfo").show();
+                        $(".jubao").hide();
+                    }else if(ret=="e2"){
+                        alert("@(BasicSet.Name)帐户不存在！");
+                    }else if(ret=="e3"){
+                        alert("@(BasicSet.Name)帐户未认证！");
+                    }else if(ret=="e4"){
+                        alert("@(BasicSet.Name)真实姓名与身份证不符！");
+                    }else if(ret=="e5"){
+                        alert("您已经领过奖啦，请不要重复领取！");
+                    }else if(ret=="e9"){
+                        alert("您的活动已经超时！");
+                    }else if(ret=="ok"){
+                        $(".tmc").show();
+                        $(".TakeMyInfo").show();
+                        $(".jubao").hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

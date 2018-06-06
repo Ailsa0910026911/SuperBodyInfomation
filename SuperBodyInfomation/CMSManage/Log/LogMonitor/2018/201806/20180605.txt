@@ -1,0 +1,9884 @@
+
+ 
+记录时间：2018-06-05 17:47:02,535 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:02
+      总 时 间：21秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:02,535 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:02,535 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Test
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:02
+      总 时 间：28秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:02,535 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:02
+      总 时 间：14秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,162 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,883 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,883 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:03
+      总 时 间：14秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,883 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:03
+      总 时 间：21秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,883 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,884 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Test
+      开始时间：2018/6/5 17:47:02
+      结束时间：2018/6/5 17:47:03
+      总 时 间：28秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,955 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,955 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,967 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,967 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,970 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,970 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,974 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,975 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,982 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,982 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,989 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,990 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,996 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,997 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:03,999 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:03
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,000 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:03
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,004 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,004 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,007 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,008 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,011 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,011 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,017 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,018 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,021 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,022 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,029 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,029 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,032 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,033 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,115 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,116 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,121 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,122 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,132 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,133 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,137 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,137 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,147 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,147 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,152 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,153 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,160 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,163 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,167 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,167 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,173 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,175 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,183 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,184 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,190 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,191 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,200 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,200 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,208 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,209 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,216 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,216 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,220 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,220 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,226 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,230 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,241 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,245 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,248 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,248 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,259 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,259 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,267 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:04,267 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:04
+      结束时间：2018/6/5 17:47:04
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,125 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Test
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,125 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Test
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,177 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,178 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,182 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,185 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,191 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,191 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,196 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,197 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,204 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,205 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,213 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,213 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,224 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,227 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,232 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,233 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,238 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,239 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,244 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,244 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,249 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,251 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,261 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,262 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,275 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,275 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,281 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,282 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,288 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,290 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,296 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,296 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,301 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,302 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,306 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,306 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,311 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,311 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,827 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,829 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,837 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,840 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,847 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,848 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,854 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,858 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,861 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,862 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,870 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,871 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,878 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,879 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,881 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,882 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,888 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,889 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,895 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,895 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,903 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,904 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,912 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,913 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,926 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,926 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,931 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,931 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,937 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,938 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,942 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,942 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,946 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,947 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,952 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,953 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,956 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,956 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,960 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:27,960 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:27
+      结束时间：2018/6/5 17:47:27
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,973 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,974 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,981 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,982 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,991 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,991 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,995 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:32,996 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:32
+      结束时间：2018/6/5 17:47:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,000 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,001 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,007 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,008 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,013 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,013 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,018 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,018 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,023 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,023 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,027 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,027 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,031 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,031 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,036 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,037 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,040 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,040 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,043 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,043 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,047 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,048 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,053 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,054 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,057 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,057 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,060 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,060 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,063 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,064 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,068 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:47:33,068 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:47:33
+      结束时间：2018/6/5 17:47:33
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:35,712 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:35
+      总 时 间：5秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:35,712 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:35
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:35,719 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:35
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:35,724 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:35
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:36,257 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:36
+      结束时间：2018/6/5 17:50:36
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,129 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:37
+      总 时 间：5秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,129 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,129 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,131 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:36
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,131 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,233 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：7秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,234 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：7秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,244 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,244 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,252 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：2秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,252 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：2秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,255 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,255 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,262 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,265 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,268 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,268 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,271 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,272 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,276 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,276 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,283 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,283 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,287 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,288 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,291 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,292 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,300 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,300 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,304 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,306 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,316 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,316 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,408 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,409 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,420 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,421 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,426 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,426 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,437 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：2秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,438 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：2秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,451 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,452 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,456 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,457 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,465 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,466 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,472 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,473 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,479 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,480 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,487 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,487 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,496 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,497 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,506 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,507 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,515 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,516 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,519 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,519 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,522 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,522 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,530 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,531 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,535 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,535 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,538 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,539 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,544 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,545 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,550 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:37,550 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:37
+      结束时间：2018/6/5 17:50:37
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:38,813 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:50:35
+      结束时间：2018/6/5 17:50:38
+      总 时 间：3134秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:39,461 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:50:38
+      结束时间：2018/6/5 17:50:39
+      总 时 间：3134秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,565 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,567 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,575 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,577 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,587 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,587 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,591 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,591 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,598 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,598 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,602 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,602 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,605 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,606 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,609 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,610 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,614 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,614 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,618 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,618 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,621 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,622 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,625 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,625 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,629 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,630 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,633 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,634 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,637 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,637 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,640 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,640 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,644 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,645 
+线程ID:[6] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,647 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,648 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,651 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,651 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,654 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:50:42,655 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 17:50:42
+      结束时间：2018/6/5 17:50:42
+      总 时 间：1秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:39,468 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:55:36
+      结束时间：2018/6/5 17:55:39
+      总 时 间：3115秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:41,566 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:55:39
+      结束时间：2018/6/5 17:55:41
+      总 时 间：3115秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:43,901 
+线程ID:[21] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:DistributionFenRun
+      开始时间：2018/6/5 17:55:43
+      结束时间：2018/6/5 17:55:43
+      总 时 间：22秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:43,926 
+线程ID:[21] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:DistributionFenRun
+      开始时间：2018/6/5 17:55:43
+      结束时间：2018/6/5 17:55:43
+      总 时 间：22秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:44,949 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:DistributionFenRunList
+      开始时间：2018/6/5 17:55:44
+      结束时间：2018/6/5 17:55:44
+      总 时 间：32秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:44,972 
+线程ID:[15] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:DistributionFenRunList
+      开始时间：2018/6/5 17:55:44
+      结束时间：2018/6/5 17:55:44
+      总 时 间：32秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:45,897 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:55:45
+      结束时间：2018/6/5 17:55:45
+      总 时 间：76秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:45,899 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:55:45
+      结束时间：2018/6/5 17:55:45
+      总 时 间：76秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:46,719 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Index
+      开始时间：2018/6/5 17:55:46
+      结束时间：2018/6/5 17:55:46
+      总 时 间：100秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:46,763 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Index
+      开始时间：2018/6/5 17:55:46
+      结束时间：2018/6/5 17:55:46
+      总 时 间：100秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:47,962 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:ConfigurationList
+      开始时间：2018/6/5 17:55:47
+      结束时间：2018/6/5 17:55:47
+      总 时 间：36秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:47,972 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:ConfigurationList
+      开始时间：2018/6/5 17:55:47
+      结束时间：2018/6/5 17:55:47
+      总 时 间：36秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:49,629 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Configuration
+      开始时间：2018/6/5 17:55:49
+      结束时间：2018/6/5 17:55:49
+      总 时 间：6秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:55:49,661 
+线程ID:[23] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Configuration
+      开始时间：2018/6/5 17:55:49
+      结束时间：2018/6/5 17:55:49
+      总 时 间：6秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:23,952 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:56:20
+      结束时间：2018/6/5 17:56:23
+      总 时 间：3046秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:25,398 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:56:23
+      结束时间：2018/6/5 17:56:25
+      总 时 间：3046秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:27,472 
+线程ID:[17] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:DistributionFenRun
+      开始时间：2018/6/5 17:56:27
+      结束时间：2018/6/5 17:56:27
+      总 时 间：22秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:27,487 
+线程ID:[17] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:DistributionFenRun
+      开始时间：2018/6/5 17:56:27
+      结束时间：2018/6/5 17:56:27
+      总 时 间：22秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:28,280 
+线程ID:[21] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:DistributionFenRunList
+      开始时间：2018/6/5 17:56:28
+      结束时间：2018/6/5 17:56:28
+      总 时 间：35秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:28,299 
+线程ID:[21] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:DistributionFenRunList
+      开始时间：2018/6/5 17:56:28
+      结束时间：2018/6/5 17:56:28
+      总 时 间：35秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:57,546 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:56:53
+      结束时间：2018/6/5 17:56:57
+      总 时 间：3660秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:56:59,108 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:56:57
+      结束时间：2018/6/5 17:56:59
+      总 时 间：3660秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:58:37,891 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:DistributionFenRun
+      开始时间：2018/6/5 17:58:19
+      结束时间：2018/6/5 17:58:37
+      总 时 间：18809秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:58:37,912 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:DistributionFenRun
+      开始时间：2018/6/5 17:58:37
+      结束时间：2018/6/5 17:58:37
+      总 时 间：18809秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:58:40,782 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 17:58:40
+      结束时间：2018/6/5 17:58:40
+      总 时 间：84秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 17:58:40,789 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 17:58:40
+      结束时间：2018/6/5 17:58:40
+      总 时 间：84秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:05,022 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:05
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:05,022 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:05
+      总 时 间：10秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:05,030 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:05
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,152 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,153 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:06
+      总 时 间：10秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,153 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:05
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,223 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,223 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,229 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,229 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,237 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,237 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,252 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,252 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,259 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,260 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,269 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,270 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,276 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,276 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,285 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,286 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,289 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,290 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,293 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,293 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,300 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,300 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,304 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,304 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,308 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,308 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,311 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,312 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,319 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,320 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,323 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,323 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,477 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,477 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,485 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,485 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,493 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,493 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,499 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,499 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,503 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,503 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,507 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,508 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,515 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,515 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,522 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,523 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,548 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,549 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,556 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,557 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,566 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,567 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,571 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,571 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,579 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,580 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,584 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,584 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,588 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,588 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,594 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,595 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,600 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,600 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,605 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,605 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,608 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,608 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,617 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:06,617 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:06
+      结束时间：2018/6/5 18:04:06
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:08,253 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Index
+      开始时间：2018/6/5 18:04:04
+      结束时间：2018/6/5 18:04:08
+      总 时 间：3255秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:08,872 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Index
+      开始时间：2018/6/5 18:04:08
+      结束时间：2018/6/5 18:04:08
+      总 时 间：3255秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,635 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,636 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,641 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,642 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,652 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,652 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,659 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,659 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,666 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,666 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,670 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,671 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,674 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,675 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,683 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,683 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,691 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,691 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,694 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,695 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,702 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,702 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,718 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,718 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,723 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,724 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,727 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,727 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,733 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,734 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,737 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,737 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,744 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,744 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,751 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,751 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,755 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,755 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,760 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:11,760 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:11
+      结束时间：2018/6/5 18:04:11
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,773 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,776 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,782 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,782 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,787 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,788 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,795 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,795 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,801 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,801 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,806 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,807 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,810 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,811 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,814 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,815 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,819 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,819 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,823 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,823 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,827 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,827 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,831 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,832 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,838 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,838 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,842 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,842 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,845 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,845 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,849 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,849 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,852 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,852 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,855 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,856 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,859 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,860 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,863 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:04:41,863 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:04:41
+      结束时间：2018/6/5 18:04:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,877 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,884 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,917 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,920 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,937 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,937 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,967 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,968 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：3秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,971 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,971 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,985 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,985 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:41,999 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:41
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,000 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:41
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,009 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,009 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,021 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,021 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,028 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,029 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,035 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,036 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,046 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,046 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,050 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,050 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,055 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,056 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,063 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,063 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,070 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,070 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,073 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,076 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,082 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,082 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,090 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,091 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,095 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:42,095 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:42
+      结束时间：2018/6/5 18:05:42
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,547 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,547 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,552 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,552 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,556 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,557 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,560 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,561 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,569 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,569 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,573 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,574 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,577 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,577 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,585 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,585 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,589 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,589 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,592 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,592 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,595 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,596 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,602 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,602 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,605 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,605 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,608 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,608 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,611 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,612 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,617 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,617 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,620 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,621 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,623 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,624 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,627 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,627 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,631 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:05:59,631 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:05:59
+      结束时间：2018/6/5 18:05:59
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,977 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,978 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,988 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,988 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,996 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:01,996 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:01
+      结束时间：2018/6/5 18:06:01
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,001 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,001 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,006 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,007 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,011 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,011 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,015 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,016 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,019 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,019 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,027 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,028 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,034 
+线程ID:[14] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,034 
+线程ID:[14] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,037 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,038 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,041 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,041 
+线程ID:[13] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,044 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,045 
+线程ID:[18] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,049 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,049 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,052 
+线程ID:[17] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,052 
+线程ID:[17] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,055 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,056 
+线程ID:[8] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,059 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,059 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,062 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,062 
+线程ID:[16] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,066 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,066 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,069 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:06:02,069 
+线程ID:[5] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:06:02
+      结束时间：2018/6/5 18:06:02
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:31,329 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:31
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:31,329 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:31
+      总 时 间：5秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:31,329 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:31
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,178 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:32
+      总 时 间：5秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,178 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,178 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,246 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,246 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,249 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,250 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,256 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,256 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,259 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,260 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,267 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,268 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,271 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,271 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,274 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,275 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,285 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,285 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,289 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,289 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,294 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,296 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,300 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,301 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,304 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,304 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,308 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,309 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,312 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,313 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,317 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,318 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,320 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,321 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,418 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,469 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,472 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,473 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,484 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,485 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,490 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,491 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,498 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,499 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,515 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,515 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,521 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,521 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,532 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,533 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,537 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,537 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,541 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,541 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,547 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,548 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,553 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,553 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,557 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,559 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,564 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,564 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,568 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,568 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,571 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,571 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,576 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,577 
+线程ID:[10] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,581 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,582 
+线程ID:[12] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,584 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,585 
+线程ID:[11] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,588 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:32,588 
+线程ID:[7] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:Login
+      开始时间：2018/6/5 18:15:32
+      结束时间：2018/6/5 18:15:32
+      总 时 间：0秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:34,257 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      Action执行时间监控：
+      ControllerName：DefaultController
+      ActionName:FenRunByUsers
+      开始时间：2018/6/5 18:15:31
+      结束时间：2018/6/5 18:15:34
+      总 时 间：2998秒
+        Form：
+ 
+
+ 
+记录时间：2018-06-05 18:15:34,896 
+线程ID:[9] 
+日志级别：  INFO  
+跟踪描述：
+      View视图生成时间监控：
+      ControllerName：DefaultController
+      ViewName:FenRunByUsers
+      开始时间：2018/6/5 18:15:34
+      结束时间：2018/6/5 18:15:34
+      总 时 间：2998秒
+        Form：
+ 

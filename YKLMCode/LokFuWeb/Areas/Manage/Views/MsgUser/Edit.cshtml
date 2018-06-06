@@ -1,0 +1,294 @@
+﻿@{
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    MsgUser MsgUser = ViewBag.MsgUser;
+    Dictionary<int, string> userName = ViewBag.UserName;
+    ViewBag.SMUid = 23;
+    string isAdd = "false";
+    if (MsgUser.Id.IsNullOrEmpty())
+    {
+        MsgUser.State = 1;
+        isAdd = "true";
+    }
+    ViewBag.Title = "发送消息";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(MsgUser.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(MsgUser.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+
+                        <div class="form-group" id="div_xuanze">
+                            <label class="control-label col-md-3">消息发送选择</label>
+                            <div class="col-md-4">
+                                <div class="input-large">
+                                    <div>
+                                        <select id="slt_xuanze" name="IsState" class="form-control input-medium input-inline input-sm" style="width: 200px;">
+                                            <option value="0">根据代理商发送</option>
+                                            <option value="1">根据个人商户发送</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_dailishang" style="display: block;">
+                            <label class="control-label col-md-3">选择代理商<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-large">
+                                    <div>
+                                        <select id="slt_sousuo" name="AgentId" class="form-control input-medium input-inline input-sm" style="width: 200px;">
+                                            @{
+                                                foreach (var item in SysAgentList)
+                                                {
+                                                <option value="@(item.Id)" @(MsgUser.PId == item.Id ? " selected" : "")>@(item.Name)</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_xianshixiaji" style="display: block;">
+                            <label class=" control-label col-md-3">
+                                是否发送至下级
+                            </label>
+                            <div class="col-md-4">
+                                <div class="input-large">
+                                    <div>
+                                        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-small input-inline input-sm">
+                                            <option value="false">否</option>
+                                            <option value="true">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        @{
+                            if (!MsgUser.Id.IsNullOrEmpty() && userName.Count > 0)
+                            {
+                            <div class="form-group" id="div_dailishangxingm" style="display: block;">
+                                <label class="control-label col-md-3">代理商姓名</label>
+                                <div class="col-md-4">
+                                    <div class="input-large">
+                                        <div>
+                                            <select name="" class="form-control input-small input-inline input-sm">
+                                                @{
+                                                    foreach (var item in userName)
+                                                    {
+                                                         <option value="@(item.Key)">@(item.Value)</option>
+                                                    }
+                                                }
+                                            </select>
+                                            @*<input type="text" class="form-control input-large" name="UserName" id="UserName" value="@(userName)" disabled="disabled" />*@
+                                        </div>
+                                    </div>
+                                    <p class="help-block"></p>
+                                </div>
+                            </div>
+                            }
+                        }
+                        <input type="hidden" name="UserId" value="@(MsgUser.UId)" />
+                        @*<div class="form-group">
+                                <label class="control-label col-md-3">选择接收商户</label>
+                                <div class="col-md-4">
+                                    <div class="input-large">
+                                        <select id="slt_shanghu" name="UserId" class="form-control input-small input-inline input-sm">
+                                            @{
+                                                if (userModel == null || userModel.Id.IsNullOrEmpty())
+                                                {
+                                                    <option value="0">--所有--</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@(userModel.Id)">@(userModel.TrueName)</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="form-group" id="div_shanghu" style="display: none;">
+                            <label class="control-label col-md-3">接收商户 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-large">
+                                    <div>
+                                        搜索商户：<input type="text" id="UsersTrueName" class="pagination-panel-input form-control input-medium input-inline input-sm" style="width: 200px;">
+                                        <button type="button" class="btn btn-sm yellow" id="SearchUsers">查询</button>
+                                    </div>
+                                    <div id="UsersBox">
+                                        <span>
+                                            <input type="radio" class="validate[required]" name="UId" id="UId0" value="0" /><label>全体商户</label></span>
+                                    </div>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">消息标题 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" maxlength="100" style="width:253px;" value="@(MsgUser.Name)" alert="请填写标题" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">消息内容 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control input-xxlarge" name="Info" id="Info" rows="12">@(MsgUser.Info)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        @{
+                            if (!MsgUser.Id.IsNullOrEmpty())
+                            {
+                            <div class="form-group">
+                                <label class="control-label col-md-3">消息状态 <span class="required">* </span></label>
+                                <div class="col-md-4">
+                                    @{
+                                if (MsgUser.UId > 0)
+                                {
+                                        <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                            <option value="1" @(MsgUser.State == 1 ? " selected" : "")>未读</option>
+                                            <option value="2" @(MsgUser.State == 2 ? " selected" : "")>已读</option>
+                                            <option value="0" @(MsgUser.State == 0 ? " selected" : "")>取消</option>
+                                        </select>
+                                }
+                                else
+                                {
+                                        @:==
+                                   }
+                                    }
+
+                                </div>
+                            </div>
+                            }
+                            else
+                            {
+                            <input type="hidden" value="1" name="State" />
+                            }
+                        }
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">@(isAdd=="true"?"确认发布":"确认修改")</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+                $("#slt_xuanze").change(function () {
+                    var v = $("#slt_xuanze").val();
+                    if (v == "0") {
+                        $("#div_dailishang").show();
+                        $("#div_xianshixiaji").show();
+                        $("#div_shanghu").hide();
+                    } else if (v == "1") {
+                        $("#div_dailishang").hide();
+                        $("#div_xianshixiaji").hide();
+                        $("#div_shanghu").show();
+                    }
+                });
+
+                $("#SearchUsers").click(function () {
+                    var v = $("#UsersTrueName").val();
+                    if (v == "") {
+                        showdialog("请填写关键词");
+                        return false;
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "/manage/asyn/getusers.html",
+                        data: "username=" + v,
+                        dataType: "json",
+                        beforeSend: function () {
+                            $("#UsersBox").html("");
+                        },
+                        success: function (json) {
+                            $("#UsersBox").append('<span><input class="validate[required]" type="radio" name="UId" id="UId0" value="0" /><label>全体商户</label></span>');
+                            for (var i = 0; i < json.length; i++) {
+                                var obj = json[i];
+                                var html = "<span class=\"NewData\"><input class=\"validate[required]\" type=\"radio\" name=\"UId\" id=\"UId" + obj.id + "\" value=\"" + obj.id + "\" /><label>" + obj.truename + "</label></span>";
+                                $("#UsersBox").append(html);
+                            }
+                            App.initUniform();
+                        }
+                    })
+                });
+                var isAdd = "@(isAdd)";
+                if (isAdd == "false") {
+
+                    $("#div_xuanze").hide();
+                    $("#div_dailishang").hide();
+                    $("#div_xianshixiaji").hide();
+                }
+
+                //$("#slt_sousuo").change(function () {
+                //    var v = $("#slt_sousuo").val();
+                //    if (v == "0") {
+                //        $("#slt_shanghu").find("option").not(":first").remove();
+                //        return;
+                //    }
+                //    $.ajax({
+                //        type: "post",
+                //        url: "/manage/asyn/GetAgentUser.html",
+                //        data: "PId=" + v,
+                //        dataType: "json",
+                //        beforeSend: function () {
+                //            $("#slt_shanghu").find("option").not(":first").remove();
+                //        },
+                //        success: function (json) {
+                //            if (json.msg == "10005") {
+                //                alert("此代理商下没有任何商家。");
+                //                return;
+                //            }
+                //            var htmlData = '';
+
+                //            $.each(json.msg, function (i, field) {
+                //                htmlData += '<option value=' + field["Id"] + '>' + field["TrueName"] + '</option>';
+                //            })
+                //            $("#slt_shanghu").append(htmlData);
+                //        }
+                //    });
+                //});
+            })
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+    }
+}

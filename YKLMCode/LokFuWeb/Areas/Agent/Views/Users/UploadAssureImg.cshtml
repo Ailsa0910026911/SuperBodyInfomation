@@ -1,0 +1,48 @@
+﻿@{
+    Int32 UId = Request.QueryString["UId"] != null ? Convert.ToInt32(Request.QueryString["UId"]) : 0;
+    LokFuEntity Entity = ViewBag.Entity;
+    Users Users = Entity.Users.FirstOrNew(u => u.Id == UId);
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<div class="row" style="width: 500px; height: auto; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <div class="portlet box">
+        <div class="table-responsive">
+            <form action="SaveAssureImg.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="IFrameId" name="IFrameId" value="@(Request["IFrameId"])" />
+                <input type="hidden" name="Id" value="@(UId)" />
+                <table class="table table-striped table-bordered table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>上传担保</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success" style="width: 120px; text-align: center; line-height: 100px;">担保书</td>
+                            <td class="active">
+                                @Html.Partial("FileLoad", new FileLoad() { StandardSize = 4, BigName = "AssureImgName", FilePath = "Users", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" }, Class = "validate[required]" })
+                                @*@Html.Partial("FileLoad", new FileLoad() { BigName = "AssureImgName", FilePath = "Users", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" }, Class = "validate[required]" })*@
+                                @if (!Users.AssureImgName.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("Users", Users.AssureImgName))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("Users", Users.AssureImgName))" style="margin-top:10px" height="100" />
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="btn green" style="width: 100%;">确认提交</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201608191447"></script>
+}

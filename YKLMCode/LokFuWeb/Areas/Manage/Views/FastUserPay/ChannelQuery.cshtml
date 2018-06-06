@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.SMUid = 60;
+    LokFu.Areas.Manage.Controllers.ChannelDateModel ChannelDateModel = ViewBag.ChannelDateModel;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>余额及商户信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">商户号</td>
+                        <td class="active" colspan="3">@(ChannelDateModel.MerchantId)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">持卡人姓名</td>
+                        <td class="active">@(ChannelDateModel.Name)</td>
+                        <td class="success" style="width: 120px">持卡人证件号</td>
+                        <td class="active">@(ChannelDateModel.CertNo)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">银行卡号</td>
+                        <td class="active">@(ChannelDateModel.BankAccountNo)</td>
+                        <td class="success">入驻结果</td>
+                        <td class="active">
+                            @switch(ChannelDateModel.AuthResult)
+                            {
+                                case "0":
+                                    @("处理中")
+                                    break;
+                                case "1":
+                                    @("入驻成功")
+                                    break;
+                                case "2":
+                                    @("入驻失败")
+                                    break;
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success">可用余额</td>
+                        <td class="active price">
+                            @(ChannelDateModel.BalanceAmount)
+                        </td>
+                        <td class="success">冻结金额</td>
+                        <td class="active price">@(ChannelDateModel.FreezeAmount)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        
+    }
+}

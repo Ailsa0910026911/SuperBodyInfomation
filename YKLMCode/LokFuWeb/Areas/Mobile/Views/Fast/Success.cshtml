@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+    FastOrder FastOrder = ViewBag.FastOrder;
+    bool IsLokFu = ViewBag.IsLokFu;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@(IsLokFu?"收":"付")款成功</title>
+    <link href="/Content/Mobile/Fast/css/main.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+    <div class="success_icon"></div>
+    <span class="success_ok">@(IsLokFu?"收":"付")款成功</span>
+    <div class="success_box">
+        <div class="success_text01">
+            <span class="sp01">交易单号</span>
+            <span class="sp02">@(FastOrder.TNum)</span>
+        </div>
+        <div class="success_text01">
+            <span class="sp01">交易金额</span>
+            <span class="sp02">@(FastOrder.Amoney.ToMoney())元</span>
+        </div>
+        <div class="success_text01">
+            <span class="sp01">交易时间</span>
+            <span class="sp02">@(FastOrder.AddTime.ToString("yyyy-MM-dd HH:mm"))</span>
+        </div>
+        <div class="success_text01" style="border: 0;">
+            <span class="sp01">到账银行</span>
+            <span class="sp02">@(FastOrder.Bank) 尾号@(FastOrder.Card.Substring(FastOrder.Card.Length-4,4))</span>
+        </div>
+    </div>
+    <a href="index-@(FastOrder.UId).html" class="success_run">返回收付直通车</a>
+</body>
+</html>

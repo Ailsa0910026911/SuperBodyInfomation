@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/Content/Shop/css/normalize.css" rel="stylesheet" />
+    <link href="/Content/Shop/css/style.css?201608171148" rel="stylesheet" />
+    <script src="/Content/Shop/js/jquery.min.js"></script>
+    <title>@(Page.Name)</title>
+    @RenderSection("HeaderScripts", false)
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("FooterScripts", false)
+</body>
+</html>

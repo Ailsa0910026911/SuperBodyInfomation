@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.SMUid = 17;
+    ViewBag.Title = "导出";
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+<form style="padding:20px;" id="ListForm" name="ListForm" method="post" action="XlsDo.html">
+  <span>卡号起止：</span> 
+  <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Num0" value="" />
+  ~
+  <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Num1" value="" />
+  <p style="height:5px;"></p>
+  <span>发卡时间：</span> 
+  <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="FInTime" value="" id="STime" />
+  ~
+  <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="FOutTime" value="" id="ETime" />
+  <p style="height:5px;"></p>
+  <span>所属机构：</span> 
+  <select name="AId" class="form-control input-small input-inline input-sm" id="AId">
+      <option value="">不限制</option>
+      @foreach(var p in SysAgentList){
+      <option value="@(p.Id)">@(p.Name)</option>
+      }
+  </select>
+  <span>　　领卡员工：</span> 
+  <select name="AdminId" class="form-control input-small input-inline input-sm" id="AdminId">
+      <option value="">不限制</option>
+      @foreach (var p in SysAdminList)
+      {
+      <option value="@(p.Id)" rev="@(p.AgentId)" style="display:none;">@(p.TrueName)</option>
+      }
+  </select>
+  <p style="height:5px;"></p>
+  <span>卡片状态：</span> 
+  <select name="State" class="form-control input-small input-inline input-sm">
+      <option value="">不限制</option>
+      <option value="1">正常</option>
+      <option value="2">已用</option>
+      <option value="99">失效</option>
+  </select>
+  <span>分配：</span> 
+  <select name="State" class="form-control input-small input-inline input-sm">
+      <option value="">不限制</option>
+      <option value="1">自动</option>
+      <option value="99">保留</option>
+  </select>
+  <span>　　设置密码：</span>
+  <input class="pagination-panel-input form-control input-small input-inline input-sm" style="color:red;" type="text" id="Password" name="Password" />
+  <input class="button Password" type="button" id="CreatSCode" value="生成密码" />
+  <span class="Password">请设置生成文档打开密码,<b style="color:red;">请牢记密码！</b></span> 
+  <p style="height:5px;"></p>
+  <button class="btn btn-sm green table-group-action-submit" type="submit"><i class="fa fa-share"></i>导出</button>
+</form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+@*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" /> 
+<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+<script type="text/javascript">
+    $(function () {
+        //$("#FInTime").datepicker({
+        //    format:"yyyy-mm-dd",
+        //    showAnim: "fadeIn",
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    onSelect: function (dateText, inst) {
+        //    }
+        //});
+        //$("#FOutTime").datepicker({
+        //    format:"yyyy-mm-dd",
+        //    showAnim: "fadeIn",
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    onSelect: function (dateText, inst) {
+        //    }
+        //});
+        $("#CreatSCode").click(function () {
+            var text = getRan();
+            $("#Password").val(text);
+        });
+        $("#AId").change(function () {
+            var v = $(this).val();
+            if (v > 0) {
+                $("#AdminId option").hide().eq(0).show();
+                $("#AdminId option[rev=" + v + "]").show();
+            } else {
+                $("#AdminId option").hide().eq(0).show();
+            }
+        });
+    });
+    function getRan() {
+        a = 8;
+        b = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        t = "";
+        for (x = 0; x < a; x++) {
+            c = Math.floor(Math.random() * 99999) % b.length;
+            t += b.substr(c, 1);
+        }
+        return t;
+    }
+</script>
+    }
+}

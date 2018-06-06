@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+    Turntable Turntable = ViewBag.Turntable;
+    bool IsApple = ViewBag.IsApple;
+    SysSet BasicSet = ViewBag.BasicSet;
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    Users users = Entity.Users.FirstOrNew(n => n.Id == Users.MyPId);
+    string NoteDownload = "/mobile/down/index-0.html";
+    string AppName = BasicSet.Name;
+    int Agent = 0;
+    if (!users.Id.IsNullOrEmpty())
+    {
+        SysAgent SysAgent = Entity.SysAgent.FirstOrNew(o => o.Id == users.Agent);//当前代理
+        SysAgent = SysAgent.GetTopAgent(Entity);
+        if (SysAgent.IsTeiPai == 1){
+            AppName = SysAgent.APPName.IsNullOrEmpty() ? AppName : SysAgent.APPName;
+            NoteDownload = SysAgent.NoteDownload.IsNullOrEmpty() ? NoteDownload : SysAgent.NoteDownload;
+            Agent = SysAgent.Id;
+        }
+    }    
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/Content/Mobile/css/bootstrap.css" />
+    <link rel="stylesheet" href="/Content/Mobile/share/css/style.css?v=8" />
+    <script type="text/javascript" src="/Content/Mobile/js/jquery.js"></script>
+    <script type="text/javascript" src="/Content/Mobile/share/js/index.js?V=6"></script>
+    <title>用户注册</title>
+</head>
+<body class="register">
+    <section class="sec">
+        <div class="sec-main col-md-12">
+            <form class="form" method="post" action="#" id="regForm" name="regForm">
+                <input name="MyPId" value="@(Users.MyPId)" type="hidden" />
+                <input name="PayConfigId" value="@(Users.PayConfigId)" type="hidden" />
+                <input name="ShareType" value="@(Users.ShareType)" type="hidden" />
+                <input id="Agent" value="@(Agent)" type="hidden" />
+                <ul class="list-unstyled">
+                    <li>
+                        <div class="form-group">
+                            <input class="form-control phone" maxlength="11" type="tel" name="UserName" id="UserName"  autocomplete="off"  placeholder="请输入您要注册的手机号码" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <input class="form-control codes yanzheng" maxlength="4" type="text" id="tuCode" name="tuCode"  autocomplete="off"  placeholder="点击获取图形验证码" />
+                            <a class="godes" href="#" title="点击更换验证码" id="imga" style="display:none;"><img src="/Content/Metronic/img/none.gif" id="img" style="height:28px;" /></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <input class="form-control codes yanzheng"  maxlength="4" type="tel" id="Code" name="Code"  autocomplete="off"  placeholder="请输入验证码" />
+                            <a class="godes" id="GetCode" href="javascript:void(0);">获取验证码</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <input class="form-control pass" type="password" id="PassWord" name="PassWord" autocomplete="off" placeholder="请设置登录密码" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <input class="form-control password" type="password" id="PassWord2"  autocomplete="off" placeholder="请确认登录密码" />
+                        </div>
+                    </li>
+                    <li class="point ">
+                        <div class="form-group">
+                            <span class="text-danger"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <input class="check" type="checkbox" checked value="1" id="Agreement" /><a href="/Mobile/Agreement/Index.html?Id=@(Agent)&Type=1">用户使用协议</a>
+                    </li>
+                    <li class="sub">
+                        <div class="form-group">
+                            <button type="submit" id="regSubBtn" class="btn btn-lg btn-block">注  册 </button>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </section>
+    <!--弹出层 -->
+    <div class="layer-bg hide "></div>
+    <div class="reg_cg hide">
+        <div class="layer">
+            <div class="layer-top"></div>
+            <div class="layer-main text-center">
+                <span id="showmsg"></span>
+                <div class="form-group">
+                    <a class="btn btn-block btn-default" href="@(NoteDownload)">点击下载APP</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

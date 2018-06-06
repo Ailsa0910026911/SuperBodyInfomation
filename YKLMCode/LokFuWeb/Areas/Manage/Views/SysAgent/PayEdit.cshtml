@@ -1,0 +1,140 @@
+﻿@{
+    SysAgent SysAgent = ViewBag.SysAgent;
+    ViewBag.SMUid = 30;
+    SysSet BasicSet = ViewBag.BasicSet;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    IList<UserPayAgent> UserPayAgentList = ViewBag.UserPayAgentList;
+    LokFuEntity Entity = ViewBag.Entity;
+    ViewBag.Title = "商户入网费率设置";
+
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height: 500px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="PaySave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(SysAgent.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            <tr>
+                                <td class="success center">通道名称 </td>
+                                <td class="success center" style="width: 120px;">最低设置</td>
+                                <td class="success center" style="width: 240px;">当前设置</td>
+                            </tr>
+                            @foreach (var p in PayConfigList)
+                            {
+                                double Cost = p.CostUser.GetValueOrDefault() * 1000;
+                                UserPayAgent PCT = UserPayAgentList.FirstOrNew(n => n.AId == SysAgent.Id && n.PId == p.Id);
+                                if (!PCT.Id.IsNullOrEmpty())
+                                {
+                                    Cost = PCT.Cost * 1000;
+                                }
+                                <tr class="odd gradeX">
+                                    <td class="center">@(p.Name)
+                                        <input type="hidden" name="PId" value="@(p.Id)" /></td>
+                                    <td class="center"><span class="permillage">@(p.CostAgent * 1000)</span>‰ </td>
+                                    <td class="center form-group">
+                                        <input type="text" class="form-control input-inline input-xsmall validate[required,custom[float],min[@(p.CostAgent * 1000)],max[1000]]" name="Cost" id="Cost@(p.Id)" value="@(Cost)" />
+                                        ‰ </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (ViewBag.PaySave)
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-3">同步设置</label>
+                            <div style="padding-top: 10px;">
+                                <input type="checkbox" name="AnsyNext" id="AnsyNext" value="1" /><a>同步下级代理</a>
+                                <input type="checkbox" name="AnsyCash" id="AnsyCash" value="1" /><a>同步到老用户</a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9">
+                        @if (ViewBag.PaySave)
+                        {
+                            <button type="submit" class="btn green">确认修改</button>
+                        }
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+                $("#AnsyCash").click(function () {
+                    var Obj = $(this);
+                    var Chk = Obj.prop("checked");
+                    if (Chk) {
+                        var Dialog = art.dialog({
+                            title: '温馨提示',
+                            content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                            icon: 'warning',
+                            lock: true,
+                            button: [{
+                                name: '确定同步变更',
+                                callback: function () {
+                                },
+                                focus: true,
+                                disabled: false
+                            }, {
+                                name: '取消同步变更',
+                                callback: function () {
+                                    Obj.prop("checked", false);
+                                    Obj.closest("span").removeClass("checked");
+                                    this.close();
+                                }
+                            }
+                            ]
+                        });
+                    }
+                });
+                $("#AnsyNext").click(function () {
+                    var Obj = $(this);
+                    var Chk = Obj.prop("checked");
+                    if (Chk) {
+                        var Dialog = art.dialog({
+                            title: '温馨提示',
+                            content: '下级代理商自行设置的配置将会被覆盖，是否同步更新？',
+                            icon: 'warning',
+                            lock: true,
+                            button: [{
+                                name: '确定同步变更',
+                                callback: function () {
+                                },
+                                focus: true,
+                                disabled: false
+                            }, {
+                                name: '取消同步变更',
+                                callback: function () {
+                                    Obj.prop("checked", false);
+                                    Obj.closest("span").removeClass("checked");
+                                    this.close();
+                                }
+                            }
+                            ]
+                        });
+                    }
+                });
+            })
+        </script>
+    }
+}

@@ -1,0 +1,176 @@
+﻿@{
+    Layout = null;
+    string etnum = ViewBag.etnum;
+    FastOrder FastOrder = ViewBag.FastOrder;
+    Users Users = ViewBag.Users;
+    IList<UsersPayCard> UsersPayCardList = ViewBag.UsersPayCardList;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>绑定银行卡支付</title>
+<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+<link href="/Content/Pay/css/qiapay.css?v=20170425" rel="stylesheet" />
+<script src="/Content/Pay/js/jquery.js"></script>
+</head>
+
+<body>
+<div class="dabox">
+	<div class="onebox">
+    	<span class="sp01">支付金额(元)</span>
+        <span class="sp02">@(FastOrder.Amoney.ToString("F2"))</span>
+        <span class="sp03">交易单号:@(FastOrder.TNum)</span>
+    </div>
+    <div class="twobox"><span class="sp01">姓名</span><span class="sp02">@(Users.TrueName)</span></div>
+    <div class="threebox"><span class="sp01">请选择支付方式</span>@if (UsersPayCardList != null && UsersPayCardList.Count > 0) { <span class="sp02 sp02_1 glnhk">管理银行卡</span>}</div>
+    @if (UsersPayCardList != null && UsersPayCardList.Count > 0)
+    {
+    <div class="fourbox fourbox2">
+        @foreach (var p in UsersPayCardList)
+        {
+    	<div class="ihk ihkManage" id="@(p.Id)">
+            <span class="sc">删除</span>
+            <span class="sp01 idhn">@(p.Bank)
+                @*<span>
+                    @switch (p.Type)
+                    { 
+                        case 1 :
+                            @("借记卡")
+                            break;
+                        case 2 :
+                            @("信用卡")
+                            break;
+                        default:
+                            @Html.Raw("&nbsp;")
+                            break;
+                    }   
+                </span>*@
+            </span>
+            <span class="sp02">尾号@(p.Card.Substring(p.Card.Length - 4, 4))</span>
+            <span class="sp03 gx">勾选</span>
+            <span class="sp04 xw"></span>
+        </div>
+        }
+        <a href="AddCard.html?etnum=@(HttpUtility.UrlEncode(etnum))">
+        <div class="ihk ihk2">
+            <span class="sp01" style="background-image:url(/Content/Pay/images/tianblak.png);">添加银行卡</span>
+            <span class="sp02">只能添加"<span style="color:#fa6767;">@(Users.TrueName)</span>"的银行卡</span>
+        </div>
+        </a>
+    </div>
+    <div class="fivebox">
+        <form action="GoPay.html" method="post" id="GoBank" name="GoBank">
+            <input name="etnum" type="hidden" value="@(etnum)" />
+            <input name="BankId" id="BankId" type="hidden" value="" />
+            <a class="ljzf">立即支付</a>
+        </form>
+        <span class="wcll">管理完成</span>
+    </div>
+    <div class="cm_01"></div>
+    <div class="qrk">
+    	<span class="scwb selectBut">是否删除银行卡?</span> 
+        <span class="scwb affirmText" style="display:none"></span> 
+    	<span class="fsc selectBut">
+            <span class="sp01 fosc">否</span>
+            <span class="sp02 delAuthDataCenter" >删除</span>
+            <input id="delid" type="hidden"/>
+        </span>
+        <span class="fsc affirmBut" style="background:none;display:none">
+            <span class="sp01 fosc" style="width:100%">我知道了</span>
+        </span>
+    </div>
+    }
+    else
+    {
+        <div class="fourbox">
+    	    <a href="AddCard.html?etnum=@(HttpUtility.UrlEncode(etnum))" class="on_ka"></a>
+        </div>
+        <div class="fivebox"><a href="AddCard.html?etnum=@(HttpUtility.UrlEncode(etnum))" style="background-color:#5ca3d9;">添加银行卡</a></div>
+    }
+    <script>
+        $(function () {
+            $(".ihkManage").each(function (i) {
+                $(this).click(function () {
+                    var Id = $(this).attr("id");
+                    $("#BankId").val(Id);
+                    $(".gx").css({ "background-image": "url(/Content/Pay/images/dui_01.png)" })
+                    $(".gx:eq(" + i + ")").css({ "background-image": "url(/Content/Pay/images/dui_02.png)" })
+                    $(".ljzf").css({ "background-color": "#5ca3d9" })
+                    return false;
+
+                });
+            });
+            $(".ljzf").click(function () {
+                if ($(this).hasClass("disabled")) {
+                    return false;
+                }
+                var v = $("#BankId").val();
+                if (!$.isNumeric(v)) {
+                    alert("请选择银行卡");
+                }
+                else {
+                    $(this).addClass("disabled");
+                    $(".ljzf").css({ "background-color": "#d5d5d5" })
+                    $("#GoBank").submit();
+                }
+            });
+        });
+
+        $(".glnhk").click(function () {
+            $(".ihk2,.ljzf,.gx").hide(200);
+            $(".glnhk").css({ "display": "none" })
+            $(".ihk").css({ "padding-top": "2%", "padding-bottom": "1%" })
+            $(".sc,.wcll").css({ "display": "block" })
+            $(".fivebox").css({ "margin-top": "0" })
+
+        });
+        $(".wcll").click(function () {
+            $(".ihk2,.ljzf,.gx").show(200);
+            $(".glnhk").css({ "display": "block" })
+            $(".ihk").css({ "padding-top": "1%", "padding-bottom": "1%", "maring-left": "4%" })
+            $(".sc,.wcll").css({ "display": "none" })
+            $(".fivebox").css({ "margin-top": "2%" })
+
+        });
+        $(".sc").click(function () {
+            $(".cm_01,.qrk").css({ "display": "block" });
+            var Id = $(this).parent().attr("id");
+            $("#delid").val(Id);
+        });
+        $(".delAuthDataCenter").click(function () {
+            debugger
+            var Id = $("#delid").val();
+            $(".selectBut").hide();
+            $(".affirmText").text("提交中...");
+            $(".affirmText").show();
+            $.post("DelCard.html", { etnum: "@(etnum)", id: Id },
+               function (data) {
+                   if (data == "1") {
+                       $("#" + Id).remove();
+                       $("#BankId").val("")
+                       $(".affirmText").text("删除成功");
+                   }
+                   else { $(".affirmText").text("删除失败") }
+                   $(".affirmBut").show();
+               }
+            );
+        });
+        $(".fosc").click(function () {
+            $(".cm_01,.qrk").css({ "display": "none" })
+
+        });
+        $(".affirmBut").click(function () {
+            $(".cm_01,.qrk").css({ "display": "none" })
+            $(".affirmText").text("");
+            $(".affirmBut").hide();
+            $(".selectBut").show();
+            if ($(".ihkManage").length == 0) {
+                location.reload();
+            }
+        });
+	</script>
+</div>
+</body>
+</html>

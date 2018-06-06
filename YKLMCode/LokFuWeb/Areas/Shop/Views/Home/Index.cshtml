@@ -1,0 +1,180 @@
+﻿@{
+    Users BasicUsers = ViewBag.BasicUsers;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<SysControl> SCList = Entity.SysControl.Where(n => (n.Tag == "WeiXin" || n.Tag == "Alipay") && n.State == 1).OrderBy(n => n.Tag).ThenBy(n => n.Sort).ToList();
+    int Nav = 10;
+    Page.Name = BasicUsers.NeekName + "的超级收银台";
+    SysSet BasicSet = ViewBag.BasicSet;
+    IList<SysControl> scList = new List<SysControl>();
+    foreach (var p in SCList){
+        SysControl SC = p.GetState();
+        if(SC.State==1){
+            SC.CName = p.CName;
+            SC.PayWay = p.PayWay;
+            scList.Add(SC);
+        }
+    }
+}
+<div class="cash">
+    @Html.Partial("Header", Nav)
+    <div class="main">
+        <div class="container">
+            <div class="main-top">
+                <p><a href="/shop/">首页 </a>&gt; <a href="javascript:">收银台</a></p>
+            </div>
+        </div>
+        <div class="container border text-center">
+            <div class="enter">
+                @if (BasicSet.LagEntry == 0)
+                {
+                    <p style="padding:15px 0;">@(BasicUsers.NeekName)的收银台</p>
+                }else{
+                    <div class="mode-select">
+						<strong><em class="mode-span"> T + @(BasicUsers.InTypePC==0?"0":"5") (@(BasicUsers.InTypePC==0?"实时入账":"五个工作日入账"))</em> <i class="iconfont">&#xe60c;</i> </strong>
+						<div class="mode-list hide">
+							<ul class="list-unstyled">
+								<li data-intype="0">
+									<div class="clearfix">
+										<b class="pull-left icon-warp"><i class="iconfont">&#xe62d;</i></b>
+										<div class="pull-left">
+											<p class="recorded">T+0(实时入账)</p>
+											<p class="fee"><b class="text-gray">手续费：</b><em class="text-warning">按收款方式费率收取</em></p>
+										</div>
+									</div>
+								</li>
+								<li data-intype="1">
+									<div class="clearfix">
+										<b class="pull-left icon-warp b2"><i class="iconfont">&#xe62d;</i></b>
+										<div class="pull-left">
+											<p class="recorded"> T + 5 (五个工作日入账)</p>
+											<p class="fee"><b class="text-gray">手续费：</b><em class="text-warning">免手续费</em></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+                }
+                <span class="pull-left"></span>
+                <input class="enter-input pull-left" type="text" placeholder="0.00" id="Amount" value="" />
+                <div class="pattern pull-left">
+                    <a class="pattern-scan selectmode active" href="javascript:"><i class="iconfont">&#xe621;</i> 扫码枪模式 </a>
+                    <a class="pattern-code selectmode" href="javascript:"><i class="iconfont">&#xe622;</i> 二维码模式 </a>
+                </div>
+            </div>
+            <div class="enter-main">
+                <div class="pull-left enter-left">
+                    <ul class="list-unstyled">
+                        <li><a href="javascript:" data-num="1">1</a></li>
+                        <li><a href="javascript:" data-num="2">2</a></li>
+                        <li><a href="javascript:" data-num="3">3</a></li>
+                        <li><a href="javascript:" data-num="4">4</a></li>
+                        <li><a href="javascript:" data-num="5">5</a></li>
+                        <li><a href="javascript:" data-num="6">6</a></li>
+                        <li><a href="javascript:" data-num="7">7</a></li>
+                        <li><a href="javascript:" data-num="8">8</a></li>
+                        <li><a href="javascript:" data-num="9">9</a></li>
+                        <li><a href="javascript:" data-num=".">.</a></li>
+                        <li><a href="javascript:" data-num="0">0</a></li>
+                        <li class="del"><a href="javascript:" data-num="del">←</a></li>
+                    </ul>
+                </div>
+                <div class="enter-right pull-right">
+                    <ul class="list-unstyled scancode">
+                        @foreach (var p in scList)
+                        {
+                            <li class="wx-other Sao" data-name="@(p.CName)" data-pay="@(p.Tag=="WeiXin"?"WxCode":"AliCode")" data-payway="@(p.PayWay)" data-snum="@(p.SNum)" data-enum="@(p.ENum)">
+                                <div>
+                                    <i class="iconfont @(p.Tag=="WeiXin"?"icon-wx":"icon-zfb")">&#@(p.Tag=="WeiXin"?"xe623;":"xe624;")</i>
+                                    <p>@(p.CName)</p>
+                                    <p class="money">@(p.SNum.ToString("F0"))~@(p.ENum.ToString("F0"))元</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="list-unstyled qrcode hide">
+                        @foreach (var p in scList)
+                        {
+                            <li class="wx-other QRCode" data-name="@(p.CName)" data-pay="@(p.Tag=="WeiXin"?"WxSao":"AliSao")" data-payway="@(p.PayWay)" data-snum="@(p.SNum)" data-enum="@(p.ENum)">
+                                <div>
+                                    <i class="iconfont @(p.Tag=="WeiXin"?"icon-wx":"icon-zfb")">&#@(p.Tag=="WeiXin"?"xe623;":"xe624;")</i>
+                                    <p>@(p.CName)</p>
+                                    <p class="money">@(p.SNum.ToString("F0"))~@(p.ENum.ToString("F0"))元</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layer hide sweep" id="QRCodeBox">
+        <div class="layer-main">
+            <div class="other">
+                <div class="layer-top text-center">
+                    <p><span class="ban">! </span>请打开<span class="payment">微信</span> "扫一扫" 扫描下方的二维码</p>
+                </div>
+                <div class="layer-con text-center">
+                    <img src="/Content/Metronic/img/none.gif" id="QRCodeImg" class="qrcode" />
+                    <p>请用<span class="payment">微信</span>扫我哟</p>
+                    <p><span class="ban">￥ </span><span class="text-success"><span class="money">0.00</span>元</span></p>
+                </div>
+                <a class="shut CancelBtn" href="javascript:">X </a>
+            </div>
+        </div>
+    </div>
+    <div class="layer hide sweep" id="SaoBox">
+        <div class="layer-main">
+            <div class="me">
+                <form id="SaoForm" method="post">
+                    <div class="layer-top text-center">
+                        <p><span class="ban">! </span>请用扫码枪扫对方<span class="payment">微信</span>付款码</p>
+                    </div>
+                    <div class="layer-con text-center">
+                        <input class="scan-input" type="text" id="SaoMa" data-pay="" />
+                        <div class="text-success hide" id="showTips">
+                            <img class="saoma" src="/Content/Shop/img/gif.gif" />收款中</div>
+                        <div class="btn-warp">
+                            <a class="cancel CancelBtn" href="javascript:">取 消 </a>
+                            <button class="define" type="submit">确 定 </button>
+                        </div>
+                    </div>
+                    <a class="shut CancelBtn" href="javascript:">X </a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="layer hide sweep" id="Success">
+        <div class="layer-main">
+            <div class="succ">
+                <div class="layer-top text-center">
+                    <p><span class="success">√ </span>支付成功 </p>
+                </div>
+                <div class="layer-con text-center">
+                    <div class="btn-warp">
+                        <a class="define SuccessClose" href="javascript:">确 定 </a>
+                    </div>
+                </div>
+                <a class="shut SuccessClose" href="javascript:">X </a>
+            </div>
+        </div>
+    </div>
+    <div class="port-warp hide" id="InfoTipsBox">
+        <div class="port error">
+            <div class="port-top text-center">
+                <p><i class="iconfont">&#xe61e;</i>&nbsp;<span id="InfoTipsMsg"></span></p>
+            </div>
+            <div class="layer-con text-center">
+                <div class="btn-warp">
+                    <a class="define InfoTipsClose" href="javascript:">确 定 </a>
+                </div>
+            </div>
+            <a class="shut InfoTipsClose" href="javascript:">X </a>
+        </div>
+    </div>
+    @Html.Partial("Footer")
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Shop/js/index.js"></script>
+}

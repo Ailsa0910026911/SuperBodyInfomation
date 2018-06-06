@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.SMUid = 24;
+    ViewBag.Title = "导出付款单";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+<form style="padding:20px;" id="ListForm" name="ListForm" method="post" action="XlsDo.html">
+  <span>交易时间：</span> 
+  <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="FInTime" value="" id="STime" />
+  ~
+  <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="FOutTime" value="" id="ETime" />
+  <p style="height:5px;"></p>
+  <span>导出格式：</span> 
+  <select name="Id" class="form-control input-small input-inline input-sm" id="Id">
+      <option value="13">中国民生银行</option>
+  </select>
+  <p style="height:5px;"></p>
+  <button class="btn btn-sm green table-group-action-submit" type="submit"><i class="fa fa-share"></i>导出</button>
+</form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+@*<link href="/Content/Metronic/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" /> 
+<script src="/Content/Metronic/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>*@
+@*<script type="text/javascript">
+    $(function () {
+        $("#FInTime").datepicker({
+            format:"yyyy-mm-dd",
+            showAnim: "fadeIn",
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function (dateText, inst) {
+            }
+        });
+        $("#FOutTime").datepicker({
+            format:"yyyy-mm-dd",
+            showAnim: "fadeIn",
+            changeMonth: true,
+            changeYear: true,
+            onSelect: function (dateText, inst) {
+            }
+        });
+    });
+</script>*@
+    }
+}

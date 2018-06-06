@@ -1,0 +1,378 @@
+﻿@{
+    IList<FinTotal> FinTotalList = ViewBag.FinTotalList;
+    FinTotal FinTotal = ViewBag.FinTotal;
+    bool IsCountByYear = ViewBag.IsCountByYear;
+    ViewBag.SMUid = 92;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+<style>
+    tr.Total th {
+        background: rgba(182, 255, 0, 0.30) !important;
+    }
+
+    tr.Total td {
+        background: rgba(182, 255, 0, 0.30) !important;
+    }
+</style>
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="Id" class="form-control input-small input-inline input-sm">
+            <option value="">最近12个月</option>
+            @for (int i = DateTime.Now.Year; i >= 2015; i--)
+            {
+                <option value="@(i)" @(FinTotal.Id == i ? "selected" : "")>@(i)年</option>
+            }
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+@if (FinTotal.Id.IsNullOrEmpty())
+{
+    int AllUsers = Entity.Users.Count(n => n.State == 1);
+    int CHKUsers = Entity.Users.Count(n => n.State == 1 && n.CardStae == 2);
+    decimal AllMoney = 0;
+    decimal Frozen = 0;
+    decimal AllSXF = 0;
+    decimal YHFR = 0;
+    decimal DLFR = 0;
+    decimal ALLLR = 0;
+    //try
+    //{
+    List<Users> usersList=Entity.Users.Where(n => n.Amount > 0).ToList();
+    if (usersList.Count>0)
+    {
+        AllMoney = usersList.Sum(n => n.Amount);
+    }
+    if (Entity.Users.Count(n => n.Frozen > 0) > 0)
+    {
+        Frozen = Entity.Users.Where(n => n.Frozen > 0).Sum(n => n.Frozen);
+    }
+    //总手续费
+    AllSXF = Entity.Orders.Where(n => (n.TState == 2 && n.PayState == 2 && (n.TType == 2 || n.TType == 5)) || (n.TState == 2 && n.PayState == 1 && (n.TType == 1 || n.TType == 3)) || (n.TType > 5 && n.PayState == 1 && n.TState != 0)).Sum(n => n.Poundage);
+    //Id<28325 未开始分润
+    double Agent1 = Entity.OrderRecharge.Where(n => n.PayState == 1 && n.OrderState == 2).Sum(n => n.AgentPayGet);
+    double Agent2 = Entity.OrderCash.Where(n => n.PayState == 2 && n.OrderState == 2).ToList().Sum(n => n.AgentCashGet);
+    double Agent3 = Entity.OrderTransfer.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => n.AgentPayGet);
+    double? Agent5 = Entity.OrderHouse.Where(n => n.PayState == 2 && n.OrderState == 2).ToList().Sum(n => (double?)n.AgentPayGet);
+    double Agent6 = Entity.PayConfigOrder.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => n.AgentGet);
+    double Agent8 = Entity.OrderF2F.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => n.AgentPayGet);
+    double Sys1 = Entity.OrderRecharge.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => (double)n.Poundage - n.SysRate * (double)n.Amoney - n.AgentPayGet);
+    double Sys2 = Entity.OrderCash.Where(n => n.PayState == 2 && n.OrderState == 2).ToList().Sum(n => n.UserRate - (double)n.CashRate - n.AgentCashGet);//UserRate-CashRate-AgentCashGet
+    double Sys3 = Entity.OrderTransfer.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => (double)n.Poundage - n.SysRate * (double)n.Amoney - n.AgentPayGet);//Poundage-SysRate*Amoney-AgentPayGet
+    double? Sys5 = Entity.OrderHouse.Where(n => n.PayState == 2 && n.OrderState == 2).ToList().Sum(n => (double?)((double)n.Poundage - n.SysRate * (double)n.Amoney - (double)n.CashRate - n.AgentPayGet));//Poundage-SysRate*Amoney-CashRate-AgentPayGet
+    double Sys6 = Entity.PayConfigOrder.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => (double)n.Amoney - n.AgentGet);//Amoney-AgentGet
+    double Sys8 = Entity.OrderF2F.Where(n => n.PayState == 1 && n.OrderState == 2).ToList().Sum(n => (double)n.Poundage - n.SysRate * (double)n.Amoney - n.AgentPayGet);//Poundage-SysRate*Amoney-AgentPayGet
+    double Agent10 = 0;
+    double Sys10 = 0;
+    if (Entity.DaiLiOrder.Count(n => n.PayState == 1 && n.OrderState == 2) > 0)
+    {
+        Agent10 = Entity.DaiLiOrder.Where(n => n.PayState == 1 && n.OrderState == 2).Sum(n => n.AgentGet);
+        Sys10 = Entity.DaiLiOrder.Where(n => n.PayState == 1 && n.OrderState == 2).Sum(n => (double)n.Amoney - n.AgentGet);
+    }
+    YHFR = Entity.OrderProfitLog.Where(n => n.LogType == 1).ToList().Sum(n => n.Profit);
+    DLFR = (decimal)(Agent1 + Agent2 + Agent3 + (Agent5.HasValue ? Agent5.Value : (double)0) + Agent6 + Agent8 + Agent10) - YHFR;
+    ALLLR = (decimal)(Sys1 + Sys2 + Sys3 + (Sys5.HasValue ? Sys5.Value : (double)0) + Sys6 + Sys8 + Sys10);
+    /*
+--总的，节点前
+select * from Orders where ID<28325 and
+((TState = 2 and PayState = 2 and (TType = 2 or TType = 5)) or (TState = 2 and PayState = 1 and (TType = 1 or TType = 3)) or (TType > 5 and PayState = 1 and TState != 0))
+order by ID
+--总的，节点后
+select * from Orders where ID>28325 and
+((TState = 2 and PayState = 2 and (TType = 2 or TType = 5)) or (TState = 2 and PayState = 1 and (TType = 1 or TType = 3)) or (TType > 5 and PayState = 1 and TState != 0))
+order by ID
+===========充值=============
+SELECT * FROM [OrderRecharge]
+Where OrderState=2 and PayState=1
+order by id
+--代理：AgentPayGet（含用户）
+--利润：Poundage-SysRate*Amoney-AgentPayGet
+--用户：OrderProfitLog LogType=1
+===========提现=============
+SELECT * FROM [OrderCash]
+Where OrderState=2 and PayState=2
+order by id
+--代理：AgentCashGet
+--利润：UserRate-CashRate-AgentCashGet
+--用户：OrderProfitLog LogType=1
+===========转帐=============
+SELECT * FROM [OrderTransfer]
+Where OrderState=2 and PayState=1
+order by id
+--代理：AgentPayGet
+--利润：Poundage-SysRate*Amoney-AgentPayGet
+--用户：OrderProfitLog LogType=1
+===========房租=============
+SELECT * FROM [OrderHouse]
+Where OrderState=2 and PayState=2
+order by id
+--代理：AgentCashGet
+--利润：Poundage-SysRate*Amoney-CashRate-AgentPayGet //6笔，忽略了提现手续费
+--用户：OrderProfitLog LogType=1
+===========升级============= 
+SELECT * FROM [PayConfigOrder]
+Where OrderState=2 and PayState=1
+order by id
+--代理：AgentGet
+--利润：Amoney-AgentGet //17笔，忽略了支付手续费
+--用户：OrderProfitLog LogType=1
+===========面对面付=============
+SELECT * FROM [OrderF2F]
+Where OrderState=2 and PayState=1
+order by id
+--代理：AgentPayGet
+--利润：Poundage-SysRate*Amoney-AgentPayGet
+--用户：OrderProfitLog LogType=1
+===========代理=============
+SELECT * FROM [DaiLiOrder]
+Where OrderState=2 and PayState=1
+order by id
+--代理：AgentGet
+--利润：Amoney-AgentGet //0笔，忽略了支付手续费
+--用户：OrderProfitLog LogType=1
+    */
+    //}
+    //catch (Exception) { }
+    <div class="alert alert-danger">
+        <button class="close" data-close="alert"></button>
+        用户数量：<b>@(AllUsers)</b>，
+    认证用户：<b>@(CHKUsers)</b>，
+    总余额：<b>@((AllMoney + Frozen).ToMoney())</b>，
+    可提现：<b>@(AllMoney.ToMoney())</b><br />
+        总手续费：<b>@(AllSXF.ToMoney())</b>，
+    用户分润：<b>@(YHFR.ToMoney())</b>，
+    代理分润：<b>@(DLFR.ToMoney())</b>，
+    总利润：<b>@(ALLLR.ToMoney())</b>。
+    </div>
+}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>汇总表</div>
+                <!--@(ViewBag.Title)-->
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th colspan="2">时间</th>
+                                <th>银联</th>
+                                <th>充值/收款【银联】</th>
+                                <th>提现</th>
+                                <th>T0提现</th>
+                                @*<th>转帐</th>
+                                <th>房租</th>
+                                <th>T0房租</th>*@
+                                <th>升级</th>
+                                <th>支付宝</th>
+                                <th>微信</th>
+                               @* <th>NFC</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                decimal? TotalAmoney = 0;
+                                decimal? Amoney1 = 0;
+                                decimal? Amoney2 = 0;
+                                decimal? Amoney2_0 = 0;
+                                decimal? Amoney3 = 0;
+                                decimal? Amoney5 = 0;
+                                decimal? Amoney5_0 = 0;
+                                decimal? Amoney6 = 0;
+                                decimal? Amoney7 = 0;
+                                decimal? Amoney8 = 0;
+                                decimal? Amoney9 = 0;
+                                decimal? TotlaPoundage = 0;
+                                decimal? Poundage1 = 0;
+                                decimal? Poundage2_0 = 0;
+                                decimal? Poundage2_1 = 0;
+                                decimal? Poundage3 = 0;
+                                decimal? Poundage5 = 0;
+                                decimal? Poundage5_0 = 0;
+                                decimal? Poundage7 = 0;
+                                decimal? Poundage8 = 0;
+                                decimal? Poundage9 = 0;
+                                int? Number2 = 0;
+                            }
+                            @if (FinTotalList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in FinTotalList)
+                                {
+                                <tr class="odd gradeX tr@(p.Id)">
+                                    <th rowspan="2"><a title="更新时间：@(((DateTime)(p.Update == null ? p.AddTime : p.Update)).ToString("yyyy-MM-dd HH:mm:ss"))" class="GengXin" href="Info.html?Id=@(p.Id)">@(p.AddTime.ToString("yyyy年MM月"))</a></th>
+                                    <th>总额</th>
+                                    <td class="totalamoney">@(p.TotalAmoney.ToMoney())</td>
+                                    <td class="amoney1">@(p.Amoney1.ToMoney())</td>
+                                    <td class="amoney2">@(p.Amoney2.ToMoney())</td>
+                                    <td class="amoney2_0">@(p.Amoney2_0.ToMoney())</td>
+                                  @*  <td class="amoney3">@(p.Amoney3.ToMoney())</td>
+                                    <td class="amoney5">@(p.Amoney5.ToMoney())</td>
+                                    <td class="amoney5_0">@(p.Amoney5_0.ToMoney())</td>*@
+                                    <td class="amoney6">@(p.Amoney6.ToMoney())</td>
+                                    <td class="amoney7">@(p.Amoney7.ToMoney())</td>
+                                    <td class="amoney8">@(p.Amoney8.ToMoney())</td>
+                                    @*<td class="amoney9">@(p.Amoney9.ToMoney())</td>*@
+                                </tr>
+                                <tr class="odd gradeX tr@(p.Id)">
+                                    <th>手续费</th>
+                                    <td class="totalpoundage">@(p.TotlaPoundage.ToMoney())</td>
+                                    <td class="poundage1">@(p.Poundage1.ToMoney())</td>
+                                    <td class="number2" title="提现笔数及服务费">@(p.Number2)笔/@(p.Poundage2_1.ToMoney())</td>
+                                    <td class="poundage2_0">@(p.Poundage2_0.ToMoney())</td>
+                                    @*<td class="poundage3">@(p.Poundage3.ToMoney())</td>
+                                    <td class="poundage5">@(p.Poundage5.ToMoney())</td>
+                                    <td class="poundage5_0">@(p.Poundage5_0.ToMoney())</td>*@
+                                    <td>--</td>
+                                    <td class="poundage7">@(p.Poundage7.ToMoney())</td>
+                                    <td class="poundage8">@(p.Poundage8.ToMoney())</td>
+                                 @*   <td class="poundage9">@(p.Poundage9.ToMoney())</td>*@
+                                </tr>  
+                                    TotalAmoney += p.TotalAmoney;
+                                    Amoney1 += p.Amoney1;
+                                    Amoney2 += p.Amoney2;
+                                    Amoney2_0 += p.Amoney2_0;
+                                    //Amoney3 += p.Amoney3;
+                                    //Amoney5 += p.Amoney5;
+                                    //Amoney5_0 += p.Amoney5_0;
+                                    Amoney6 += p.Amoney6;
+                                    Amoney7 += p.Amoney7;
+                                    Amoney8 += p.Amoney8;
+                                    Amoney9 += p.Amoney9;
+                                    TotlaPoundage += p.TotlaPoundage;
+                                    Poundage1 += p.Poundage1;
+                                    Poundage2_0 += p.Poundage2_0;
+                                    Poundage2_1 += p.Poundage2_1;
+                                    Poundage3 += p.Poundage3;
+                                    Poundage5 += p.Poundage5;
+                                    Poundage5_0 += p.Poundage5_0;
+                                    Poundage7 += p.Poundage7;
+                                    Poundage8 += p.Poundage8;
+                                    //Poundage9 += p.Poundage9;
+                                    Number2 += p.Number2;
+                                }
+                                if (IsCountByYear)
+                                { 
+                                <tr class="Total">
+                                    <th rowspan="2">汇总</th>
+                                    <th>总额</th>
+                                    <td class="totalamoney">@(TotalAmoney.ToMoney())</td>
+                                    <td class="amoney1">@(Amoney1.ToMoney())</td>
+                                    <td class="amoney2">@(Amoney2.ToMoney())</td>
+                                    <td class="amoney2_0">@(Amoney2_0.ToMoney())</td>
+                               @*     <td class="amoney3">@(Amoney3.ToMoney())</td>
+                                    <td class="amoney5">@(Amoney5.ToMoney())</td>
+                                    <td class="amoney5_0">@(Amoney5_0.ToMoney())</td>*@
+                                    <td class="amoney6">@(Amoney6.ToMoney())</td>
+                                    <td class="amoney7">@(Amoney7.ToMoney())</td>
+                                    <td class="amoney8">@(Amoney8.ToMoney())</td>
+                                    @*<td class="amoney9">@(Amoney9.ToMoney())</td>*@
+                                </tr>
+                                <tr class="Total">
+                                    <th>手续费</th>
+                                    <td class="totalpoundage">@(TotlaPoundage.ToMoney())</td>
+                                    <td class="poundage1">@(Poundage1.ToMoney())</td>
+                                    <td class="number2" title="提现笔数及服务费">@(Number2)笔/@(Poundage2_1.ToMoney())</td>
+                                    <td class="poundage2_0">@(Poundage2_0.ToMoney())</td>
+                                   @* <td class="poundage3">@(Poundage3.ToMoney())</td>
+                                    <td class="poundage5">@(Poundage5.ToMoney())</td>
+                                    <td class="poundage5_0">@(Poundage5_0.ToMoney())</td>*@
+                                    <td>--</td>
+                                    <td class="poundage7">@(Poundage7.ToMoney())</td>
+                                    <td class="poundage8">@(Poundage8.ToMoney())</td>
+                                    @*<td class="poundage9">@(Poundage9.ToMoney())</td>*@
+                                </tr> 
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Agent/Views/Shared/Page.cshtml", FinTotalList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<script type="text/javascript">
+    $(function () {
+        $(".GengXin").live("click", function () {
+            var Btn = $(this);
+            Url = Btn.attr("href");
+            //得到当前单击的tr行
+            DeleteItemDialog = art.dialog({
+                title: '温馨提示',
+                content: '您确定更新选定的数据吗？',
+                icon: 'warning',
+                lock: true,
+                button: [{
+                    name: '更新',
+                    callback: function () {
+                        $.ajax({
+                            type: "GET",
+                            url: Url,
+                            dataType: "json",
+                            success: function (json) {
+                                var id = json["id"];
+                                var update = json["update"];
+                                var Tr = Btn.closest("tbody").find(".tr" + id);
+                                Btn.attr("title", "更新时间" + update);
+                                Tr.find(".totalamoney").text(ToMoney(json["totalamoney"]));
+                                Tr.find(".totlapoundage").text(ToMoney(json["totlapoundage"]));
+                                Tr.find(".amoney1").text(ToMoney(json["amoney1"]));
+                                Tr.find(".amoney2").text(ToMoney(json["amoney2"]));
+                                Tr.find(".amoney2_0").text(ToMoney(json["amoney2_0"]));
+                                Tr.find(".amoney3").text(ToMoney(json["amoney3"]));
+                                Tr.find(".amoney5").text(ToMoney(json["amoney5"]));
+                                Tr.find(".amoney5_0").text(ToMoney(json["amoney5_0"]));
+                                Tr.find(".amoney6").text(ToMoney(json["amoney6"]));
+                                Tr.find(".amoney7").text(ToMoney(json["amoney7"]));
+                                Tr.find(".amoney8").text(ToMoney(json["amoney8"]));
+                                Tr.find(".amoney9").text(ToMoney(json["amoney9"]));
+                                Tr.find(".poundage1").text(ToMoney(json["poundage1"]));
+                                Tr.find(".poundage2_0").text(ToMoney(json["poundage2_0"]));
+                                Tr.find(".number2").text(json["number2"] + "笔/" + ToMoney(json["poundage2_1"]));
+                                Tr.find(".poundage3").text(ToMoney(json["poundage3"]));
+                                Tr.find(".poundage5").text(ToMoney(json["poundage5"]));
+                                Tr.find(".poundage5_0").text(ToMoney(json["poundage5_0"]));
+                                Tr.find(".poundage7").text(ToMoney(json["poundage7"]));
+                                Tr.find(".poundage8").text(ToMoney(json["poundage8"]));
+                                Tr.find(".poundage9").text(ToMoney(json["poundage9"]));
+                                showdialog("更新成功");
+                            }
+                        });
+                    },
+                    focus: true,
+                    disabled: false
+                }, {
+                    name: '取消',
+                    callback: function () {
+                        this.close();
+                    }
+                }
+                ]
+            });
+            return false;
+        });
+    })
+    function ToMoney(m) {
+        var intm = parseInt(m);
+        var floatm = parseFloat(m);
+        if (intm == floatm) {
+            return intm;
+        } else {
+            return floatm.toFixed(2);
+        }
+    }
+</script>

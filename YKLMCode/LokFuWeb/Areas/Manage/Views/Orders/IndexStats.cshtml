@@ -1,0 +1,10 @@
+﻿@{
+    Layout = null;
+    decimal SumLagAmoney = ViewBag.SumLagAmoney ?? decimal.Zero;
+    decimal SumLagAgentPayGet = ViewBag.SumLagAgentPayGet ?? decimal.Zero;
+}
+<div class="alert alert-danger">
+    <button data-close="alert" class="close"></button>
+    T5总交易额：<b>@(SumLagAmoney.ToString("f2"))</b>，
+    T5总利润：<b>@(SumLagAgentPayGet.ToString("f2"))</b>。
+</div>

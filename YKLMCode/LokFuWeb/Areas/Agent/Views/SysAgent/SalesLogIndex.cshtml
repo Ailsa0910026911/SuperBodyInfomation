@@ -1,0 +1,46 @@
+﻿@{
+    IPageOfItems<SalesLog> SalesLogList = ViewBag.SalesLogList;
+    ViewBag.SMUid = 38;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="overflow-x: hidden;overflow-y:auto; margin: 0px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+      <div class="portlet-body" style="margin: 10px;">
+        <div class="table-scrollable">
+        <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+          <thead>
+            <tr>
+                <th>变动时间 </th>
+                <th>销售人员 </th>
+                <th>代理费用 </th>
+                <th>到期时间 </th>
+                <th>操作 </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var item in SalesLogList)
+            {
+            <tr class="odd gradeX">
+                <td class="center"> @(item.AddTime.ToString()) </td>
+                <td class="center"> @(item.Salesman)</td>
+                <td class="center price"> @(item.AgentFee.ToString("f2")) </td>
+                <td class="center"> @(item.ExpireTime.ToString("yyyy-MM-dd HH:mm")) </td>
+                <td class="center"> <a style="cursor:pointer" onclick="javascript:parent.OpentIfarme('@(item.AddTime)','/Agent/SysAgent/EditSalesLog.html?Id=@(item.Id)');" >查看</a> </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        </div>
+        <div  class="inquiry">
+            <div class="main-content">
+                <link rel="stylesheet" href="/Content/HaoFu/css/style.css" />
+                @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml",SalesLogList)
+            </div>
+        </div>
+      </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+</div>
+<!-- END PAGE CONTENT-->

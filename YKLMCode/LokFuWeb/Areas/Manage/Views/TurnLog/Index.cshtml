@@ -1,0 +1,97 @@
+﻿@{
+    IList<TurnLog> TurnLogList = ViewBag.TurnLogList;
+    ViewBag.SMUid = 88;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    LokFuEntity Entity = ViewBag.Entity;
+    TurnLog TurnLog = ViewBag.TurnLog;
+    IList<Turntable> TurntableList = Entity.Turntable.ToList();
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 820px; height: 600px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="alert alert-warning">
+            <button class="close" data-close="alert"></button>
+            @{
+                decimal Totle = 0;
+                decimal Take = 0;
+                decimal None = 0;
+                try
+                {
+                    Totle = Entity.TurnLog.Where(n => n.TId == TurnLog.TId && n.Amoney > 0).Sum(n => n.Amoney);
+                    Take = Entity.TurnLog.Where(n => n.TId == TurnLog.TId && n.Amoney > 0 && n.State == 2).Sum(n => n.Amoney);
+                    None = Entity.TurnLog.Where(n => n.TId == TurnLog.TId && n.Amoney > 0 && n.State == 1).Sum(n => n.Amoney);
+                }
+                catch (Exception) { }
+            }
+            总中奖金额：<b>@(Totle.ToString("F0"))</b>元，
+            已领取金额：<b>@(Take.ToString("F0"))</b>元，
+            未领取金额：<b>@(None.ToString("F0"))</b>元。
+        </div>
+        <div class="portlet-body">
+            <div class="table-scrollable">
+                <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                    <thead>
+                        <tr>
+                            <th>用户 </th>
+                            <th>用户名 </th>
+                            <th>活动 </th>
+                            <th>奖品名称 </th>
+                            <th>数量 </th>
+                            <th>状态 </th>
+                            <th>中奖时间 </th>
+                            <th>兑奖时间 </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (TurnLogList.Count() <= 0)
+                        {
+                            <tr>
+                                <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                    <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var p in TurnLogList)
+                            {
+                                Turntable Turntable = TurntableList.FirstOrNew(n => n.Id == p.TId);
+                                Users Users = Entity.Users.FirstOrNew(n => n.Id == p.UId);
+                            <tr class="odd gradeX">
+                                <td class="center">@(Users.TrueName) </td>
+                                <td class="center">@(Users.UserName) </td>
+                                <td class="center">@(Turntable.Name) </td>
+                                <td class="center">@(p.Name) </td>
+                                <td class="center">@(p.Num) </td>
+                                <td class="center">@if (p.State == 1)
+                                                   {
+                                    <i class="color-green">未领奖</i>
+                                                   }
+                                                   else if (p.State == 2)
+                                                   {
+                                    <i class="color-red">已领奖</i>
+                                                   }
+                                                   else
+                                                   {
+                                    <i class="color-gray">未中奖</i>
+                                                   } </td>
+                                <td class="center">@(p.AddTime) </td>
+                                <td class="center">@(p.TakeTime) </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", TurnLogList)
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+<!-- END PAGE CONTENT-->

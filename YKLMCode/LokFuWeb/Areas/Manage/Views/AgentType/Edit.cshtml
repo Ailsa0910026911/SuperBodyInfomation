@@ -1,0 +1,78 @@
+﻿@{
+    AgentType AgentType = ViewBag.AgentType;
+    ViewBag.SMUid = 204;
+    if(AgentType.Id.IsNullOrEmpty())
+    {
+        AgentType.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Agent/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(AgentType.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(AgentType.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">类型名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control  validate[required] input-large" name="Name" id="Name" value="@(AgentType.Name)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">开通费用 <span class="required"> * </span> </label>
+              <div class="col-md-4" >
+                <div class="input-icon right"> <i class="fa" style="right:17px"></i>
+                  <input type="text" class="form-control validate[required,min[0]] input-inline" name="RegisterFee" id="RegisterFee" value="@(AgentType.RegisterFee.ToString("n2"))"  />元
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">开通费率 <span class="required"> * </span> </label>
+              <div class="col-md-4" >
+                <div class="input-icon right"> <i class="fa" style="right:17px"></i>
+                  <input type="text" class="form-control validate[required,min[0]] input-inline" name="RegisterPayGet" id="RegisterPayGet" value="@( (AgentType.RegisterPayGet * 100).ToString("n2"))"  />%
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(AgentType.State==1?" selected":"")>显示</option>
+                    <option value="0"@(AgentType.State==0?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

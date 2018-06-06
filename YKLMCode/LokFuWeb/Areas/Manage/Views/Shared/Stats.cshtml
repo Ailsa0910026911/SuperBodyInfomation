@@ -1,0 +1,29 @@
+﻿@{
+    StatsModel StatsModel = this.Model;
+}
+<script>
+    $("#@(StatsModel.ButtonId)").click(function () {
+        $(this).attr("disabled",true);
+        var data;
+        @if(!StatsModel.FormId.IsNullOrEmpty())
+        {
+            @Html.Raw("data = $('#" + StatsModel.FormId + "').serialize();")
+        }
+
+        $.ajax({
+            type: "GET",
+            url: '@(StatsModel.Url)',
+            data: data,
+            success: function (reslut) {
+                $("#@(StatsModel.ShowId)").html(reslut);
+                $("#@(StatsModel.ButtonId)").attr("disabled", false);
+            },
+            beforeSend: function (XMLHttpRequest) {
+                var img = '正在统计...<img src="/Content/Metronic/img/loadding.gif">';
+                $("#@(StatsModel.ShowId)").html(img);
+            }
+        });
+
+        
+    });
+</script>

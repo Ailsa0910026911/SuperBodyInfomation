@@ -1,0 +1,49 @@
+﻿@{
+    SysAdmin SysAdmin = ViewBag.AdminUser;
+    ViewBag.SMUid = 152;
+    ViewBag.Title = "个人中心 - 个人信息";
+    string viewType = ViewBag.ViewType;
+}
+<div class=" clearfix">
+    <div class="ifarm-index clearfix">
+    <div class="main-content information">
+	    @if(viewType.IsNullOrEmpty())
+        {
+        <div class="proxy-top inform">
+            <img alt="" src="/Content/HaoFu/image/inform.png">		
+            <hr>
+        </div>
+         }
+	    <div class="proxy-con inquiry-cont">
+		    <form action="InfoSave.html??@(Request.QueryString["IsAjax"].IsNullOrEmpty()?"":"IsAjax=1")" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+			    <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <ul class="list-unstyled inform-list">
+				    <li>
+					    <span class="left-span"> 登录账户 </span> <span class="text-warning">@(SysAdmin.UserName)</span>
+				    </li>
+				    <li>
+					    <span class="left-span"> 姓名 </span> 
+                        <input class="input-max validate[required]" type="text" name="TrueName" id="TrueName" value="@(SysAdmin.TrueName)"  /> 
+				    </li>
+				    <li>
+					    <span class="left-span"> 手机 </span> 
+                        <input class="input-max validate[custom[mobile]]" maxlength="11" type="text" name="Mobile" id="Mobile" value="@(SysAdmin.Mobile)" alert="手机号码" /> 
+				    </li>
+				    <li>
+					    <span class="left-span"> 邮箱 </span> 
+                        <input class="input-max validate[custom[email]]" type="text" name="Email" id="Email" value="@(SysAdmin.Email)" alert="邮箱地址" />
+				    </li>
+			    </ul>
+			    <br>
+			    <div class="text-center"><button type="submit" class="sub">确认</button></div>
+		    </form>
+	    </div>
+    </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604251426"></script>
+}

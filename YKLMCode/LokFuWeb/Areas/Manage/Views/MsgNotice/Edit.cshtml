@@ -1,0 +1,132 @@
+﻿@{
+    MsgNotice MsgNotice = ViewBag.MsgNotice;
+    ViewBag.SMUid = 22;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<SysAgent> SysAgentList = Entity.SysAgent.Where(n => n.State == 1 && n.Tier == 1 && n.IsTeiPai == 1).ToList();
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(MsgNotice.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(MsgNotice.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公告类型 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <select name="NType" id="NType" class="form-control input-small input-inline input-sm validate[required]" type="select-one" alert="请选择公告类型">
+                      <option value="">请选择</option>
+                      <option value="0" @(MsgNotice.NType==0?"selected":"")>平台公告</option>
+                      <option value="1" @(MsgNotice.NType==1?"selected":"")>管理公告</option>
+                      <option value="2" @(MsgNotice.NType==2?"selected":"")>机构公告</option>
+                      <option value="3" @(MsgNotice.NType==3?"selected":"")>商户公告</option>
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group AgentId" style="display:none;">
+              <label class="control-label col-md-3">商户范围<span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <select name="AgentId" id="AgentId" class="form-control input-small input-inline input-sm validate[required]" type="select-one" alert="请选择公告类型">
+                      <option value="">请选择</option>
+                      <option value="0" @(MsgNotice.AgentId==0?"selected":"")>所有商户</option>
+                      <option value="999999999" @(MsgNotice.AgentId==999999999?"selected":"")>@(BasicSet.Name)商户</option>
+                      @foreach (var p in SysAgentList){
+                      <option value="@(p.Id)" @(MsgNotice.AgentId==p.Id?"selected":"")>@(p.Name)商户</option>
+                      }
+                  </select>
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公告标题 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                    <input type="text" class="form-control validate[required,maxSize[14]] input-large" name="Name" id="Name" value="@(MsgNotice.Name)" alert="请填写标题" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公告内容 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right"> <i class="fa"></i>
+                  <textarea class="xyeditor input-xxlarge" name="Info" id="Info" rows="12" data-path="/Manage/Home/UpFile.html">@(MsgNotice.Info)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">公告状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(MsgNotice.State==1?" selected":"")>显示</option>
+                    <option value="0"@(MsgNotice.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+            @if (MsgNotice.Id.IsNullOrEmpty())
+            {
+                <div class="form-group" style="display:none;" id="IsPushDiv">
+                    <label class="control-label col-md-3">@*是否推送到全体APP*@是否推送到亿卡联盟钱包全体用户 <span class="required"> * </span> </label>
+                    <div class="col-md-4">
+                        <select class="bs-select form-control input-xsmall input-inline" name="IsPush" id="IsPush">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                        选择“是”只推亿卡联盟不推贴牌
+                    </div>
+                </div>
+            }
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(MsgNotice.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+<script>
+    $(function () {
+        $("#NType").change(function () {
+            var V = $(this).val();
+            if (V == 0 || V == 3) {
+                $(".AgentId").show();
+            } else {
+                $(".AgentId").hide();
+                $("#AgentId").val(0);
+            }
+
+            if (V == 3) {
+                $("#IsPushDiv").show();
+            }
+            else {
+                $("#IsPushDiv").hide();
+            }
+        }).change();
+    });
+</script>      
+    }
+}

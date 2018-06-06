@@ -1,0 +1,182 @@
+﻿@{
+    AppUpdate AppUpdate = ViewBag.AppUpdate;
+    ViewBag.SMUid = 239;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="@(AppUpdate.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(AppUpdate.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">App名称<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="Name" id="Name" value="@(AppUpdate.Name)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">App标识<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="Tag" id="Tag" value="@(AppUpdate.Tag)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓版本标识<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[required]" name="ApkVer" id="ApkVer" value="@(AppUpdate.ApkVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓版本号<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[required,custom[int]]" name="ApkInt" id="ApkInt" value="@(AppUpdate.ApkInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓升级链接<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="ApkUrl" id="ApkUrl" value="@(AppUpdate.ApkUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓应用宝<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="ApkYYB" id="ApkYYB" value="@(AppUpdate.ApkYYB)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">升级介绍</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <textarea class="form-control  input-xxlarge" name="ApkInfo" id="ApkInfo" rows="3">@(AppUpdate.ApkInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓颜色<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[required]" name="ApkColor" id="ApkColor" value="@(AppUpdate.ApkColor)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">安卓状态</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="APKState" id="APKState1" @(AppUpdate.APKState == 1 ? "checked" : "") />已上线
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="2" name="APKState" id="APKState2" @(AppUpdate.APKState == 2 ? "checked" : "") />审核中
+                                    </label>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS版本标识<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[required]" name="IosVer" id="IosVer" value="@(AppUpdate.IosVer)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS版本号<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control input-small validate[required,custom[int]]" name="IosInt" id="IosInt" value="@(AppUpdate.IosInt)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">应用市场链接<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="IosUrl" id="IosUrl" value="@(AppUpdate.IosUrl)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">应用宝链接<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <input type="text" class="form-control input-large validate[required]" name="IosYYB" id="IosYYB" value="@(AppUpdate.IosYYB)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">升级介绍</label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <textarea class="form-control input-xxlarge" name="IosInfo" id="IosInfo" rows="3">@(AppUpdate.IosInfo)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS颜色 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-small">
+                                    <input type="text" class="form-control validate[required] input-small" name="IosColor" id="IosColor" value="@(AppUpdate.IosColor)" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">IOS状态  </label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="IOSState" id="IOSState1" @(AppUpdate.IOSState == 1 ? "checked" : "") />已上线
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="2" name="IOSState" id="IOSState2" @(AppUpdate.IOSState == 2 ? "checked" : "") />审核中
+                                    </label>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">确认添加</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

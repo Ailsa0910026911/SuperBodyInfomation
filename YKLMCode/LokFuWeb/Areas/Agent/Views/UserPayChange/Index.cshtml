@@ -1,0 +1,106 @@
+﻿@{
+    IList<UserPayChange> UserPayChangeList = ViewBag.UserPayChangeList;
+    ViewBag.SMUid = 140;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    IList<Users> UsersList = ViewBag.UsersList;
+    UserPayChange UserPayChange = ViewBag.UserPayChange;
+    ViewBag.NoShowDel = true;
+}
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="inquiry-cont">
+            <form id="ListForm" name="ListForm" method="get" class="frame-list">
+                <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="112" align="right">商户 : </td>
+                            <td width="200" align="left">
+                                <input type="text" class="input-text" name="Remark" id="Remark" value="@(UserPayChange.Remark)" /></td>
+                            <td width="112" align="right">状态 : </td>
+                            <td width="200" align="left">
+                                <select name="State" class="input-text input-sm">
+                                    <option value="">不限制</option>
+                                    <option value="1" @(UserPayChange.State == 1 ? "selected" : "")>待审核</option>
+                                    <option value="2" @(UserPayChange.State == 2 ? "selected" : "")>已审核</option>
+                                    <option value="3" @(UserPayChange.State == 3 ? "selected" : "")>审核失败</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button type="submit" class="but">查  询</button>
+                    <button type="reset" class="but">重  置</button>
+                </div>
+            </form>
+        </div>
+        <div class="list-table">
+            <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                <thead>
+                    <tr>
+                        <th width="400px">商户 </th>
+                        <th width="160px">申请时间 </th>
+                        <th width="128px">状态 </th>
+                        <th width="160px">审核时间 </th>
+                        <th width="100px">操作 </th>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    @if (UserPayChangeList.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var p in UserPayChangeList)
+                        {
+                            Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                        <tr class="odd gradeX">
+                            <td class="center">@(Users.TrueName) </td>
+                            <td class="center">@(p.AddTime) </td>
+                            <td class="center">@if (p.State == 1)
+                                               {
+                                <i class="fa fa-wrench color-blue">待审核</i>
+                                               }
+                                               else if (p.State == 2)
+                                               {
+                                <i class="fa fa-check color-green">已审核</i>
+                                               }
+                                               else
+                                               {
+                                <i class="fa fa-times color-red">失败</i>
+                                               } </td>
+                            @if (p.State > 1)
+                            {
+                                <td class="center">@(((DateTime)p.EditTime).ToString("yyyy-MM-dd HH:mm")) </td>
+                            }
+                            else
+                            {
+                                <td class="center">-- </td>
+                            }
+                            <td class="center">
+                                @if (ViewBag.Info)
+                                {
+                                    <a class="label label-sm label-success Ajax" href="Info.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>查看</a>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", UserPayChangeList)
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+}
+@section HeaderScripts
+{
+}

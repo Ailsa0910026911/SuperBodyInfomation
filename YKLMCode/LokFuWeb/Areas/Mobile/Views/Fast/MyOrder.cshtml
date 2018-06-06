@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+    FastOrder FastOrder = ViewBag.FastOrder;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>交易明细</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/Content/Mobile/Fast/css/main.css?201702" rel="stylesheet" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div class="big">交易金额</div>
+        <div class="amount">@(FastOrder.Amoney.ToString("F2"))</div>
+        <span class="state state@(FastOrder.PayState)">@(FastOrder.PayState==1?(FastOrder.UserState==1?"已结算":"已支付"):"待支付")</span>
+        <div class="xian"></div>
+        <div class="boxtext">
+            <span class="title">交易号</span>
+            <a class="con">@(FastOrder.TNum)</a>
+        </div>
+        <div class="boxtext">
+            <span class="title">交易时间</span>
+            <span class="con">@(FastOrder.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+        </div>
+        <div class="boxtext">
+            <span class="title">交易类型</span>
+            <span class="con">@(FastOrder.OType==1?"支付宝":"")@(FastOrder.OType==2?"微信":"")</span>
+        </div>
+        <div class="xian"></div>
+        <div class="boxtext">
+            <span class="title">到账银行</span>
+            <span class="con">@(FastOrder.Bank)</span>
+        </div>
+        <div class="boxtext">
+            <span class="title">银行卡号</span>
+            <a class="con">@(FastOrder.Card)</a>
+        </div>
+        <div class="boxtext">
+            <span class="title">手续费</span>
+            <span class="con red">￥@(FastOrder.Poundage.ToString("F2"))</span>
+        </div>
+        <div class="boxtext">
+            <span class="title">到账金额</span>
+            <span class="con red">￥@(FastOrder.PayMoney.ToString("F2"))</span>
+        </div>
+    </div>
+</body>
+</html>

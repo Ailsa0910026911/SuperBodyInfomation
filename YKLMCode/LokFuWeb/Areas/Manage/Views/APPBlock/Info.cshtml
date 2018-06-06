@@ -1,0 +1,234 @@
+﻿@{
+    APPBlock APPBlock = ViewBag.APPBlock;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    ViewBag.SMUid = 272;
+    if (APPBlock.Id.IsNullOrEmpty())
+    {
+        APPBlock.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 650px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="Audit.html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(APPBlock.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">标题</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPBlock.Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">小标题</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPBlock.SubName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">小图标</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-xlarge control">
+                                @if (!APPBlock.IconUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPBlock", APPBlock.IconUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPBlock", APPBlock.IconUrl))" height="25" />
+                                    </a>
+                                }
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">广告图</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-xlarge control">
+                                @if (!APPBlock.PicUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPBlock", APPBlock.PicUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPBlock", APPBlock.PicUrl))" height="25" />
+                                    </a>
+                                }
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">链接类型</label>
+                       <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPBlock.LinkType)
+                                {
+                                    case 1: 
+                                    @("内置")
+                                        break;
+                                    case 2: 
+                                    @("外链")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">链接地址</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                 @(APPBlock.LinkType == 1?( ModuleTypeSelectList.FirstOrDefault(q => q.Value == APPBlock.LinkUrl).Key):APPBlock.LinkUrl)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">按键1链接名称</label>
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <div class="input-icon right" style="width: 400px;">
+                                @(APPBlock.LinkName1)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">按键1链接类型</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPBlock.LinkType1)
+                                {
+                                    case 1: 
+                                    @("内置")
+                                        break;
+                                    case 2: 
+                                    @("外链")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                       <div class="form-group">
+                        <label class="control-label col-md-3">按键1链接值</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                     @(APPBlock.LinkType1 == 1?( ModuleTypeSelectList.FirstOrDefault(q => q.Value == APPBlock.LinkUrl1).Key):APPBlock.LinkUrl1)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">按键2链接名称</label>
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <div class="input-icon right" style="width: 400px;">
+                                @(APPBlock.LinkName2)
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <label class="control-label col-md-3">按键2链接类型</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPBlock.LinkType2)
+                                {
+                                    case 1: 
+                                    @("内置")
+                                        break;
+                                    case 2: 
+                                    @("外链")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">按键2链接值</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                  @(APPBlock.LinkType2 == 1?( ModuleTypeSelectList.FirstOrDefault(q => q.Value == APPBlock.LinkUrl2).Key):APPBlock.LinkUrl2)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">代理商</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @if (SysAgent!=null)
+                                {
+                                      @SysAgent.Name;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">状态</label>
+                           <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPBlock.State)
+                                {
+                                    case 1: 
+                                    @("显示")
+                                        break;
+                                    case 0: 
+                                    @("隐藏")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">高</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPBlock.Height
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">宽</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPBlock.Width
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3">排序</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPBlock.Sort
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+}

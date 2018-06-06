@@ -1,0 +1,72 @@
+﻿@{
+    //SysSet SysSet = ViewBag.SysSet;
+    int Id = ViewBag.Id;
+    string Agreement = ViewBag.Agreement;
+    Dictionary<int,string> SysAgentList = ViewBag.SysAgentList;
+    ViewBag.SMUid = 57;
+    ViewBag.Title = "商户协议设置";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+ 
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="AgreementSave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    @*<input type="hidden" name="Id" value="@(Id)" />*@
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目.
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">商户协议 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="xyeditor input-xxlarge" name="Agreement" id="Agreement" rows="12" data-path="/Manage/Home/UpFile.html">@(Agreement)</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.AgreementSave)
+                            {
+                                <button type="submit" class="btn green">确认修改</button>
+                            }
+
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+        <script>
+            $(function () {
+                $("#chkForm").submit(function () {
+                })
+            })
+        </script>
+    }
+}
+@section HeaderScripts
+{
+    @{
+    }
+}

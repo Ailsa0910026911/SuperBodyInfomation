@@ -1,0 +1,25 @@
+﻿@{
+    this.Layout = null;
+    string FrameId = Request.Form["IFrameId"];
+}
+<script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js"></script>
+<link href="/Content/HaoFu/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+<script src="/Content/HaoFu/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+<script src="/Content/HaoFu/plugins/artdialog/iframeTools.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        @if (FrameId.IsNullOrEmpty())
+        {
+            @Html.Raw("var frameId = window.frameElement && window.frameElement.id || '';")
+        }
+        else
+        {
+            @Html.Raw("var frameId = \"" + FrameId + "\";")
+        }
+        if (frameId != "")
+        {
+            parent.reloadFrame(frameId);
+        }
+        art.dialog.close();
+    });
+</script>

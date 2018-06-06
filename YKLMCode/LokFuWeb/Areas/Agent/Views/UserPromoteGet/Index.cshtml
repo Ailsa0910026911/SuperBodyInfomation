@@ -1,0 +1,129 @@
+﻿@{
+    IList<UserPromoteGet> UserPromoteGetList = ViewBag.UserPromoteGetList;
+    //LokFuEntity Entity = ViewBag.Entity;
+    //SysSet SysSet = Entity.SysSet.FirstOrDefault();
+    ViewBag.SMUid = 202;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+}
+<div class="main-content clearfix">
+	<div class="ifarm-index clearfix">
+		<div class="proxy-top">@(ViewBag.Title)</div>		
+		<div class="information">
+		<div class="proxy-con inquiry-cont operator">
+			<form action="@(this.Url.Action("Save"))" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="IFrameId" value="iframeId202" />
+				<table class="operator-table">											
+					<tbody class="tbody">
+                        <tr>
+                            <td align="center">代理商利润的：</td>
+                            <td align="left" colspan="2">
+                                <input type="text" id="PromoteGet" name="PromoteGet" value="@((BasicAgent.PromoteGet * 100).ToString("n2"))" 
+                                    class="input-text validate[required,min[0],custom[float]]" />
+                                %用作推广佣金
+                            </td>
+                        </tr>
+						<tr>
+							<td width="280" align="center">推广等级</td>
+							<td width="450" align="center">占推广佣金比</td>
+							<td width="220" align="center">状态</td>													
+						</tr>	
+                        @{
+                            int i = 0;    
+                        }
+                        @foreach (var item in UserPromoteGetList)
+                        {
+                            <tr>
+							    <td width="280" align="center">@(item.PromoteLevel)<input type="hidden" name="[@i].Id" value="@item.Id" /><input type="hidden" name="[@i].PromoteLevel" value="@item.PromoteLevel" /></td>
+							    <td width="450" align="center">
+                                     <input type="text" id="[@i].PromoteGet" name="[@i].PromoteGet" value="@(item.PromoteGet != 0 ? (item.PromoteGet * 100).ToString("f2") : "0")" 
+                                             placeholder="百分比"  class="PromoteGet input-text validate[required,min[0],custom[float]]" />
+                                 %</td>
+							    <td width="220" align="center">
+                                    <select class="input-sm" name="[@i].State" >
+                                        <option value="1"@(item.State == 1 ? " selected" : "")>启用</option>
+                                        <option value="0"@(item.State == 0 ? " selected" : "")>停用</option>
+                                    </select>
+							    </td>													
+						    </tr>	
+                            i++;
+                        }
+                        <tr>
+                            <td align="center">推广佣金比率共：</td>
+                            <td align="left" colspan="2"><b id="PromoteGetSum">@((UserPromoteGetList.Sum(o => o.PromoteGet) * 100).ToString("f2"))%</b><b id="sumErrorMessage" style="display:none;color:red">请输入推广佣金之和等于100%的数字</b></td>
+                        </tr>
+                        <tr>
+                            <td align="center">是否启用推广佣金：</td>
+                            <td align="left" colspan="2">
+                            <select class="input-sm" name="IsPromote" id="IsPromote">
+                                <option value="1"@(BasicAgent.IsPromote == 1 ? " selected" : "")>启用</option>
+                                <option value="0"@(BasicAgent.IsPromote == 0 ? " selected" : "")>停用</option>
+                            </select>
+                            </td>
+                        </tr>
+                        @if (BasicAgent.IsTeiPai == 1 && BasicAgent.Tier == 1)
+                        {
+                        <tr>
+                            <td align="center">分享功能设置：</td>
+                            <td align="left" colspan="2">
+                            <select class="input-small" name="Set4" id="Set4">
+                                <option value="0"@(BasicAgent.Set4 == 0 ? " selected" : "")>关闭</option>
+                                <option value="1"@(BasicAgent.Set4 == 1 ? " selected" : "")>仅开分享挣钱</option>
+                                <option value="2"@(BasicAgent.Set4 == 2 ? " selected" : "")>仅开分享降费率</option>
+                                <option value="3"@(BasicAgent.Set4 == 3 ? " selected" : "")>全部开启</option>
+                            </select>
+                            </td>
+                        </tr>
+                        }
+					</tbody>
+				</table>
+				<br>
+				<br>
+				<div class="text-center warning"><button type="submit" class="sub">保存设置</button></div>
+			</form>
+			<br>
+		</div>
+	</div>
+	</div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201604261603"></script>
+<script>
+    $(function () {
+        $(".chkForm").on("submit", function () {
+            var sum = parseInt($("#PromoteGetSum").text());
+            if (sum != 100)
+            {
+                $("#sumErrorMessage").show();
+                return false;
+            }
+            if ($(this).validationEngine("validate")) {
+                $("input[type=checkbox]:not(:checked)").each(function () {
+                    $(this).val(0).attr("checked", true);
+                })
+            };
+        });
+        $(".PromoteGet[type=text]").on("change", function () {
+            var sum = 0;
+            $.each($(".PromoteGet[type=text]"), function (i, n) {
+                console.log($(n).val());
+                if ($.isNumeric($(n).val()))
+                { 
+                    sum = sum + parseInt($(n).val());
+                }
+            });
+            $("#PromoteGetSum").text(sum + "%");
+            if (sum != 100) {
+                $("#sumErrorMessage").show();
+            }
+            else
+            {
+                $("#sumErrorMessage").hide();
+            }
+        });
+    });
+</script>
+}

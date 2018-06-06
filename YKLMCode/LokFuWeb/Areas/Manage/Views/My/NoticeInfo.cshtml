@@ -1,0 +1,23 @@
+﻿@{
+    MsgNotice MsgNotice = ViewBag.MsgNotice;
+    ViewBag.SMUid = 0;
+    ViewBag.Title = "阅读公告";
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div style="width:600px;">
+  <div style=" padding:15px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+        <h3 style="text-align:center;">@(MsgNotice.Name)</h3>
+        <p style="text-align:right; border-bottom:1px gray dashed; border-top:double gray 3px; padding:5px 3px">发布时间：@(MsgNotice.AddTime)</p>
+        <div>@Html.Raw(MsgNotice.Info)</div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+    }
+}

@@ -1,0 +1,614 @@
+﻿@using Newtonsoft.Json
+@{
+    IList<APPModule> APPModuleList = ViewBag.APPModuleList;
+    ViewBag.SMUid = 195;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    SysAgent SysAgent = ViewBag.SysAgent;
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+    AdTag ScanCodeTag = ViewBag.ScanCodeTag;
+    AdTag BannerTag = ViewBag.BannerTag;
+    AdInfo ScanCodeInfo = ViewBag.scanCodeInfo;
+    List<AdInfo> BannerInfos = ViewBag.bannerInfos;
+    SysSet BasicSet = this.ViewBag.BasicSet;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    Session["Url"] = this.Request.Url.ToString();
+    ViewBag.NoShowDel = true;
+    bool Out = !(BasicSet.ApkSet8 == 1 && BasicSet.IosSet8 == 1);
+    bool Set7 = BasicSet.ApkSet7 == 1 && BasicSet.IosSet7 == 1;
+    string Set7Css = Set7 ? "" : "Set7";
+    int SourceAgentId = ViewBag.SourceAgentId;
+    var Home = APPModuleList.Where(o => o.DisplaySite == 1).OrderBy(o => o.Sort).ToList();
+    var More = APPModuleList.Where(o => o.DisplaySite == 3).OrderBy(o => o.Sort).ToList();
+    var Boot = APPModuleList.Where(o => o.DisplaySite == 2).OrderBy(o => o.Sort).ToList();
+    FileInfo[] homeFiles = ViewBag.homeFiles;
+    FileInfo[] bottomDefaultFiles = ViewBag.bottomDefaultFiles;
+    FileInfo[] bottomActFiles = ViewBag.bottomActFiles;
+    bool IsAdd = ViewBag.IsAdd;
+    bool IsSave = ViewBag.IsSave;
+    bool IsDelete = ViewBag.IsDelete;
+    bool IsEdit = ViewBag.IsEdit;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<link rel="stylesheet" href="/Content/Metronic/csstwo/normalize.css" />
+<link rel="stylesheet" href="/Content/Metronic/csstwo/style.css" />
+<script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js"></script>
+<script src="/Content/Metronic/js/phone.js?201612021621"></script>     
+<script src="/Content/Metronic/js/Sortable.min.js"></script>  
+<link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+<script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+<script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js"></script>
+<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+<script src="/Content/HaoFu/plugins/FileUpLoad/js/vendor/jquery.ui.widget.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-process.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="/Content/HaoFu/plugins/FileUpLoad/js/jquery.fileupload-validate.js"></script>
+<style>
+    .screen .code {
+        @if (ScanCodeInfo.Id.IsNullOrEmpty())
+        {
+            @("background: #fff;")
+        }
+        else
+        {
+            @("background: rgba(0, 0, 0, 0) url(" + Utils.ImageUrl("AdInfo", ScanCodeInfo.Pic) + ") no-repeat scroll 0 0;")
+        }
+        border: 1px solid #ddd;
+        cursor: pointer;
+        height: 92px;
+        position: relative;
+       background-size:100%;
+    }
+    .interval 
+    {
+        margin-right:20px;
+    }
+    .system-icon{
+        margin-left: 40px;
+    }
+    .phone-list{ 
+        position: relative;
+     }
+    .modal-layer{ 
+        position: absolute;
+        left: 20px;
+        top: 330px;
+        width: 400px;
+        border-radius: 5px !important;
+        border: 1px solid #d5d5d5;
+        background: #fff;
+     }
+     .modal-top{
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        border-radius: 5px 5px 0 0 !important;
+        background: #1e85ea;
+        color: #fff;
+     }
+     .modal-top a{ color: #fff; text-decoration: none; }
+     .modal-con{ padding: 10px; height: 300px; overflow-y: auto;    }
+     .modal-con a{ display: block; width: 50px; height: 50px; text-align: center; border: 1px solid #d5d5d5; }
+     .modal-con a img{ width: 46px; vertical-align: top;}
+     .modal-con li { margin-right: 10px; margin-bottom: 10px; float: left; }
+     .modal-con a:hover,.modal-con a.active{ border: 1px solid #f40; }
+     .modal-foot{ height: 50px; line-height: 50px; padding: 0 10px; border-top: 1px solid #d5d5d5; border-radius: 0 0 5px 5px !important;  }
+    .screen .features li .lock_suo{ width:16px; height: 16px; position:absolute; margin:0; top:5px;right:5px; }
+</style>
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">                    
+        <div class="set-phone clearfix">
+            <div class="quantity clearfix">  
+                <span class="pull-left">当前代理商 : </span>
+                <select class="input-max pull-left" id="Id" value="@(SysAgent.Id)" >    
+                    @foreach (var item in SysAgentList)
+                    { 
+                        <option value="@(item.Id)" @(item.Id == SysAgent.Id ? "selected" : "") >@(item.APPName)</option>     
+                    }            
+                </select>   
+                <span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能列表数量 : </span>
+                <select class="input-max pull-left" id="AppBtnNumber" name="AppBtnNumber" autocomplete="off">    
+                    <option value="4" @(SysAgent.AppBtnNumber == 4 ? "selected" : "") >十二宫格</option>                                          
+                    <option value="3" @(SysAgent.AppBtnNumber == 3 ? "selected" : "") >九宫格</option>                                       
+                </select>
+                <span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有无更多按钮 : </span>
+                <select class="input-max pull-left" id="APPHasMore" name="APPHasMore" autocomplete="off">   
+                    @{
+                        int APPHasMore = SysAgent.APPHasMore == 0 ? BasicSet.APPHasMore : SysAgent.APPHasMore;
+                    }
+                    <option value="1" @(APPHasMore == 1 ? "selected" : "") >有</option>                                          
+                    <option value="2" @(APPHasMore == 2 ? "selected" : "") >无</option>                                        
+                </select>
+            </div>
+            <div class="quantity clearfix">  
+                <form method="post" action="EditImportData.html" id="importData" onsubmit="return importData();">
+                    <input type="hidden" name="TargetAgentId" value="@(SysAgent.Id)" />
+                <span class="pull-left">导入代理商 : </span>
+                <select class="input-max pull-left" name="SourceAgentId" >   
+                    @foreach (var item in SysAgentList)
+                    {
+                        <option value="@(item.Id)" @(item.Id == SourceAgentId ? "selected" : "") >@(item.Name)</option>     
+                    }      
+                </select>
+                
+                <span class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择区域：</span>
+                <span class="interval">广告<input type="Checkbox" value="guanggao" name="guanggao" /></span>
+                <span class="interval">扫码背景<input type="Checkbox" value="saoma" name="saoma" /></span>
+                <span class="interval">Home<input type="Checkbox" value="home" name="home" /></span>
+                <span class="interval">底部<input type="Checkbox" value="bottom" name="bottom" /></span>
+                <span class="interval">更多<input type="Checkbox" value="more" name="more" /></span>
+                @if(IsAdd)
+                {
+                <button class="btn green" type="submit">导入数据</button>
+                }
+                </form>
+            </div>
+            <div class="phone-left pull-left">
+                <div class="screen clearfix">
+                    <div class="screen-main-warp clearfix">
+                        <div class="screen-main homeleft">
+                            <div class="code-title text-center">
+                        		<h2>@(SysAgent.APPName)</h2>
+                        		<span class="info-span"><i class="iconfont">&#xe62c;</i></span>
+                        	</div>
+                        @for (int i = 0; i < 2; i++)
+                        {
+
+                            if (Out)
+                            {
+                                Out = false;
+                        	    <div class="code clearfix" name="code">
+                                    <div class="clearfix code-warp">
+                                	    <div class="@(Set7Css) code-left pull-left text-center">
+                                        <a href="javascript:"><img src="/Content/Metronic/image/sao.png" alt="" /></a>
+	                                    </div>
+	                                    <div class="@(Set7Css) code-con pull-left text-center">
+                                            @if (Set7)
+                                            {
+	                                        <a href="javascript:"><img src="/Content/Metronic/image/yao.png" alt="" /></a>
+                                            }
+	                                    </div>
+	                                    <div class="@(Set7Css) code-right pull-left text-center">
+	                                        <a href="javascript:"><img src="/Content/Metronic/image/shou.png" alt="" /></a>
+	                                    </div>
+	                                    <div class="lasy hide">
+                                            @if(IsSave)
+                                            {                                        
+	                                        <a class="btn btn-yellow modify" href="javascript:">修改</a>   
+                                            }                                                   
+	                                    </div>
+                                    </div>
+                                </div>
+                                        
+                            }
+                            else
+                            {
+                                Out = true;
+                                <div class="top" name="top">
+                                    <ul class="list-unstyled imgwarp">
+                                        @foreach (var item in BannerInfos)
+                                        {
+                                          <li data-id="@(item.Id)">
+                                              <img src="@(Utils.ImageUrl("AdInfo", item.Pic))" alt="" width="320" height="85" />
+                                          </li>
+                                        }
+                                    </ul>
+                                    <ul class="reoud list-unstyled"></ul>
+                                    <div class="lasy hide">
+                                        @if(IsAdd)
+                                        { 
+                                        <a class="btn btn-green add" href="javascript:">添加</a>
+                                        }
+                                        @if(IsSave)
+                                        { 
+                                        <a class="btn btn-yellow modify" href="javascript:">修改</a>
+                                        }
+                                    </div>
+                                </div>
+                            
+                            }
+                        }
+                            <div class="features home-feat">
+                                <ul class="list-unstyled clearfix featlist" id="features"></ul>
+                                <a class="more_features" href="javascript:void(0);">
+                                    <img src="/Content/Metronic/image/icon-12.png" alt="" />
+                                    <p>更多</p>
+                                </a>
+                            </div>
+                            <div class="bott">
+                                <ul class="list-unstyled bottlist" id="buttlist"></ul>
+                            </div>
+                        </div>
+                        <div class="screen-main homeright hide">
+                            <div class="back">
+                                <a href="javascript:"> &lt;&lt;返回</a>
+                            </div>
+                            <div class="features move-feat">
+                                <ul class="list-unstyled clearfix movelist" id="movelist"></ul>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if(IsSave)
+                {
+                    <botton class="btn btn-warning sortsave " >保存排序及设置</botton>
+                }
+            </div>
+            <!--表单-->
+            <div class="phone-right pull-left">
+                <!--Home和更多图标表单-->
+                <div class="phone-list set-features hide">                                          
+                    <form class="chkForm" enctype="multipart/form-data" method="post" action="" AddAction="/Manage/APPModule/Add.html" SaveAction="/Manage/APPModule/Save.html">
+                        <input type="hidden" name="id" />
+                        <input type="hidden" name="AgentId" value="@(SysAgent.Id)" />
+                        <input type="hidden" name="DisplaySite" />
+                        <div class="phoneRig-top">
+                            <ul class="list-unstyled">
+                                <li class="active formName"></li>
+                            </ul>
+                        </div>
+                        <div class="phoneRig-main">
+                            <ul class="list-unstyled">
+                                <li class="clearfix">
+                                    <span class="phone-title"> 功能名称 </span>
+                                    <div class="pull-left">
+                                        <input class="input-maxtext validate[required,maxSize[5]]" type="text" name="Name" />
+                                        <p>字数不超过5位</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix genre-list">
+                                    <span class="phone-title"> 功能类型 </span>
+                                    <div class="pull-left">
+                                        <select class="input-maxtext" name="ModuleType">
+                                            <option value="1">内置</option>
+                                            <option value="2">外链</option>                 
+                                        </select>   
+                                        <p>内置为app内置功能,外链可以自己设置跳转链接</p>
+                                    </div>
+                                </li>
+                                <li class="fealist clearfix">
+                                    <span class="phone-title"> 值 </span>
+                                    <div class="pull-left selectdiv">
+                                        <select class="input-maxtext select validate[required]" name="Value" id="Value1">
+                                            <option value="0">请选择</option>
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" >@(item.Key)</option>
+                                            }                                                                                                          
+                                        </select>                                                              
+                                    </div>
+                                    <div class="pull-left inputdiv">
+                                        <input class="input-maxtext feaval validate[required]" type="text" name="Value" id="Value2" />
+                                        <p>请输入以"http://"开头的网址,例如"http://www.taobao.com"</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="phone-title"> 图标  </span>
+                                    <div class="pull-left icont-upload" >
+                                        <input type="hidden" name="PictureUrl" id="PictureUrl" class="PicFile"/>
+                                        <a target="_blank" class="featimg"><img width="40" height="40" src=""/></a>
+                                        <b class="file">
+                                            <input class="upLoadFile " type="file" name="upLoadFile" MaxHigh="80" MaxWidth="80" MinHigh="75" MinWidth="75"/>
+                                            选择文件
+                                        </b>
+                                        <button class="btn btn-primary system-icon" type="button" data-tabel="IconHome"> 选择系统图标 </button>
+                                        <p class="img-size">尺寸：80*80px，格式.Png，图片以英文命名（例如：my.png）</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix genre-list">
+                                    <span class="phone-title"> 锁定 </span>
+                                    <div class="pull-left">
+                                        <select class="input-maxtext IsLock" name="IsLock">
+                                            <option value="False">否</option>
+                                            <option value="True">是</option>                 
+                                        </select>   
+                                        <p>锁定后代理平台将不能修改和排序</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="phoneRig-bot">
+                                <button class="btn btn-warning imgbtn" type="button" >确定</button>
+                            </div>
+
+                            <div class="modal-layer hide" id="IconHome">
+                                <div class="modal-top clearfix">
+                                <span class="pull-left">系统图标</span>
+                                <a class="pull-right modal-close" href="javascript:"> X </a>
+                                </div>
+                                <div class="modal-con">
+                                    <ul class="list-unstyled clearfix">
+                                        @foreach (var item in homeFiles)
+                                        { 
+                                        <li>
+                                            <a href="javascript:"><img src="@(Utils.ImageUrl("APPModule", "/Home/"+item.Name))" alt="@(item.Name)" /></a>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="modal-foot text-right IconSubmitButton">
+                                    <button  class="btn btn-primary modal-btn" type="button">确定</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!--底部功能修改-->
+                <div class="phone-list get-foot hide">
+                    <form class="chkForm" enctype="multipart/form-data" method="post" action="" AddAction="/Manage/APPModule/Add.html" SaveAction="/Manage/APPModule/Save.html">
+                        <input class="hide-id" type="hidden" name="id" />
+                        <input class="hide-displaySite" type="hidden" name="DisplaySite" />
+                        <input type="hidden" name="AgentId" value="@(SysAgent.Id)" />
+                        <div class="phoneRig-top">
+                            <ul class="list-unstyled clearfix">
+                                <li class="active formName"></li>
+                            </ul>
+                        </div>
+                        <div class="phoneRig-main bot">
+                            <ul class="list-unstyled">
+                                <li class="clearfix">
+                                    <span class="phone-title"> 功能名称 </span>
+                                    <div class="pull-left">
+                                        <input class="input-maxtext validate[required,maxSize[4]]" type="text" name="Name" />
+                                        <p>字数不超过5位</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix genre-list">
+                                    <span class="phone-title"> 功能类型 </span>
+                                    <div class="pull-left">
+                                        <select class="input-maxtext" name="ModuleType">
+                                            <option value="1">内置</option>
+                                            <option value="2">外链</option>                 
+                                        </select>   
+                                        <p>内置为app内置功能,外链可以自己设置跳转链接</p>
+                                    </div>
+                                </li>
+                                <li class="fealist clearfix">
+                                    <span class="phone-title"> 值 </span>
+                                    <div class="pull-left selectdiv">
+                                        <select class="input-maxtext select validate[required]" name="Value" id="Value1">
+                                            <option value="0">请选择</option>
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" >@(item.Key)</option>
+                                            }                                                                                                          
+                                        </select>                                                              
+                                    </div>
+                                    <div class="pull-left inputdiv">
+                                        <input class="input-maxtext feaval validate[required]" type="text" name="Value" id="Value2" />
+                                        <p>请输入以"http://"开头的网址,例如"http://www.taobao.com"</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="phone-title"> 默认图标  </span>
+                                    <div class="pull-left icont-upload" >
+                                        <input type="hidden" name="PictureUrl" id="PictureUrl" class="PicFile"/>
+                                        <a target="_blank" class="featimg"><img width="40" height="40"/></a>
+                                        <b class="file"><input class="upLoadFileBoot " type="file" name="upLoadFile"  MaxHigh="66" MaxWidth="60" MinHigh="44" MinWidth="44" />选择文件</b>
+                                        <button class="btn btn-primary system-icon" type="button" data-tabel="IconBottomDef"> 选择系统图标 </button>
+                                        <p class="img-size">最小尺寸：44*44px，最大尺寸：60*60px，格式：Png，分辩率(dpi)：72<br />以英文命名（例如：my.png）</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="phone-title"> 选中图标 </span>
+                                    <div class="inline-block icont-upload PicUrl" >
+                                        <input type="hidden" name="PicUrl" id="PicUrl" class="PicFile"/>
+                                        <a target="_blank" class="featimg"><img width="40" height="40"/></a>
+                                        <b class="file"><input class="upLoadFileBoot " type="file" name="upLoadFile" MaxHigh="66" MaxWidth="60" MinHigh="44" MinWidth="44" />选择文件</b>
+                                        <button class="btn btn-primary system-icon" type="button" data-tabel="IconBottomAct"> 选择系统图标 </button>
+                                        <p class="img-size">最小尺寸：44*44px，最大尺寸：60*60px，格式：Png，分辩率(dpi)：72<br />以英文命名（例如：my.png）</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix genre-list">
+                                    <span class="phone-title"> 锁定 </span>
+                                    <div class="pull-left">
+                                        <select class="input-maxtext IsLock" name="IsLock">
+                                            <option value="False">否</option>
+                                            <option value="True">是</option>                 
+                                        </select>   
+                                        <p>锁定后代理平台将不能修改和排序</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="phoneRig-bot">
+                                <button class="btn btn-warning btn-add doubleImgBtn imgbtn" type="submit">确定</button>
+                            </div>
+                            <div class="modal-layer hide" id="IconBottomDef">
+                                <div class="modal-top clearfix">
+                                <span class="pull-left">系统图标</span>
+                                <a class="pull-right modal-close" href="javascript:"> X </a>
+                                </div>
+                                <div class="modal-con">
+                                    <ul class="list-unstyled clearfix">
+                                        @foreach (var item in bottomDefaultFiles)
+                                        { 
+                                        <li>
+                                            <a href="javascript:"><img src="@(Utils.ImageUrl("APPModule", "/bottom/default/"+item.Name))" alt="@(item.Name)" /></a>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="modal-foot text-right">
+                                    <button  class="btn btn-primary modal-btn" type="button">确定选择</button>
+                                </div>
+                            </div>
+
+                            <div class="modal-layer hide" id="IconBottomAct">
+                                <div class="modal-top clearfix">
+                                <span class="pull-left">系统图标</span>
+                                <a class="pull-right modal-close" href="javascript:"> X </a>
+                                </div>
+                                <div class="modal-con">
+                                    <ul class="list-unstyled clearfix">
+                                        @foreach (var item in bottomActFiles)
+                                        { 
+                                        <li>
+                                            <a href="javascript:"><img src="@(Utils.ImageUrl("APPModule", "/bottom/activate/"+item.Name))" alt="@(item.Name)" /></a>
+                                        </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="modal-foot text-right IconSubmitButton">
+                                    <button  class="btn btn-primary modal-btn" type="button">确定选择</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!--修改/添加 广告图-->
+                <div class="phone-list set-carou-modity hide">
+                    <form action="/Manage/APPModule/SaveAdinfo.html" class="chkForm" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="TId" value="@(BannerTag.Id)" />
+                        <input type="hidden" name="Tag" value="@(BannerTag.Tag)" />
+                        <input type="hidden" name="AgentId" value="@(SysAgent.Id)" />
+                        <div class="phoneRig-top">
+                            <ul class="list-unstyled clearfix">
+                                <li class="active ADFromName">广告图</li>
+                            </ul>
+                        </div>
+                        <div class="phoneRig-main ios">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <span class="phone-title"> 广告 </span>
+                                    <div class="inline-block">
+                                        <select class="input-maxtext validate[required]" name="Id" id="ADId">
+                                        </select>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="phone-title"> 广告名称 </span>
+                                    <div class="inline-block">
+                                        <input class="input-maxtext carou-title validate[required]" type="text" name="Name" />
+                                    </div>
+                                </li>
+                                <li class="clearfix genre-list">
+                                    <span class="phone-title"> 功能类型 </span>
+                                    <div class="pull-left">
+                                        <select class="input-maxtext genre validate[required]" name="ModuleType" >
+                                            <option value="1" selected>内置</option>
+                                            <option value="2">外链</option>          
+                                        </select>   
+                                        <p>内置为app内置功能,外链可以自己设置跳转链接</p>
+                                    </div>
+                                </li>
+                                <li class="fealist clearfix">
+                                    <span class="phone-title"> 值 </span>
+                                    <div class="pull-left selectdiv">
+                                        <select class="input-maxtext select validate[required]" name="Url" id="Value1" >
+                                            <option value="0">请选择</option>
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" >@(item.Key)</option>
+                                            }                                                                                                          
+                                        </select>                                                               
+                                    </div>
+                                    <div class="pull-left inputdiv">
+                                        <input class="input-maxtext feaval validate[required]" type="text" name="Url" id="Value2" />
+                                        <p>请输入以"http://"开头的网址,例如"http://www.taobao.com"</p>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="phone-title"> 图片  </span>
+                                    <div class="pull-left icont-upload" >
+                                        <input type="hidden" name="Pic" id="Pic" class="PicFile"/>
+                                        <a target="_blank" class="featimg"><img width="50" height="50"/></a>
+                                        <b class="file-two"><input class="upLoadFileAD" type="file" name="upLoadFile" MaxHigh="200" MaxWidth="720" MinHigh="150" MinWidth="670" />选择文件</b>
+                                        <p>尺寸：720*200px，格式.Png，图片以英文命名（例如：my.png）</p>
+                                    </div>
+                                </li> 
+                                <li>
+                                    <span class="phone-title"> 排序 </span>
+                                    <div class="inline-block">
+                                        <input class="input-maxtext ADSort" type="text" name="Sort" />
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="phoneRig-bot topbtn clearfix">
+                                <button class="btn btn-warning btn-modity imgbtn" type="submit">确定</button>
+                                @if(IsDelete)
+                                {
+                                    <button class="btn btn-warning btn-del" type="button">删除</button>
+                                }
+                            </div>
+                        </div>                
+                    </form>
+                </div>
+                <!--修改/添加 扫码背景图-->
+                <div class="phone-list set-scan hide">
+                    <form action="/Manage/APPModule/SaveAdinfo.html" class="chkForm" enctype="multipart/form-data" method="post">
+                        <input class="hide-id" type="hidden" name="Id" value="@(ScanCodeInfo.Id)" />
+                        <input type="hidden" name="TId" value="@(ScanCodeTag.Id)" />
+                        <input type="hidden" name="Tag" value="@(ScanCodeTag.Tag)" />
+                        <input type="hidden" name="AgentId" value="@(SysAgent.Id)" />
+                        <input type="hidden" name="Name" value="扫码背景" />
+                        <div class="phoneRig-top">
+                            <ul class="list-unstyled clearfix">
+                                <li data-model="0" class="active"><a href="javascript:">扫码背景图</a></li>
+                            </ul>
+                        </div>
+                        <div class="phoneRig-main ios">
+                            <ul class="list-unstyled">    
+                                <li class="clearfix">
+                                    <span class="phone-title"> 图片  </span>
+                                    <div class="pull-left icont-upload" >
+                                        <input type="hidden" name="Pic" id="Pic" class="PicFile" value="@(ScanCodeInfo.Pic)"/>
+                                        <a target="_blank" class="featimg" href="@(Utils.ImageUrl("AdInfo", ScanCodeInfo.Pic))">
+                                            <img width="50" height="50" src="@(Utils.ImageUrl("AdInfo", ScanCodeInfo.Pic))" />
+                                        </a>
+                                        <b class="file">
+                                            <input class="upLoadFileADP" type="file" name="upLoadFile" MaxHigh="425" MaxWidth="720"  MinHigh="375" MinWidth="670"/>
+                                            选择文件</b>
+                                        <p class="img-size">尺寸：720*425px，格式.Png，图片以英文命名（例如：my.png）</p>
+                                    </div>
+                                </li>                                        
+                            </ul>
+                            <div class="phoneRig-bot">
+                                <button class="btn btn-warning modify imgbtn" type="submit">确定</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>                         
+</div>
+<script>
+    var imgpath = "@(Utils.ImageUrl("APPModule", "/"))";
+    var imgpathad = "@(Utils.ImageUrl("AdInfo", "/"))";
+    var bannerInfostr = '@(this.Html.Raw(JsonConvert.SerializeObject(BannerInfos)))';
+    var BasicSetAPPHasMore = @(BasicSet.APPHasMore);
+    var Home = @(this.Html.Raw(JsonConvert.SerializeObject(Home.Select(o => new { o.Id,o.Name, o.ModuleType, o.PicUrl, o.PictureUrl, o.Value,o.IsLock }))));
+    var More = @(this.Html.Raw(JsonConvert.SerializeObject(More.Select(o => new { o.Id,o.Name, o.ModuleType, o.PicUrl, o.PictureUrl, o.Value,o.IsLock }))));
+    var Boot = @(this.Html.Raw(JsonConvert.SerializeObject(Boot.Select(o => new { o.Id,o.Name, o.ModuleType, o.PicUrl, o.PictureUrl, o.Value,o.IsLock }))));
+    var IsAdd = @(IsAdd.ToString().ToLower());
+    var IsSave = @(IsSave.ToString().ToLower());
+    var IsDelete = @(IsDelete.ToString().ToLower());
+    var IsEdit = @(IsEdit.ToString().ToLower());
+</script>
+@section FooterScripts
+{
+<script>
+    $(function () {
+        $("#Id").on("change", function () {
+            if (window.confirm('请保存数据否则将丢失，确认要跳转？')) {
+                window.location.href = "/Manage/APPModule/Index.html?Id=" + $(this).val();
+            }
+        });
+    });
+
+    function importData()
+    {
+        if (window.confirm('导入数据将覆盖现有数据，确认要导入？')) {
+            return true;
+        }
+        else { return false; }
+    }
+</script>
+}

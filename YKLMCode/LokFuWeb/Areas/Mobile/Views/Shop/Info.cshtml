@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+    bool IsWeiXinBrowser = ViewBag.IsWeiXinBrowser;
+    Users Users = ViewBag.Users;
+    IList<UserPic> UserPicList = ViewBag.UserPicList;
+    string AppImgPath = ViewBag.AppImgPath;
+}
+<!DOCTYPE >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>@(Users.NeekName)的店铺</title>
+    <link rel="stylesheet" href="/Content/Mobile/css/normalize.css" />
+    <link rel="stylesheet" href="/Content/Mobile/css/swiper.min.css" />
+    <link rel="stylesheet" href="/Content/Mobile/Shop/css/info.css" />
+    <script type="text/javascript" src="/Content/HaoFu/js/jquery.min.js" ></script>
+    @if (UserPicList.Count > 0)
+    {  <script type="text/javascript" src="/Content/Mobile/js/swiper.min.js" ></script>}
+</head>
+<body>
+    <div class="summary" >
+        <header>店铺简介</header>
+	    <section>
+            <div class="swiper-container">
+		        <div class="swiper-wrapper">
+                    @if (UserPicList.Count > 0)
+                    {  
+                        foreach (var item in UserPicList)
+                        {
+                            <div class="swiper-slide bgwhite"><img src="@Utils.ImageUrl("UserPic", item.Pic, AppImgPath)" alt="" /></div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="swiper-slide bgwhite text-center"><img src="" alt="" /></div>
+                    }
+		        </div>
+		        <!-- 如果需要分页器 -->
+		        <div class="swiper-pagination"></div>
+  		    </div>
+		    <div class="title">
+			    <br />
+			    <h2><span>@(Users.NeekName)</span>的店铺简介</h2>
+			    <br />
+			    <div class="warp">
+				    <span>@(Users.ShopInfo)</span>
+			    </div>
+                @if (!Users.ShopTel.IsNullOrEmpty())
+                { 
+			    <a class="link"><i class="iconfont">&#xe612;</i> 联系卖家: @(Users.ShopTel) </a>
+                }
+			    <br />
+			    <br />
+		    </div>
+	    </section>
+        @if (!Users.ShopTel.IsNullOrEmpty())
+        { 
+	    <div class="layer">
+		    <div class="layer-main">
+			    <div class="layer-top">联系卖家</div>
+			    <div class="layer-porp">
+				    <span><i class="iconfont">&#xe613;</i> <b>@(Users.ShopTel)</b></span>
+				    <a class="but">点击拨打</a>
+			    </div>
+		    </div>
+	    </div>
+        }
+        <script>
+            $(function () {
+                $(".link").on("click", function () {
+                    $(".layer").css("display", "block");
+                });
+                $(".layer").on("click", function () {
+                    $(this).hide();
+                }).on("click", ".layer-porp", function (ev) {
+                    ev.stopPropagation();
+                });
+            })
+            var mySwiper = new Swiper ('.swiper-container', {
+                autoplay : 2000,
+                loop: true,
+                pagination: '.swiper-pagination',
+            })
+		</script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+﻿@{
+    JobSet JobSet = ViewBag.JobSet;
+    ViewBag.SMUid = 282;
+    ViewBag.Title = "任务配置";
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .control_label {
+        text-align: right;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="Save.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(JobSet.Id)" />
+                    <div class="form-body">
+                        <div class="alert alert-danger">
+                            <button class="close" data-close="alert"></button>
+                            商户手续费=交易金额*刷卡费率+每笔刷卡费
+                        </div>      
+                        <!-- 刷卡费率 ‰ -->
+                        <div class="form-group">
+                            <label class="control-label col-md-3">刷卡费率<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[float],min[0],max[1000]]" name="Cost" id="Cost" value="@((JobSet.Cost * 1000).ToString("f2"))" />‰
+                                     <select name="AdvCost" class="form-control input-small input-inline input-sm">
+                                      <option value="0" @(JobSet.AdvCost == 0 ? "selected" : "")>非预收</option>
+                                      <option value="1" @(JobSet.AdvCost == 1 ? "selected" : "")>预收</option>
+                                  </select>
+                                     </div>
+                                <p class="help-block">预收刷卡手续费：任务生成时第一笔刷卡支付手续费：还款金额*刷卡费率
+                                    <br />
+                                                      非预收刷卡手续费：每一次刷卡收取手续费：刷卡金额*刷卡费率</p>
+                            </div>
+                        </div>
+                        <!-- 刷卡费率 ‰ -->
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">VIP刷卡费率<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-small input-inline validate[required,custom[float],min[0],max[1000]]" name="VIPCost" id="VIPCost" value="@((JobSet.VIPCost * 1000).ToString("f2"))" />‰
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">消费笔数<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="Cash" id="Cash" value="@((JobSet.Cash).ToString("0.00"))" />元
+                                      <select name="AdvCash" class="form-control input-small input-inline input-sm">
+                                      <option value="0" @(JobSet.AdvCash == 0 ? "selected" : "")>非预收</option>
+                                      <option value="1" @(JobSet.AdvCash == 1 ? "selected" : "")>预收</option>
+                                  </select>
+                                     </div>
+                                <p class="help-block">
+                                    预收每笔手续费：任务生成时第一笔刷卡：还款笔数*每笔手续费
+                                    <br />
+                                    非预收每笔手续费：每一次刷卡收取手续费：每笔手续费
+                                </p>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <label class="control-label col-md-3">VIP每笔刷费<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="VIPCash" id="VIPCash" value="@((JobSet.VIPCash).ToString("0.00"))" />元
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-md-3">日期前后差<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[int]]" name="EqDays" id="EqDays" value="@(JobSet.EqDays)" />天
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">最大还款天数<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[int]]" name="MaxDay" id="MaxDay" value="@(JobSet.MaxDay)" />天
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">平均每天最大刷卡笔数<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[int]]" name="MaxPay" id="MaxPay" value="@(JobSet.MaxPay)" />笔
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">每天计划限额<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="MinMoney" id="MinMoney" value="@(JobSet.MinMoney.ToMoney())" /> - 
+                                    <input type="text" class="form-control input-inline input-small validate[required,custom[money]]" name="MaxMoney" id="MaxMoney" value="@(JobSet.MaxMoney.ToMoney())" />元
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.Save)
+                            {
+                                <button type="submit" class="btn green" id="btnUpdata">确认修改</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+<script src="/Content/Metronic/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //提现类型选择
+        $("#CashType").change(function () {
+            var ctVal = $("#CashType").val();
+            if (ctVal == "2") {
+                $("#week").hide();
+                $("#day").show();
+            }
+            if (ctVal == "1") {
+                $("#week").show();
+                $("#day").hide();
+            }
+        })
+
+        $("#btnUpdata").click(function () {
+            var arr = "|";
+            var cbox = $("#selectdWeek input");
+            for (var i = 0, v, l = cbox.length; v = cbox[i], i < l; i++) {
+                if (v.checked) {
+                    arr += (v.value + "|");
+                }
+            }
+            if (arr != "|") {
+                $("#CashWeeks").val(arr);
+            }
+            $("#chkForm").submit();
+        });
+    })
+
+</script>
+
+
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <script>
+        $(function () {
+            $("#AnsyCash0,#AnsyCash1").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = art.dialog({
+                        title: '温馨提示',
+                        content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+            $("#AnsyAgent0,#AnsyAgent1").click(function () {
+                var Obj = $(this);
+                var Chk = Obj.prop("checked");
+                if (Chk) {
+                    var Dialog = art.dialog({
+                        title: '温馨提示',
+                        content: '同步更新到代理商将所有代理商的设置变更为此设置，代理商自行设置配置会被覆盖，是否同步更新？',
+                        icon: 'warning',
+                        lock: true,
+                        button: [{
+                            name: '确定同步变更',
+                            callback: function () {
+                            },
+                            focus: true,
+                            disabled: false
+                        }, {
+                            name: '取消同步变更',
+                            callback: function () {
+                                Obj.prop("checked", false);
+                                Obj.closest("span").removeClass("checked");
+                                this.close();
+                            }
+                        }
+                        ]
+                    });
+                }
+            });
+        })
+    </script>
+}
+

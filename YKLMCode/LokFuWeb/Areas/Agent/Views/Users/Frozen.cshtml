@@ -1,0 +1,60 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    LokFuEntity Entity = ViewBag.Entity;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+    var ActionName = ViewBag.ActionName;
+}
+<!-- BEGIN PAGE CONTENT-->
+<div style="width: 780px; margin: 3px; ">
+    <!-- BEGIN EXAMPLE TABLE PORTLET -->
+    <div class="table-responsive" >
+        <form action="@(ActionName).html?IFrameId=@(Request.QueryString["IFrameId"])" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="UId" value="@(Users.Id)" />
+            <table class="table table-striped table-bordered table-advance table-hover" style="width: 97%;">
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">商户：</td>
+                        <td class="active">@(Users.NeekName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">姓名：</td>
+                        <td class="active">@(Users.TrueName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">手机号：</td>
+                        <td class="active">@(Users.Mobile)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">上传凭证</td>
+                        <td class="active">
+                             @Html.Partial("FileLoad", new FileLoad() { StandardSize = 4, BigName = "Pic", FilePath = "StopPayAudit", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png","application/zip"  },Class="validate[required]" })
+                            <br />
+                            <span><span style="color:red">*</span>请上传Bmp、Gif、Jpeg、Png、ZIP格式</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">备注信息</td>
+                        <td class="active">
+                            <textarea class="validate[required,maxSize[1000]] form-control input-large" name="Remark" id="Remark" rows="5" style="width:400px !important"></textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><button type="submit" class="btn green" style="width:100%;">确认</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        <link rel="stylesheet" type="text/css" href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" />
+        <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+        <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js"></script>
+        @*<link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.css" />
+        <script src="/Content/Metronic/plugins/lightbox/jquery.lightbox-0.5.js"></script>*@
+    }
+}

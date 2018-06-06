@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+    decimal SumAmoney = ViewBag.SumAmoney ?? decimal.Zero;
+    double SumPaymoney = ViewBag.SumPaymoney ?? 0;
+    int Count = ViewBag.Count;
+}
+<div class="alert alert-danger">
+    <button data-close="alert" class="close"></button>
+    提现共：<b>@(Count)笔</b>，
+    提现金额：<b>@(SumAmoney.ToString("f2"))</b>，
+    付款金额：<b>@((SumAmoney - (decimal)SumPaymoney).ToString("f2"))</b>。
+</div>

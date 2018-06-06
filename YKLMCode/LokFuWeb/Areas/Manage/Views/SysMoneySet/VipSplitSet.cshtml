@@ -1,0 +1,164 @@
+﻿@{
+    SysMoneySet SysMoneySet = ViewBag.SysMoneySet;
+    ViewBag.SMUid = 288;
+    ViewBag.Title = "VIP分润设置";
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<style>
+    .control_label {
+        text-align: right;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN VALIDATION STATES-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-reorder"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="VipSplitSetSave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(SysMoneySet.Id)" />
+                    <div class="form-body">
+                      
+                          <div class="form-group">
+                            <label class="control-label col-md-3">升级VIP费用<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control input-inline input-small validate[required,custom[float],min[0],max[999999]]" name="VipPrice" id="VipPrice" value="@((SysMoneySet.VipPrice).ToString("F2"))" /> 元
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                       
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP一级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA1" id="VipSplitA1" value="@((SysMoneySet.VipSplitA1*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP二级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA2" id="VipSplitA2" value="@((SysMoneySet.VipSplitA2*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP三级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA3" id="VipSplitA3" value="@((SysMoneySet.VipSplitA3*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP四级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA4" id="VipSplitA4" value="@((SysMoneySet.VipSplitA4*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP五级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA5" id="VipSplitA5" value="@((SysMoneySet.VipSplitA5*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <label class="control-label col-md-3">VIP六级代理分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitA6" id="VipSplitA6" value="@((SysMoneySet.VipSplitA6*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="control-label col-md-3">VIP一级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitU0" id="VipSplitU0" value="@((SysMoneySet.VipSplitU0*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-md-3">VIP二级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitU1" id="VipSplitU1" value="@((SysMoneySet.VipSplitU1*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-md-3">VIP三级用户分润<span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                   <input type="text" class="form-control Sigma input-inline input-small validate[required,custom[float],min[0],max[99]]" name="VipSplitU2" id="VipSplitU2" value="@((SysMoneySet.VipSplitU2*100).ToString("F2"))" /> %
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            @if (ViewBag.VipSplitSetSave)
+                            {
+                                @*<button type="submit" class="btn green" id="btnUpdata">确认修改</button>*@
+                                <button type="button" class="btn green" id="btnUpdata">确认修改</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+    </div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+     
+    <script>
+        $("#btnUpdata").click(function () {
+            var sum = 0;
+            $(".Sigma").each(function () {
+                sum = sum + parseFloat($(this).val());
+            })
+            debugger
+            if (sum >= 100)
+            {
+                showdialog("分润金额不能大于VIP金额");
+                return false;
+            }
+            $("#btnUpdata").attr("type", "submit").click();
+            
+        })
+    </script>
+   
+
+}
+

@@ -1,0 +1,24 @@
+@{
+    string ErrorMsg = ViewBag.ErrorMsg;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>@(ErrorMsg)</title>
+    <style>
+        html{ width: 100%; height: 100%; }
+        body{ margin: 0; padding: 1rem; width: 100%; height: 100%; box-sizing: border-box;}
+        .imgwarp{ text-align: center; margin-top: 2rem;}
+        .imgwarp p{ color:#c3c1c1; font-size: 16px;margin-top: 2rem }
+        img{ width: 30%;}
+    </style>
+</head>
+<body>
+    <div class="imgwarp">
+        <img src="/Content/Base/Images/a3.png" alt="@(ErrorMsg)" />
+        <p>@(ErrorMsg)</p>
+    </div>
+</body>
+</html>

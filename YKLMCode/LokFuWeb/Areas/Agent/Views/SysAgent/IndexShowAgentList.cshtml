@@ -1,0 +1,76 @@
+﻿@{
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    SysSet BasicSet = ViewBag.BasicSet;
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+}
+<html>
+<head>
+    <link href="~/Content/HaoFu/css/normalize.css" rel="stylesheet">
+    <link href="~/Content/HaoFu/css/style.css" rel="stylesheet">
+    <link href="~/Content/HaoFu/css/custom.css" rel="stylesheet">
+    <title></title>
+</head>
+<body>
+    <div class="main-content clearfix" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+        <div class="ifarm-index clearfix">
+            <div class="list-table">
+                <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                    <thead>
+                        <tr>
+                            <th width="200">机构名称 </th>
+                            <th width="80">联系人 </th>
+                            <th width="100">联系手机 </th>
+                            <th width="60">状态 </th>
+                            <th width="60">钱包绑定 </th>
+                            <th width="100">开通时间 </th>
+                            <th width="100">过期时间 </th>
+                            <th width="120">操作 </th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody">
+                        @if (SysAgentList != null)
+                        {
+                            foreach (var p in SysAgentList)
+                            {
+                            <tr class="odd gradeX">
+                                <td class="center">@(p.Name) </td>
+                                <td class="center">@(p.Linker) </td>
+                                <td class="center">@(p.LinkMobile) </td>
+                                <td class="center">
+                                    @if (p.State == 1)
+                                    {
+                                        <i class="iconfont color-green">&#xe60d;</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="iconfont color-red">&#xe611;</i>
+                                    }
+                                </td>
+                                <td class="center">
+                                    @if (!p.MyUId.IsNullOrEmpty())
+                                    {
+                                        <i class="iconfont color-green">&#xe60d;</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="iconfont color-red">&#xe611;</i>
+                                    }
+                                </td>
+                                <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                <td class="center">@(p.ExpireTime.ToString("yyyy-MM-dd")) </td>
+                                <td class="center">
+                                    @if (p.Tier < BasicAgent.AgentLevelMax)
+                                    {
+                                        <a class="label label-sm label-success Ajax" href="IndexShowAgentList.html?Id=@(p.Id)"><i class="fa fa-wrench"></i>查看下级</a>
+                                    }
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+.portlet-warp{ font-family: "microsoft yahei", arial;}
+.portlet-warp .portlet-title{ padding: 10px; background: #aaaaaa; color: #fff;}
+.portlet-warp .portlet-body{ border: 1px solid #aaa; padding: 20px 10px;}
+.input-mini{ height: 24px; font-size: 12px; line-height: 1.4; border-radius: 3px;}
+.table-scrollable table tr td{ padding: 4px 8px;}

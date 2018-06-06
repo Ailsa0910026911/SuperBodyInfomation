@@ -1,0 +1,147 @@
+.text-center{ text-align: center;}
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+  margin:0
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.text-block{ color: #000;}
+.pull-left{ float: left;}
+.pull-right{ float: right;}
+.text-success{ color:#2ab770;}
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1460605650_329358.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1460605650_329358.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1460605650_329358.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1460605650_329358.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1460605650_329358.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont{ font-family:"iconfont"; font-size:16px;font-style:normal;}                    
+html{
+  font-size:75%;
+  font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;line-height: 1;
+  color:#999
+}
+a{
+  color: #999;
+  text-decoration: none;
+  border:none;
+  outline:none;
+}
+p{ margin: 0;}
+h2{ margin: 0; font-weight: normal;}
+input, textarea, button, a,select option{ -webkit-tap-highlight-color:rgba(0,0,0,0); } 
+img{ max-width: 100%; max-height: 100%;}
+button{ border: none; outline: none;}
+.btn{height:3.4rem; line-height:3.4rem;text-align: center;display: inline-block; font-size: 1.4rem;}
+.btn-block,
+.input-block{display: block;}
+.hide{ display: none;}
+@media only screen and (min-width: 481px) {
+    html {
+        font-size:94%
+    }
+}
+@media only screen and (min-width: 561px) {
+    html {
+        font-size:109%
+    }
+}
+@media only screen and (min-width: 641px) {
+    html {
+        font-size:125%
+    }
+}
+/*头部*/
+body{ padding-top: .5rem; font-size: 1.2rem; background: #f4f5f9; }
+.head{ padding: 1rem 0; background: #d8d8d8; }
+.head span{ color: #656464; font-size: 1.4rem;}
+.main li.title-warp{ padding: 1.5rem 0; }
+.main li .title{ color: #000;}
+.main .list li{ float: left; text-align: center;}
+.main .sex li{ width: 50%; float: left; text-align: center; }
+.main .list div{ padding: 1.5rem 0; background: #fff; margin-right: .1rem; margin-bottom: .1rem; color: #666; }
+.main .list div.active{ background: #47aaff; color: #fff;}
+.main .list div.last{ margin-right: none; }
+.main .record li{ width: 33.33%; }
+.but-warp{ margin: 4rem 0; padding: 0 2rem;}
+.but-warp a{ background: #fe7620; color: #fff; border-radius: 2rem; margin-top: 1rem;}
+.but-warp button{background: #fe7620; color: #fff; border-radius: 2rem; width: 100%; margin-top: 1rem;}
+.but-warp span{ color: #FD5359;}
+/*工作信息*/
+.main .firm{  margin-top: .5rem}
+.main .firm li{ clear: both; background: #fff;  height: 4rem; margin-bottom: .3rem;}
+.main .firm li.city{  height: 8rem; }
+.main .firm li.city .city-two{ width: 16rem; }
+.main .firm li.city select{ margin-bottom: .5rem; height: 2.6rem;}
+.main .firm li.city .province{ width: 13rem;}
+.main .firm .firm-title{ display: block; width: 6rem; text-align: left; padding-left: 1rem; color: #000; float: left; vertical-align: middle; line-height: 4rem;}
+.main .firm .year{ line-height: 4rem; margin-right: .5rem;}
+.main .firm div{ float: left; margin-top: .7rem; }
+.main .firm div input{   outline: none; height: 2rem;  padding-left: 1rem; width: 100%; border: none; color: #000;}
+.point{ padding: .5rem 1rem; line-height: 1.4rem;}
+.point i{ color: #2cbbf7;}
+/*申请信用卡*/
+.credit{ margin-bottom: 2rem;}
+.credit header{ padding: 1.5rem 1rem; color: #000; font-size: 1.3rem;}
+.credit header i{ color: #2cbbf7; font-size: 1.6rem; vertical-align: top;}
+.credit .conter li{ margin-bottom: .5rem;}
+.credit .list-div{ background: #fff; text-align: center; padding-top: 1rem;}
+.credit .list-div p{color: #679ae9; font-size: 1.4rem; padding-bottom: 1.5rem;}
+.credit .online-top{ border-top: .1rem solid #e5e5e5; margin-top: .5rem;}
+.credit .online-con{ width: 12rem; height: 12rem; border-radius: 50%; border: .1rem solid #94bdfd; margin: 1rem auto; text-align: center;}
+.credit .online-con .round{ width: 10rem; height: 10rem;background: #94bdfd; border-radius: 50%; overflow: hidden; margin: 0 auto; margin-top: 1rem;}
+.credit .online-con .round img{ width: 8rem;}
+.credit .online-top span{  padding: .2rem 1rem; background: #fff; position: relative; top: -.6rem; font-size: 1.6rem; color: #679ae9;}
+.credit .but-warp{ margin: 1rem 0; padding: 0 2rem;}
+.credit .but-warp a{ background: #679ae9; border-radius: .5rem; }
+.credit .reserve .online-top span{ color: #ff9138;}
+.credit .reserve .online-con .round{ background: #ff9138;}
+.credit .reserve p{color: #ff9138; }
+.credit .reserve .but-warp a{background: #ff9138;}
+.credit .list-bank{ padding: 0 1rem;}
+/*选择银行*/
+.list-bank{ padding: 0 1rem; margin-bottom: 6.6rem;}
+.list-bank li{ background: #fff; padding: .5rem 0; position: relative; margin-bottom: .5rem;}
+.list-bank li img{ width: 4rem;}
+.list-bank li .img-warp{ margin-left: 1rem; }
+.list-bank li .bank-title{ margin-left: 1rem;}
+.list-bank li .bank-title h2{ font-size: 1.4rem; color: #000; margin-top: .3rem;}
+.list-bank li .bank-title p{ margin-top: .5rem;}
+.list-bank li .icon{ margin-right: 1rem;}
+.list-bank li .icon i{ font-size: 2rem; position: absolute; right: 1rem; top: 1.5rem;}
+.credit .footer{ background: #fff; padding-top: .5rem; position: fixed; bottom: 0; width: 100%; border-top: .1rem solid #DEDEDE;}
+.credit .footer .but-warp a{ background: #fe7620; color: #fff; border-radius: 2rem;}
+/*hao羊毛*/
+.hao{ padding: .5rem 0;}
+.hao li{ background: #fff; padding: .5rem 1rem; margin-bottom: .1rem;}
+.hao .left { width: 70%; }
+.hao .right { width: 25%; text-align: right; height: 4.5rem; overflow: hidden;}
+.hao .left h2{ font-size: 1.3rem;height: 1.3rem; overflow: hidden; color: #000;margin-bottom: .3rem;}
+.hao .left p{ line-height: 1.6rem; font-size: 1rem; overflow: hidden;}
+.hao .left span{ font-size: 1rem; color: #d8d8d8;}
+.hao .left span i{ vertical-align: middle;}
+.hao .right img{ width: 6rem;}
+.hao-deta{ padding: 1rem;}
+.hao-deta .hao-title{ font-size: 1rem; color: #000; margin-bottom: 1.5rem;}
+.hao-deta .hao-title h2{ margin-bottom: 1rem;}
+.hao-deta .hao-title span{ color: #767371;}
+.hao-deta .ad{ margin-bottom: 1rem;}
+.hao-deta .hao-content p{ line-height: 1.8rem; color: #000; text-indent: 2rem;}
+
+.page a{ display: inline-block; padding: 6px 10px; border: 1px solid #ebebeb; background: #f2f2f2; color: #333; vertical-align: middle;}
+.page{ display: inline-block; *display: inline; *zoom: 1; text-align:center; width:100%; padding:10px 0;}
+.page ul,.page-warp span.text-red{ position: relative; top: 12px; }
+.page li{ float: left; margin-right: 5px;}
+.page a:hover,.page a.active{ background: #fff; color: #e64a4c;}
+.page-td a.prohibit{ background: #f6f6f6; color: #dddddd;}
+.page button{ outline: none;}
+.page .page-input{ width: 40px; height: 24px; padding: 1px; outline: none; text-align: center; line-height: 24px; vertical-align: middle;}

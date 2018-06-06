@@ -1,0 +1,44 @@
+﻿@{
+    IList<UserCard> UserCardList = ViewBag.UserCardList;
+    Users Users = ViewBag.Users;
+    this.Layout = null;
+    string AppImgPath = ViewBag.AppImgPath;
+}
+<table class="table table-striped table-bordered table-hover tablethc" id="UserCard">
+    <thead>
+        <tr>
+            <th>户名 </th>
+            <th>开户行 </th>
+            <th>卡号 </th>
+            <th>类型 </th>
+            <th>银行卡照片 </th>
+            <th>检验 </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in UserCardList)
+        {
+            string pic = string.Empty;
+            if(!p.Pic.IsNullOrEmpty())
+            {
+                pic = Utils.ImageUrl("UserCard", p.Pic, AppImgPath);
+            }
+        <tr class="odd gradeX">
+            <td class="center">@(p.Name) </td>
+            <td class="center">@(p.Bank) </td>
+            <td class="center">@(p.Card) </td>
+            <td class="center">@(p.Type == 1 ? "借记卡" : "贷记卡") </td>
+            <td class="center">@if(pic != string.Empty){<a href="@(pic)" target="_blank">照片</a>} </td>
+            <td class="center">@if (p.Name == Users.TrueName)
+                                {
+                <i class="fa fa-check color-green">本人卡片</i>
+                                }
+                                else
+                                {
+                <i class="fa fa-times color-red">他人卡片</i>              
+                                } </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

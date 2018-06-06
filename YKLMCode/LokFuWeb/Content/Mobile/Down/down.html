@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>好付钱包</title>
+<meta charset="utf-8">
+<meta name="apple-touch-fullscreen" content="YES">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="pragram" content="no-cache">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/endpic.css">
+<script type="text/javascript" src="js/offline.js"></script>
+<script type="text/javascript">
+/*
+* 智能机浏览器版本信息:
+*
+*/
+var browser = {
+	versions: function() {
+		var u = navigator.userAgent, app = navigator.appVersion;
+		return {//移动终端浏览器版本信息 
+			trident: u.indexOf('Trident') > -1, //IE内核
+			presto: u.indexOf('Presto') > -1, //opera内核
+			webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+			gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+			mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+			ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+			android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+			iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+			iPad: u.indexOf('iPad') > -1, //是否iPad
+			webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+			isWX:u.indexOf('MicroMessenger')>-1 //是否微信浏览器
+		};
+	}(),
+	language: (navigator.browserLanguage || navigator.language).toLowerCase()
+}
+function download(){
+	if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+		if (browser.versions.isWX) {
+			window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.lokfu.haofu&g_f=991653";
+			//alert("由于微信内置浏览器暂不支持直接下载，您需要点击右上角图标后，选择\"在浏览器中打开\"后再下载。");
+		} else {
+			window.location = "http://itunes.apple.com/cn/app/jellies!/id993983256";
+			//window.location = "http://fir.im/haofu";
+		}
+	}
+	else if (browser.versions.android) {
+		if (browser.versions.isWX){
+			window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.lokfu.haofu";
+		}else{
+			window.location="http://down.goodpay.net.cn/haofu.apk";
+		}
+	}
+	return false;
+}
+</script>
+<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+</head>
+<body class="s-bg-ddd pc no-3d" style="-webkit-user-select: none;">
+    <section class="u-alert">
+        <!--<img style="display:none;" src="images/loading_large.gif">-->
+        <div class="alert-loading z-move">
+            <div class="cycleWrap">	<span class="cycle cycle-1"></span>
+                <span class="cycle cycle-2"></span><span class="cycle cycle-3"></span><span class="cycle cycle-4"></span>
+            </div>
+            <div class="lineWrap">	<span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+            </div>
+        </div>
+    </section>
+    <section class="u-arrow">
+        <p class="css_sprite01"></p>
+    </section>
+    <section class="p-ct transformNode-2d" style="height: 907px;">
+        <div class="translate-back" style="height: 907px;">
+            <div class="m-page m-fengye" data-page-type="info_pic3" data-statics="info_pic3" style="height:100%;">
+                <div class="page-con lazy-finish" data-position="50% 50%" data-size="cover" style="background-image: url(images/1.gif); background-size: cover; height: 909px; background-position: 50% 50%;">
+				<a href="javascript:download();"><img src="images/ljxz.png" /></a></div>
+            </div>
+            <div class="m-page m-bigTxt f-hide" data-page-type="bigTxt" data-statics="info_list" style="height:100%;">
+                <div class="page-con j-txtWrap lazy-finish" data-position="50% 50%" data-size="cover" style="background-image: url(images/2.gif); background-size: cover; background-position: 50% 50%;"></div>
+            </div>
+            <div class="m-page m-bigTxt f-hide" data-page-type="bigTxt" data-statics="info_list" style="height:100%;">
+                <div class="page-con j-txtWrap lazy-finish" data-position="50% 50%" data-size="cover" style="background-image: url(images/3.gif); background-size: cover; background-position: 50% 50%;">
+				<a href="javascript:download();" style="bottom:25%;"><img src="images/ljxz2.png" /></a></div>
+            </div>
+        </div>
+    </section>
+    <section class="u-pageLoading">
+        <img src="images/load.gif" alt="loading">
+    </section>
+    <script src="js/init.mix.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/coffee.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/99_main.js?01" type="text/javascript" charset="utf-8"></script>
+	<div id="j-mengban"></div>
+</body>
+</html>

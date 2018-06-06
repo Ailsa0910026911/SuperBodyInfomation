@@ -1,0 +1,138 @@
+﻿@{
+    APPModule APPModule = ViewBag.APPModule;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    ViewBag.SMUid = 275;
+    if (APPModule.Id.IsNullOrEmpty())
+    {
+        APPModule.State = 1;
+        APPModule.ModuleType = 1;
+    }
+
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+}
+<!-- BEGIN PAGE CONTENT-->
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="proxy-top">@(ViewBag.Title)</div>
+        <div class="information">
+            <div class="proxy-con inquiry-cont operator">
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+               
+                    <input type="hidden" name="Id" value="@(APPModule.Id)" />
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="100" align="right">名称: </td>
+                                <td width="300" style="padding-left:50px;">
+                                   @(APPModule.Name)
+                                </td>
+                                </tr>
+                             <tr>
+                                <td width="100" align="right">默认图标: </td>
+                                <td width="300" style="padding-left:50px;">
+                                     @if (!APPModule.PictureUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" height="25" />
+                                    </a>
+                                }
+                                </td>
+                                </tr>
+                            
+                             <tr style="display: none;" id="SelPic">
+                                  
+                                <td width="100" align="right">选中图标: </td>
+                                <td width="300" style="padding-left:50px;height:50px;">
+                                     @if (!APPModule.PicUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" height="25" />
+                                    </a>
+                                }
+                                </td>
+                                
+                                </tr>
+                            
+                             <tr>
+                                <td width="100" align="right">功能类型: </td>
+                                <td width="300" style="padding-left:50px;">
+                                    @switch (APPModule.ModuleType)
+                                {
+                                    case 1: 
+                                    @("内置")
+                                        break;
+                                    case 2: 
+                                    @("外链")
+                                        break;
+                                }
+                                </td>
+                               
+                                </tr>
+                           
+                             <tr>
+                                <td width="100" align="right">值: </td>
+                                <td width="300" style="padding-left:50px;">
+                                      @(APPModule.ModuleType == 1 ? (ModuleTypeSelectList.FirstOrDefault(q => q.Value == APPModule.Value).Key) : APPModule.Value)
+                                </td>
+                                </tr>
+                            @* <tr>
+                                <td width="100" align="right">是否锁定: </td>
+                                <td width="300" style="padding-left:50px;">
+                                       @switch (APPModule.IsLock)
+                                {
+                                    case false: 
+                                    @("否")
+                                        break;
+                                    case true: 
+                                    @("是")
+                                        break;
+                                }
+                                </td>
+                                </tr>*@
+                              <tr>
+                                <td width="100" align="right">显示位置: </td>
+                                <td width="300" style="padding-left:50px;">
+                                        @switch (APPModule.DisplaySite)
+                                {
+                                    case 1: 
+                                    @("Home图标")
+                                        break;
+                                    case 2: 
+                                    @("底部图标")
+                                        break;
+                                }
+                                </td>
+                                </tr>
+                              <tr>
+                                <td width="100" align="right">状态: </td>
+                                <td width="300" style="padding-left:50px;">
+                                        @switch (APPModule.DisplaySite)
+                                {
+                                    case 1: 
+                                    @("显示")
+                                        break;
+                                    case 0: 
+                                    @("隐藏")
+                                        break;
+                                }
+                                </td>
+                                </tr>
+                              <tr>
+                                <td width="100" align="right">排序: </td>
+                                <td width="300" style="padding-left:50px;">
+                                         @APPModule.Sort
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     <div style="display: none" class="deleteA"></div>
+
+                <!-- END FORM-->
+            </div>
+          <br>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,276 @@
+﻿@{
+    OrderCash OrderCash = ViewBag.OrderCash;
+    Orders Orders = ViewBag.Orders;
+    ViewBag.SMUid = 85;
+    Users Users = ViewBag.Users;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    SysAdmin SysAdmin = ViewBag.SysAdmin;
+    SysAdmin FinAdmin = ViewBag.FinAdmin;
+    LokFuEntity Entity = ViewBag.Entity;
+    string PayWay = "--";
+    if (Orders.PayWay > 0 && Orders.PayState == 1)
+    {
+        PayWay = Entity.PayConfig.FirstOrNew(n => n.Id == Orders.PayWay).Name;
+    }
+    var parentAgents = SysAgent.GetAgentsById(Entity);
+    string ActionName = ViewBag.ActionName;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+
+<div id="twitter-bootstrap-container" class="row" style="width: 720px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">交易信息</a></li>
+        <li><a href="/Manage/CancelCash/IndexOrderCashLog.html?TNum=@(Orders.TNum) #OrderCashLog" data-target="#OrderCashLogDiv">操作记录</a></li>
+    </ul>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base" style="height: 600px">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易号</td>
+                        <td class="active" colspan="3">@(Orders.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易内容</td>
+                        <td class="active" colspan="3">@(Orders.GetPayNameWithTName())</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易类型</td>
+                        <td class="active">[<span>@(Orders.GetTTName())</span>]【<span>T+@(Orders.TrunType)出款</span>】</td>
+                        <td class="success">交易金额</td>
+                        <td class="active">@(Orders.Amoney.ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易状态</td>
+                        <td class="active">@if (Orders.TState == 1)
+                                           {
+                            <span>进行中</span>
+                                           }
+                                           else if (Orders.TState == 2)
+                                           {
+                            <span>成功</span>
+                                           }
+                                           else if (Orders.TState == 3)
+                                           {
+                            <span>失败</span>
+                                           }</td>
+                        <td class="success">交易时间</td>
+                        <td class="active">@(Orders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">交易备注</td>
+                        <td class="active" colspan="3">@(Orders.Remark)</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>付款信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">支付状态</td>
+                        <td class="active">@if (Orders.PayState == 0)
+                                           {
+                            <span>未付款</span>
+                                           }
+                                           else
+                                           {
+                            <span>已付款</span>
+                                           }</td>
+                        <td class="success">支付时间</td>
+                        <td class="active">@(Orders.PayTime.HasValue ? Orders.PayTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                    </tr>
+                    <tr>
+                        <td class="success">支付方式</td>
+                        <td class="active">@(PayWay)</td>
+                        <td class="success">@(Orders.TType == 2 ? "提现时间" : " ")</td>
+                        <td class="active">@(Orders.TrunTime.HasValue ? Orders.TrunTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>机构信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">机构名称</td>
+                        <td class="active">
+                            @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                        </td>
+                        <td class="success">业务员</td>
+                        <td class="active">@(SysAdmin.TrueName)</td>
+                    </tr>
+                    @*<tr>
+                    <td class="success">机构结算</td>
+                    <td class="active">@if (Orders.AgentState == 0){
+                                        <span>未结算</span>
+                                    }else{
+                                        <span>已结算</span>
+                                    }</td>
+                    <td class="success">@(Orders.AgentState==1?"结算时间":" ")</td>
+                    <td class="active">@(Orders.AgentTime)</td>
+                </tr>*@
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>定位信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易地点</td>
+                        <td class="active" colspan="3"><a href="/Manage/Map/Orders.html?Id=@(Orders.Id)" class="Ajax">@(Orders.OrderAddress == "INVALID_USER_KEY" ? "" : Orders.OrderAddress)</a>
+                            @if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"] != null)
+                            {
+                                if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"].ToString().Equals("ON"))
+                                {
+                                <a class="label label-sm label-success Ajax" href="/Manage/UserTrail/Index.html?UId=@(Orders.UId)"><i class="fa fa-anchor"></i>轨迹</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>提现订单信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">提现方式</td>
+                        <td class="active">T+@(OrderCash.TrunType) </td>
+                        <td class="success" style="width: 120px">&nbsp</td>
+                        <td class="active">&nbsp</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">提现金额</td>
+                        <td class="active price">@(OrderCash.Amoney.ToString("F2"))</td>
+                        <td class="success" style="width: 120px">到帐金额</td>
+                        <td class="active price">@((OrderCash.Amoney - (decimal)OrderCash.UserRate).ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success">提现服务费</td>
+                        <td class="active"><span class="price">@(OrderCash.UserRate.ToString("F2"))</span>元</td>
+                        <td class="success">手续费</td>
+                        <td class="active"><span class="price">@(OrderCash.ECash.ToString("F2"))</span>元/笔+<span class="price">@((OrderCash.Cash * 1000).ToString("F2"))‰</span></td>
+                    </tr>
+                    <tr>
+                        <td class="success">分支机构提成</td>
+                        <td class="active price">@(OrderCash.AgentCashGet.ToString("F2"))</td>
+                        <td class="success">利润</td>
+                        <td class="active price">@((OrderCash.UserRate - (double)OrderCash.CashRate - OrderCash.AgentCashGet).ToString("F2"))</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">退款时间</td>
+                        <td class="active">@(OrderCash.RefundTime != null ? Convert.ToDateTime(OrderCash.RefundTime).ToString("yyyy-MM-dd HH:mm") : "")</td>
+                        <td class="success" style="width: 120px">&nbsp</td>
+                        <td class="active">&nbsp</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>银行卡信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success" style="width: 120px">银行</td>
+                        <td class="active">@(OrderCash.Bank)</td>
+                        <td class="success" style="width: 120px">开户行</td>
+                        <td class="active">@(OrderCash.Deposit)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">开户名</td>
+                        <td class="active">@(OrderCash.Owner)</td>
+                        <td class="success">卡号</td>
+                        <td class="active">@(OrderCash.CardNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success">手机</td>
+                        <td class="active">@(OrderCash.Mobile)</td>
+                        <td class="success">联行号</td>
+                        <td class="active">@(OrderCash.Bin)</td>
+                    </tr>
+                </tbody>
+            </table>
+            @if (OrderCash.PayState == 3 && ActionName == "Edit")
+            {
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9">
+                        <form action="Save.html" method="post" style="display: inline;" class="sf">
+                            <input type="hidden" name="Id" value="@(OrderCash.Id)" />
+                            <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                            <button type="submit" class="btn green">确认并退款</button>
+                        </form>
+                        <form action="SaveEdit.html" method="post" style="display: inline;" class="sf">
+                            <input type="hidden" name="Id" value="@(OrderCash.Id)" />
+                            <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                            <button type="submit" class="btn red">已付款成功</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+    <div id="OrderCashLogDiv"></div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <link href="/Content/Metronic/plugins/data-tables/DT_bootstrap.css" rel="stylesheet" type="text/css" />
+        <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+        <script src="/Content/Metronic/plugins/data-tables/jquery.dataTables.min.js?201611170853"></script>
+        <script src="/Content/Metronic/plugins/data-tables/DT_bootstrap.js"></script>
+        
+        <script type="text/ecmascript">
+            $(document).ready(function () {
+                //ajax请求完成执行
+                tab.bind('easytabs:ajax:complete', function (event, $clicked, $targetPanel, settings) {
+                    if ($clicked.attr("data-target") == "#OrderCashLogDiv") {
+                        var table = TableIni("OrderCashLog");
+                    }
+                });
+                $(".sf").on("submit", function () {
+                    $("button").attr("disabled", true);
+                });
+            });
+        </script>
+    }
+}

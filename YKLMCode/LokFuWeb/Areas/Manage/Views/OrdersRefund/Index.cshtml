@@ -1,0 +1,138 @@
+﻿@{
+    IList<OrdersRefund> OrdersRefundList = ViewBag.OrdersRefundList;
+    OrdersRefund OrdersRefund = ViewBag.OrdersRefund;
+    ViewBag.SMUid = 255;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    DateTime STime = ViewBag.STime ?? DateTime.MinValue;
+    DateTime ETime = ViewBag.ETime ?? DateTime.MinValue;
+    bool IsInfo = ViewBag.IsInfo;
+    bool IsAudit = ViewBag.IsAudit;
+    bool IsAnewSubmit = ViewBag.IsAnewSubmit;
+    bool ExcelExport = ViewBag.ExcelExport;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>订单号：</span>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-medium" name="TNum" value="@(OrdersRefund.TNum)" />
+        <span class="seperator">|</span>
+        <select name="CreateAdminId" class="form-control input-small input-inline input-sm" id="DateSelect" autocomplete="off">
+            <option value="1" @(OrdersRefund.CreateAdminId == 1 ? "selected" : "")>发起时间</option>
+            <option value="2" @(OrdersRefund.CreateAdminId == 2 ? "selected" : "")>过期时间</option>
+            <option value="3" @(OrdersRefund.CreateAdminId == 3 ? "selected" : "")>审核时间</option>
+        </select>
+        <input autocomplete="off" class="pagination-panel-input form-control  input-inline input-sm  Wdate ExpireTime" type="text"  name="STime" value="@(STime == DateTime.MinValue ? "" : STime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~<input autocomplete="off" class="pagination-panel-input form-control  input-inline input-sm  Wdate ExpireTime" type="text" name="ETime" value="@(ETime == DateTime.MinValue ? "" : ETime.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <span class="seperator">|</span>
+        <select name="TState" class="form-control input-small input-inline input-sm" id="TState">
+            <option value="">审核状态</option>
+            <option value="1" @(OrdersRefund.TState == 1 ? "selected" : "")>待审核</option>
+            <option value="2" @(OrdersRefund.TState == 2 ? "selected" : "")>审核通过</option>
+            <option value="3" @(OrdersRefund.TState == 3 ? "selected" : "")>审核失败</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+         @if (ExcelExport)
+       {
+        <button class="btn btn-sm green table-group-action-submit" type="button" id="Export"><i class="fa fa-share"></i>导出</button>
+       }
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>订单号 </th>
+                                <th>金额 </th>
+                                <th>状态 </th>
+                                <th>发起人 </th>
+                                <th>发起时间 </th>
+                                <th>过期时间 </th>
+                                <th>审核人 </th>
+                                <th>审核时间 </th>
+                                <th width="140">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (OrdersRefundList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in OrdersRefundList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td class="center">
+                                        <a href="/Manage/Orders/Info.html?TNum=@(p.TNum)" class="Ajax">@(p.TNum)</a>
+                                    </td>
+                                    <td class="center price">@(p.Amoney.ToString("f2")) </td>
+                                    <td class="center">
+                                        @switch (p.TState)
+                                        {
+                                            case 1: 
+                                            @("待审核")
+                                                break;
+                                            case 2: 
+                                            <i class="fa fa-check color-green"></i>
+                                                break;
+                                            case 3: 
+                                            <i class="fa fa-times color-red"></i>
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="center">@(p.CreateAdminName) </td>
+                                    <td class="center">@(p.AddTime) </td>
+                                    <td class="center @(DateTime.Now > p.TDLastTime ? "price" : "")">@(p.TDLastTime.HasValue ? p.TDLastTime.Value.ToString("yyyy-MM-dd") : "") </td>
+                                    <td class="center">@(p.AuditAdminName) </td>
+                                    <td class="center">@(p.AuditTime.HasValue ? p.AuditTime.Value.ToString() : "") </td>
+                                    <td class="center">
+                                        @if (p.TState == 1 && IsAudit)
+                                        {
+                                            <a class="label label-sm label-danger Ajax" href="Audit.html?Id=@(p.Id)" title="审核"><i class="fa fa-wrench"></i>审核</a>
+                                        }
+                                        else if (p.TState == 3 && IsAnewSubmit)
+                                        {
+                                            <a class="label label-sm label-info Ajax" href="/Manage/Orders/Chargeback.html?IsAjax=1&TNum=@(p.TNum)" title="重新提交"><i class="fa fa-wrench"></i>重新提交</a>
+                                        }
+                                        @if (IsInfo)
+                                        { 
+                                            <a class="label label-sm label-success Ajax" href="Info.html?Id=@(p.Id)" title="查看"><i class="fa fa-wrench"></i>查看</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", OrdersRefundList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<script>
+    $(function () {
+        $("#Export").on("click", function () {
+            $("#ListForm").attr("action", "/Manage/OrdersRefund/ExcelExport.html");
+            $("#ListForm").submit();
+            $("#ListForm").attr("action", "");
+        });
+    })
+</script>

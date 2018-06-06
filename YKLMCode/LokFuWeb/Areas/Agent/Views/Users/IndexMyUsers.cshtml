@@ -1,0 +1,149 @@
+﻿@{
+    IList<Users> UsersList = ViewBag.UsersList;
+    ViewBag.SMUid = 42;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    Users Users = ViewBag.Users;
+    ViewBag.NoShowDel = true;
+    this.Layout = "../Shared/MetronicLayout.cshtml";
+}
+<link href="~/Content/HaoFu/css/style.css" rel="stylesheet" />
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; overflow: hidden; margin: 0;">
+    <form style="padding: 10px" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <input type="hidden" name="MyPId" value="@(Users.MyPId)" />
+        <input type="hidden" name="IsAjax" value="1" />
+        <span>帐户：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="UserName" value="@(Users.UserName)" />
+        <span class="seperator">|</span>
+        <select name="State" class="form-control input-inline input-sm">
+            <option value="">开通状态</option>
+            <option value="1" @(Users.State == 1 ? "selected" : "")>正常</option>
+            <option value="99" @(Users.State == 99 ? "selected" : "")>锁定</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="CardStae" class="form-control input-inline input-sm">
+            <option value="88">认证状态</option>
+            <option value="1" @(Users.CardStae == 1 ? "selected" : "")>已申请</option>
+            <option value="2" @(Users.CardStae == 2 ? "selected" : "")>已认证</option>
+            <option value="3" @(Users.CardStae == 3 ? "selected" : "")>认证失败</option>
+            <option value="99" @(Users.CardStae == 99 ? "selected" : "")>未认证</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="ShareType" class="form-control input-inline input-sm">
+            <option value="0">邀请方式</option>
+           @* <option value="1" @(Users.ShareType == 1 ? "selected" : "")>红包分享</option>*@
+           @* <option value="2" @(Users.ShareType == 2 ? "selected" : "")>降费率分享</option>*@
+            <option value="3" @(Users.ShareType == 3 ? "selected" : "")>分润分享</option>
+            <option value="4" @(Users.ShareType == 4 ? "selected" : "")>短信邀请</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+    <p></p>
+    <div class="">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>邀请帐户 </th>
+                                <th>状态 </th>
+                                <th>认证 </th>
+                                <th>密保 </th>
+                                <th>邀请方式 </th>
+                                <th>邀请时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (UsersList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in UsersList)
+                                {
+                                <tr class="odd gradeX">
+                                    <td class="center"><a class="Ajax" href="Info.html?Id=@(p.Id)">@(p.UserName)</a></td>
+                                    <td class="center">
+                                        @if (p.State == 1)
+                                        {
+                                            <i class="iconfont color-green">&#xe60d;</i>
+                                        }
+                                        else
+                                        {
+                                            <i class="iconfont color-red">&#xe611;</i>
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        @if (p.CardStae == 2)
+                                        {
+                                            @:已认证
+                                        }
+                                        else if (p.CardStae == 1)
+                                        {
+                                            @:申请中
+                                        }
+                                        else if (p.CardStae == 3)
+                                        {
+                                            @:认证失败
+                                        }
+                                        else
+                                        {
+                                            @:未认证
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        @if (p.MiBao == 1)
+                                        {
+                                            <i class="iconfont color-green">&#xe60d;</i>
+                                        }
+                                        else
+                                        {
+                                            <i class="iconfont color-red">&#xe611;</i>
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        @if (p.ShareType == 1)
+                                        {
+                                            @:红包分享
+                                        }
+                                        else if (p.ShareType == 2)
+                                        {
+                                            @:降费率分享
+                                        }
+                                        else if (p.ShareType == 3)
+                                        {
+                                            @:分润分享
+                                        }
+                                        else if (p.ShareType == 4)
+                                        {
+                                            @:短信邀请
+                                        }
+                                    </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("/Areas/Manage/Views/Shared/Page.cshtml", UsersList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+}
+@section HeaderScripts
+{
+}

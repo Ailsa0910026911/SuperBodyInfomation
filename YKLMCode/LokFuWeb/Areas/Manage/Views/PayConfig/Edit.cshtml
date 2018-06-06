@@ -1,0 +1,181 @@
+﻿@{
+    PayConfig PayConfig = ViewBag.PayConfig;
+    ViewBag.SMUid = 28;
+    string names = "";
+    if (LokFuWeb.Controllers.Base.PayConfigConst.dictionary.ContainsKey(PayConfig.DllName))
+    {
+        names = LokFuWeb.Controllers.Base.PayConfigConst.dictionary[PayConfig.DllName];
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height:auto; overflow-x: hidden;overflow-y:auto; margin: 0px;">
+  <div class="" style="margin:10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(PayConfig.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(PayConfig.Id)" />
+          <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">接口名称 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-small input-inline validate[required]" name="Name" id="Name" value="@(PayConfig.Name)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">接口描述 </label>
+              <div class="col-md-5">
+                <div class="input-icon right"> <i class="fa"></i>
+                  <textarea class="input-xlarge form-control" name="Description" id="Description" rows="2" >@(PayConfig.Description)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">成本费率 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="Cost" id="Cost" value="@(PayConfig.Cost*1000)" />‰
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3"><a href="javascript:void(0);" title="代理商设置不能低于本限制">代理限制</a> <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right">
+                  <input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="CostAgent" id="CostAgent" value="@(PayConfig.CostAgent*1000)" />‰
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3"><a href="javascript:void(0);" title="用户开通时默认费率">商户默认费率</a> <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right">
+                  <input type="text" class="form-control input-xsmall input-inline validate[required,custom[float],min[0],max[1000]]" name="CostUser" id="CostUser" value="@(PayConfig.CostUser*1000)" />‰
+                  <input type="checkbox" name="AnsyCash" id="AnsyCash" value="1" class="one-check" />同步到老用户
+                  <input type="checkbox" name="AnsyAgent" id="AnsyAgent" value="1" class="one-check" />同步到代理商
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">排序 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <div class="input-icon right input-small">
+                  <input type="text" class="form-control input-xsmall validate[required,custom[int],min[0],max[1000]]" name="Sort" id="Sort" value="@(PayConfig.Sort)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-5">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(PayConfig.State==1?" selected":"")>显示</option>
+                    <option value="0"@(PayConfig.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+           @if (!names.IsNullOrEmpty())
+            {
+                string[] QueryArrayList = names.Split(',');
+                string[] QueryArrayListTemp = PayConfig.QueryArray.Split(',');
+                for (int i = 0; i < QueryArrayList.Length; i++)
+                {
+                    string Val = QueryArrayListTemp.Length < i + 1 ? string.Empty : QueryArrayListTemp[i];
+                    <div class="form-group">
+                      <label class="control-label col-md-3">@(QueryArrayList[i])<span class="required"> * </span></label>
+                      <div class="col-md-5">
+                            <input type="text" id="queryArray" name="queryArray" class="form-control input-xsmall @(PayConfig.DllName == "WeiXin" && i == 4 ? "":"validate[required]")" style="width:300px !important" value="@(Val)" />
+                      </div>
+                    </div>
+                }
+            }
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">确认修改</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script>
+    $(function () {
+        $("#AnsyCash").click(function () {
+            var Obj = $(this);
+            var Chk = Obj.prop("checked");
+            if (Chk) {
+                var Dialog = art.dialog({
+                    title: '温馨提示',
+                    content: '同步更新到老用户将所有用户的设置变更为此设置，通过费率变更的用户也会被同步设置，是否同步更新？',
+                    icon: 'warning',
+                    lock: true,
+                    button: [{
+                        name: '确定同步变更',
+                        callback: function () {
+                        },
+                        focus: true,
+                        disabled: false
+                    }, {
+                        name: '取消同步变更',
+                        callback: function () {
+                            Obj.prop("checked", false);
+                            Obj.closest("span").removeClass("checked");
+                            this.close();
+                        }
+                    }
+                    ]
+                });
+            }
+        });
+        $("#AnsyAgent").click(function () {
+            var Obj = $(this);
+            var Chk = Obj.prop("checked");
+            if (Chk) {
+                var Dialog = art.dialog({
+                    title: '温馨提示',
+                    content: '同步更新到代理商将所有代理商的设置变更为此设置，代理商自行设置配置会被覆盖，是否同步更新？',
+                    icon: 'warning',
+                    lock: true,
+                    button: [{
+                        name: '确定同步变更',
+                        callback: function () {
+                        },
+                        focus: true,
+                        disabled: false
+                    }, {
+                        name: '取消同步变更',
+                        callback: function () {
+                            Obj.prop("checked", false);
+                            Obj.closest("span").removeClass("checked");
+                            this.close();
+                        }
+                    }
+                    ]
+                });
+            }
+        });
+    });
+</script>        
+    }
+}

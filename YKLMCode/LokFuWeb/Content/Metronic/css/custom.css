@@ -1,0 +1,5 @@
+/* here you can put your own css to customize and override the theme */
+.price{color:#F30; font-weight:bold;}
+.permillage{color:#390; font-weight:bold;}
+.red{color:red;}.blue{color:blue;}.green{color:green;}
+.dataTables_info span{cursor:pointer;}

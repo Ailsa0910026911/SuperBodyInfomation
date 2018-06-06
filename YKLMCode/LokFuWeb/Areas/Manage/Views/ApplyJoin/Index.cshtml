@@ -1,0 +1,186 @@
+﻿@{
+    DateTime STime = ViewBag.STime;
+    DateTime ETime = ViewBag.ETime;
+    IList<ApplyJoin> ApplyJoinList = ViewBag.ApplyJoinList;
+    ViewBag.SMUid = 158;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ApplyJoin ApplyJoin = ViewBag.ApplyJoin;
+    IList<BasicProvince> BasicProvinceList = ViewBag.BasicProvinceList;
+    IList<BasicCity> BasicCityList = ViewBag.BasicCityList;
+    bool ExcelExport = ViewBag.ExcelExport;
+    // IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>联系人：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Linker" value="@(ApplyJoin.Linker)" />
+        <span class="seperator">|</span>
+        <span>手机号：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="Mobile" value="@(ApplyJoin.Mobile)" />
+        <span class="seperator">|</span>
+        <span>公司名称：</span>
+        <input type="text" class="pagination-panel-input form-control input-small input-inline input-sm" name="ComName" value="@(ApplyJoin.ComName)" />
+        <span class="seperator">|</span>
+        <select name="Province" id="Province" class="form-control input-small input-inline input-sm">
+            <option value="">所在省</option>
+            @foreach (var p in BasicProvinceList)
+            {
+                <option value="@(p.Id)" @(ApplyJoin.Province == p.Id ? "selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span class="seperator">|</span>
+        <select name="City" id="City" class="form-control input-small input-inline input-sm">
+            <option>所在市</option>
+            @foreach (var p in BasicCityList)
+            {
+                <option value="@(p.Id)" rev="@(p.PId)" @(ApplyJoin.City == p.Id ? "selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span class="seperator">|</span>
+        <select name="State" class="form-control input-small input-inline input-sm">
+            <option value="">跟进状态</option>
+            <option value="1" @(ApplyJoin.State == 1 ? "selected" : "")>未跟进</option>
+            <option value="2" @(ApplyJoin.State == 2 ? "selected" : "")>跟进中</option>
+            <option value="3" @(ApplyJoin.State == 3 ? "selected" : "")>无意向</option>
+            <option value="4" @(ApplyJoin.State == 4 ? "selected" : "")>已完成</option>
+        </select>
+       @* <span class="seperator">|</span>
+        <select name="TiePaiAgentId" class="form-control input-small input-inline input-sm">
+            <option value="">是否贴牌</option>
+            <option value="1" @(ApplyJoin.TiePaiAgentId == 1 ? "selected" : "")>是</option>
+            <option value="99" @(ApplyJoin.TiePaiAgentId == 99 ? "selected" : "")>否</option>
+        </select>*@
+        <span class="seperator">|</span>
+        <span>申请时间：</span>
+        <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="STime" id="STime" value="@(STime == DateTime.MinValue ? "" : STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ETime" id="ETime" value="@(ETime == DateTime.MinValue ? "" : ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+         @if (ExcelExport)
+        {
+        <button class="btn btn-sm green table-group-action-submit" type="button" id="Export"><i class="fa fa-share"></i>导出</button>
+        }
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                @*   <th>业务类型 </th>
+                                <th>合作方式 </th>*@
+                                <th>联系人 </th>
+                                <th>手机号 </th>
+                                <th>公司名称 </th>
+                                <th>所在省 </th>
+                                <th>所在市 </th>
+                                <th>申请时间 </th>
+                                <th>状态 </th>
+                                <th>上级代理名</th>
+                               @* <th>是否贴牌</th>*@
+                                <th width="60">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ApplyJoinList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in ApplyJoinList)
+                                {
+                                    BasicProvince BasicProvince = BasicProvinceList.FirstOrNew(n => n.Id == p.Province);
+                                    BasicCity BasicCity = BasicCityList.FirstOrNew(n => n.Id == p.City);
+                                    // SysAgent SysAgent = SysAgentList.FirstOrNew(s => s.Id == p.AgentId);
+                                <tr class="odd gradeX">
+                                    @*  <td class="center">@(p.ServiceType == 1 ? "申请信用卡" : "")@(p.ServiceType == 2 ? "办理贷款" : "")</td>
+                                    <td class="center">@(p.ApplyType == 1 ? "服务商加盟" : "")@(p.ApplyType == 2 ? " 商户入网" : "") </td>*@
+                                    <td class="center">@(p.Linker) </td>
+                                    <td class="center">@(p.Mobile) </td>
+                                    <td class="center">@(p.ComName) </td>
+                                    <td class="center">@(BasicProvince.Name) </td>
+                                    <td class="center">@(BasicCity.Name) </td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd")) </td>
+                                    <td class="center">
+                                        @if (p.State == 2)
+                                        {
+                                            <i class="fa color-green">跟进中</i>
+                                        }
+                                        else if (p.State == 1)
+                                        {
+                                            <i class="fa">未跟进</i>
+                                        }
+                                        else if (p.State == 3)
+                                        {
+                                            <i class="fa color-red">无意向</i>
+                                        }
+                                        else if (p.State == 4)
+                                        {
+                                            <i class="fa color-blue">已完成</i>
+                                        } </td>
+                                    <td class="center">@(p.AgentName)</td>
+                                 @*   <td class="center">@(p.TiePaiAgentId != null ? "是" : "否")</td>*@
+                                    <td class="center">
+                                        @if (p.State != 4 && ViewBag.Save)
+                                        {
+                                            <a class="label label-sm label-success Ajax" href="Edit.html?Id=@(p.Id)" title="跟进用户"><i class="fa fa-wrench"></i>跟进</a>
+                                        }
+                                        <a class="label label-sm label-success Ajax" href="Edit.html?Id=@(p.Id)&Remark=Log" title="跟进记录"><i class="fa fa-wrench"></i>记录</a>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", ApplyJoinList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var selects;
+    $(function () {
+        selects = $("#City").clone();
+        $("#City option:gt(0)").remove();
+        $("#Province").change(function () {
+            $("#City").val("");
+            $("#City option:gt(0)").remove();
+            if ($(this).val() != "") {
+                var rev = selects.find("option:[rev=" + $(this).val() + "]").clone();
+                $("#City").append(rev);
+            }
+        });
+        debugger
+        $("#Export").on("click", function () {
+            $("#ListForm").attr("action", "/Manage/ApplyJoin/ExcelExport.html");
+            $("#ListForm").submit();
+            $("#ListForm").attr("action", "");
+        });
+    });
+</script>
+@section HeaderScripts
+{
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+    <script>
+        
+    </script>
+}
+

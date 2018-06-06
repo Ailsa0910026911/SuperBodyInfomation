@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.SMUid = 275;
+    ViewBag.NoShowDel = true;
+
+    LokFuEntity Entity = ViewBag.Entity;
+    IPageOfItems<CheckUser> CheckUserList = ViewBag.CheckUserList;
+    List<CheckUserMoney> CheckUserMoneyList = ViewBag.CheckUserMoneyList;
+    List<LokFu.Areas.Manage.Controllers.CheckUserModel> UsersList = ViewBag.UsersList;
+    CheckTask CheckTask = ViewBag.CheckTask;
+    List<DateTime> CheckTaskList = ViewBag.CheckTaskList;
+    DateTime TrueDate = ViewBag.TrueDate;
+    bool IsExcelExport = ViewBag.ExcelExport;
+    string ValidDateStr = string.Empty;
+    CheckTaskList.ForEach(o => { 
+        ValidDateStr += o.ToString("yyyy-MM-dd")+",";
+    });
+    ValidDateStr = ValidDateStr.Remove(ValidDateStr.Length - 1);
+    int show = ViewBag.show;
+    int Count = ViewBag.Count;
+    string UserName = ViewBag.UserName;
+}
+@Html.Partial("Menu")
+<style>
+    .PriceRight {
+        font-weight:bold;
+        color:green;
+    }
+</style>
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get" action="Index.html">
+        跑批日期：
+        <input type="text" class="pagination-panel-input form-control input-inline input-sm" data-Valid="@(ValidDateStr)" 
+            name="Date" value="@(TrueDate.ToString("yyyy-MM-dd"))" id="ValidDateWP" placeholder="跑批日期" style="margin-right: 6px;" />
+        <select name="Show" class="form-control input-sm input-inline" id="Show">
+            <option value="1" @(show == 1 ? "selected" : "")>仅显示问题商户</option>
+            <option value="0" @(show == 0 ? "selected" : "")>显示所有</option>
+        </select>
+        手机号：<input type="text" class="pagination-panel-input form-control input-inline input-sm" name="UserName" value="@(UserName)" />
+        @if (IsExcelExport)
+        {
+            <button class="btn btn-sm green table-group-action-submit" type="button" id="export" style="margin-left: 6px;"><i class="fa fa-share"></i>导出</button>
+        }
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit" style="margin-left: 6px;"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    @if (CheckTask != null)
+    {
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>商户结果 日期：@(CheckTask.TaskDate.ToString("yyyy-MM-dd")) 跑批完成：@(CheckTask.IsComplete ? "√" : "X")</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" >
+                        <thead>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th colspan="2">原始记录</th>
+                                <th colspan="2">系统模拟运算</th>
+                                <th colspan="2">实际记录</th>
+                                <th colspan="2">差额</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th>商户</th>
+                                <th>手机号</th>
+                                <th>余额</th>
+                                <th>冻结金额</th>
+                                <th>余额</th>
+                                <th>冻结金额</th>
+                                <th>余额</th>
+                                <th>冻结金额</th>
+                                <th>余额</th>
+                                <th>冻结金额</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in CheckUserList)
+                            {
+                                bool IsTrueMoney = false;
+                                bool IsTrueFrozen = false;
+                                bool IsNone = false;
+                                if (
+                                    ((item.CheckMoney == item.NowMoney) && (item.CheckMoney == item.PastMoney))
+                                    && ((item.CheckFrozen == item.NowFrozen) && (item.CheckFrozen == item.PastFrozen))
+                                    )
+                                {
+                                    IsNone = true;
+                                }
+                                else
+                                {
+                                    IsTrueMoney = item.CheckMoney == item.NowMoney ? true : false;
+                                    IsTrueFrozen = item.CheckFrozen == item.NowFrozen ? true : false;
+                                }
+                                var u = UsersList.FirstOrNew(o => o.Id == item.UId);
+                                var CodeCheckUserMoneyList = CheckUserMoneyList.Where(o => o.UId == item.UId).ToList();
+                                <tr>
+                                    <td>
+                                        @if (CodeCheckUserMoneyList.Count > 0)
+                                        {
+                                            <img src="/Content/Metronic/img/add.png" class="Esbut" id="Expand" style="cursor:pointer" data-id="@(item.UId)" />
+                                        }
+                                    @(u.TrueName)
+                                </td>
+                                <td style="text-align:center">@(u.UserName)</td>
+                                <td style="text-align:right">@(item.PastMoney.ToString("n2"))</td>
+                                <td style="text-align:right">@(item.PastFrozen.ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueMoney ? "PriceRight" : "price") : "")">@(item.CheckMoney.ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueFrozen ? "PriceRight" : "price") : "")">@(item.CheckFrozen.ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueMoney ? "PriceRight" : "price") : "")">@(item.NowMoney.ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueFrozen ? "PriceRight" : "price") : "")">@(item.NowFrozen.ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueMoney ? "PriceRight" : "price") : "")">@((item.CheckMoney - item.NowMoney).ToString("n2"))</td>
+                                <td style="text-align:right" class="@(!IsNone ? (IsTrueFrozen ? "PriceRight" : "price") : "")">@( Math.Abs(item.CheckFrozen - item.NowFrozen).ToString("n2"))</td>
+                                <td style="word-wrap:break-word;word-break:break-all;white-space:pre-wrap;"><a class="Ajax" href="SaveRemark.html?Id=@(item.Id)">备注</a>@(item.Remark.IsNullOrEmpty() ? "" : "：" + item.Remark)</td>
+                            </tr>
+                                if (CodeCheckUserMoneyList.Count > 0)
+                                {
+                                    <tr style="display:none;" id="@(item.UId)">
+                                        <td colspan="11">
+                                            <table class="table table-striped table-bordered table-hover tablethc">
+                                                <tr>
+                                                    <th>操作</th>
+                                                    <th>变动余额</th>
+                                                    <th>变动冻结金额</th>
+                                                    <th>运算操作金额</th>
+                                                    <th>记录操作金额</th>
+                                                    <th>差额</th>
+                                                </tr>
+                                                @foreach (var p in CodeCheckUserMoneyList)
+                                                {
+                                                    var d = p.ProgressMoney == p.RecordMoney ? "PriceRight" : "price";
+                                            <tr>
+                                                <td style="text-align:center">@(LokFu.Areas.Manage.Controllers.CheckExtensions.GetProgressName(p.Progress))</td>
+                                                <td style="text-align:right">@(p.ChangeMoney.ToString("n2"))</td>
+                                                <td style="text-align:right">@(p.ChangeFrozen.ToString("n2"))</td>
+                                                <td style="text-align:right" class="@(d)">@(p.ProgressMoney.ToString("n2"))</td>
+                                                <td style="text-align:right" class="@(d)">@(p.RecordMoney.ToString("n2"))</td>
+                                                <td style="text-align:right" class="@(d)">@( (p.ProgressMoney - p.RecordMoney).ToString("n2"))</td>
+                                            </tr>
+                                                }
+                                            </table>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", CheckUserList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    }
+</div>
+<!-- END PAGE CONTENT-->
+<script type="text/javascript">
+
+    $(function () {
+        $(".Esbut").on("click", function () {
+            if ($(this).attr("id") == "Expand") {
+                $(this).attr("id","Shrink");
+                $(this).attr("src", "/Content/Metronic/img/delete.png");
+                var id = $(this).attr("data-id");
+                $("#" + id).show();
+            }
+            else {
+                $(this).attr("id", "Expand");
+                $(this).attr("src", "/Content/Metronic/img/add.png");
+                var id = $(this).attr("data-id");
+                $("#" + id).hide();
+            }
+        });
+
+        $("#export").on("click", function () {
+            var date = $("#ValidDateWP").val();
+            if(date == null || date =="")
+            {
+                showdialog("请选择导出日期");
+                return false;
+            }
+            var Show = $("#Show").val()
+            window.location.href = "/Manage/CheckUser/ExcelExport.html?Date=" + date + "&Show=" + Show;
+        });
+
+
+    });
+</script>

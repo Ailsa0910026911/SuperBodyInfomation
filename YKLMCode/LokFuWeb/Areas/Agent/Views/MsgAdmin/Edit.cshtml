@@ -1,0 +1,180 @@
+﻿@{
+    MsgAdmin MsgAdmin = ViewBag.MsgAdmin;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    Dictionary<int, string> userName = ViewBag.UserName;
+
+    ViewBag.SMUid = 23;
+    if (MsgAdmin.Id.IsNullOrEmpty())
+    {
+        MsgAdmin.State = 1;
+    }
+    ViewBag.Title = "发送消息";
+
+}
+<link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" />
+<!-- BEGIN PAGE CONTENT-->
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="proxy-top">@(ViewBag.Title) <a href="javascript:history.go(-1);" class="pull-right proxy-top-a" style="color: #fff">返回</a></div>
+        <div class="information">
+            <div class="proxy-con inquiry-cont operator">
+                <!-- BEGIN FORM-->
+                <form action="@(MsgAdmin.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(MsgAdmin.Id)" />
+                    @*<input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />*@
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <tbody>
+                            @{
+                                if (!MsgAdmin.Id.IsNullOrEmpty())
+                                {
+                                <tr>
+                                    <td width="120px">接收管理</td>
+                                    <td class="col-md-4">
+                                        <select name="" class="form-control input-small input-inline input-max">
+                                            @{
+                                    foreach (var item in userName)
+                                    {
+                                                <option value="@(item.Key)">@(item.Value)</option>
+                                    }
+                                            }
+                                        </select>
+                                        @*<input type="text" class="form-control input-large" name="UserName" id="UserName" value="@(userName)" disabled="disabled" />*@
+                                    </td>
+                                    <td colspan="2">
+                                        <p class="help-block"></p>
+                                    </td>
+                                </tr>
+                                }
+                                else
+                                {
+                                <tr>
+                                    <td class="success">发送对象</td>
+                                    <td class="active" colspan="3">
+                                        <select name="IsObj" id="IsObj" class="form-control input-small input-inline input-max">
+                                            <option value="0">内部管理员</option>
+                                            <option value="1">下级代理商</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="tr_guanliyuan">
+                                    <td class="success">选择管理员</td>
+                                    <td class="active" colspan="3">
+                                        <select name="IsAdmin" id="IsAdmin" class="form-control input-small input-inline input-md">
+                                            <option value="0">--所有--</option>
+                                            @foreach (var p in SysAdminList)
+                                            {
+                                                <option value="@(p.Id)">@(p.TrueName)</option>
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="tr_dailishang" style="display: none;">
+                                    <td class="success">选择代理商</td>
+                                    <td class="active" colspan="3">
+                                        <select name="IsPId" id="IsPId" class="form-control input-small input-inline input-md">
+                                            <option value="0">--所有--</option>
+                                            @foreach (var p in SysAgentList)
+                                            {
+                                                <option value="@(p.Id)">@(p.Name)</option>
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="tr_baohanxiaji" style="display: none;">
+                                    <td class="success">是否发送至下级</td>
+                                    <td class="active" colspan="3">
+                                        <select name="IsLevel" id="IsLevel" class="form-control input-small input-inline input-md">
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                            <tr>
+                                <td class="success">消息标题<b class="text-red"> * </b></td>
+                                <td class="active" colspan="3">
+                                    <input type="text" class="form-control input-large validate[required]" name="Name" id="Name" value="@(MsgAdmin.Name)" maxlength="100" style="width:253px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="success">消息内容<b class="text-red"> * </b></td>
+                                <td class="active" colspan="3">
+                                    <textarea class="form-control input-large validate[required]" name="Info" id="Info" style="width: 510px; height: 100px; margin-left: 10px; resize: none; outline: none;" rows="3">@(MsgAdmin.Info)</textarea>
+                                </td>
+                            </tr>
+                            @{
+                                if (!MsgAdmin.Id.IsNullOrEmpty())
+                                {
+                                <tr id="tr_isHdel">
+                                    <td class="success">消息状态</td>
+                                    <td class="active" colspan="3">
+                                        @{
+                                    if (MsgAdmin.AId > 0)
+                                    {
+                                            <select class="form-control input-small input-inline input-sm" name="State" id="State">
+                                                <option value="1" @(MsgAdmin.State == 1 ? " selected" : "")>未读</option>
+                                                <option value="2" @(MsgAdmin.State == 2 ? " selected" : "")>已读</option>
+                                                <option value="0" @(MsgAdmin.State == 0 ? " selected" : "")>取消</option>
+                                            </select>
+                                    }
+                                    else
+                                    {
+                                            @:==
+                                    } 
+                                        }
+
+                                    </td>
+                                </tr>
+                                }
+                                else
+                                {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" value="1" name="State" />
+                                    </td>
+                                </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class="form-body">
+                    </div>
+
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9 warning text-center">
+                            <button type="submit" class="sub" style="width: 200px;">确认修改</button>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.js"></script>
+        <script type="text/javascript">
+            $("#IsObj").change(function () {
+                var isObj = $(this).val();
+                if (isObj == "0") {
+                    $("#tr_guanliyuan").show();
+                    $("#tr_dailishang").hide();
+                    $("#tr_baohanxiaji").hide();
+                } else {
+                    $("#tr_guanliyuan").hide();
+                    $("#tr_dailishang").show();
+                    $("#tr_baohanxiaji").show();
+                }
+            });
+        </script>
+    }
+}

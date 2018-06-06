@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+    IList<SysAdmin> SysAdminList = ViewBag.SysAdminList;
+}
+var html="";
+html+="<div class=\"online_sev\">";
+html+="<dl>";
+html+="<dt class=\"tc\">";
+html+="<p class=\"title\">在线QQ客服</p>";
+@foreach (var p in SysAdminList){
+    @:html+="<p><a target=\"_blank\" class=\"mt5 dib mb5\" href=\"http://wpa.qq.com/msgrd?v=3&uin=@(p.QQNum)&site=qq&menu=yes\"><img border=\"0\" src=\"/Content/Manage/images/@(p.QQState==1?"qq_online":"qq_offline").gif\" alt=\"点击这里给我发消息\" title=\"@(p.QQName)\" /></a></p>";
+}
+html+="</dt>";
+html+="<dd title=\"在线客服\">在线客服</dd>";
+html+="</dl>";
+html+="<p class=\"clear\"></p>";
+html+="</div>";
+document.write(html);
+eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('J.X.K=m(f){3 g=11;3 h={};3 i=L.R.Y();3 s;(s=i.12(/13 ([\\d.]+)/))?h.r=s[1]:0;4(h.r&&h.r=="6.0"){g=W}3 j,l;4(u.v){j=u.I;l=u.v}y 4(5.k&&5.k.t){j=5.k.w;l=5.k.t}y 4(5.7){j=5.7.w;l=5.7.t}S 9.19(m(){3 a=$(9).Z()/2;3 b=l/2-a;3 c={o:f+"p","x":b+"p"};3 d=$("<n z=\\"M:N\\"></n>");4(g)d=$("<n></n>");$("7").O(d);4(g)d[0].z.P("x","k.Q+"+b);d.8(c).8({"B":"C","T":"U"}).V(m(){$(9).D(":E").F({o:0},G)},m(){$(9).D(":E").F({o:f+"p"},G)});4(g){d.8("B","10");3 e=$("7").8("q-H");4(e=="")e="14(15:16)";$("7").8("q-17","C").8("q-H",e)}$(9).18(d);$(9).A();$(d).A()})}',62,72,'|||var|if|document||body|css|this|||||||||||documentElement|windowHeight|function|div|right|px|background|ie||clientHeight|self|innerHeight|clientWidth|top|else|style|show|position|fixed|not|animated|animate|200|image|innerWidth|jQuery|floatdiv|navigator|display|none|append|setExpression|scrollTop|userAgent|return|z_index|99999|toggle|true|fn|toLowerCase|height|absolute|false|match|msie|url|about|blank|attachment|appendTo|each'.split('|'),0,{}))
+$(function(){
+	var px=-129;
+	$(".online_sev").floatdiv(px);
+});
+/*js for 浮动客服*/

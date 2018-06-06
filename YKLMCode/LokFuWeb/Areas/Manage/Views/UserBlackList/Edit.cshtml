@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.SMUid = 254;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    UserBlackList UserBlackList = ViewBag.UserBlackList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body form">
+                <form action="EditSave.html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <div class="form-body">
+                        <div class="alert alert-danger display-hide">
+                            <button class="close" data-close="alert"></button>
+                            您所填定内容无法通过验证，请检查警示项目. </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">号码类型<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <select name="State" id="State" class="form-control input-small input-inline input-sm" type="select-one" >
+                                        <option value="1">手机号码</option>
+                                        <option value="2">身份证号</option>
+                                         <option value="3">银行卡号</option>
+                                    </select>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">限制号码 <span class="required">* </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right input-large">
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required,custom[mobile]]" name="CardNumber" id="CardNumber" />
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group">
+
+                            <label class="control-label col-md-3">限制理由<span class="required"> * </span></label>
+                            <div class="col-md-4">
+                                <div class="input-icon right">
+                                    <i class="fa"></i>
+                                    <textarea class="form-control input-large validate[required]" name="Reason" maxlength="100" id="Reason" rows="3"></textarea>
+                                </div>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit"  class="btn green">添加限制</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script>
+            $(function () {
+                $("#State").change(function () {
+                    if ($(this).val() == 1) {
+                        $("#CardNumber").attr("class", "form-control validate[required,custom[mobile]");
+                    }
+                    else if ($(this).val() == 2) {
+                        $("#CardNumber").attr("class", "form-control validate[required,custom[IdCard]]");
+                    }
+                    else {
+                        $("#CardNumber").attr("class", "form-control validate[required,custom[onlyNumberSp]]");
+                    }
+                });
+                $(".chkForm").submit(function (e) {
+                    var CardNumber= $("#CardNumber").val().replace(/(^\s*)|(\s*$)/g, "")
+                    if (CardNumber == null || CardNumber == "") {
+                        showdialog("请输入正确的限制号码");
+                        return false;
+                    }
+                    var state = $("#State").val();
+                    var flag = true;
+                    $.ajax({
+                        type: "post",
+                        url: "/Manage/My/EditCheckNumber.html",
+                        data: "state=" + state + "&value=" + CardNumber,
+                        cache: false,
+                        async: false,
+                        success: function (data) {
+                            debugger
+                            var code = data.code;
+                            if (code == 1) {
+                                flag = false;
+                            }
+                        }
+                    });
+                    if (flag) {
+                        showdialog("该号码已存在");
+                        return false;
+                    }
+                    var Reason = $("#Reason").val().replace(/(^\s*)|(\s*$)/g, "");
+                    if (Reason == null || Reason == "") {
+                        showdialog("请输入限制理由");
+                        return false;
+                    }
+                });
+                //$("#chkForm").bind("submit", function () {
+                //    var CardNumber = $("#CardNumber").val();
+                //    $.ajax({
+                //        url: "EditCheckCardNumber.html",
+                //        data: "CardNumber=" + CardNumber,
+                //        success: function (ret) {
+                //            if (ret == "0") {
+                //                return true;
+                //            } else {
+                //                $("#CardNumber").validationEngine('showPrompt', '该限制号码已存在！', 'error');
+                //                return false;
+                //            }
+                //        }
+                //    });
+                //});
+            });
+        </script>
+    }
+}

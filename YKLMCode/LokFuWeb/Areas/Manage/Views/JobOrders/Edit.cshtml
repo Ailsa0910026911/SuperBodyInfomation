@@ -1,0 +1,210 @@
+﻿@{
+    JobOrders JobOrders = ViewBag.JobOrders;
+    ViewBag.SMUid = 35;
+    LokFuEntity Entity = ViewBag.Entity;
+    Users Users = ViewBag.Users;
+    JobPayWay JobPayWay = ViewBag.JobPayWay;
+    SysAgent SysAgent = Entity.SysAgent.FirstOrNew(o=>o.Id==JobOrders.AgentId);
+    UserTrack UsersTrack = Entity.UserTrack.FirstOrDefault(o => o.UserName == JobOrders.TNum);
+    var parentAgents = SysAgent.GetAgentsById(Entity);
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+
+<div id="twitter-bootstrap-container" class="row" style=" margin: 0px; padding: 10px;overflow:auto; ">
+    <ul class="nav nav-tabs">
+        <li><a href="#base">订单基本信息</a></li>
+        <li><a href="/Manage/JobOrders/IndexJobOrders.html?TNum=@(JobOrders.TNum)" data-target="#JobOrdersDiv">订单明细</a></li>
+          @if (JobOrders.AgentGet > 0 && JobOrders.PayState == 1)
+        {
+            <li><a href="/Manage/JobOrders/IndexOrderProfitLog.html?TNum=@(JobOrders.TNum) #IndexOrderProfitLog" data-target="#OrderProfitLogDiv">分润记录</a></li>
+        }
+    </ul>
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box" id="base" style="height: 600px">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-advance table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>基本信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">订单号</td>
+                        <td class="active" colspan="3">@(JobOrders.TNum)</td>
+                    </tr>
+                    <tr>
+                        <td class="success" style="width: 120px">交易商户</td>
+                        <td class="active">@(Users.TrueName)</td>
+                        <td class="success" style="width: 120px">登录账户</td>
+                        <td class="active">@(Users.UserName)</td>
+                    </tr>
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>交易信息</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td class="success">总还款金额</td>
+                    <td class="active price">
+                        @(JobOrders.TotalMoney.ToString("F2"))
+                    </td>
+                    <td class="success">手续费</td>
+                    <td class="active price">
+                        @(JobOrders.Poundage.ToString("F2"))
+                    </td>
+                </tr>
+                <tr>
+                    <td class="success ">成本</td>
+                    <td class="active price">
+                        @((JobOrders.PayGet + JobOrders.CashGet).ToString("F2"))
+                    </td>
+                    <td class="success">利润</td>
+                    <td class="active price">@(JobOrders.HFGet.ToString("F2"))</td>
+                </tr>
+                <tr>
+                    <td class="success">订单状态</td>
+                    <td class="active">
+                        @(JobOrders.GetState())
+                    </td>
+                    <td class="success">创建时间</td>
+                    <td class="active">@(JobOrders.AddTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                </tr>
+                <tr>
+                    <td class="success">支付状态</td>
+                    <td class="active">
+                        @if (JobOrders.PayState == 0)
+                        {
+                            <span>未付款</span>
+                        }
+                        else
+                        {
+                            <span>已付款</span>
+                        }
+                    </td>
+                    <td class="success">支付时间</td>
+                    <td class="active">@(JobOrders.PayTime.HasValue ? JobOrders.PayTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")</td>
+                </tr>
+                <tr>
+                    <td class="success">刷还余额</td>
+                    <td class="active price">@(JobOrders.Amount.ToMoney())</td>
+                    <td class="success">刷还通道</td>
+                    <td class="active">@(JobPayWay.Name)/@(Entity.JobPayWay.FirstOrNew(o => o.Id == JobOrders.CashWay).Name)</td>
+                </tr>
+                <tr>
+                    <td class="success">预收刷卡手续费</td>
+                    <td class="active">
+                        @(JobOrders.AdvCost == 0 ? "非预收" : "预收")
+                    </td>
+                    <td class="success">预收代付手续费</td>
+                    <td class="active">
+                        @(JobOrders.AdvCash == 0 ? "非预收" : "预收")
+                    </td>
+                </tr>
+                </tbody>
+                @if (!JobOrders.AgentId.IsNullOrEmpty())
+                {
+                    <thead>
+                        <tr>
+                            <th colspan="4"><i class="fa fa-globe"></i>机构信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="success">机构名称</td>
+                            <td class="active">
+                                @*@(Entity.SysAgent.FirstOrNew(o => o.Id == JobOrders.AgentId).Name)*@
+                                 @{
+                                int index = 0;
+                                foreach (var item in parentAgents)
+                                {
+                                    string empty = "";
+                                    for (int i = 0; i < index; i++)
+                                    {
+                                        empty += "&nbsp;&nbsp;";
+                                    }
+                                    if (index > 0)
+                                    {
+                                        empty += "----";
+                                    }
+                                <div>@(this.Html.Raw(empty))@(item.Name)</div>
+                                    index++;
+                                }
+                            }
+                            </td>
+                            <td class="success">结算状态</td>
+                            <td class="active">@(JobOrders.AgentState == 0 ? "未结算" : "已结算")</td>
+                        </tr>
+                        <tr>
+                            <td class="success">结算分润</td>
+                            <td class="active price">
+                                @(JobOrders.AgentGet.ToString("F2"))
+                            </td>
+                            <td class="success">结算时间</td>
+                            <td class="active">
+                                @(JobOrders.AgentTime.HasValue ? JobOrders.AgentTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "--")
+                            </td>
+                        </tr>
+                        @if(!JobOrders.SameGet.IsNullOrEmpty())
+                        {
+                         <tr>
+                            <td class="success">同级分润</td>
+                            <td class="active price">
+                                @(JobOrders.SameGet.ToString("F2"))
+                            </td>
+                            <td class="success"></td>
+                            <td class="active">
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                }
+                <thead>
+                    <tr>
+                        <th colspan="4"><i class="fa fa-globe"></i>定位信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="success">交易地点</td>
+                        <td class="active" colspan="3">
+                            @if (UsersTrack != null)
+                            { <a href="/Manage/Map/GPS.html?Id=@(UsersTrack.Id)" class="Ajax">@(UsersTrack.GPSAddress)</a>}
+                            else
+                            {
+                                <span>无法获取到交易地点</span>
+                            }
+                            @if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"] != null)
+                            {
+                                if (System.Configuration.ConfigurationManager.AppSettings["UserTrail"].ToString().Equals("ON"))
+                                {
+                                    <a class="label label-sm label-success Ajax" href="/Manage/UserTrail/Index.html?UId=@(JobOrders.UId)"><i class="fa fa-anchor"></i>轨迹</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="success">订单备注：</td>
+                        <td class="active" colspan="3">@(JobOrders.Remark)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- END EXAMPLE TABLE PORTLET-->
+    <div id="JobOrdersDiv" style="height: 600px;"></div>
+    <div id="OrderProfitLogDiv"></div>
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/lightbox2/css/lightbox.min.css" />
+    <script src="/Content/Metronic/plugins/lightbox2/js/lightbox.min.js"></script>
+    <script src="/Content/HaoFu/plugins/jquery.easytabs.min.js"></script>
+
+    <script type="text/ecmascript">
+
+    </script>
+}

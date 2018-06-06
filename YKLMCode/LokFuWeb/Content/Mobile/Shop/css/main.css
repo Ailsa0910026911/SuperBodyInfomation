@@ -1,0 +1,19 @@
+﻿@charset "utf-8";
+/*店铺首页*/
+a{text-decoration:none;}
+body{font-family:"微软雅黑";}
+*{list-style-type:none;margin:0; padding:0;}
+.topbu{ width:100%; height:auto; background-color:#2b303d; color:#fff; padding:1% 0; text-align:center; font-size:1em;}
+.gongneng{ width:100%; height:auto; overflow:auto; margin-top:5%;}
+.gongneng a{ width:41%; height:auto; background-color:#fd7f2f; padding:2% 0; display:block; color:#fff; text-align:center; float:left; border-radius:4px;}
+.middle{ width:100%; height:auto; padding-top:3px;}
+.info { width:auto; height:auto; margin:0 12px 0 12px; line-height:42px; border-bottom:1px solid #DEDEDE;}
+.txt1 { color:#484848; font-size:16px; }
+.txt2 { color:#484848; font-size:16px; float:right; }
+.txt3 { color:#F00; font-size:16px; }
+#TextInfo{line-height:60px; font-size:20px; margin-left:20px; text-align:center;}
+#Fail,#Success{display:none;}
+@media only screen and (min-width: 640px) {
+  body{width:640px;margin:0 auto;}
+  .middle{width:640px;margin:0 auto;}
+}

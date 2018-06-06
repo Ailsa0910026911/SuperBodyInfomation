@@ -1,0 +1,44 @@
+﻿@{
+    bool IsAjax = false;
+    if (Request.Form["IsAjax"] != null)
+    {
+        IsAjax = true;
+    }
+    else if (Request.QueryString["IsAjax"] != null)
+    {
+        IsAjax = true;
+    }
+    bool IsShowReturn = true;
+    if(ViewBag.IsShowReturn != null)
+    {
+        IsShowReturn = ViewBag.IsShowReturn;
+    }
+}
+<div class="row" style="min-width:600px;">
+    <div class="col-md-12 page-500">
+        <div class=" number">
+            <i class="fa fa-exclamation-circle"></i>
+        </div>
+        <div class=" details">
+            <h3>出错啦~~~！！！</h3>
+            <p>
+                对不起，出错啦~~~<br />
+                原因是：@(ViewBag.ErrorMsg)<br />
+               @if (!IsAjax && IsShowReturn)
+               {
+                   @:请点击 <a href="javascript:window.history.go(-1);void(0);"><font color="red" style=" font-size:12px; font-weight:bold;" >返回上一页</font></a>
+               }
+                <br />
+            </p>
+        </div>
+    </div>
+</div>
+@section HeaderScripts
+{
+    @{
+        <link href="/Content/Metronic/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Content/Metronic/css/pages/error.css" rel="stylesheet" type="text/css" />
+        
+    }
+}
+

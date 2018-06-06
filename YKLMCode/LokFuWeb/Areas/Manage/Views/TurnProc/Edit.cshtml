@@ -1,0 +1,64 @@
+﻿@{
+    TurnProc TurnProc = ViewBag.TurnProc;
+    ViewBag.SMUid = 88;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 820px; height: 400px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="@(TurnProc.Id.IsNullOrEmpty() ? "Add" : "Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(TurnProc.Id)" />
+                <input type="hidden" name="IsAjax" value="1" />
+                <input type="hidden" name="TId" value="@(TurnProc.TId)" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">奖品名称<span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(TurnProc.Name)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">奖品金额 <span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-small">
+                                <input type="text" class="form-control validate[required,custom[money]] input-small" name="Amoney" id="Amoney" value="@(TurnProc.Amoney)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">数量<span class="required">* </span></label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-small">
+                                <input type="text" class="form-control validate[required,custom[int]] input-small" name="Num" id="Num" value="@(TurnProc.Num)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn green">确认修改</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+    }
+}

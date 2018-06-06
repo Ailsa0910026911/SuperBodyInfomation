@@ -1,0 +1,48 @@
+﻿@{
+    List<OrderProfitLog> OrderProfitLog = ViewBag.OrderProfitLog;
+    Dictionary<int, string> UserNameList = ViewBag.UserNameList;
+    Dictionary<int, string> AgentsList = ViewBag.AgentsList;
+    this.Layout = null;
+}
+<table class="table table-striped table-bordered table-hover tablethc" id="IndexOrderProfitLog">
+    <thead>
+        <tr>
+            <th>商户</th>
+            <th>代理商</th>
+            <th>分润类型</th>
+            <th>层级</th>
+            <th>金额</th>
+            <th>添加时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in OrderProfitLog)
+        {
+            var TrueName = UserNameList.FirstOrNew(o => o.Key == p.UId).Value;
+            var AgentName = AgentsList.FirstOrNew(o => o.Key == p.Agent).Value;
+
+            <tr class="odd gradeX">
+                <td class="center">@(TrueName)</td>
+                <td class="center">@(AgentName)</td>
+
+                <td class="center">
+                    @switch (p.LogType)
+                    {
+                        case 1:
+                            @("商户分润")
+                            break;
+                        case 2:
+                        @("代理分润")
+                            break;
+                             case 3:
+                        @("同级代理分润")
+                            break;
+                    }
+                </td>
+                <td class="center">@(p.Tier)</td>
+                <td class="center price">@(p.Profit.ToString("n2"))</td>
+                <td class="center">@(p.AddTime)</td>
+            </tr>
+        }
+    </tbody>
+</table>

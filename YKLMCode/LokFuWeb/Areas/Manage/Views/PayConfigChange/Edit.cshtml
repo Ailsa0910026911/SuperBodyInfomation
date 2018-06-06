@@ -1,0 +1,220 @@
+﻿@{
+    PayConfigChange PayConfigChange = ViewBag.PayConfigChange;
+    ViewBag.SMUid = 78;
+    SysSet BasicSet = ViewBag.BasicSet;
+    IList<PayConfig> PayConfigList = ViewBag.PayConfigList;
+    bool isId = PayConfigChange.Id.IsNullOrEmpty();
+    if (isId)
+    {
+        PayConfigChange.State = 1;
+        PayConfigChange.ECash0 = BasicSet.ECash0;
+        PayConfigChange.ECash1 = BasicSet.ECash1;
+        PayConfigChange.Cash0 = BasicSet.Cash0;
+        PayConfigChange.Cash1 = BasicSet.Cash1;
+        
+    }
+    LokFuEntity Entity = ViewBag.Entity;
+    if (!isId)
+    {
+        ViewBag.Title = "费率套餐——查看";
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 720px; height: 600px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="@(isId?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(PayConfigChange.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">套餐名称 <span class="required"> * </span> </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required]" name="Title" id="Title" value="@(PayConfigChange.Title)" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">小标题 </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large" name="SubTitle" id="SubTitle" value="@(PayConfigChange.SubTitle)" />
+                            </div>
+                            <p class="help-block">预留功能</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">调整费率 </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large" name="ShowTip" id="ShowTip" value="@(PayConfigChange.ShowTip)" />
+                            </div>
+                            <p class="help-block">仅用于标题显示，不参考计算</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">通过分享升级<span class="required"> * </span> </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required,custom[int]]" name="ShareNumber" id="ShareNumber" value="@(PayConfigChange.ShareNumber)" />
+                            </div>
+                            <p class="help-block">为0时，不可通过分享升级</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">T0提现变更 <span class="required"> * </span> </label>
+                        <div class="col-md-5">
+                            <div class="input-icon right">
+                                <input type="text" class="form-control validate[required,custom[money],min[@(BasicSet.SysECash0)]] input-xsmall input-inline" name="ECash0" id="ECash0" value="@((PayConfigChange.ECash0).ToString("F2"))" />元/笔
+                                +
+                                <input type="text" class="form-control input-inline input-xsmall validate[required,min[@(BasicSet.SysCash0*1000)],custom[money]]" name="Cash0" id="Cash0" value="@((PayConfigChange.Cash0 * 1000).ToString("F2"))" /> ‰
+                                <input type="checkbox" name="CState" id="CState" value="1" class="one-check" @(PayConfigChange.CState == 1 ? "checked" : "") />设置可升级
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">T1提现变更 <span class="required"> * </span> </label>
+                        <div class="col-md-5">
+                            <div class="input-icon right">
+                                <input type="text" class="form-control validate[required,custom[money],min[@(BasicSet.SysECash1)]] input-xsmall input-inline" name="ECash1" id="ECash1" value="@((PayConfigChange.ECash1).ToString("F2"))" />元/笔
+                                +
+                                <input type="text" class="form-control input-inline input-xsmall validate[required,min[@(BasicSet.SysCash1*1000)],custom[money]]" name="Cash1" id="Cash1" value="@((PayConfigChange.Cash1 * 1000).ToString("F2"))" /> ‰
+                                <input type="checkbox" name="EState" id="EState" value="1" class="one-check" @(PayConfigChange.EState == 1 ? "checked" : "") />设置可升级
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">费率调整 </label>
+                        <div class="col-md-4">
+                            <div style="width:450px;">
+                                <div class="table-scrollable">
+                                    <table class="table table-striped table-bordered table-advance table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td class="success center">通道名称 </td>
+                                                <td class="success center" style="width:120px;">默认</td>
+                                                <td class="success center" style="width:240px;">升级后</td>
+                                                <td class="success center" style="width:80px;">可升级</td>
+                                            </tr>
+                                            @foreach (var p in PayConfigList)
+                                            {
+                                                double Cost = p.CostUser.GetValueOrDefault() * 1000;
+                                                PayConfigTemp PCT = Entity.PayConfigTemp.FirstOrNew(n => n.PCCId == PayConfigChange.Id && n.PId == p.Id);
+                                                if (!PCT.Id.IsNullOrEmpty())
+                                                {
+                                                    Cost = PCT.Cost * 1000;
+                                                }
+                                                else
+                                                {
+                                                    PCT.State = 0;
+                                                }
+                                                <tr class="odd gradeX">
+                                                    <td class="center">@(p.Name) <input type="hidden" name="PId" value="@(p.Id)" /></td>
+                                                    <td class="center"><span class="permillage">@(p.CostUser * 1000)</span>‰ </td>
+                                                    <td class="center form-group"><input type="text" class="form-control input-inline input-mini validate[required,min[@(p.Cost * 1000)],max[1000]]" name="Cost" id="Cost@(p.Id)" value="@(Cost)" /> ‰ </td>
+                                                    <td class="center"><input type="checkbox" name="PState" id="PState" value="1" class="one-check" @(PCT.State == 1 ? "checked" : "") /></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">升级价格 <span class="required"> * </span> </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-small">
+                                <input type="text" class="form-control input-small validate[required,custom[money]]" name="APrice" id="APrice" value="@(PayConfigChange.APrice.GetValueOrDefault().ToString("F2"))" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">优惠价格 <span class="required"> * </span> </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-small">
+                                <input type="text" class="form-control input-small validate[required,custom[money]]" name="BPrice" id="BPrice" value="@(PayConfigChange.BPrice.GetValueOrDefault().ToString("F2"))" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">代理商价 <span class="required"> * </span> </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-small">
+                                <input type="text" class="form-control input-small validate[required,custom[money]]" name="CPrice" id="CPrice" value="@(PayConfigChange.CPrice.GetValueOrDefault().ToString("F2"))" />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div style="margin-left:10%;color:red;" ><span>*代理商利润=优惠价格-代理商价格</span></div>
+                    @{
+                        string test = PayConfigChange.State == 1 ? "显示" : "隐藏";
+                        if (!isId)
+                        {
+                            <div class="form-group">
+                                    <label class="control-label col-md-3">状态</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control input-small" value="@(test)" />
+                                        @*<select class="bs-select form-control input-xsmall" name="State" id="State">
+                                            <option value="1" @(PayConfigChange.State == 1 ? " selected" : "")>显示</option>
+                                            <option value="0" @(PayConfigChange.State != 1 ? " selected" : "")>隐藏</option>
+                                        </select>*@
+                                    </div>
+                                </div>
+                        }
+                    }
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <textarea class="form-control input-large" name="Remark" id="Remark" rows="3">@(PayConfigChange.Remark)</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (isId)
+                {
+                    <div class="form-actions fluid">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">确认添加</button>
+                            <p>温馨提示：发布后需几分钟后才能在APP中显示</p>
+                        </div>
+                    </div>
+                }
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+        <script type="text/javascript">
+            var isId = "@(isId)";
+            if (isId != "True") {
+                $("#chkForm").find("input").attr("disabled", "disabled");
+                $("#Remark").attr("disabled", "disabled");
+            }
+        </script>
+    }
+}

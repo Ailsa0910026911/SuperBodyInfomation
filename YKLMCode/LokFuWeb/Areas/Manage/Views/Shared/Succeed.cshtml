@@ -1,0 +1,42 @@
+﻿@{
+    //Layout = @"../Shared/_Layout.cshtml";
+    bool IsAjax = Request.QueryString["IsAjax"] != null ? true : false;
+    string urlReferrer = this.Request.UrlReferrer.ToString();
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row" style="min-width:600px;">
+    <div class="col-md-12 page-500">
+        <div class="number">
+            <i class="fa fa-check"></i>
+        </div>
+        <div class=" details">
+            <h3>操作成功</h3>
+            <p>
+                信息：@(ViewBag.Msg)<br />
+                请点击 <a href="javascript:void(0);" onclick="reload()"><font color="red" style=" font-size:12px; font-weight:bold;" >关闭窗口</font></a>
+            </p>
+        </div>
+    </div>
+</div>
+@section HeaderScripts
+{
+    @{
+ <link href="/Content/Metronic/css/pages/error.css?201610191811" rel="stylesheet" type="text/css" />
+    }
+}
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            if (parent.currentAtr != null) {
+                var w = $(".row").css("width");
+                var h = $(".row").css("Height");
+                parent.currentAtr.size(w, h);
+            }
+        });
+        function reload()
+        {
+            parent.window.location.href = parent.document.URL;
+        }
+    </script>
+}

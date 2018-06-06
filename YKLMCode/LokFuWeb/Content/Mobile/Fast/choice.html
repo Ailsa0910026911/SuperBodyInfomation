@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>选择收款银行</title>
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="js/jquery.js"></script>
+</head>
+
+<body style="background-color:#3595f2;">
+
+			<div class="xz_box">
+            	<span class="sp06">请选择收款银行</span>
+                <div class="bank bank2">
+                	<span class="sp01"></span>
+                    <span class="sp02">工商银行</span>
+                    <span class="sp03">尾号0000</span>
+                </div>
+                <div class="bank">
+                	<span class="sp01"></span>
+                    <span class="sp02">工商银行</span>
+                    <span class="sp03">尾号0000</span>
+                </div>
+                <div class="bank">
+                	<span class="sp01"></span>
+                    <span class="sp02">工商银行</span>
+                    <span class="sp03">尾号0000</span>
+                </div>
+                <span class="sp09">如需新增银行卡,请前往商户中心页面添加</span>
+                <span class="sp10"><input type="button" value="设为收款银行卡" /></span>
+            </div>
+            <div class="xz_text">
+            温馨提示：<br />1.首次使用收付直通车功能，需要设定一张收款银行卡，后期可以更换收款银行卡，请放心使用。<br />2.如需“新增或删除”银行卡，请在“商户中心-银行卡列表”中进行管理。使用过程中如有疑问，请拨打我们的客服热线咨询。
+            </div>
+            <script>
+			$(function(){
+			$(".bank").each(function(i){
+				$(this).click(function(){
+						$(".bank").removeClass("bank2");
+						$(".bank:eq("+i+")").addClass("bank2");
+						return false;
+					});
+				});
+			});
+            </script>
+
+
+
+
+
+
+</body>
+</html>

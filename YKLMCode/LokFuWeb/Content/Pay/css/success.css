@@ -1,0 +1,8 @@
+﻿html,*{font-family:"微软雅黑"; max-width:480px; margin:0 auto;}
+body{ margin:0; padding:0; background-color:#f4f5f9; }
+.duigou{ width:auto; height:auto; margin:10% auto 0;}
+.text1{ width:100%; height:auto; text-align:center; font-size:1em; margin-top:2%;}
+.box1{ width:100%; height:auto; background-color:#fff; padding:2% 0;}
+.box1 span{font-size:1em;}
+.box1 .sp1{ margin-left:5%; margin-right:3%;}
+.ditu{ display:block; width:100%; height:auto; position:fixed; bottom:0;}

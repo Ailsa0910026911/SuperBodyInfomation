@@ -1,0 +1,91 @@
+﻿@{
+    bool IsAjax = false;
+    if (Request.Form["IsAjax"] != null)
+    {
+        IsAjax = true;
+    }
+    else if (Request.QueryString["IsAjax"] != null)
+    {
+        IsAjax = true;
+    }
+    string FrameId = "";
+    if(Request.Form["IFrameId"] != null)
+    {
+        FrameId = Request.Form["IFrameId"];
+    }
+    else if (Request.QueryString["IFrameId"] != null)
+    {
+        FrameId = Request.QueryString["IFrameId"];
+    }
+    bool IsColse = ViewBag.IsColse ?? false;
+}
+<div class="row" style="min-width:600px;">
+    <div class="col-md-12 page-500">
+        <div class=" number">
+            <i class="fa fa-check" style="font-size:100px;"></i>
+        </div>
+        <div class=" details">
+            <h3>@(ViewBag.Title)</h3>
+            <p>
+                信息：@(ViewBag.Msg)<br />
+               @if (!IsAjax)
+               {
+                   if (IsColse)
+                   {
+                        @:请点击 <a href="javascript:CloseFrame();"><font color="red" style=" font-size:12px; font-weight:bold;" >关闭窗口</font></a>
+                   }
+                   else
+                   {
+                        @:请点击 <a href="javascript:ReloadFrame();"><font color="red" style=" font-size:12px; font-weight:bold;" >关闭窗口</font></a>
+                   }
+               }
+               else
+               {
+                   @:请点击 <a href="javascript:window.history.go(-1);void(0);"><font color="red" style=" font-size:12px; font-weight:bold;" >返回上一页</font></a>
+               }
+                <br />
+            </p>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <link href="/Content/Metronic/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/Content/Metronic/css/pages/error.css?201610191812" rel="stylesheet" type="text/css" />
+    <link href="/Content/HaoFu/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+    <script src="/Content/HaoFu/plugins/artdialog/iframeTools.js" type="text/javascript"></script>
+    <script>
+        top.window.scrollTo(0, 0);
+        @if (FrameId.IsNullOrEmpty())
+        {
+            @Html.Raw("var frameId = window.frameElement && window.frameElement.id || '';")
+        }
+        else
+        {
+            @Html.Raw("var frameId = \"" + FrameId + "\";")
+        }
+        $(function () {
+            if (parent.currentAtr != null) {
+                var w = document.body.scrollWidth;
+                var h = document.body.scrollHeight;
+                parent.currentAtr.size(w, h);
+            }
+        });
+
+        function ReloadFrame() {
+            if (frameId != "") {
+                parent.reloadFrameNum(frameId);
+            }
+            art.dialog.close();
+        }
+
+        function CloseFrame()
+        {
+            if (frameId != "") {
+                parent.ColseIFarme(frameId);
+            }
+        }
+        
+    </script>
+}

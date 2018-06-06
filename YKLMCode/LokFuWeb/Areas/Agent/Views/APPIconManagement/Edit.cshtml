@@ -1,0 +1,271 @@
+﻿@{
+    APPModule APPModule = ViewBag.APPModule;
+    List<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    ViewBag.SMUid = 275;
+    if (APPModule.Id.IsNullOrEmpty())
+    {
+        APPModule.State = 1;
+        APPModule.ModuleType = 1;
+    }
+
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+    SortedList<string, string> ModuleTypeBottomSelectList = ViewBag.ModuleTypeBottomSelectList;
+}
+<style>
+
+/*输入框css*/
+.inquiry .inquiry-cont input, .inquiry .inquiry-cont select {
+    outline: none;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid #d2d0d0;
+    padding: 0 0 0 5px;
+}
+.inquiry .input-text {
+    width: 300px;
+    height: 32px;
+	line-height:32px;}
+	
+
+
+
+/*弹窗提示*/
+.formError .formErrorContent {
+    width: 100%;
+    background: #ee0101;
+    position: relative;
+    color: #fff;
+    min-width: 120px;
+    font-size: 11px;
+    padding: 4px 10px 4px 10px;
+	border-radius: 6px;}
+
+.formError .formErrorArrow div {
+   
+    font-size: 0px;
+    height: 1px;
+    background: #ee0101;
+    margin: 0 auto;
+    line-height: 0;
+    font-size: 0;
+	display: block;}
+	
+.formError .formErrorArrow .line3 {
+    width: 1px;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+	border-bottom: 0 solid #fff;}
+.formError .formErrorArrow .line2 {
+    width: 3px;
+    border: none;
+    background: #fff;
+}
+
+.formError .formErrorArrow .line1 {
+    width: 1px;
+    border: none;
+    background: #fff;
+}
+
+.inquiry .inquiry-cont input, .inquiry .inquiry-cont select {
+    outline: none;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid #d2d0d0;
+    padding: 0 0 0 5px;
+	color: #7e7e7e;
+}
+
+
+</style>
+<!-- BEGIN PAGE CONTENT-->
+<div class="main-content clearfix">
+    <div class="ifarm-index clearfix">
+        <div class="proxy-top">@(ViewBag.Title)</div>
+        <div class="information">
+            <div class="proxy-con inquiry-cont operator">
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form  action="/agent/APPIconManagement/@(APPModule.Id.IsNullOrEmpty() ? "Add" : "Save").html"  id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="Id" value="@(APPModule.Id)" />
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td width="100" align="right">名称<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <input type="text" class="input-text  validate[required] " name="Name" id="Name" value="@(APPModule.Name)" />
+                                </td>
+                                </tr>
+                             <tr>
+                                <td width="100" align="right">默认图标<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                     @Html.Partial("FileLoad", new FileLoad() { BigName = "PictureUrl", FilePath = "APPModule", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPModule.PictureUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" height="25" />
+                                        </a>
+                                    }
+                                </td>
+                                </tr>
+                            
+                             <tr style="display: none;" id="SelPic">
+                                  
+                                <td width="100" align="right">选中图标<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                     @Html.Partial("FileLoad", new FileLoad() { BigName = "PicUrl", FilePath = "APPModule", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                                    @if (!APPModule.PicUrl.IsNullOrEmpty())
+                                    {
+                                        <a href="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" target="_blank">
+                                            <img src="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" height="25" />
+                                        </a>
+                                    }
+                                </td>
+                                
+                                </tr>
+                            
+                             <tr>
+                                <td width="100" align="right">功能类型<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                    <select class="bs-select form-control input-small" name="ModuleType" id="ModuleType">
+                                    <option value="1" @(APPModule.ModuleType == 1 ? " selected" : "")>内置</option>
+                                    <option value="2" @(APPModule.ModuleType == 2 ? " selected" : "")>外链</option>
+                                </select>
+                                
+                                </td>
+                                <td><p class="help-block">内置:APP的内置功能 外链:链接到H5功能 </p></td> 
+                                </tr>
+                           
+                             <tr @(APPModule.ModuleType == 1 ? "" : "style=display:none;") id="selectValue">
+                                <td width="100" align="right">值<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                     <select id="SelectValueSelect" @(APPModule.ModuleType == 1 ? "name=Value" : "")
+                                            class="bs-select form-control  validate[required] input-md">
+                                        <optgroup label="Home区域">
+                                            @foreach (var item in ModuleTypeSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPModule.Value ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                        <optgroup label="底部区域">
+                                            @foreach (var item in ModuleTypeBottomSelectList)
+                                            {
+                                                <option value="@(item.Value)" @(item.Value == APPModule.Value ? "selected" : "")>@(item.Key)</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </td>
+                                </tr>
+                       
+                             <tr @(APPModule.ModuleType == 2 ? "" : "style=display:none;") id="fillValue">
+                                  
+                                <td width="100" align="right">值<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                     <div>
+                                    <i class="fa"></i>
+                                    <input type="text" class="form-control validate[required] input-large" id="FillValueInput"
+                                           @(APPModule.ModuleType == 2 ? "name=Value" : "") value="@(APPModule.Value)" />
+                                </div>
+                                
+                                </td>
+                                <td><p class="help-block"> 请输入以"http://"开头的网址,例如"http://www.taobao.com" </p></td>
+                                </tr>
+
+                            @*  <tr>
+                                <td width="100" align="right">是否锁定<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                       <select class="bs-select form-control input-xsmall" name="IsLock" id="IsLock">
+                                    <option value="0" @(APPModule.IsLock == false ? " selected" : "")>否</option>
+                                    <option value="1" @(APPModule.IsLock == true ? " selected" : "")>是</option>
+                                </select>
+                                </td>
+                                </tr>*@
+                              <tr>
+                                <td width="100" align="right">显示位置<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                       <select class="bs-select form-control input-xsmall" name="DisplaySite" id="DisplaySite" style="width: 120px !important">
+                                    <option value="1" @(APPModule.DisplaySite == 1 ? " selected" : "")>Home图标</option>
+                                    <option value="2" @(APPModule.DisplaySite == 2 ? " selected" : "")>底部图标</option>
+                                </select>
+                                <p class="help-block"></p>
+                                </td>
+                                </tr>
+                              <tr>
+                                <td width="100" align="right">状态<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                       <select class="bs-select form-control input-xsmall" name="State" id="State">
+                                    <option value="1" @(APPModule.State == 1 ? " selected" : "")>显示</option>
+                                    <option value="0" @(APPModule.State == 0 ? " selected" : "")>隐藏</option>
+                                </select>
+                                <p class="help-block"></p>
+                                </td>
+                                </tr>
+                              <tr>
+                                <td width="100" align="right">排序<b class="text-red"> * </b>: </td>
+                                <td width="300">
+                                       <input type="text" class="form-control  validate[required,custom[int]] input-small" name="Sort" id="Sort" value="@(APPModule.Sort)" />
+                                <p class="help-block"></p>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                     <div style="display: none" class="deleteA"></div>
+                    <br>
+                    <div class="text-center warning">
+                        <button type="submit"class="sub" id="subBt">确认</button>
+                    </div>
+                </form>
+                <!-- END FORM-->
+            </div>
+          <br>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    @{
+        <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+        <script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+         <link href="/Content/Metronic/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine.min.js"></script>
+    <script src="/Content/HaoFu/plugins/ValidationEngine/js/jquery.validationEngine-zh_CN.js?201608191447"></script>
+        <script>
+            $(function () {
+                $("#DisplaySite").change(function () {
+                    var v = $(this).val();
+                    if (v == 2) {
+                        $("#SelPic").show();
+                    } else {
+                        $("#SelPic").hide();
+                    }
+                }).change();
+                $("#ModuleType").change(function () {
+                    var v = $(this).val();
+                    if (v == 1) {
+                        $("#selectValue").show();
+                        $("#fillValue").hide();
+
+                        $("#SelectValueSelect").attr("name", "Value");
+                        $("#FillValueInput").attr("name", "");
+
+                    }
+                    else {
+                        $("#selectValue").hide();
+                        $("#fillValue").show();
+
+                        $("#FillValueInput").attr("name", "Value");
+                        $("#SelectValueSelect").attr("name", "");
+                    }
+                });
+                var uploadSelect = $(".control").children("select").children("option");
+                $.each(uploadSelect, function (i, n) {
+                    if ($(n).val() == 0) {
+                        $(n).remove();
+                    }
+                });
+            });
+        </script>
+    }
+}

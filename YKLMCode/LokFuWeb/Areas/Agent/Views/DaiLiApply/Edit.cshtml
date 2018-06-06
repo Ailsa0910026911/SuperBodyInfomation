@@ -1,0 +1,339 @@
+﻿@{
+    Layout = "";
+    SysAgent BasicAgent = ViewBag.BasicAgent;
+    LokFuEntity Entity = ViewBag.Entity;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>代理商</title>
+    <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link href="/Content/Metronic/plugins/artdialog/skins/default.css" rel="stylesheet" type="text/css" />
+    <script src="/Content/Metronic/plugins/artdialog/jquery.artDialog.js" type="text/javascript"></script>
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <link href="~/Content/Manage/DaiLiApply/css/style.css" rel="stylesheet" />
+</head>
+<body>
+        <div class="d1">
+            <a class="d2 btnAjax" href="#"></a>
+                @{
+                    DaiLiApply Temp = Entity.DaiLiApply.FirstOrDefault(n => n.Agent == BasicAgent.Id && (n.OrderState == 1 || n.OrderState == 2));
+                    if (Temp != null)
+                    {
+                    <a class="d2 tips" href="#">
+                        @if (Temp.OrderState == 1)
+                        {
+                            @:您的申请已提交，请耐心等待~
+                        }
+                        @if (Temp.OrderState == 2)
+                        {
+                            @:您的申请已处理完成，重新登录~
+                        }
+                    </a>
+                    }
+                }
+            <a class="d2 btnAjax" href="#"></a>
+        </div>
+        <div class="dld">代理申请单填写</div>
+        <div class="guanggao"></div>
+    <form id="AddForm" name="chkForm" class="chkForm" enctype="multipart/form-data" method="post" action="Add.html">
+        <div class="txzld">
+            <div class="biaoti">钻石代理申请单资料填写</div>
+            <div style="overflow: hidden;">
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>公司名称：</span>
+                        <input name="YingYeName" id="YingYeName" class="validate[required,custom[chinese]]" alert="请正确填写公司名称" />
+                    </div>
+                    <div class="tiaomu">
+                        <span>营业执照号：</span>
+                        <input name="YingYeNum" id="YingYeNum" class="validate[required]" alert="请填写营业执照号" />
+                    </div>
+                    <div class="tiaomu">
+                        <span>地址：</span>
+                        <input name="Address" id="Address" class="validate[required]" alert="请填写地址" />
+                    </div>
+                </div>
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>税务登记证号：</span>
+                        <input name="SuiWuNum" id="SuiWuNum" class="validate[required]" alert="请填写税务登记证号" />
+                    </div>
+                    <div class="tiaomu">
+                        <span>组织机构证号：</span>
+                        <input name="ZuZhiNum" id="ZuZhiNum" class="validate[required]" alert="请填写组织机构证号" />
+                    </div>
+                    <div class="tiaomu">
+                        @{
+                            IList<BasicProvince> BasicProvinceList = Entity.BasicProvince.Where(n => n.State == 1).ToList();
+                            IList<BasicCity> BasicCityList = Entity.BasicCity.Where(n => n.State == 1).ToList();
+                            }
+                        <span>地区：</span>
+                        <select id="Area1" class="validate[required]" type="select-one" alert="请选择省">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicProvinceList)
+                        {
+                          <option value="@(p.Id)">@(p.Name)</option>
+                        }
+                    </select>
+                    <select name="Area" id="Area2" class="validate[required]" type="select-one" alert="请选择城市">
+                        <option value="">请选择</option>
+                        @foreach (var p in BasicCityList)
+                        {
+                          <option value="@(p.Id)" rev="@(p.PId)">@(p.Name)</option>
+                        }
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden;">
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>法人姓名：</span>
+                        <input name="TureName" id="TureName" class="validate[required,custom[chinese]]" alert="请正确填写法人姓名" />
+                    </div>
+                </div>
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>身份证号：</span>
+                        <input name="IdCard" id="IdCard" class="validate[required,custom[idcard]]" alert="请正确填写身份证号" />
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden;">
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>联系电话：</span>
+                        <input name="Pic4" id="Pic4" class="validate[required,custom[phone]]" alert="请正确填写固定电话" />
+                    </div>
+                </div>
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>联系手机：</span>
+                        <input name="Mobile" id="Mobile" class="validate[required,custom[mobile]]" alert="请正确填写手机号码" />
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden; margin-top: 30px;">
+                <div class="tjzp">
+                    <span class="text2">营业执照照片：</span>
+                    <div class="box">
+                        <img src="/Content/Metronic/img/none.gif" id="f_img_pic1" />
+                        <span id="f_txtbox_pic1">营业执照照片</span>
+                        <input type="button" value="添加照片" class="anniu1" id="f_btn_pic1" />
+                    </div>
+                </div>
+                <div class="tjzp">
+                    <span class="text2">税务登记照片：</span>
+                    <div class="box">
+                        <img src="/Content/Metronic/img/none.gif" id="f_img_pic2" />
+                        <span id="f_txtbox_pic2">税务登记照片</span>
+                        <input type="button" value="添加照片" class="anniu1" id="f_btn_pic2" />
+                    </div>
+                </div>
+                <div class="tjzp">
+                    <span class="text2" style="width: 150px;">组织机构代码证照片：</span>
+                    <div class="box">
+                        <img src="/Content/Metronic/img/none.gif" id="f_img_pic3" />
+                        <span id="f_txtbox_pic3">组织机构代码证照片</span>
+                        <input type="button" value="添加照片" class="anniu1" id="f_btn_pic3" />
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden; margin-top: 30px;">
+                <div class="tjzp">
+                    <span class="text2">身份证照片：</span>
+                    <div class="box" style="margin-right: 30px;">
+                        <img src="/Content/Metronic/img/none.gif" id="f_img_pic4" />
+                        <span id="f_txtbox_pic4">身份证正面</span>
+                        <input type="button" value="添加照片" class="anniu1" id="f_btn_pic4" />
+                    </div>
+                    <div class="box">
+                        <img src="/Content/Metronic/img/none.gif" id="f_img_pic5" />
+                        <span id="f_txtbox_pic5">身份证反面</span>
+                        <input type="button" value="添加照片" class="anniu1" id="f_btn_pic5" />
+                    </div>
+                </div>
+            </div>
+            @*@if (BasicAgent.Levels == 4)
+            {
+            <div style="overflow: hidden;">
+                <div class="fdu">
+                    <div class="tiaomu">
+                        <span>支付金额：</span>
+                        <input style="width: 160px;" name="Amoney" id="Amoney" class="" />
+                        <span style="text-align: left;">元</span><br />
+                        <input class="hklsd" type="button" value="点此上传支付凭证(汇款流水单)" />
+                    </div>
+                </div>
+            </div>
+            }*@
+        </div>
+        @*@if (BasicAgent.Levels == 4)
+        {
+        *@<div class="ws" id="btnBox">
+            <input class="tijiao" type="submit" value="提交申请" />
+        </div>
+        @*}*@
+@*图片上传域*@
+<script>
+    function BindChange(inputFile, BigName, img, btn) {
+        btn.addEventListener('click', function () {
+            inputFile.click();
+        });
+        inputFile.addEventListener('change', function () {
+            BigName.innerHTML = this.value;//文件名
+            var file = inputFile.files[0];
+            if (!(/^image/.test(file.type))) {
+                alert('不是图片文件');
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function () {
+                img.src = this.result;
+                img.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+</script>
+<div style="display:none;">
+@{
+    string Id_n = "pic1";
+    string BigName = "YingYePic";//字段名
+    //身份证
+}
+<input class="" id="f_@(Id_n)" type="file" Name="@(BigName)" title="文件的格式必须为[<%=FileContentTypeList %>]" />
+<input class="t@(Id_n)" id="@(BigName)_FilePath" Name="@(BigName)_FilePath" type="hidden" value="DaiLiApply" />
+<input class="t@(Id_n)" id="@(BigName)_FileName" Name="@(BigName)_FileName" type="hidden" value="" />
+<input class="t@(Id_n)" id="@(BigName)_IsSamll" name="@(BigName)_IsSamll" value="0" type="hidden" />
+<input class="t@(Id_n)" id="@(BigName)_StandardSize" Name="@(BigName)_StandardSize" type="hidden" value="PcOnJF0/1MYziw/AjavDTFDrb0Pa4rCefQ99XOau" />
+<input class="t@(Id_n)" id="@(BigName)_FileContentType" Name="@(BigName)_FileContentType" type="hidden" value="PcOnJF0/1MYziw/Aja7FSAPqaUeAu+qcLgp6DeP1OU/GbR2bzi9MzUP0UKiZ6USIz3r3ZEFAhhNWH7olxaXUX+GfjGkvgqQGD0rDyAKhlRokELCx9qs3IYkp3Q==" />
+<script>
+    var file = document.getElementById("f_@(Id_n)");
+    var txtbox = document.getElementById("f_txtbox_@(Id_n)");
+    var img = document.getElementById("f_img_@(Id_n)");
+    var btn = document.getElementById("f_btn_@(Id_n)");
+    BindChange(file, txtbox, img, btn);
+</script>
+@{
+    Id_n = "pic2";
+    BigName = "SuiWuPic";//字段名
+    //身份证
+}
+<input class="" id="f_@(Id_n)" type="file" Name="@(BigName)" title="文件的格式必须为[<%=FileContentTypeList %>]" />
+<input class="t@(Id_n)" id="@(BigName)_FilePath" Name="@(BigName)_FilePath" type="hidden" value="DaiLiApply" />
+<input class="t@(Id_n)" id="@(BigName)_FileName" Name="@(BigName)_FileName" type="hidden" value="" />
+<input class="t@(Id_n)" id="@(BigName)_IsSamll" name="@(BigName)_IsSamll" value="0" type="hidden" />
+<input class="t@(Id_n)" id="@(BigName)_StandardSize" Name="@(BigName)_StandardSize" type="hidden" value="PcOnJF0/1MYziw/AjavDTFDrb0Pa4rCefQ99XOau" />
+<input class="t@(Id_n)" id="@(BigName)_FileContentType" Name="@(BigName)_FileContentType" type="hidden" value="PcOnJF0/1MYziw/Aja7FSAPqaUeAu+qcLgp6DeP1OU/GbR2bzi9MzUP0UKiZ6USIz3r3ZEFAhhNWH7olxaXUX+GfjGkvgqQGD0rDyAKhlRokELCx9qs3IYkp3Q==" />
+<script>
+    var file = document.getElementById("f_@(Id_n)");
+    var txtbox = document.getElementById("f_txtbox_@(Id_n)");
+    var img = document.getElementById("f_img_@(Id_n)");
+    var btn = document.getElementById("f_btn_@(Id_n)");
+    BindChange(file, txtbox, img, btn);
+</script>
+@{
+    Id_n = "pic3";
+    BigName = "ZuZhiPic";//字段名
+    //身份证
+}
+<input class="" id="f_@(Id_n)" type="file" Name="@(BigName)" title="文件的格式必须为[<%=FileContentTypeList %>]" />
+<input class="t@(Id_n)" id="@(BigName)_FilePath" Name="@(BigName)_FilePath" type="hidden" value="DaiLiApply" />
+<input class="t@(Id_n)" id="@(BigName)_FileName" Name="@(BigName)_FileName" type="hidden" value="" />
+<input class="t@(Id_n)" id="@(BigName)_IsSamll" name="@(BigName)_IsSamll" value="0" type="hidden" />
+<input class="t@(Id_n)" id="@(BigName)_StandardSize" Name="@(BigName)_StandardSize" type="hidden" value="PcOnJF0/1MYziw/AjavDTFDrb0Pa4rCefQ99XOau" />
+<input class="t@(Id_n)" id="@(BigName)_FileContentType" Name="@(BigName)_FileContentType" type="hidden" value="PcOnJF0/1MYziw/Aja7FSAPqaUeAu+qcLgp6DeP1OU/GbR2bzi9MzUP0UKiZ6USIz3r3ZEFAhhNWH7olxaXUX+GfjGkvgqQGD0rDyAKhlRokELCx9qs3IYkp3Q==" />
+<script>
+    var file = document.getElementById("f_@(Id_n)");
+    var txtbox = document.getElementById("f_txtbox_@(Id_n)");
+    var img = document.getElementById("f_img_@(Id_n)");
+    var btn = document.getElementById("f_btn_@(Id_n)");
+    BindChange(file, txtbox, img, btn);
+</script>
+@{
+    Id_n = "pic4";
+    BigName = "IdCardPic";//字段名
+    //身份证
+}
+<input class="" id="f_@(Id_n)" type="file" Name="@(BigName)" title="文件的格式必须为[<%=FileContentTypeList %>]" />
+<input class="t@(Id_n)" id="@(BigName)_FilePath" Name="@(BigName)_FilePath" type="hidden" value="DaiLiApply" />
+<input class="t@(Id_n)" id="@(BigName)_FileName" Name="@(BigName)_FileName" type="hidden" value="" />
+<input class="t@(Id_n)" id="@(BigName)_IsSamll" name="@(BigName)_IsSamll" value="0" type="hidden" />
+<input class="t@(Id_n)" id="@(BigName)_StandardSize" Name="@(BigName)_StandardSize" type="hidden" value="PcOnJF0/1MYziw/AjavDTFDrb0Pa4rCefQ99XOau" />
+<input class="t@(Id_n)" id="@(BigName)_FileContentType" Name="@(BigName)_FileContentType" type="hidden" value="PcOnJF0/1MYziw/Aja7FSAPqaUeAu+qcLgp6DeP1OU/GbR2bzi9MzUP0UKiZ6USIz3r3ZEFAhhNWH7olxaXUX+GfjGkvgqQGD0rDyAKhlRokELCx9qs3IYkp3Q==" />
+<script>
+    var file = document.getElementById("f_@(Id_n)");
+    var txtbox = document.getElementById("f_txtbox_@(Id_n)");
+    var img = document.getElementById("f_img_@(Id_n)");
+    var btn = document.getElementById("f_btn_@(Id_n)");
+    BindChange(file, txtbox, img, btn);
+</script>
+@{
+    Id_n = "pic5";
+    BigName = "Pic1";//字段名
+    //身份证
+}
+<input class="" id="f_@(Id_n)" type="file" Name="@(BigName)" title="文件的格式必须为[<%=FileContentTypeList %>]" />
+<input class="t@(Id_n)" id="@(BigName)_FilePath" Name="@(BigName)_FilePath" type="hidden" value="DaiLiApply" />
+<input class="t@(Id_n)" id="@(BigName)_FileName" Name="@(BigName)_FileName" type="hidden" value="" />
+<input class="t@(Id_n)" id="@(BigName)_IsSamll" name="@(BigName)_IsSamll" value="0" type="hidden" />
+<input class="t@(Id_n)" id="@(BigName)_StandardSize" Name="@(BigName)_StandardSize" type="hidden" value="PcOnJF0/1MYziw/AjavDTFDrb0Pa4rCefQ99XOau" />
+<input class="t@(Id_n)" id="@(BigName)_FileContentType" Name="@(BigName)_FileContentType" type="hidden" value="PcOnJF0/1MYziw/Aja7FSAPqaUeAu+qcLgp6DeP1OU/GbR2bzi9MzUP0UKiZ6USIz3r3ZEFAhhNWH7olxaXUX+GfjGkvgqQGD0rDyAKhlRokELCx9qs3IYkp3Q==" />
+<script>
+    var file = document.getElementById("f_@(Id_n)");
+    var txtbox = document.getElementById("f_txtbox_@(Id_n)");
+    var img = document.getElementById("f_img_@(Id_n)");
+    var btn = document.getElementById("f_btn_@(Id_n)");
+    BindChange(file, txtbox, img, btn);
+</script>
+</div>
+    </form>
+@*@if (BasicAgent.Levels == 4) { 
+<style>
+    #AddForm{display:block;}
+</style>
+}*@
+<script>
+    var selects;
+    $(function () {
+        $('.btnAjax').unbind();
+        $('.btnAjax').click(function () {
+            DeleteItemDialog = art.dialog({
+                title: '填写申请资料',
+                content: document.getElementById('AddForm'),
+                lock: true,
+                button: [{
+                    name: '提交申请',
+                    callback: function () {
+                        $("#AddForm").submit();
+                        return false;
+                    },
+                    focus: true,
+                    disabled: false
+                }, {
+                    name: '取消',
+                    callback: function () {
+                        this.close();
+                    }
+                }
+                ]
+            });
+            return false;
+        });
+        selects = $("#Area2").clone();
+        $("#Area2 option:gt(0)").remove();
+        $("#Area1").change(function () {
+            $("#Area2").val("");
+            $("#Area2 option:gt(0)").remove();
+            if ($(this).val() != "") {
+                var rev = selects.find("option:[rev=" + $(this).val() + "]").clone();
+                $("#Area2").append(rev);
+            }
+        });
+    });
+</script>
+</body>
+</html>

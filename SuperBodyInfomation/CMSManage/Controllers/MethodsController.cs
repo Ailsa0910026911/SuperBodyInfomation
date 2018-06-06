@@ -68,7 +68,6 @@ namespace CMSManage.Controllers
         //分润算法
         public string ShareProfit(string id = "", decimal? money = 0)
         {
-            var a = id;
             //取出分润比例Type=0：信用卡
             var bsp = ct.BusinessShareProfit.Where(o => o.Type == 0).FirstOrDefault();
             var Id = int.Parse(id);
@@ -79,11 +78,25 @@ namespace CMSManage.Controllers
                 //查找代理商
                 var sysagent = ct.SysAgent.Where(o => o.Id == user.Agent).ToList();
                 OrderProfitLog op = new OrderProfitLog();
+                OrdersPayOnly opo = new OrdersPayOnly();
                 var logType = "1";
                 decimal? bspnum = 0;
                 //生成订单号
                 var Tnum = "FX" + MD5Helper.getMd5Hash(DateTime.Now.ToString());
-                //生成订单
+                try
+                {
+                    //添加订单
+                    opo.TNum = Tnum;
+                    opo.AddTime = DateTime.Now;
+                    opo.IsDel = 0;
+                    ct.OrdersPayOnly.Add(opo);
+                    ct.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Log.LoggerHelper.Error("添加订单失败，原因：" + e);
+                }
+                //生成分润日志
                 op.AddTime = DateTime.Now;
                 op.IsDel = 0;
                 op.UId = user.Id;
@@ -93,17 +106,24 @@ namespace CMSManage.Controllers
                 op.Amoney = decimal.Parse(money.ToString());
 
                 #region VIP用户分润
-                logType = "1";
-                op.LogType = byte.Parse(logType);
-                op.Tier = 0;
-                bspnum = bsp.S0_0;
-                op.Agent = 0;
-                op.Profit = decimal.Parse((money * bspnum).ToString());
-                ct.OrderProfitLog.Add(op);
-                //对用户的账户进行操作
-                user.Amount = user.Amount + op.Profit;
-                user.Sp_Amount = user.Sp_Amount + op.Profit;
-                ct.SaveChanges();
+                try
+                {
+                    logType = "1";
+                    op.LogType = byte.Parse(logType);
+                    op.Tier = 0;
+                    bspnum = bsp.S0_0;
+                    op.Agent = 0;
+                    op.Profit = decimal.Parse((money * bspnum).ToString());
+                    ct.OrderProfitLog.Add(op);
+                    //对用户的账户进行操作
+                    user.Amount = user.Amount + op.Profit;
+                    user.Sp_Amount = user.Sp_Amount + op.Profit;
+                    ct.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Log.LoggerHelper.Error("添加VIP用户分润日志失败，原因：" + e);
+                }
                 #endregion
                 //用户的代理商
                 var Agent = ct.SysAgent.Where(o => o.Id == user.Agent).FirstOrDefault();
@@ -116,40 +136,49 @@ namespace CMSManage.Controllers
                     //代理商一级分润
                     if (Agent.Tier == 4)
                     {
-                        bspnum = bsp.S1_4;
-                        //对代理商的账户进行操作
-                        var S1_4 = ct.Users.Where(o => o.Id == Agent.MyUId).FirstOrDefault();
-                        if (S1_4 != null)
+                        #region 分销商S1_4
+                        try
                         {
-                            op.UserName = user.UserName;
-                            op.UId = S1_4.Id;
-                            op.Profit = decimal.Parse((money * bspnum).ToString());
-                            ct.OrderProfitLog.Add(op);
-                            S1_4.Amount = S1_4.Amount + op.Profit;
-                            S1_4.Sp_Amount = S1_4.Sp_Amount + op.Profit;
-                            ct.SaveChanges();
-                            //同级代理
-                            #region 同级分润
-                            var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
-                            if (tagent != null)
+                            bspnum = bsp.S1_4;
+                            //对代理商的账户进行操作
+                            var S1_4 = ct.Users.Where(o => o.Id == Agent.MyUId).FirstOrDefault();
+                            if (S1_4 != null)
                             {
-                                var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
-                                if (S1_1 != null)
+                                op.UserName = user.UserName;
+                                op.UId = S1_4.Id;
+                                op.Profit = decimal.Parse((money * bspnum).ToString());
+                                ct.OrderProfitLog.Add(op);
+                                S1_4.Amount = S1_4.Amount + op.Profit;
+                                S1_4.Sp_Amount = S1_4.Sp_Amount + op.Profit;
+                                ct.SaveChanges();
+                                //同级代理
+                                #region 同级分润
+                                var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
+                                if (tagent != null)
                                 {
-                                    bspnum = bsp.S1_1;
-                                    op.Tier = tagent.Tier;
-                                    op.UserName = S1_4.UserName;
-                                    op.UId = S1_1.Id;
-                                    op.Profit = decimal.Parse((money * bspnum).ToString());
-                                    ct.OrderProfitLog.Add(op);
-                                    //对用户的账户进行操作
-                                    S1_1.Amount = S1_1.Amount + op.Profit;
-                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                    ct.SaveChanges();
+                                    var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
+                                    if (S1_1 != null)
+                                    {
+                                        bspnum = bsp.S1_1;
+                                        op.Tier = tagent.Tier;
+                                        op.UserName = S1_4.UserName;
+                                        op.UId = S1_1.Id;
+                                        op.Profit = decimal.Parse((money * bspnum).ToString());
+                                        ct.OrderProfitLog.Add(op);
+                                        //对用户的账户进行操作
+                                        S1_1.Amount = S1_1.Amount + op.Profit;
+                                        S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                        ct.SaveChanges();
+                                    }
                                 }
+                                #endregion
                             }
-                            #endregion
                         }
+                        catch (Exception e)
+                        {
+                            Log.LoggerHelper.Error("添加(S1_4)代理商一级分润日志失败，原因：" + e);
+                        }
+                        #endregion
                     }
                     else if (Agent.Tier == 5)
                     {
@@ -158,32 +187,41 @@ namespace CMSManage.Controllers
                         var S1_5 = ct.Users.Where(o => o.Id == Agent.MyUId).FirstOrDefault();
                         if (S1_5 != null)
                         {
-                            op.UserName = user.UserName;
-                            op.UId = S1_5.Id;
-                            op.Profit = decimal.Parse((money * bspnum).ToString());
-                            ct.OrderProfitLog.Add(op);
-                            S1_5.Amount = S1_5.Amount + op.Profit;
-                            S1_5.Sp_Amount = S1_5.Sp_Amount + op.Profit;
-                            ct.SaveChanges();
-                            //同级代理
-                            #region 同级分润
-                            var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
-                            if (tagent != null)
+                            #region 分销商S1_5
+                            try
                             {
-                                var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
-                                if (S1_1 != null)
+                                op.UserName = user.UserName;
+                                op.UId = S1_5.Id;
+                                op.Profit = decimal.Parse((money * bspnum).ToString());
+                                ct.OrderProfitLog.Add(op);
+                                S1_5.Amount = S1_5.Amount + op.Profit;
+                                S1_5.Sp_Amount = S1_5.Sp_Amount + op.Profit;
+                                ct.SaveChanges();
+                                //同级代理
+                                #region 同级分润
+                                var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
+                                if (tagent != null)
                                 {
-                                    bspnum = bsp.S1_1;
-                                    op.Tier = tagent.Tier;
-                                    op.UserName = S1_5.UserName;
-                                    op.UId = S1_1.Id;
-                                    op.Profit = decimal.Parse((money * bspnum).ToString());
-                                    ct.OrderProfitLog.Add(op);
-                                    //对用户的账户进行操作
-                                    S1_1.Amount = S1_1.Amount + op.Profit;
-                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                    ct.SaveChanges();
+                                    var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
+                                    if (S1_1 != null)
+                                    {
+                                        bspnum = bsp.S1_1;
+                                        op.Tier = tagent.Tier;
+                                        op.UserName = S1_5.UserName;
+                                        op.UId = S1_1.Id;
+                                        op.Profit = decimal.Parse((money * bspnum).ToString());
+                                        ct.OrderProfitLog.Add(op);
+                                        //对用户的账户进行操作
+                                        S1_1.Amount = S1_1.Amount + op.Profit;
+                                        S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                        ct.SaveChanges();
+                                    }
                                 }
+                                #endregion
+                            }
+                            catch (Exception e)
+                            {
+                                Log.LoggerHelper.Error("添加(S1_5)代理商一级分润日志失败，原因：" + e);
                             }
                             #endregion
                             //上级代理商
@@ -193,42 +231,51 @@ namespace CMSManage.Controllers
                                 //判断代理商的层级
                                 if (upAgent.Tier == 4)
                                 {
-                                    op.Tier = upAgent.Tier;
-                                    op.Agent = upAgent.Id;
-                                    bspnum = bsp.S2_5_4;
-                                    //对代理商的账户进行操作
-                                    var S2_5_4 = ct.Users.Where(o => o.Id == upAgent.MyUId).FirstOrDefault();
-                                    if (S2_5_4 != null)
+                                    #region 分销商S2_5_4
+                                    try
                                     {
-                                        op.UserName = S1_5.UserName;
-                                        op.UId = S2_5_4.Id;
-                                        op.Profit = decimal.Parse((money * bspnum).ToString());
-                                        ct.OrderProfitLog.Add(op);
-                                        S2_5_4.Amount = S2_5_4.Amount + op.Profit;
-                                        S2_5_4.Sp_Amount = S2_5_4.Sp_Amount + op.Profit;
-                                        ct.SaveChanges();
-                                        //同级代理
-                                        #region 同级分润
-                                        var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
-                                        if (uptagent != null)
+                                        op.Tier = upAgent.Tier;
+                                        op.Agent = upAgent.Id;
+                                        bspnum = bsp.S2_5_4;
+                                        //对代理商的账户进行操作
+                                        var S2_5_4 = ct.Users.Where(o => o.Id == upAgent.MyUId).FirstOrDefault();
+                                        if (S2_5_4 != null)
                                         {
-                                            var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
-                                            if (S1_1 != null)
+                                            op.UserName = S1_5.UserName;
+                                            op.UId = S2_5_4.Id;
+                                            op.Profit = decimal.Parse((money * bspnum).ToString());
+                                            ct.OrderProfitLog.Add(op);
+                                            S2_5_4.Amount = S2_5_4.Amount + op.Profit;
+                                            S2_5_4.Sp_Amount = S2_5_4.Sp_Amount + op.Profit;
+                                            ct.SaveChanges();
+                                            //同级代理
+                                            #region 同级分润
+                                            var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
+                                            if (uptagent != null)
                                             {
-                                                bspnum = bsp.S1_1;
-                                                op.Tier = uptagent.Tier;
-                                                op.UserName = S2_5_4.UserName;
-                                                op.UId = S1_1.Id;
-                                                op.Profit = decimal.Parse((money * bspnum).ToString());
-                                                ct.OrderProfitLog.Add(op);
-                                                //对用户的账户进行操作
-                                                S1_1.Amount = S1_1.Amount + op.Profit;
-                                                S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                                ct.SaveChanges();
+                                                var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
+                                                if (S1_1 != null)
+                                                {
+                                                    bspnum = bsp.S1_1;
+                                                    op.Tier = uptagent.Tier;
+                                                    op.UserName = S2_5_4.UserName;
+                                                    op.UId = S1_1.Id;
+                                                    op.Profit = decimal.Parse((money * bspnum).ToString());
+                                                    ct.OrderProfitLog.Add(op);
+                                                    //对用户的账户进行操作
+                                                    S1_1.Amount = S1_1.Amount + op.Profit;
+                                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                                    ct.SaveChanges();
+                                                }
                                             }
+                                            #endregion
                                         }
-                                        #endregion
                                     }
+                                    catch (Exception e)
+                                    {
+                                        Log.LoggerHelper.Error("添加(S2_5_4)代理商二级分润日志失败，原因：" + e);
+                                    }
+                                    #endregion
                                 }
                             }
                         }
@@ -239,34 +286,44 @@ namespace CMSManage.Controllers
                         var S1_6 = ct.Users.Where(o => o.Id == Agent.MyUId).FirstOrDefault();
                         if (S1_6 != null)
                         {
-                            op.UserName = user.UserName;
-                            op.UId = S1_6.Id;
-                            op.Profit = decimal.Parse((money * bspnum).ToString());
-                            ct.OrderProfitLog.Add(op);
-                            S1_6.Amount = S1_6.Amount + op.Profit;
-                            S1_6.Sp_Amount = S1_6.Sp_Amount + op.Profit;
-                            ct.SaveChanges();
-                            //同级代理
-                            #region 同级分润
-                            var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
-                            if (tagent != null)
+                            #region 分销商S1_6
+                            try
                             {
-                                var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
-                                if (S1_1 != null)
+                                op.UserName = user.UserName;
+                                op.UId = S1_6.Id;
+                                op.Profit = decimal.Parse((money * bspnum).ToString());
+                                ct.OrderProfitLog.Add(op);
+                                S1_6.Amount = S1_6.Amount + op.Profit;
+                                S1_6.Sp_Amount = S1_6.Sp_Amount + op.Profit;
+                                ct.SaveChanges();
+                                //同级代理
+                                #region 同级分润
+                                var tagent = ct.SysAgent.Where(o => o.Id == Agent.SameAgent).FirstOrDefault();
+                                if (tagent != null)
                                 {
-                                    bspnum = bsp.S1_1;
-                                    op.Tier = tagent.Tier;
-                                    op.UserName = S1_6.UserName;
-                                    op.UId = S1_1.Id;
-                                    op.Profit = decimal.Parse((money * bspnum).ToString());
-                                    ct.OrderProfitLog.Add(op);
-                                    //对用户的账户进行操作
-                                    S1_1.Amount = S1_1.Amount + op.Profit;
-                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                    ct.SaveChanges();
+                                    var S1_1 = ct.Users.Where(o => o.Id == tagent.MyUId).FirstOrDefault();
+                                    if (S1_1 != null)
+                                    {
+                                        bspnum = bsp.S1_1;
+                                        op.Tier = tagent.Tier;
+                                        op.UserName = S1_6.UserName;
+                                        op.UId = S1_1.Id;
+                                        op.Profit = decimal.Parse((money * bspnum).ToString());
+                                        ct.OrderProfitLog.Add(op);
+                                        //对用户的账户进行操作
+                                        S1_1.Amount = S1_1.Amount + op.Profit;
+                                        S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                        ct.SaveChanges();
+                                    }
                                 }
+                                #endregion
+                            }
+                            catch (Exception e)
+                            {
+                                Log.LoggerHelper.Error("添加(S1_6)分销商一级分润日志失败，原因：" + e);
                             }
                             #endregion
+
                             //上级代理商
                             var upAgent = ct.SysAgent.Where(o => o.Id == Agent.AgentID).FirstOrDefault();
                             if (upAgent != null)
@@ -281,32 +338,41 @@ namespace CMSManage.Controllers
                                     var S2_6_4 = ct.Users.Where(o => o.Id == upAgent.MyUId).FirstOrDefault();
                                     if (S2_6_4 != null)
                                     {
-                                        op.UserName = S1_6.UserName;
-                                        op.UId = S2_6_4.Id;
-                                        op.Profit = decimal.Parse((money * bspnum).ToString());
-                                        ct.OrderProfitLog.Add(op);
-                                        S2_6_4.Amount = S2_6_4.Amount + op.Profit;
-                                        S2_6_4.Sp_Amount = S2_6_4.Sp_Amount + op.Profit;
-                                        ct.SaveChanges();
-                                        //同级代理
-                                        #region 同级分润
-                                        var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
-                                        if (uptagent != null)
+                                        #region 分销商S2_6_4
+                                        try
                                         {
-                                            var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
-                                            if (S1_1 != null)
+                                            op.UserName = S1_6.UserName;
+                                            op.UId = S2_6_4.Id;
+                                            op.Profit = decimal.Parse((money * bspnum).ToString());
+                                            ct.OrderProfitLog.Add(op);
+                                            S2_6_4.Amount = S2_6_4.Amount + op.Profit;
+                                            S2_6_4.Sp_Amount = S2_6_4.Sp_Amount + op.Profit;
+                                            ct.SaveChanges();
+                                            //同级代理
+                                            #region 同级分润
+                                            var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
+                                            if (uptagent != null)
                                             {
-                                                bspnum = bsp.S1_1;
-                                                op.Tier = uptagent.Tier;
-                                                op.UserName = S2_6_4.UserName;
-                                                op.UId = S1_1.Id;
-                                                op.Profit = decimal.Parse((money * bspnum).ToString());
-                                                ct.OrderProfitLog.Add(op);
-                                                //对用户的账户进行操作
-                                                S1_1.Amount = S1_1.Amount + op.Profit;
-                                                S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                                ct.SaveChanges();
+                                                var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
+                                                if (S1_1 != null)
+                                                {
+                                                    bspnum = bsp.S1_1;
+                                                    op.Tier = uptagent.Tier;
+                                                    op.UserName = S2_6_4.UserName;
+                                                    op.UId = S1_1.Id;
+                                                    op.Profit = decimal.Parse((money * bspnum).ToString());
+                                                    ct.OrderProfitLog.Add(op);
+                                                    //对用户的账户进行操作
+                                                    S1_1.Amount = S1_1.Amount + op.Profit;
+                                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                                    ct.SaveChanges();
+                                                }
                                             }
+                                            #endregion
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Log.LoggerHelper.Error("添加(S2_6_4)分销商二级分润日志失败，原因：" + e);
                                         }
                                         #endregion
                                     }
@@ -320,33 +386,42 @@ namespace CMSManage.Controllers
                                     var S2_6_5 = ct.Users.Where(o => o.Id == upAgent.MyUId).FirstOrDefault();
                                     if (S2_6_5 != null)
                                     {
-                                        op.UserName = S1_6.UserName;
-                                        op.UId = S2_6_5.Id;
-                                        op.Profit = decimal.Parse((money * bspnum).ToString());
-                                        ct.OrderProfitLog.Add(op);
-                                        S2_6_5.Amount = S2_6_5.Amount + op.Profit;
-                                        S2_6_5.Sp_Amount = S2_6_5.Sp_Amount + op.Profit;
-                                        ct.SaveChanges();
-                                        //同级代理
-                                        #region 同级分润
-                                        var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
-                                        if (uptagent != null)
+                                        #region 分销商S2_6_5
+                                        try
                                         {
-                                            var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
-                                            if (S1_1 != null)
+                                            op.UserName = S1_6.UserName;
+                                            op.UId = S2_6_5.Id;
+                                            op.Profit = decimal.Parse((money * bspnum).ToString());
+                                            ct.OrderProfitLog.Add(op);
+                                            S2_6_5.Amount = S2_6_5.Amount + op.Profit;
+                                            S2_6_5.Sp_Amount = S2_6_5.Sp_Amount + op.Profit;
+                                            ct.SaveChanges();
+                                            //同级代理
+                                            #region 同级分润
+                                            var uptagent = ct.SysAgent.Where(o => o.Id == upAgent.SameAgent).FirstOrDefault();
+                                            if (uptagent != null)
                                             {
-                                                bspnum = bsp.S1_1;
-                                                op.Tier = uptagent.Tier;
-                                                op.UserName = S2_6_5.UserName;
-                                                op.UId = S1_1.Id;
-                                                op.Profit = decimal.Parse((money * bspnum).ToString());
-                                                ct.OrderProfitLog.Add(op);
-                                                //对用户的账户进行操作
-                                                S1_1.Amount = S1_1.Amount + op.Profit;
-                                                S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                                ct.SaveChanges();
+                                                var S1_1 = ct.Users.Where(o => o.Id == uptagent.MyUId).FirstOrDefault();
+                                                if (S1_1 != null)
+                                                {
+                                                    bspnum = bsp.S1_1;
+                                                    op.Tier = uptagent.Tier;
+                                                    op.UserName = S2_6_5.UserName;
+                                                    op.UId = S1_1.Id;
+                                                    op.Profit = decimal.Parse((money * bspnum).ToString());
+                                                    ct.OrderProfitLog.Add(op);
+                                                    //对用户的账户进行操作
+                                                    S1_1.Amount = S1_1.Amount + op.Profit;
+                                                    S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                                    ct.SaveChanges();
+                                                }
                                             }
+                                            #endregion
                                         }
+                                        catch (Exception e)
+                                        {
+                                            Log.LoggerHelper.Error("添加(S2_6_5)分销商二级分润日志失败，原因：" + e);
+                                        } 
                                         #endregion
                                         //上级代理商
                                         var up1Agent = ct.SysAgent.Where(o => o.Id == upAgent.AgentID).FirstOrDefault();
@@ -359,34 +434,41 @@ namespace CMSManage.Controllers
                                             var S3_6_5_4 = ct.Users.Where(o => o.Id == up1Agent.MyUId).FirstOrDefault();
                                             if (S3_6_5_4 != null)
                                             {
-                                                op.UserName = S3_6_5_4.UserName;
-                                                op.UId = S3_6_5_4.Id;
-                                                op.Profit = decimal.Parse((money * bspnum).ToString());
-                                                ct.OrderProfitLog.Add(op);
-                                                S3_6_5_4.Amount = S3_6_5_4.Amount + op.Profit;
-                                                S3_6_5_4.Sp_Amount = S3_6_5_4.Sp_Amount + op.Profit;
-                                                ct.SaveChanges();
-                                                //同级代理
-                                                #region 同级分润
-                                                var up1tagent = ct.SysAgent.Where(o => o.Id == up1Agent.SameAgent).FirstOrDefault();
-                                                if (up1tagent != null)
+                                                try
                                                 {
-                                                    var S1_1 = ct.Users.Where(o => o.Id == up1tagent.MyUId).FirstOrDefault();
-                                                    if (S1_1 != null)
+                                                    op.UserName = S3_6_5_4.UserName;
+                                                    op.UId = S3_6_5_4.Id;
+                                                    op.Profit = decimal.Parse((money * bspnum).ToString());
+                                                    ct.OrderProfitLog.Add(op);
+                                                    S3_6_5_4.Amount = S3_6_5_4.Amount + op.Profit;
+                                                    S3_6_5_4.Sp_Amount = S3_6_5_4.Sp_Amount + op.Profit;
+                                                    ct.SaveChanges();
+                                                    //同级代理
+                                                    #region 同级分润
+                                                    var up1tagent = ct.SysAgent.Where(o => o.Id == up1Agent.SameAgent).FirstOrDefault();
+                                                    if (up1tagent != null)
                                                     {
-                                                        bspnum = bsp.S1_1;
-                                                        op.Tier = up1tagent.Tier;
-                                                        op.UserName = S3_6_5_4.UserName;
-                                                        op.UId = S1_1.Id;
-                                                        op.Profit = decimal.Parse((money * bspnum).ToString());
-                                                        ct.OrderProfitLog.Add(op);
-                                                        //对用户的账户进行操作
-                                                        S1_1.Amount = S1_1.Amount + op.Profit;
-                                                        S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
-                                                        ct.SaveChanges();
+                                                        var S1_1 = ct.Users.Where(o => o.Id == up1tagent.MyUId).FirstOrDefault();
+                                                        if (S1_1 != null)
+                                                        {
+                                                            bspnum = bsp.S1_1;
+                                                            op.Tier = up1tagent.Tier;
+                                                            op.UserName = S3_6_5_4.UserName;
+                                                            op.UId = S1_1.Id;
+                                                            op.Profit = decimal.Parse((money * bspnum).ToString());
+                                                            ct.OrderProfitLog.Add(op);
+                                                            //对用户的账户进行操作
+                                                            S1_1.Amount = S1_1.Amount + op.Profit;
+                                                            S1_1.Sp_Amount = S1_1.Sp_Amount + op.Profit;
+                                                            ct.SaveChanges();
+                                                        }
                                                     }
+                                                    #endregion
                                                 }
-                                                #endregion
+                                                catch (Exception e)
+                                                {
+                                                    Log.LoggerHelper.Error("添加(S3_6_5_4)分销商三级分润日志失败，原因：" + e);
+                                                }
                                             }
                                         }
                                     }

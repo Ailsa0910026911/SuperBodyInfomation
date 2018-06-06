@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+    string etnum = ViewBag.etnum;
+    FastOrder FastOrder = ViewBag.FastOrder;
+    UsersPayCard UsersPayCard = ViewBag.UsersPayCard;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>请填写验证码</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="/Content/Pay/css/HBeptok.css" rel="stylesheet" />
+    <script src="/Content/Pay/js/jquery.js"></script>
+</head>
+<body>
+    <div class="union_box">
+        <span class="sp01">支付金额(元)</span>
+        <span class="sp02">@(FastOrder.Amoney.ToString("F2"))</span>
+        <span class="sp03">交易单号：@(FastOrder.TNum)</span>
+    </div>
+    <div class="strip"></div>
+    <div class="union_box2">
+        <span class="sp01">支付银行卡</span>
+        <span class="sp02">@(UsersPayCard.Card.Substring(0, 4)) **** **** @(UsersPayCard.Card.Substring(UsersPayCard.Card.Length - 4, 4))</span>
+    </div>
+    <div class="union_box2" id="mobileText">
+        <span class="sp01">预留手机号</span>
+        <span class="sp02" id="mobileNum">@(UsersPayCard.Mobile)</span>
+    </div>
+    <div>
+        <form class="form" method="post" action="payed.html" id="GoPay" name="GoPay">
+            <input type="hidden" name="etnum" value="@(etnum)" />
+            <div class="codebox">
+                <input class="code" type="tel" id="Code" name="Code" placeholder="请填写短信验证码" autocomplete="off" />
+                <input class="btn" type="button" id="GetCode" value="获取验证码" />
+            </div>
+            <input type="submit" value="确认支付" id="submit" class="un_st disabled" />
+        </form>
+    </div>
+     <div class="zctc_box" id="prompt">
+        <span id="prompt_lang"></span>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#prompt").hide();
+        });
+        var etnum = "@(HttpUtility.UrlEncode(etnum))";
+        var sec = 0;
+        $(function () {
+            //提交支付
+            $("#submit").click(function () {
+                if ($(this).hasClass("disabled")) {
+                    return false;
+                }
+                var Code = $("#Code").val();
+                if (!/^[0-9]{6}$/.test(Code)) {
+                    return false;
+                }
+                $(this).addClass("disabled")
+            });
+            $("#Code").change(function () {
+                var Code = $("#Code").val();
+                if (!/^[0-9]{6}$/.test(Code)) {
+                    $("#submit").addClass("disabled")
+                } else {
+                    $("#submit").removeClass("disabled")
+                }
+            }).keyup(function () {
+                var Code = $("#Code").val();
+                if (!/^[0-9]{6}$/.test(Code)) {
+                    $("#submit").addClass("disabled")
+                } else {
+                    $("#submit").removeClass("disabled")
+                }
+            });
+            $("#GetCode").click(function () {
+                if ($(this).hasClass("disabled")) {
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "pay.html",
+                    dataType: "json",
+                    data: "etnum=" + etnum,
+                    beforeSend: function () {
+                        $("#GetCode").addClass("disabled").val("发送中..");
+                    },
+                    success: function (ret) {
+                        if (ret.error == 0) {
+                            ShowInfo("发送成功");
+                            sec = 60;
+                            SetSec();
+
+                        } else {
+                            ShowInfo(ret.info);
+                            $("#GetCode").removeClass("disabled").val("重新发送");
+                        }
+                    }
+                });
+            });
+        });
+        var ShowInfo = function (info) {
+            $("#prompt_lang").text(info);
+            $("#prompt").show();
+            setTimeout(function () {
+                $("#prompt").hide();
+            }, 2000);
+        }
+        var SetSec = function () {
+            if (sec > 0) {
+                sec--;
+                $("#GetCode").addClass("disabled").val(sec + "秒后重试");
+                setTimeout("SetSec()", 1000);
+            } else {
+                $("#GetCode").removeClass("disabled").val("重新发送");
+            }
+        }
+    </script>
+</body>
+</html>

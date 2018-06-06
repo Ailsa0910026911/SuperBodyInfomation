@@ -1,0 +1,163 @@
+﻿@{
+    APPModule APPModule = ViewBag.APPModule;
+    SysAgent SysAgent = ViewBag.SysAgent;
+    ViewBag.SMUid = 271;
+    if (APPModule.Id.IsNullOrEmpty())
+    {
+        APPModule.State = 1;
+        APPModule.ModuleType = 1;
+    }
+
+    SortedList<string, string> ModuleTypeSelectList = ViewBag.ModuleTypeSelectList;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 650px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="Audit.html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="Id" value="@(APPModule.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">名称</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPModule.Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">默认图标</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-xlarge control">
+                                @if (!APPModule.PictureUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPModule", APPModule.PictureUrl))" height="25" />
+                                    </a>
+                                }
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">选中图标</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-xlarge control">
+                                @if (!APPModule.PicUrl.IsNullOrEmpty())
+                                {
+                                    <a href="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" target="_blank">
+                                        <img src="@(Utils.ImageUrl("APPModule", APPModule.PicUrl))" height="25" />
+                                    </a>
+                                }
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">功能类型</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPModule.ModuleType)
+                                {
+                                    case 1: 
+                                    @("内置")
+                                        break;
+                                    case 2: 
+                                    @("外链")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">值</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @(APPModule.ModuleType == 1 ? (ModuleTypeSelectList.FirstOrDefault(q => q.Value == APPModule.Value).Key) : APPModule.Value)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">代理商</label>
+                        <div class="col-md-4" style="margin-top: 8px;">
+                            <div class="input-icon right" style="width: 400px;">
+                                @(SysAgent.Name)
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <label class="control-label col-md-3">是否锁定</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPModule.IsLock)
+                                {
+                                    case false: 
+                                    @("否")
+                                        break;
+                                    case true: 
+                                    @("是")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="control-label col-md-3">显示位置</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPModule.DisplaySite)
+                                {
+                                    case 1: 
+                                    @("Home图标")
+                                        break;
+                                    case 2: 
+                                    @("底部图标")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3">状态</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @switch (APPModule.DisplaySite)
+                                {
+                                    case 1: 
+                                    @("显示")
+                                        break;
+                                    case 0: 
+                                    @("隐藏")
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">排序</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large" style="margin-top: 8px">
+                                @APPModule.Sort
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+}

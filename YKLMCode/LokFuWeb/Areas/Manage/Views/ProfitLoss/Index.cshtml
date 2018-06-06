@@ -1,0 +1,352 @@
+﻿@{
+    ViewBag.SMUid = 262;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    LokFuEntity Entity = ViewBag.Entity;
+
+    DateTime? S_Time = ViewBag.WTimes;
+    DateTime? E_Time = ViewBag.EndDT;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList1 = ViewBag.ProfitLossList1;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList2 = ViewBag.ProfitLossList2;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList3 = ViewBag.ProfitLossList3;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList4 = ViewBag.ProfitLossList4;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList6 = ViewBag.ProfitLossList6;
+    IList<LokFu.Repositories.Extensions.ProfitLossModel> ProfitLossList7 = ViewBag.ProfitLossList7;
+
+    ViewBag.NoShowDel = true;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px; line-height: 40px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <span>交易时间：</span>
+        <input type="text" class="pagination-panel-input form-control input-inline input-sm  Wdate"  name="WTimes" id="STime" value="@(S_Time == null ? DateTime.Now.ToString("yyyy-MM-dd") + "00:00:00" : S_Time.Value.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="EndDT" id="ETime" value="@(E_Time == null ? DateTime.Now.ToString("yyyy-MM-dd  HH:mm:ss") : E_Time.Value.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="today"><i class="fa fa-clock-o"></i>昨天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="toweek"><i class="fa fa-clock-o"></i>本周</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days7"><i class="fa fa-clock-o"></i>近七天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="tomonth"><i class="fa fa-clock-o"></i>本月</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days30"><i class="fa fa-clock-o"></i>近30天</button>
+        <br />
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+        @if (ViewBag.Xls)
+        {
+            <button class="btn btn-sm green" style="margin-left: 10px;" type="button" id="XLS"><i class="fa fa-share"></i>导出报表</button>
+        }
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>项目 </th>
+                                <th>支付方式代码 </th>
+                                <th>支付方式 </th>
+                                <th>交易金额 </th>
+                                <th>（商户）到账金额 </th>
+                                <th>用户手续费</th>
+                                <th>支出手续费</th>
+                                <th>结算金额（分润）</th>
+                                <th>利润</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                decimal countAmoney1 = 0M;
+                                decimal countPayMoney1 = 0M;
+                                decimal countPoundage1 = 0M;
+                                decimal countSysRate1 = 0M;
+                                decimal countAgentPayGet1 = 0M;
+                                decimal countProfie1 = 0M;
+                                
+                                decimal countAmoney2 = 0M;
+                                decimal countPayMoney2 = 0M;
+                                decimal countPoundage2 = 0M;
+                                decimal countSysRate2 = 0M;
+                                decimal countAgentPayGet2 = 0M;
+                                decimal countProfie2 = 0M;
+
+                                decimal countAmoney3 = 0M;
+                                decimal countPayMoney3 = 0M;
+                                decimal countPoundage3 = 0M;
+                                decimal countSysRate3 = 0M;
+                                decimal countAgentPayGet3 = 0M;
+                                decimal countProfie3 = 0M;
+                            }
+                            @if (ProfitLossList1.Count() <= 0 && ProfitLossList3.Count() <= 0 && ProfitLossList6.Count() <= 0 && ProfitLossList6.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                if (ProfitLossList1 != null && ProfitLossList1.Count() > 0)
+                                {
+                                    int i = 0;
+                                    foreach (var item in ProfitLossList1)
+                                    {
+                                        
+                                    <tr class="odd gradeX">
+                                    
+                                        @if (i == 0)
+                                        {
+                                        <td style="text-align: center;vertical-align: inherit;" rowspan="@(ProfitLossList1.Count)" >资金流入</td>
+                                        }
+                                        <td style="text-align: center">@(item.PayType)</td>
+                                        <td style="text-align: center">@(item.PayWay)</td>
+                                        <td style="text-align: center">@(item.Amoney.ToString("F2"))</td>
+                                        <td style="text-align: center">@(item.PayMoney.ToString("F2"))</td>
+                                        <td style="text-align: center">@(item.Poundage.ToString("F2"))</td>
+                                        <td style="text-align: center">@(item.SysRate.ToString("F2"))</td>
+                                        <td style="text-align: center">@(item.AgentPayGet.ToString("F2"))</td>
+                                        <td style="text-align: center">@(item.Profie.ToString("F2"))</td>
+                                    </tr>
+                                        i++;
+                                        }
+
+                                    }
+
+                                    countAmoney1 = ProfitLossList1.Sum(x => x.Amoney); //+ ProfitLossList2.Sum(x => x.Amoney);
+                                    countPayMoney1 = ProfitLossList1.Sum(x => x.PayMoney); //+ ProfitLossList2.Sum(x => x.PayMoney);
+                                    countPoundage1 = ProfitLossList1.Sum(x => x.Poundage); //+ ProfitLossList2.Sum(x => x.Poundage);
+                                    countSysRate1 = ProfitLossList1.Sum(x => x.SysRate); //+ ProfitLossList2.Sum(x => x.SysRate);
+                                    countAgentPayGet1 = ProfitLossList1.Sum(x => x.AgentPayGet); //+ ProfitLossList2.Sum(x => x.AgentPayGet);
+                                    countProfie1 = ProfitLossList1.Sum(x => x.Profie);//+ ProfitLossList2.Sum(x => x.Profie);
+                                
+                                <tr class="odd gradeX">
+                                    <td style="text-align: center" colspan="3">小计</td>
+                                    @if (ProfitLossList1 == null || ProfitLossList1.Count() <= 0)
+                                    {
+                                        <td style="text-align: center"></td>
+                                    }
+                                    <td style="text-align: center">@(countAmoney1.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countPayMoney1.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countPoundage1.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countSysRate1.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countAgentPayGet1.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countProfie1.ToString("F2"))</td>
+                                </tr>
+
+                                if (ProfitLossList3 != null || ProfitLossList3.Count >= 2)
+                                {
+                                    int j = 0;
+                                    foreach (var item in ProfitLossList3)
+                                    {
+                                        <tr class="odd gradeX">
+                                            @if (j == 0)
+                                            {
+                                            <td style="text-align: center; vertical-align: inherit;" rowspan="@(ProfitLossList3.Count)">资金流出</td>
+                                            <td style="text-align: center; vertical-align: inherit;" rowspan="@(ProfitLossList3.Count)">@(item.PayType)</td>
+                                            }
+                                            <td style="text-align: center">@(item.PayWay)</td>
+                                            <td style="text-align: center">@(item.Amoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.PayMoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Poundage.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.SysRate.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.AgentPayGet.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Profie.ToString("F2"))</td>
+                                        </tr>
+                                        j++;
+                                    }
+                                }
+
+                                if (ProfitLossList4 != null && ProfitLossList4.Count > 0)
+                                {
+                                    foreach (var item in ProfitLossList4)
+                                    {
+                                        if (item.Amount > 0)
+                                        {
+                                <tr class="odd gradeX">
+                                    <td style="text-align: center">理财利息支出</td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center">@(item.Amount.ToString("F2"))</td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center"></td>
+                                    <td style="text-align: center"></td>
+                                </tr>
+                                        }
+
+                                    }
+                                }
+
+                                if (ProfitLossList3 != null || ProfitLossList4 != null)
+                                {
+                                    countAmoney2 = ProfitLossList3.Sum(x => x.Amoney) + ProfitLossList4.Sum(x => x.Amount);
+                                    countPayMoney2 = ProfitLossList3.Sum(x => x.PayMoney);// + ProfitLossList4.Sum(x => x.PayMoney);
+                                    countPoundage2 = ProfitLossList3.Sum(x => x.Poundage);// + ProfitLossList4.Sum(x => x.Poundage);
+                                    countSysRate2 = ProfitLossList3.Sum(x => x.SysRate);// +ProfitLossList4.Sum(x => x.SysRate);
+                                    countAgentPayGet2 = ProfitLossList3.Sum(x => x.AgentPayGet);// +ProfitLossList4.Sum(x => x.AgentPayGet);
+                                    countProfie2 = ProfitLossList3.Sum(x => x.Profie);// +ProfitLossList4.Sum(x => x.Profie);
+                                <tr class="odd gradeX">
+                                    <td style="text-align: center" colspan="3">小计</td>
+                                    <td style="text-align: center">@(countAmoney2.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countPayMoney2.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countPoundage2.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countSysRate2.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countAgentPayGet2.ToString("F2"))</td>
+                                    <td style="text-align: center">@(countProfie2.ToString("F2"))</td>
+                                </tr>
+                                }
+
+                                if (ProfitLossList6 != null && ProfitLossList6.Count > 0)
+                                {
+                                    int i = 0;
+                                    foreach (var item in ProfitLossList6)
+                                    {
+                                        <tr class="odd gradeX">
+                                            @if (i == 0)
+                                            {
+                                                <td style="text-align: center; vertical-align: inherit;" rowspan="@(ProfitLossList6.Count)">订单退款</td>
+                                            }
+                                            <td style="text-align: center; vertical-align: inherit;">@(item.PayType)</td>
+                                            <td style="text-align: center">@(item.PayWay)</td>
+                                            <td style="text-align: center">@(item.Amoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.PayMoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Poundage.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.SysRate.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.AgentPayGet.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Profie.ToString("F2"))</td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+
+                                if (ProfitLossList7 != null && ProfitLossList7.Count > 0)
+                                {
+                                    foreach (var item in ProfitLossList7)
+                                    {
+                                        <tr class="odd gradeX">
+                                            <td style="text-align: center; vertical-align: inherit;">提现退款</td>
+                                            <td style="text-align: center; vertical-align: inherit;">@(item.PayType)</td>
+                                            <td style="text-align: center">@(item.PayWay)</td>
+                                            <td style="text-align: center">@(item.Amoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.PayMoney.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Poundage.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.SysRate.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.AgentPayGet.ToString("F2"))</td>
+                                            <td style="text-align: center">@(item.Profie.ToString("F2"))</td>
+                                        </tr>
+                                    }
+                                }
+                                if (ProfitLossList7 != null || ProfitLossList6 != null)
+                                {
+                                    countAmoney3 = ProfitLossList7.Sum(x => x.Amoney) + ProfitLossList6.Sum(x => x.Amoney);
+                                    countPayMoney3 = ProfitLossList7.Sum(x => x.PayMoney) + ProfitLossList6.Sum(x => x.PayMoney);
+                                    countPoundage3 = ProfitLossList7.Sum(x => x.Poundage);// + ProfitLossList4.Sum(x => x.Poundage);
+                                    countSysRate3 = ProfitLossList7.Sum(x => x.SysRate);// +ProfitLossList4.Sum(x => x.SysRate);
+                                    countAgentPayGet3 = ProfitLossList7.Sum(x => x.AgentPayGet);// +ProfitLossList4.Sum(x => x.AgentPayGet);
+                                    countProfie3 = ProfitLossList7.Sum(x => x.Profie);// +ProfitLossList4.Sum(x => x.Profie);
+                                    <tr class="odd gradeX">
+                                        <td style="text-align: center" colspan="3">小计</td>
+                                        <td style="text-align: center">@(countAmoney3.ToString("F2"))</td>
+                                        <td style="text-align: center">@(countPayMoney3.ToString("F2"))</td>
+                                        <td style="text-align: center">@(countPoundage3.ToString("F2"))</td>
+                                        <td style="text-align: center">@(countSysRate3.ToString("F2"))</td>
+                                        <td style="text-align: center">@(countAgentPayGet3.ToString("F2"))</td>
+                                        <td style="text-align: center">@(countProfie3.ToString("F2"))</td>
+                                    </tr>
+                                }
+
+
+                                <tr class="totalCount">
+                                    <td class="center" colspan="3"><b>总计：</b></td>
+                                    <td class="center price"><b>@((countAmoney1 - countAmoney2 - countAmoney3).ToString("F2"))</b></td>
+                                    <td class="center price">@((countPayMoney1 - countPayMoney2 - countPayMoney3).ToString("F2"))</td>
+                                    <td class="center price">@((countPoundage1 + countPoundage2 + countPoundage3).ToString("F2"))</td>
+                                    <td class="center price">@((countSysRate1 + countSysRate2 + countSysRate3).ToString("F2"))</td>
+                                    <td class="center price">@((countAgentPayGet1 + countAgentPayGet2 + countAgentPayGet3).ToString("F2"))</td>
+                                    <td class="center price">@((countProfie1 + countProfie2 + countProfie3).ToString("F2"))</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section FooterScripts
+{
+    <script>
+        $(function () {
+            var Today = new Date();
+            $("#today").click(function () {
+                var currentDay = Today.getDate();
+                var myyear = Today.getFullYear();
+                var mymonth = Today.getMonth();
+                var yesterday = new Date(myyear, mymonth, currentDay - 1);
+                $("#STime").val(yesterday.Format("yyyy-MM-dd 00:00:00"));
+                $("#ETime").val(yesterday.Format("yyyy-MM-dd 23:59:59"));
+            });
+            $("#toweek").click(function () {
+                var currentDay = Today.getDay();
+                if (currentDay == 0) { currentDay = 7; }
+                var mondayTime = Today.getTime() - (currentDay - 1) * 24 * 60 * 60 * 1000;
+                var sundayTime = Today.getTime() + (7 - currentDay) * 24 * 60 * 60 * 1000;
+                var monday = new Date(mondayTime);
+                var sunday = new Date(sundayTime);
+                $("#STime").val(monday.Format("yyyy-MM-dd 00:00:00"));
+                $("#ETime").val(sunday.Format("yyyy-MM-dd 23:59:59"));
+            });
+            $("#days7").click(function () {
+                var StartTime = Today.getTime() - 6 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+            });
+            $("#tomonth").click(function () {
+                var myyear = Today.getFullYear();
+                var mymonth = Today.getMonth();
+                var monthStartDate = new Date(myyear, mymonth, 1);
+                var days = getMonthDays(myyear, mymonth);
+                var monthEndDate = new Date(myyear, mymonth, days);
+                $("#STime").val(monthStartDate.Format("yyyy-MM-dd 00:00:00"));
+                $("#ETime").val(monthEndDate.Format("yyyy-MM-dd 23:59:59"));
+            });
+            $("#days30").click(function () {
+                var StartTime = Today.getTime() - 29 * 24 * 60 * 60 * 1000;
+                var Start = new Date(StartTime);
+                $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+            });
+        });
+        Date.prototype.Format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        //获得某月的天数     
+        function getMonthDays(myYear, myMonth) {
+            var monthStartDate = new Date(myYear, myMonth, 1);
+            var monthEndDate = new Date(myYear, myMonth + 1, 1);
+            var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+            return days;
+        }
+    </script>
+}

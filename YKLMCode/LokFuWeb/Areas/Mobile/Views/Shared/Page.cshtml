@@ -1,0 +1,75 @@
+﻿@{
+    int PageIndex, PageSize, TotalItemCount, TotalPageCount;
+    Type myType = Model.GetType();
+    PageIndex = Convert.ToInt32(myType.GetProperty("PageIndex").GetValue(Model, null));
+    PageSize = Convert.ToInt32(myType.GetProperty("PageSize").GetValue(Model, null));
+    TotalItemCount = Convert.ToInt32(myType.GetProperty("TotalCount").GetValue(Model, null));
+    TotalPageCount = Convert.ToInt32(myType.GetProperty("TotalPage").GetValue(Model, null));
+    int count = PageSize;
+    int pageindex = PageIndex == 0 ? 1 : PageIndex;
+    int pageSize = PageSize;
+    int TotalPage = TotalPageCount;
+    int eachStartPage = pageindex <= 2 ? 1 : pageindex - 2;
+    int eachEndPage = pageindex + 2 > TotalPage ? TotalPage : pageindex + 2;
+}
+<div class="page">
+@if (TotalItemCount > PageSize)
+{
+    <a href="javascript:SendPageIndex(1);">首页</a>
+    if (pageindex != 1)
+    {
+        @:<a href="javascript:SendPageIndex(@(pageindex - 1));">&laquo;上一页</a>
+    }else{
+        @:<span>&laquo;上一页</span>
+    }
+    <em class="pageinfo">@(pageindex)/@(TotalPage)</em>
+    if (pageindex != TotalPage)
+    {
+        @:<a href="javascript:SendPageIndex(@(pageindex + 1));">下一页 &raquo;</a>
+    }
+    else
+    {
+        @:<span>下一页 &raquo;</span>
+    }
+    @:<a href="javascript:SendPageIndex(@(TotalPage));">尾页</a>
+}
+    <input type="hidden" id="PageIndex" value="@pageindex" />
+    <input type="hidden" id="PageSize" value="@pageSize" />
+</div>
+<script>
+    function SendPageIndex(PageIndex) {
+        var href = location.pathname;
+        var form = $("#ListForm");
+        if (form.length < 1) {
+            $("body").append("<form name=\"ListForm\" id=\"ListForm\" method=\"get\" action=\"" + href + "\"></form>");
+            form = $("#ListForm");
+            var query = location.search.substring(1);
+            query = decodeURI(query);
+            var pairs = query.split("&");
+            for (var i = 0; i < pairs.length; i++) {
+                var pos = pairs[i].indexOf('=');
+                if (pos == -1) continue;
+                var argname = pairs[i].substring(0, pos);
+                var value = pairs[i].substring(pos + 1);
+                if (argname == "PageIndex" || argname == "PageSize") continue;
+                form.append("<input type=\"hidden\" value=\"" + value + "\" name=\"" + argname + "\">");
+            }
+        }
+        var PageSize = $("#PageSize").val();
+        form.append("<input type=\"hidden\" value=\"" + PageIndex + "\" name=\"PageIndex\">");
+        form.append("<input type=\"hidden\" value=\"" + PageSize + "\" name=\"PageSize\">");
+        form.submit();
+    }
+    function SendPageSize(PageIndex) {
+        var href = location.pathname;
+        var form = $("#ListForm");
+        if (!form) {
+            $("body").append("<form name=\"ListForm\" id=\"ListForm\" method=\"get\" action=\"" + href + "\"></form>");
+            form = $("#ListForm");
+        }
+        form.append("<input type=\"hidden\" value=\"0\" name=\"PageIndex\">");
+        form.append("<input type=\"hidden\" value=\"" + PageIndex + "\" name=\"PageSize\">");
+        form.submit();
+    }
+</script>
+    

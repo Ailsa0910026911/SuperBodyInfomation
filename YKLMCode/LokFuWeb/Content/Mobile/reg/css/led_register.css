@@ -1,0 +1,45 @@
+﻿@charset "utf-8";
+
+*{ font-family: "微软雅黑";-webkit-appearance: none; margin: 0; padding: 0; list-style: none; }
+
+body{ background-color: #f2f2f2; margin:0; padding:0; list-style: none; }
+
+@media only screen and (min-width: 681px) {
+	body {
+		width: 681px;
+		margin: 0 auto;
+	}
+}
+
+
+/*字体响应式*/
+html{font-size:10px}
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px) and (max-width:1920px){html{font-size:22px}}
+
+.ct_box1{ background:#fff; position: relative; }
+
+.ct_box1 img{ display:block; }
+
+.content_box h2{ position: absolute; left: 0; right: 0; bottom: 34%; margin:0 auto; width: 100%; text-align: center; font-size: 1.2rem; }
+
+.content_box section{ position: absolute; left: 0; right: 0; bottom: 23%; margin:0 auto; width: 80%; font-size: 1.0rem; }
+ 
+/*当尺寸为iphone5的时候适配*/
+@media only screen and (max-width: 321px){
+	
+.content_box section{ bottom: 22%; font-size: 1.0rem; }		
+}
+
+.botton_ico{ position:absolute; bottom: 11%; left: 10%; width:80%; height:7.4%; background: url(../images/register_ico.png) no-repeat center center ; background-size: 100% 100%; cursor: pointer;  border-radius: 5%;  }
+
+.register_text2{ display: block; position: absolute; z-index: 10;  left: 0; right: 0; bottom: 6%; margin:0 auto; text-align: center; color: #333;  font-size: 1.0rem; text-decoration: none; }
+
+.botton_ico img{ width: 80%; height: 116px; }
+
+

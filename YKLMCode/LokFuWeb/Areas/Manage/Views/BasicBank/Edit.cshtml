@@ -1,0 +1,125 @@
+﻿@{
+    BasicBank BasicBank = ViewBag.BasicBank;
+    ViewBag.SMUid = 12;
+    if (BasicBank.Id.IsNullOrEmpty())
+    {
+        BasicBank.State = 1;
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(BasicBank.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(BasicBank.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">银行名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(BasicBank.Name)" alert="请输入银行名称" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">电脑版Logo <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                    @Html.Partial("FileLoad", new FileLoad() { BigName = "Logo", FilePath = "BasicBank", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                    @if (!BasicBank.Logo.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("BasicBank", BasicBank.Logo))" target="_blank">
+                            <img src="@(Utils.ImageUrl("BasicBank", BasicBank.Logo))" height="25" />
+                        </a>
+                    }
+                </div>
+                <p class="help-block">126*36</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">手机版Logo <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xlarge">
+                    @Html.Partial("FileLoad", new FileLoad() { BigName = "Logo1", FilePath = "BasicBank", IsSmall = false, FileContentType = new string[] { "image/bmp", "image/gif", "image/pjpeg", "image/jpeg", "image/png" } })
+                    @if (!BasicBank.Logo.IsNullOrEmpty())
+                    {
+                        <a href="@(Utils.ImageUrl("BasicBank", BasicBank.Logo1))" target="_blank"><img src="@(Utils.ImageUrl("BasicBank", BasicBank.Logo1))" height="25" /></a>
+                    }
+                </div>
+                <p class="help-block">80*80</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">支持类型 </label>
+              <div class="col-md-4">
+                <input type="checkbox" value="1" name="IsJieJi" id="IsJieJi" @(BasicBank.IsJieJi==1?"checked":"") />支持借记卡
+                <input type="checkbox" value="1" name="IsDaiJi" id="IsDaiJi" @(BasicBank.IsDaiJi==1?"checked":"") />支持贷记卡
+                <input type="checkbox" value="1" name="IsApply" id="IsApply" @(BasicBank.IsApply==1?"checked":"") />支持在线申请
+                <input type="checkbox" value="1" name="IsPayCard" id="IsPayCard" @(BasicBank.IsPayCard==1?"checked":"") />支持APP收款
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">显示状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(BasicBank.State==1?" selected":"")>显示</option>
+                    <option value="0"@(BasicBank.State!=1?" selected":"")>隐藏</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">银行介绍</label>
+              <div class="col-md-4">
+                <div class="input-icon right ">
+                  <textarea class="xyeditor input-xxlarge" name="Info" id="Info" rows="12" data-path="/Manage/Home/UpFile.html">@(BasicBank.Info)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">信用卡申请活动</label>
+              <div class="col-md-4">
+                <div class="input-icon right">
+                  <textarea class="xyeditor input-xxlarge" name="Actives" id="Actives" rows="12">@(BasicBank.Actives)</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(BasicBank.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<script src="/Content/Metronic/plugins/xyeditor/xyeditor.js"></script>
+<script>
+    $(function(){
+        $(".chkForm").submit(function () {
+            if ($(this).validationEngine("validate")) {
+                $("input[type=checkbox]:not(:checked)").each(function () {
+                    $(this).val(0).attr("checked", true);
+                })
+            };
+        })
+    });
+</script>
+    }
+}

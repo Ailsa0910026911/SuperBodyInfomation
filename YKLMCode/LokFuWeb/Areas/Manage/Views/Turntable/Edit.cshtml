@@ -1,0 +1,143 @@
+﻿@{
+    Turntable Turntable = ViewBag.Turntable;
+    ViewBag.SMUid = 88;
+    if (Turntable.Id.IsNullOrEmpty())
+    {
+        Turntable.State = 1;
+        Turntable.STime = DateTime.Now;
+        Turntable.ETime = Turntable.STime.AddMonths(1);
+    }
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="@(Turntable.Id.IsNullOrEmpty()?"Add":"Save").html" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+          <input type="hidden" name="Id" value="@(Turntable.Id)" />
+          <div class="form-body">
+            <div class="alert alert-danger display-hide"><button class="close" data-close="alert"></button>您所填定内容无法通过验证，请检查警示项目. </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">活动名称 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required] input-large" name="Name" id="Name" value="@(Turntable.Name)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">开始时间<span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control validate[required] input-large Wdate" style="width:150px; height:30px" name="STime" id="STime" value="@(Turntable.STime.ToString("yyyy-MM-dd HH:mm:00"))" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">结束时间<span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control validate[required] input-large Wdate" style="width:150px; height:30px" name="ETime" id="ETime" value="@(Turntable.ETime.ToString("yyyy-MM-dd HH:mm:00"))" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+              <div class="form-group">
+              <label class="control-label col-md-3">奖品信息</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxlarge"> <i class="fa"></i>
+                  <textarea class="form-control input-xxlarge" name="PInfo" id="PInfo" rows="4">@(Turntable.PInfo)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">中奖提示语</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxlarge"> <i class="fa"></i>
+                  <textarea class="form-control input-xxlarge" name="PTips" id="PTips" rows="4">@(Turntable.PTips)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">用完次数提示语</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control input-large" name="ETips" id="ETips" value="@(Turntable.ETips)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">结束标题</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control  input-large" name="ETitle" id="ETitle" value="@(Turntable.ETitle)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">结束提示语</label>
+              <div class="col-md-4">
+                <div class="input-icon right input-xxlarge"> <i class="fa"></i>
+                  <textarea class="input-xxlarge form-control" name="EInfo" id="EInfo" rows="4">@(Turntable.EInfo)</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">基数设置 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <div class="input-icon right input-large"> <i class="fa"></i>
+                  <input type="text" class="form-control validate[required,custom[int]] input-large" name="BaseNum" id="BaseNum" value="@(Turntable.BaseNum)" />
+                </div>
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">状态 <span class="required"> * </span> </label>
+              <div class="col-md-4">
+                <select class="bs-select form-control input-xsmall" name="State" id="State">
+                    <option value="1"@(Turntable.State==1?" selected":"")>正常</option>
+                    <option value="0"@(Turntable.State!=1?" selected":"")>锁定</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions fluid">
+            <div class="col-md-offset-3 col-md-9">
+              <button type="submit" class="btn green">@(Turntable.Id.IsNullOrEmpty()?"确认添加":"确认修改")</button>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM--> 
+      </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET--> 
+  </div>
+</div>
+@section FooterScripts
+{
+    @{
+@*<script src="/Content/Metronic/plugins/jquery.validationEngine.js"></script>
+<link href="/Content/Metronic/plugins/bootstrap-datetimepicker/css/datetimepicker.css" type="text/css" rel="stylesheet" />
+<script src="/Content/Metronic/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>*@
+        <script>
+            $(function () {
+                //$("#STime").datetimepicker({
+                //    format: 'yyyy-mm-dd hh:ii:ss'
+                //});
+                //$("#ETime").datetimepicker({
+                //    format: 'yyyy-mm-dd hh:ii:ss'
+                //});
+            });
+        </script>
+    }
+}

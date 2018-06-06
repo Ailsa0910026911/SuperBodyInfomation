@@ -1,0 +1,98 @@
+﻿@{
+    IList<OrdersDDLog> OrdersDDLogList = ViewBag.OrdersDDLogList;
+    Orders Orders = ViewBag.Orders;
+    this.Layout = null;
+    string AppImgPath = ViewBag.AppImgPath;
+}
+<table class="table table-striped table-bordered table-hover tablethc" id="IndexDDLog">
+    <thead>
+        <tr>
+            <th>类型 </th>
+            <th>凭证 </th>
+            <th>备注 </th>
+            <th>内部备注 </th>
+            <th>添加时间 </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in OrdersDDLogList)
+        {
+            <tr class="odd gradeX">
+                <td class="center">
+                    @switch (p.LogType)
+                    {
+                        case 1:
+                            @("发起调单");
+                            break;
+                        case 2:
+                        @("上传凭证");
+                        break;
+                        case 3:
+                        @("提交银联");
+                        break;
+                        case 4:
+                        @("审核通过");
+                        break;
+                        case 5:
+                        @("审核失败");
+                        break;
+                        case 6:
+                        @("强制退款");
+                        break;
+                    }
+                </td>
+                <td class="center">
+                    @if ((!p.Img.IsNullOrEmpty()))
+                    {
+                        if (p.LogType == 2)
+                        {
+                            string[] UserCardPicSplit = p.Img.Split(',');
+                            if (UserCardPicSplit != null)
+                            {
+                                int i = 1;
+                                foreach (string UserCardPicItem in UserCardPicSplit)
+                                {
+                                    if (i == 1)
+                                    {
+                                        if(Orders.CardUpType==0)
+                                        {
+                                        <a href="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)" data-lightbox="DDlogImg@(p.Id)">凭证</a>
+                                        }
+                                        else if (Orders.CardUpType == 1 || Orders.CardUpType == 2)
+                                        {  <a href="@Utils.ImageUrl("Orders", UserCardPicItem)" data-lightbox="DDlogImg@(p.Id)">凭证</a>}
+                                    }
+                                    else
+                                    {
+                                         if(Orders.CardUpType==0)
+                                         {
+                                          <a style="display:none" href="@Utils.ImageUrl("Orders", UserCardPicItem, AppImgPath)" data-lightbox="DDlogImg@(p.Id)"></a>
+                                         }
+                                        else if(Orders.CardUpType==1||Orders.CardUpType==2)
+                                        {
+                                        <a style="display:none" href="@Utils.ImageUrl("Orders", UserCardPicItem)" data-lightbox="DDlogImg@(p.Id)"></a>
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                             if(Orders.CardUpType==0)
+                                        {
+                                        <a href="@(Utils.ImageUrl("Orders", p.Img,AppImgPath))" target="_blank">凭证</a>
+                                        }
+                                        else if (Orders.CardUpType == 1 || Orders.CardUpType == 2)
+                                        {   <a href="@(Utils.ImageUrl("Orders", p.Img))" target="_blank">凭证</a>}
+                           
+                        }
+                    }
+                </td>
+                <td style="min-width: 250px; word-wrap: break-word; word-break: break-all; white-space: pre-wrap;">@(p.Remark)</td>
+                <td style="min-width: 120px; word-wrap: break-word; word-break: break-all; white-space: pre-wrap;">@(p.InteriorRemark)</td>
+                <td class="center">@(p.AddTime.ToString("yyyy-MM-dd hh:mm")) </td>
+            </tr>
+        }
+    </tbody>
+</table>

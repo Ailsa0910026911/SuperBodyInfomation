@@ -1,0 +1,388 @@
+﻿@{
+    Layout = null;
+    Turntable Turntable = ViewBag.Turntable;
+    TurnUsers TurnUsers = ViewBag.TurnUsers;
+    IList<TurnProc> TurnProcList = ViewBag.TurnProcList;
+    IList<TurnLog> TurnLogList = ViewBag.TurnLogList;
+    LokFuEntity Entity = ViewBag.Entity;
+    bool IsApple = ViewBag.IsApple;
+    SysSet BasicSet = ViewBag.BasicSet;
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@(Turntable.Name)</title>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+<link rel="stylesheet" href="/Content/Mobile/Turntable/css/themes/default/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="/Content/Mobile/Turntable/css/style.css">
+<script src="/Content/Mobile/Turntable/js/jquery.js"></script>
+<script src="/Content/Mobile/Turntable/js/jquery.mobile-1.4.5.min.js"></script>
+<script src="/Content/Mobile/Turntable/js/Rotate.js"></script>
+</head>
+<body class="rel">
+  <div class="notice_text">
+      <div id="content" class="infocontent">
+          <div id="top" class="infolist">
+            <ul>
+            @foreach (var p in TurnLogList){
+                Users Users = Entity.Users.FirstOrNew(n => n.Id == p.UId);
+              <li>幸运用户@(Users.UserName.HideMobile())抽中@(p.Amoney.ToString("F0"))元现金</li>
+            }
+            </ul>
+          </div>
+          <div id="bottom" class="infolist"></div>
+       </div>
+  </div>
+  <img src="/Content/Mobile/Turntable/img/bg_run.png" class="bg_run">
+  <div class="banner">
+    <div class="turnplate" style="background-image:url(/Content/Mobile/Turntable/img/turnplate-bg.png);background-size:100% 100%;">
+      <canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+      <img class="pointer" src="/Content/Mobile/Turntable/img/turnplate-pointer.png"/> </div>
+  </div>
+  <div class="run_tips">
+      <p>您还可以抽奖<em id="times">@(TurnUsers.Times)</em>次</p>
+      <p><a href="lokfu:share" id="sharebtn" style="font-weight:normal;margin-right:5px;">☞邀请好友</a>下载钱包获得更多抽奖机会</p>
+  </div>
+<a href="my.html" data-ajax='false'><img src="/Content/Mobile/Turntable/img/btn_myjp.png" class="btn_myjp"></a>
+<a href="yaoqing.html" data-ajax='false'><img src="/Content/Mobile/Turntable/img/btn_myyq.png" class="btn_myyq"></a>
+<script type="text/javascript">
+var turnplate={
+		restaraunts:[],				//大转盘奖品名称
+		colors:[],					//大转盘奖品区块对应背景颜色
+		fontcolors:[],				//大转盘奖品区块对应字体颜色
+		outsideRadius:192,			//大转盘外圆的半径
+		textRadius:155,				//大转盘奖品位置距离圆心的距离
+		insideRadius:68,			//大转盘内圆的半径
+		startAngle:0,				//开始角度
+		bRotate:false				//false:停止;ture:旋转
+};
+var log;//中奖奖品Id
+//页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+window.onload=function(){
+	drawRouletteWheel();
+};
+function drawRouletteWheel() {    
+  var canvas = document.getElementById("wheelcanvas");    
+  if (canvas.getContext) {
+	  //根据奖品个数计算圆周角度
+	  var arc = Math.PI / (turnplate.restaraunts.length/2);
+	  var ctx = canvas.getContext("2d");
+	  //在给定矩形内清空一个矩形
+	  ctx.clearRect(0,0,422,422);
+	  //font 属性设置或返回画布上文本内容的当前字体属性
+	  ctx.font = '20px Microsoft YaHei';      
+	  for(var i = 0; i < turnplate.restaraunts.length; i++) {       
+		  var angle = turnplate.startAngle + i * arc;
+		  ctx.fillStyle = turnplate.colors[i];
+		  ctx.beginPath();
+		  //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）    
+		  ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);    
+		  ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+		  ctx.stroke();  
+		  ctx.fill();
+		  //锁画布(为了保存之前的画布状态)
+		  ctx.save();
+		  //----绘制奖品开始----
+		  ctx.fillStyle = turnplate.fontcolors[i];
+		  var text = turnplate.restaraunts[i];
+		  var line_height = 20;
+		  //translate方法重新映射画布上的 (0,0) 位置
+		  ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+		  //rotate方法旋转当前的绘图
+		  ctx.rotate(angle + arc / 2 + Math.PI / 2);
+		  /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+			if (text.indexOf("谢谢参与")>=0){
+				ctx.fillText("谢", -ctx.measureText("谢").width / 2, 0);
+				ctx.fillText("谢", -ctx.measureText("谢").width / 2, 1 * line_height);
+				ctx.fillText("参", -ctx.measureText("参").width / 2, 2 * line_height);
+				ctx.fillText("与", -ctx.measureText("与").width / 2, 3 * line_height);
+			}else{
+				ctx.fillText(text, -ctx.measureText(text).width / 2, 0 * line_height);
+				ctx.fillText("元", -ctx.measureText("元").width / 2, 1 * line_height);
+				ctx.fillText("现", -ctx.measureText("现").width / 2, 2 * line_height);
+				ctx.fillText("金", -ctx.measureText("金").width / 2, 3 * line_height);
+			}
+		  //添加对应图标
+//		  if(text.indexOf("闪币")>0){
+//			  var img= document.getElementById("shan-img");
+//			  img.onload=function(){  
+//				  ctx.drawImage(img,-15,10);      
+//			  }; 
+//			  ctx.drawImage(img,-15,10);  
+//		  }else if(text.indexOf("谢谢参与")>=0){
+//			  var img= document.getElementById("sorry-img");
+//			  img.onload=function(){  
+//				  ctx.drawImage(img,-15,10);      
+//			  };  
+//			  ctx.drawImage(img,-15,10);  
+//		  }
+		  //把当前画布返回（调整）到上一个save()状态之前 
+		  ctx.restore();
+		  //----绘制奖品结束----
+	  }     
+  } 
+}
+var rotateTimeOut = function () {
+    $('#wheelcanvas').rotate({
+        angle: 0,
+        animateTo: 2160,
+        duration: 8000,
+        callback: function () {
+            alert('网络超时，请检查您的网络设置！');
+        }
+    });
+};
+//旋转转盘 item:奖品位置; txt：提示语;
+var rotateFn = function (item, txt, times) {
+    var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length * 2));
+    if (angles < 270) {
+        angles = 270 - angles;
+    } else {
+        angles = 360 - angles + 270;
+    }
+    $('#wheelcanvas').stopRotate();
+    $('#wheelcanvas').rotate({
+        angle: 0,
+        animateTo: angles + 1800,
+        duration: 8000,
+        callback: function () {
+            ShowResult(item, times);
+            turnplate.bRotate = !turnplate.bRotate;
+        }
+    });
+};
+var ShowResult = function (ret, times) {
+    if (ret == turnplate.restaraunts.length) {
+        if (times > 0) {
+            var title = turnplate.restaraunts[ret - 1];
+            var bolds = "亲，再转一次吧<br />转转更好运";
+            var smalls = "";
+            showTips(title, bolds, smalls, "type4");
+        } else {
+            var title = turnplate.restaraunts[ret - 1];
+            var bolds = "";
+            var smalls = "亲，把这个游戏分享出去吧，邀请好友下载钱包获得更多抽奖机会哟";
+            showTips(title, bolds, smalls, "type1");
+        }
+    } else {
+        var title = turnplate.restaraunts[ret - 1] + "元现金大奖";
+        if (times >0) {
+            var bolds = "转转更好运";
+            var smalls = "邀请好友下载钱包获取更多抽奖机会";
+            showTips(title, bolds, smalls, "type2");
+        } else {
+            var bolds = "分享有大礼<br />转转更好运";
+            var smalls = "邀请好友下载钱包获取更多抽奖机会";
+            showTips(title, bolds, smalls, "type3");
+        }
+    }
+    $("#times").text(times);
+}
+$(document).ready(function () {
+    //动态添加大转盘的奖品与奖品区域背景颜色
+    turnplate.restaraunts = [@foreach(var p in TurnProcList){@Html.Raw("\"" + (double)p.Amoney + "\",");}"谢谢参与"];
+    @{int i = 1;}
+    turnplate.colors = [@foreach(var p in TurnProcList){@Html.Raw(i % 2 == 1 ? "\"#FFFFFF\"," : "\"#FCF5D5\","); i++;}@Html.Raw(i % 2 == 1 ? "\"#FFFFFF\"," : "\"#FCF5D5\",")];
+    @{i = 1;}
+    turnplate.fontcolors = [@foreach(var p in TurnProcList){@Html.Raw(i % 2 == 1 ? "\"#9CC924\"," : "\"#3699FA\","); i++;}"#E72650"];
+    $('.pointer').click(function () {
+        if (turnplate.bRotate) return;//转动中则返回
+        //获取随机数
+        $.ajax({
+            url: "Ajax.html",
+            dataType: "json",
+            data: { tid: "@(Turntable.Id)" },
+            type: "POST",
+            beforeSend: function () {
+                $(".type").hide();
+                $(".tips").hide();
+                var h = $(document).height();
+                $(".tipsbg").height(h);
+                $(".tipsbg").show();
+            },
+            success: function (json) {
+                var index = json.index;//奖品
+                var state = json.state;// 0正常 1无次数 2未登录 3过期 99网络错误
+                var times = json.times;
+                log = json.log;//全局
+                if (state == 1) {
+                    showTips("获取抽奖资格", "", "邀请好友下载钱包获取更多抽奖机会", "type1");
+                    return;
+                }
+                if (state == 2) {
+                    showTips("获取用户信息失败", "", "未能获取到您的用户信息，请重新登录后重试！", "");
+                    return;
+                }
+                if (state == 3) {
+                    showTips("活动已结束", "", "活动已经结束，请继续关注我们的有奖活动！", "");
+                    return;
+                }
+                if (state == 4) {
+                    showTips("活动还没开始", "", "活动还没开始，请关注活动时间，并设置好闹钟哦！", "");
+                    return;
+                }
+                if (state == 5) {
+                    showTips("未知错误", "发现未知错误，请重试！", "", "");
+                    return;
+                }
+                turnplate.bRotate = !turnplate.bRotate;
+                //奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+                rotateFn(index, turnplate.restaraunts[index - 1], times);
+            }
+        })
+    });
+});
+</script>
+<div class="tipsbg"></div>
+<div class="tips">
+	<div class="tips_box">
+    	<div class="text">
+    		<p class="title"></p>
+            <p class="bold"></p>
+            <p class="small"></p>
+        </div>
+		<img src="/Content/Mobile/Turntable/img/tips_bg.png" class="tips_bg">
+        <!--没次数不中奖分享-->
+        <img src="/Content/Mobile/Turntable/img/tips_share_1.png" class="btn_center hide type type1 share">
+        <!--有次数中奖继续-->
+        <img src="/Content/Mobile/Turntable/img/tips_go.png" class="btn_left hide type type2 tips_go">
+        <img src="/Content/Mobile/Turntable/img/tips_take.png" class="btn_right hide type type2 tips_take">
+        <!--没次数中奖分享-->
+        <img src="/Content/Mobile/Turntable/img/tips_share.png" class="btn_left hide type type3 share">
+        <img src="/Content/Mobile/Turntable/img/tips_take.png" class="btn_right hide type type3 tips_take">
+        <!--有次数不中奖继续-->
+        <img src="/Content/Mobile/Turntable/img/tips_go_1.png" class="btn_center hide type type4 tips_go">
+    </div>
+</div>
+<script>
+$(function(){
+	$(".tipsbg").click(function(){
+	    $(".type").hide();
+	    $(".tips").hide();
+	    $(".tipsbg").hide();
+	});
+	$(".share").click(function () {
+	    location.href = "lokfu:share";
+	});
+	$(".tips_take").click(function () {
+	    var id = log;
+	    var btn = $(this);
+	    btn.hide();
+	    //领奖开始
+	    $.ajax({
+	        url: "Take.html",
+	        dataType: "text",
+	        data: { lid: id },
+	        type: "POST",
+	        beforeSend: function () {
+	            $(".type").hide();
+	            $(".tips").hide();
+	            var h = $(document).height();
+	            $(".tipsbg").height(h);
+	            $(".tipsbg").show();
+	        },
+	        success: function (data) {
+	            if (data == "0") {
+	                showTips("领奖成功", "奖金已发到您的钱包中~请查收！", "", "");
+	                return;
+	            }
+	            if (data == "1") {
+	                showTips("领奖失败", "该奖金已被领走，请查看钱包或领奖记录！", "", "");
+	                return;
+	            }
+	            if (data == "2") {
+	                showTips("领奖失败", "请稍候再试！", "", "");
+	                return;
+	            }
+	        }
+	    });
+	});
+	$(".tips_go").click(function () {
+	    $(".type").hide();
+	    $(".tips").hide();
+	    $(".tipsbg").hide();
+	});
+})
+var showTips=function(title,bolds,smalls,type){
+	$(".tips").find(".title").html(title);
+	$(".tips").find(".bold").html(bolds);
+	if(bolds==""){
+		$(".tips").find(".bold").hide();
+	}
+	$(".tips").find(".small").html(smalls);
+	if (type != "") {
+	    $(".tips").find("." + type).show();
+	}
+	var h=$(document).height();
+	$(".tipsbg").height(h);
+	var th=$(".tips").height();
+	$(".tips").css("marginTop","-"+(th/2)+"px");
+	$(".tips").show();
+	$(".tipsbg").show();
+}
+</script>
+<script>
+    var interval = 1000;//两次滚动之间的时间间隔  
+    var stepsize = 32;//滚动一次的长度，必须是行高的倍数,这样滚动的时候才不会断行  
+    var objInterval = null;
+    $(document).ready(function () {
+        //用上部的内容填充下部  
+        $("#bottom").html($("#top").html());
+        //给显示的区域绑定鼠标事件  
+        $("#content").bind("mouseover", function () { StopScroll(); });
+        $("#content").bind("mouseout", function () { StartScroll(); });
+        //启动定时器  
+        StartScroll();
+    });
+    var i = 1;
+    setInterval(function () {
+        if (i == 1) {
+            $("#sharebtn").css("color", "#fff");
+        }
+        if (i == 2) {
+            $("#sharebtn").css("color", "#FE7");
+        }
+        if (i == 3) {
+            $("#sharebtn").css("color", "#38c");
+        }
+        i++;
+        if (i > 3) {
+            i = 1;
+        }
+    }, 100);
+    //启动定时器，开始滚动  
+    function StartScroll() {
+        objInterval = setInterval("verticalloop()", interval);
+    }
+    //清除定时器，停止滚动  
+    function StopScroll() {
+        window.clearInterval(objInterval);
+    }
+    //控制滚动  
+    function verticalloop() {
+        //判断是否上部内容全部移出显示区域  
+        //如果是，从新开始;否则，继续向上移动  
+        if ($("#content").scrollTop() >= $("#top").outerHeight()) {
+            $("#content").scrollTop($("#content").scrollTop() - $("#top").outerHeight());
+        }
+        //使用jquery创建滚动时的动画效果  
+        $("#content").animate(
+            { "scrollTop": $("#content").scrollTop() + stepsize + "px" }, 600, function () {
+                //这里用于显示滚动区域的scrollTop，实际应用中请删除  
+                // $("#foot").html("scrollTop:"+$("#content").scrollTop());   
+            });
+    }
+</script>
+    @if(IsApple){
+    <div class="copytext">
+        <p>本公司所有活动与苹果公司无关　</p>
+    </div>
+        <style>
+            .run_tips p{font-size:14px;}
+        </style>
+    }
+</body>
+</html>

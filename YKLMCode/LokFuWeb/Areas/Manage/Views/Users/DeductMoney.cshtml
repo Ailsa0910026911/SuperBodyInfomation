@@ -1,0 +1,56 @@
+﻿@{
+    Users Users = ViewBag.Users;
+    ViewBag.SMUid = 78;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" style="width: 650px; overflow-x: hidden; overflow-y: auto; margin: 0px; padding: 10px;">
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+    <div class="portlet box light-grey">
+        <div class="portlet-title">
+            <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="DeductMoney.html?IsAjax=1" id="chkForm" name="chkForm" class="form-horizontal chkForm" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="UId" value="@(Users.Id)" />
+                <input type="hidden" name="IsAjax" value="@(Request.QueryString["IsAjax"])" />
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">扣款金额</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right input-large">
+                                <i class="fa"></i>
+                                <input type="text" class="form-control input-large validate[required,custom[money],min[0.01]]" name="Amoney" id="Amoney"  />
+                            </div>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">备注</label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <i class="fa"></i>
+                                <textarea class="form-control input-large validate[required]" name="Remark" id="Remark" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions fluid">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn green">确认</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END FORM-->
+        </div>
+    </div>
+    <!-- END EXAMPLE TABLE PORTLET-->
+</div>
+@section FooterScripts
+{
+<link href="/Content/HaoFu/plugins/ValidationEngine/css/validationEngine.jquery.css" rel="stylesheet" /> 
+    <script src="/Content/Metronic/plugins/jquery.validationEngine_Float.js"></script>
+    <script type="text/ecmascript">
+    </script>
+}

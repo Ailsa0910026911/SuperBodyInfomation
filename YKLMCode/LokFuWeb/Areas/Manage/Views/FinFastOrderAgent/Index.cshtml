@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.SMUid = 269;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    ViewBag.NoShowDel = true;
+    List<LokFu.Areas.Manage.Controllers.FastOrderAgentModel> FastOrderAgentModelList = this.ViewBag.FastOrderAgentModelList;
+    List<SysAgent> SysAgentList = this.ViewBag.SysAgentList;
+    DateTime SDate = ViewBag.SDate;
+    DateTime EDate = ViewBag.EDate;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <span>交易时间：</span>
+        <input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text"  name="SDate" id="STime" value="@(SDate.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        ~<input class="pagination-panel-input form-control  input-inline input-sm  Wdate" type="text" name="EDate" id="ETime" value="@(EDate.ToString("yyyy-MM-dd HH:mm:ss"))" >
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="today"><i class="fa fa-clock-o"></i>昨天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="toweek"><i class="fa fa-clock-o"></i>本周</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days7"><i class="fa fa-clock-o"></i>近七天</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="tomonth"><i class="fa fa-clock-o"></i>本月</button>
+        <button class="btn btn-sm table-group-action-submit purple" type="button" id="days30"><i class="fa fa-clock-o"></i>近30天</button>
+        <br />
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+        @if (ViewBag.ExcelExport)
+        {
+            <button class="btn btn-sm green" style="margin-left: 10px;" type="button" id="ExcelExport"><i class="fa fa-share"></i>导出报表</button>
+        }
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>代理商 </th>
+                                <th>联系人 </th>
+                                <th>联系电话 </th>
+                                <th>总金额 </th>
+                                <th>总结算金额 </th>
+                                <th>总手续费 </th>
+                                <th>总分润 </th>
+                                <th>总利润 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @if (FastOrderAgentModelList.Count() <= 0)
+                                {
+                                    <tr>
+                                        <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                            <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in FastOrderAgentModelList)
+                                    {
+                                        var SysAgent = SysAgentList.FirstOrNew(o=>o.Id == int.Parse(item.F_AgentPath));
+                                    <tr class="odd gradeX">
+                                        <td class="center">@(SysAgent.Name)</td>
+                                        <td class="center">@(SysAgent.Linker) </td>
+                                        <td class="center">@(SysAgent.LinkMobile) </td>
+                                        <td class="center price">@(item.Amoney.ToString("f2")) </td>
+                                        <td class="center price">@(item.PayMoney.ToString("f2")) </td>
+                                        <td class="center price">@(item.Poundage.ToString("f2")) </td>
+                                        <td class="center price">@(item.AgentPayGet.ToString("f2")) </td>
+                                        <td class="center price">@(item.HFGet.ToString("f2")) </td>
+                                    </tr>
+                                    }
+                                }
+                                <tr style="background: #FF0;">
+                                    <td class="center" colspan="3"><b>合计：</b></td>
+                                    <td class="center">@(FastOrderAgentModelList.Sum(o=>o.Amoney).ToString("f2")) </td>
+                                    <td class="center">@(FastOrderAgentModelList.Sum(o=>o.PayMoney).ToString("f2")) </td>
+                                    <td class="center">@(FastOrderAgentModelList.Sum(o=>o.Poundage).ToString("f2")) </td>
+                                    <td class="center">@(FastOrderAgentModelList.Sum(o=>o.AgentPayGet).ToString("f2")) </td>
+                                    <td class="center">@(FastOrderAgentModelList.Sum(o=>o.HFGet).ToString("f2")) </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+
+@section FooterScripts
+{
+    @{
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <script>
+            $(function () {
+                var Today = new Date();
+                $("#today").click(function () {
+                    var currentDay = Today.getDate();
+                    var myyear = Today.getFullYear();
+                    var mymonth = Today.getMonth();
+                    var yesterday = new Date(myyear, mymonth, currentDay - 1);
+                    $("#STime").val(yesterday.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(yesterday.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#toweek").click(function () {
+                    var currentDay = Today.getDay();
+                    if (currentDay == 0) { currentDay = 7; }
+                    var mondayTime = Today.getTime() - (currentDay - 1) * 24 * 60 * 60 * 1000;
+                    var sundayTime = Today.getTime() + (7 - currentDay) * 24 * 60 * 60 * 1000;
+                    var monday = new Date(mondayTime);
+                    var sunday = new Date(sundayTime);
+                    $("#STime").val(monday.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(sunday.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#days7").click(function () {
+                    var StartTime = Today.getTime() - 6 * 24 * 60 * 60 * 1000;
+                    var Start = new Date(StartTime);
+                    $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#tomonth").click(function () {
+                    var myyear = Today.getFullYear();
+                    var mymonth = Today.getMonth();
+                    var monthStartDate = new Date(myyear, mymonth, 1);
+                    var days = getMonthDays(myyear, mymonth);
+                    var monthEndDate = new Date(myyear, mymonth, days);
+                    $("#STime").val(monthStartDate.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(monthEndDate.Format("yyyy-MM-dd 23:59:59"));
+                });
+                $("#days30").click(function () {
+                    var StartTime = Today.getTime() - 29 * 24 * 60 * 60 * 1000;
+                    var Start = new Date(StartTime);
+                    $("#STime").val(Start.Format("yyyy-MM-dd 00:00:00"));
+                    $("#ETime").val(Today.Format("yyyy-MM-dd 23:59:59"));
+                });
+            });
+            Date.prototype.Format = function (fmt) { //author: meizz 
+                var o = {
+                    "M+": this.getMonth() + 1, //月份 
+                    "d+": this.getDate(), //日 
+                    "h+": this.getHours(), //小时 
+                    "m+": this.getMinutes(), //分 
+                    "s+": this.getSeconds(), //秒 
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                    "S": this.getMilliseconds() //毫秒 
+                };
+                if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o)
+                    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return fmt;
+            }
+            //获得某月的天数     
+            function getMonthDays(myYear, myMonth) {
+                var monthStartDate = new Date(myYear, myMonth, 1);
+                var monthEndDate = new Date(myYear, myMonth + 1, 1);
+                var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+                return days;
+            }
+
+            $("#ExcelExport").click(function () {
+                $("#ListForm").attr("action", "ExcelExport.html");
+                $("#ListForm").submit();
+                $("#ListForm").attr("action");
+            });
+        </script>
+    }
+}

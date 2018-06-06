@@ -1,0 +1,51 @@
+﻿@{
+    SysSet BasicSet = ViewBag.BasicSet;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    string ActionName = ViewBag.ActionName;
+    bool ShowDel = false;
+    if(ActionName.ToLower()=="index"){
+        ShowDel = true;
+    }
+    if (ViewBag.NoShowDel != null)
+    {
+        ShowDel = false;
+    }
+    bool IsAjax = Request.QueryString["IsAjax"] != null ? true : false;
+}
+@if (!IsAjax){
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+  <div class="col-md-12"> 
+    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+    <h3 class="page-title"> @(ViewBag.Title) @if(IsDel=="1"){
+                                                 <small class="btn btn-sm red"><i class="fa fa-trash-o"></i> 当前为回收站模式</small>
+    }
+    </h3>
+    <ul class="page-breadcrumb breadcrumb">
+        @if (ShowDel){
+      <li class="btn-group">
+          <button class="btn blue SetIsDel" type="button" href="?IsDel=@(1-Int16.Parse(IsDel))">
+              <i class="fa fa-trash-o"></i>
+              <span>@(IsDel=="1"?"退出":"进入")回收站</span>
+          </button>
+      </li>
+        }
+      <li> <i class="fa fa-home"></i> <a href="/Agent"> @(BasicSet.AgentName) </a> <i class="fa fa-angle-right"></i> </li>
+      <li> <a href="javascript:void(0);"> @(ViewBag.Title) </a> </li>
+    </ul>
+    <!-- END PAGE TITLE & BREADCRUMB--> 
+  </div>
+</div>
+<!-- END PAGE HEADER-->
+<script>
+    $(function () {
+        $(".SetIsDel").click(function () {
+            location.href = $(this).attr("href");
+        });
+        @if (IsDel == "1")
+        {
+        @:$("<input type='hidden' name='IsDel' id='IsDel' value='1' />").appendTo("#ListForm");
+        }
+    });
+</script>
+}

@@ -1,0 +1,99 @@
+﻿@charset "utf-8";
+/***
+Login page
+***/
+/* logo page */
+.login { background-color: #FFF !important; }
+.login .logo { margin: 20px auto 0; padding: 15px; height:80px;}
+.login .logo h3{color:#0082d8; font-size:26px; width:1000px; margin:auto; font-family:"微软雅黑"; line-height:50px;}
+.login .content {
+    background:#80DFF1;
+    background-image:-webkit-gradient(linear,0 0, 100% 100%,from(#80DFF1),to(#498BD5));
+    background-image:-webkit-linear-gradient(30deg,#80DFF1,#498BD5);
+    background-image:-moz-linear-gradient(left 30deg,#80DFF1,#498BD5);
+    background-image:-ms-linear-gradient(left 30deg,#80DFF1,#498BD5);
+    background-image:-o-linear-gradient(30deg,#80DFF1,#498BD5);
+    background-image:linear-gradient(left,#80DFF1,#498BD5);
+    position:relative;
+    height:382px;
+}
+.login .content h3 { color: #eee; }
+.login .content h4 { color: #eee; }
+.login .content p, .login .content label { color: #fff; }
+.login .content .login-form, .login .content .forget-form { padding: 0px; margin: 0px; }
+.login .content .login-form{width: 346px; display:block !important; background:#FFF;position:absolute; left:50%;top:-15px;height:420px;margin-left:140px;}
+.login .content .form-control { background-color: #fff; }
+.login .content .forget-form { display: none; }
+.login .content .register-form { display: none; }
+.login .content .form-title { font-weight:normal;margin:0 0 30px 0;padding:0 0 0 20px;background:#0082D8;color:#FFF; font-size:15px; height:38px; line-height:38px; position:relative;}
+.login .content .form-title span{font-size:18px; margin-left:5px;}
+.login .content .form-title em{border-bottom: 6px solid #FFF;border-left: 6px solid #FFF;border-right: 6px solid #FFF;
+  border-style: solid;
+  color:#0082D8;
+  border-width: 6px;
+  display: block;
+  font-size: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  left: 45px;
+  bottom: -12px;
+  transition: all 0.2s linear 0s;
+  width: 0;
+}
+.login .content .form-actions { background-color: transparent; clear: both; border: 0px; padding: 0px 20px 0px 20px; }
+.login .content .form-actions .checkbox { margin-left: 0; padding-left: 0; }
+.login .content .forget-form .form-actions { border: 0; margin-bottom: 0; padding-bottom: 20px; }
+.login .content .register-form .form-actions { border: 0; margin-bottom: 0; padding-bottom: 0px; }
+.login .content .form-actions .checkbox { margin-top: 8px; display: inline-block; }
+.login .content .form-actions .btn { margin-top: 1px;font-size:18px;padding:5px 20px; line-height:26px;}
+.login .content .forget-password {}
+.login .content .forget-password p{padding:0 20px; color:#666}
+.login .content .forget-password .tablebox{padding:0 20px;}
+.login .content .create-account { padding:0px 20px 0px 20px; height:22px; line-height:22px;}
+.login .content .create-account p{ color:#999; text-align:right;}
+.login .content .create-account a { display: inline-block; margin-top: 5px; }
+/* select2 dropdowns */
+.login .content .select2-container i { display: inline-block; position: relative; color: #ccc; z-index: 1; top:1px; margin: 4px 4px 0px 3px; width: 16px; height: 16px; font-size: 16px; text-align: center; }
+.login .content .has-error .select2-container i { color: #b94a48; }
+.login .content .select2-container a span { font-size: 13px; }
+.login .content .select2-container a span img { margin-left: 4px; }
+/* footer copyright */
+.login .copyright { text-align: center; margin: 0 auto; padding: 10px; color: #eee; font-size: 13px; background:#0082D8; text-align:right;height:110px;position:absolute;bottom:0; left:0; width:100%;}
+.login .copyright p{padding:0;margin:0; line-height:18px;}
+.form-group{margin-top:20px; padding:0 20px;}
+.input-icon{width:100%;}
+.bottom_nav{background:#2A373F; height:80px; position:fixed; bottom:0;left:0;width:100%;}
+.img_box{background:url(../../img/pages/agent_login.png); width:336px; height:224px;top:79px;left:50%;position:absolute;margin-left:-140px;}
+@media (max-width: 640px) {
+/***
+Login page
+***/
+html{
+    height:100%;
+    overflow:hidden;
+    background:#80DFF1;
+    background-image:-webkit-gradient(linear,0 0, 100% 100%,from(#80DFF1),to(#498BD5));
+    background-image:-webkit-linear-gradient(30deg,#80DFF1,#498BD5);
+    background-image:-moz-linear-gradient(left -45deg,#80DFF1,#498BD5);
+    background-image:-ms-linear-gradient(left -45deg,#80DFF1,#498BD5);
+    background-image:-o-linear-gradient(-45deg,#80DFF1,#498BD5);
+    background-image:linear-gradient(left,#80DFF1,#498BD5);
+}
+.login {
+    background:url(../../img/pages/agent_mobile_login.png) no-repeat center center; background-size:90% 90% !important;
+    background-color:transparent !important;
+    position:static;
+    height:100%;
+}
+.login .content{background:none;}
+.login .logo {margin-top:10px;}
+.login .logo h3{color:#FFF;font-size:22px; text-align:center; width:100%;}
+.login .content {padding: 0px;width: 100%;}
+.login .content .login-form{width:74%; left:13%; margin:20px 0 0 0;}
+.login .content h3 {font-size: 22px;}
+.login .checkbox {font-size: 13px;}
+.login .content .login-form{}
+.img_box{background:none; display:none;}
+.bottom_nav{display:none;}
+}

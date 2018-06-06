@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+        <link href="/Content/Metronic/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="/Content/Metronic/plugins/jquery-1.7.1.min.js"></script>
+        @RenderSection("HeaderScripts", false)
+@*        <link rel="stylesheet" href="/Content/HaoFu/css/custom.css" />*@
+        <link rel="stylesheet" href="/Content/HaoFu/css/MetronicStyle.css" />
+        
+		<title>@this.ViewBag.Title</title>
+	</head>
+    <body>
+    @RenderBody()
+    @RenderSection("FooterScripts", false)
+    <script>
+        $(function () {
+            var height = $("body").height();
+            var frameId = window.frameElement && window.frameElement.id || '';
+            $(top.frames[frameId]).attr("height", height);
+        });
+    </script>
+    </body>
+</html>

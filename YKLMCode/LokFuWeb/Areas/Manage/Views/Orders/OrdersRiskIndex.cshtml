@@ -1,0 +1,221 @@
+﻿@{
+    IList<Orders> OrdersList = ViewBag.OrdersList;
+    string IsDel = Request.QueryString["IsDel"] != null ? Request.QueryString["IsDel"].ToString() : "0";
+    Orders Orders = ViewBag.Orders;
+    ViewBag.NoShowDel = true;
+    ViewBag.SMUid = 209;
+    LokFuEntity Entity = ViewBag.Entity;
+    IList<Users> UsersList = ViewBag.UsersList;
+    IList<SysAgent> SysAgentList = ViewBag.SysAgentList;
+    bool IsShowSupAgent = ViewBag.IsShowSupAgent;
+    bool IsInfo = ViewBag.IsInfo;
+    bool IsAudit = ViewBag.IsAudit;
+    bool IsForceRefund = ViewBag.IsForceRefund;
+}
+@Html.Partial("~/Areas/Manage/Views/Shared/Menu.cshtml")
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <form style="padding: 0 20px 10px 20px;" id="ListForm" name="ListForm" method="get">
+        <input type="hidden" id="IsFirst" name="IsFirst" value="1" />
+        <select name="TrunType" class="form-control input-small input-inline input-sm" id="TrunType" style="width: 100px !important;">
+            <option value="1" @(Orders.TrunType == 1 ? "selected" : "")>交易号</option>
+            <option value="2" @(Orders.TrunType == 2 ? "selected" : "")>登录账户</option>
+            <option value="3" @(Orders.TrunType == 3 ? "selected" : "")>真实姓名</option>
+            <option value="4" @(Orders.TrunType == 4 ? "selected" : "")>商户名称</option>
+        </select>
+        <input type="text" class="pagination-panel-input form-control input-smedium input-inline input-medium" name="TNum"  value="@(Orders.TNum)" />
+        <span class="seperator">|</span>
+        <span>调单时间：</span>
+        <input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="STime" id="STime" value="@(Orders.STime == DateTime.MinValue ? "" : Orders.STime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        ~<input type="text" class="pagination-panel-input form-control  input-inline input-sm  Wdate" name="ETime" id="ETime" value="@(Orders.ETime == DateTime.MinValue ? "" : Orders.ETime.ToString("yyyy-MM-dd HH:mm:ss"))" />
+        <span class="seperator">|</span>
+        <select name="DDAuto" class="form-control input-small input-inline input-sm" id="DDAuto" style="width: 100px !important;">
+            <option value="">调单类型</option>
+            <option value="1" @(Orders.DDAuto == 1 ? "selected" : "") >自动调单</option>
+            <option value="2" @(Orders.DDAuto == 2 ? "selected" : "") >调单协查</option>
+        </select>
+        <span class="seperator">|</span>
+        <select name="IdCardState" class="form-control input-small input-inline input-sm" id="IdCardState" style="width: 100px !important;">
+            <option value="">调单状态</option>
+            <option value="1" @(Orders.IdCardState == 1 ? "selected" : "") >待上传</option>
+            <option value="2" @(Orders.IdCardState == 2 ? "selected" : "") >审核中</option>
+            <option value="3" @(Orders.IdCardState == 3 ? "selected" : "") >审核通过</option>
+            <option value="4" @(Orders.IdCardState == 4 ? "selected" : "") >审核失败</option>
+            <option value="5" @(Orders.IdCardState == 5 ? "selected" : "") >终止调单</option>
+            <option value="6" @(Orders.IdCardState == 6 ? "selected" : "") >强制退款</option>
+        </select>
+        <span class="seperator">|</span>
+        <select class="form-control input-xsmedium input-inline input-sm select2me" data-placeholder="==分支机构==" name="Agent" id="Agent">
+            <option value="">==分支机构==</option>
+            @foreach (var p in SysAgentList)
+            {
+                <option value="@(p.Id)"@(Orders.Agent == p.Id ? " selected" : "")>@(p.Name)</option>
+            }
+        </select>
+        <span id="S_IsShowSupAgent">显示下级：</span>
+        <select name="IsShowSupAgent" id="IsShowSupAgent" class="form-control input-inline input-sm input-xsmall" style="width: 60px !important;">
+            <option value="false" @(!IsShowSupAgent ? "selected" : "")>否</option>
+            <option value="true"  @(IsShowSupAgent ? "selected" : "")>是</option>
+        </select>
+        <button class="btn btn-sm yellow table-group-action-submit" type="submit"><i class="fa fa-check"></i>查询</button>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box light-grey">
+            <div class="portlet-title">
+                <div class="caption"><i class="fa fa-globe"></i>@(ViewBag.Title)</div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-hover tablethc" id="ListBox">
+                        <thead>
+                            <tr>
+                                <th>交易号 </th>
+                                <th>交易商户 </th>
+                                <th>交易金额 </th>
+                                <th>交易类型 </th>
+                                <th>交易时间</th>
+                                <th>调单类型 </th>
+                                <th>调单状态 </th>
+                                <th>调单时间 </th>
+                                <th>过期时间 </th>
+                                <th>操作类型 </th>
+                                <th width="80">操作 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (OrdersList.Count() <= 0)
+                            {
+                                <tr>
+                                    <td colspan="20" style="text-align: center; width: 100%; height: 100%; padding: 50px 0;">
+                                        <img src="/Content/Manage/images/@(Request.QueryString["IsFirst"] == null ? "Index_back_img" : "Index_back_img_to").png" />
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var p in OrdersList)
+                                {
+                                    Users Users = UsersList.FirstOrNew(n => n.Id == p.UId);
+                                <tr class="odd gradeX">
+                                    <td class="center">
+                                        <a href="Info.html?Id=@(p.Id)" class="Ajax">@(p.TNum)</a>
+                                    </td>
+                                    <td class="center"><a href="/Manage/Users/Info.html?Id=@(Users.Id)" class="Ajax">@(Users.NeekName)</a></td>
+                                    <td class="center price">@(p.Amoney.ToString("F2")) </td>
+                                    <td class="center">[<span>@(p.GetTTName())</span>]</td>
+                                    <td class="center">@(p.AddTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                                    <td class="center">
+                                        @switch (p.DDAuto)
+                                        {
+                                            case 1:
+                                            @("自动调单")
+                                                break;
+                                            case 2:
+                                            @("调单协查")
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="center">
+                                        @switch (p.IdCardState)
+                                        {
+                                            case 1:
+                                            @("待上传")
+                                                break;
+                                            case 2:
+                                            @("审核中")
+                                                break;
+                                            case 3:
+                                            @("审核通过")
+                                                break;
+                                            case 4:
+                                            @("审核失败")
+                                                break;
+                                            case 5:
+                                            @("终止调单")
+                                                break;
+                                            case 6:
+                                            @("强制退款")
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="center">@(p.CardAddTime.HasValue ? p.CardAddTime.Value.ToString("yyyy-MM-dd HH:mm") : "") </td>
+                                    <td class="center @(DateTime.Now > p.DDLastTime ? "price" : "")">@(p.DDLastTime.HasValue ? p.DDLastTime.Value.ToString("yyyy-MM-dd") : "") </td>
+                                    <td class="center">
+                                        @{
+                                        string oName = string.Empty;
+                                        if (p.IdCardState >= 1)
+                                        {
+                                            switch (p.CardUpType)
+                                            {
+                                                case 0:
+                                                    oName = "自传凭证";
+                                                    break;
+                                                case 1:
+                                                    oName = "代传凭证";
+                                                    break;
+                                                case 2:
+                                                    oName = "担保";
+                                                    break;
+                                            }
+                                        }
+                                        }
+                                        @(oName)
+                                    </td>
+                                    <td class="center">
+                                        @if (IsInfo)
+                                        {
+                                            <a class="label label-sm label-success Ajax" style="background:#3cc051;" href="DiaoDanInfo.html?Id=@(p.Id)" title="调单查看"><i class="fa fa-gavel"></i>查看</a>
+                                        }
+                                        @if (p.IdCardState == 2 && IsAudit)
+                                        {
+                                            <a class="label label-sm label-success Ajax" style="background:#3cc051;" href="DiaoDanAudit.html?Id=@(p.Id)" title="调单审核"><i class="fa fa-gavel"></i>审核</a>
+                                        }
+                                        @if ((p.IdCardState == 1 || p.IdCardState == 4) && IsForceRefund)
+                                        {
+                                            <a class="label label-sm label-success Ajax" style="background:#3cc051;" href="ForceRefund.html?Id=@(p.Id)" title="强制退款"><i class="fa fa-gavel"></i>强制退款</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @Html.Partial("~/Areas/Manage/Views/Shared/Page.cshtml", OrdersList)
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+@section FooterScripts
+{
+    <script src="/Content/Metronic/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript">
+        if ($("#Agent").val() == "") {
+            $("#S_IsShowSupAgent").hide();
+            $("#IsShowSupAgent").hide();
+        }
+        $("#Agent").change(function () {
+            if ($("#Agent").val() != "") {
+                $("#S_IsShowSupAgent").show();
+                $("#IsShowSupAgent").show();
+            }
+            else {
+                $("#S_IsShowSupAgent").hide();
+                $("#IsShowSupAgent").hide();
+            }
+        });
+        $('#Agent').select2();
+    </script>
+}
+@section HeaderScripts
+{
+    @{
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2.css" />
+        <link rel="stylesheet" type="text/css" href="/Content/Metronic/plugins/select2/select2-metronic.css" />
+    }
+}

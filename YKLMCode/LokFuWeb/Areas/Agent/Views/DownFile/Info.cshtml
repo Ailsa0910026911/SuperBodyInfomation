@@ -1,0 +1,28 @@
+﻿@{
+    IList<DownFile> DownFileList = ViewBag.DownFileList;
+}
+<body class="index inquiry order">
+    <div class="main-content clearfix">
+	<div class="ifarm-index">
+	<div class="inquiry-cont"></div>
+	<div class="list-table">
+		<table style="width:100%">
+			<thead>
+                <th width="80%" style="text-align:left;">文件 </th>
+                <th width="20%">发布时间 </th>
+			</thead>
+			<tbody>
+                @foreach (var p in DownFileList)
+                {
+                    <tr class="odd gradeX">
+                        <td style="text-align:left;"><a href="@(Utils.ImageUrl("DownFile", p.Pic))" target="_blank">@(p.Pic)</a></td>
+                        <td class="center">@(p.AddTime.ToString("yyyy-MM-dd hh-mm")) </td>
+                    </tr>
+                }
+			</tbody>
+		</table>
+        @Html.Partial("~/Areas/Agent/Views/Shared/NewPage.cshtml", DownFileList)
+	</div>
+    </div>
+    </div>
+</body>

@@ -1,0 +1,90 @@
+.index{ background: url(../image/bg.png) no-repeat; background-size: 100%; font-family: "microsoft yahei,arial, helvetica, sans-serif"}
+.index .share{ position: absolute; bottom: 3%; width: 100%; text-align: center; z-index: 10; }
+.index .but, .register .but{ display: block; width: 80%; padding: .6rem 0; margin: 0 auto 1rem; background: #ffdc73; color: #f86000; border-radius: 1.2rem; }
+.index .already{ color: #fff;}
+.register{background: #f4f5f9;  font-family: "microsoft yahei,arial, helvetica, sans-serif"}
+.register .sec-main{ width: 100%;  overflow: hidden; margin-top: 1rem; }
+.register .form-control{ border: none; height: 4.5rem;}
+.register li{ position: relative;}
+.register .godes{ padding: 1.2rem; background: #ff6a43; color: #fff; position: absolute; top: 0; right: 0; border-radius: .4rem;}
+.register .btn-block{ width: 90%; margin: 0 auto; background: #ffdc73; border: none; color: #f86000; outline: none;}
+img{ max-width: 100%; max-height: 100%; }
+html{ font-size: 14px; font-family: "Microsoft YaHei", Arial; }
+.list-unstyled {  padding-left: 0;  list-style: none;  margin: 0;}
+.inline-block{ display: inline-block; }
+.pull-right {  float: right;}
+.pull-left {  float: left;}
+.text-red{ color: red; }
+.text-center{ text-align: center;}
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1466762050_5810058.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1466762050_5810058.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1466762050_5810058.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1466762050_5810058.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1466762050_5810058.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+a,button,input,textarea,select{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.iconfont{font-family:"iconfont"; font-size:16px;font-style:normal;} 
+.invite{ background: #f1f1f1; box-sizing: border-box;}
+.invite .invite-main{ box-sizing: border-box; -webkit-box-sizing: border-box; }
+.invite .invite-main .popter{ padding: 1rem; }
+.invite .invite-main .popter i{color:#2ea1f1; }
+.invite .invite-list{ margin-bottom: 1rem; background: #ffffff;  padding: 0 1rem; border-bottom: .1rem solid #ddd;}
+.invite .invite-list .inp{ outline: none;  width: 100%;  border: none; vertical-align: middle;}
+.invite .invite-list li{ height: 3rem; line-height: 3rem; border-bottom: .1rem solid #ddd; }
+.invite .invite-list li:last-child{ border-bottom: none;  }
+.invite .invite-list li div{ width: 70% }
+.invite .invite-list .invite-left{ width: 6rem; }
+.invite .invite-list select{ margin-right: .5rem; height: 2rem; line-height: 2rem; outline: none; width: 40%;}
+.invite .invite-list .codes{ width: 6rem }
+.invite .invite-list img{ vertical-align: middle; margin-left: 1rem; }
+.invite .btn{ display: inline-block; padding: .5rem 4rem; border-radius: .5rem; border: .1rem solid #fe7620; background: #fe7620; color: #fff; margin: 1rem auto; }
+.invite .affiliate{ background: #fff; padding: 1rem;}
+.invite .affiliate .top{ padding: 1rem 0; border-bottom: .1rem solid #ddd; margin-bottom: 1rem;}
+.invite .affiliate h2{ margin: 0; font-weight: normal;}
+.invite .affiliate li{ padding: .5rem 0;}
+.invite .btn-warp{ background: #fff; padding-top: 1rem;}
+.invite .invite-list.last{ margin-bottom: 0;}
+img{ max-width: 100%; max-height: 100%; }
+html{ font-size: 14px; font-family: "Microsoft YaHei", Arial; }
+.list-unstyled {  padding-left: 0;  list-style: none;  margin: 0;}
+.inline-block{ display: inline-block; }
+.pull-right {  float: right;}
+.pull-left {  float: left;}
+.text-red{ color: red; }
+.text-center{ text-align: center;}
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1466762050_5810058.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_1466762050_5810058.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_1466762050_5810058.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/font_1466762050_5810058.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_1466762050_5810058.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+a,button,input,textarea,select{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+.iconfont{font-family:"iconfont"; font-size:16px;font-style:normal;} 
+.invite{ background: #f1f1f1; box-sizing: border-box;}
+.invite .invite-main{ box-sizing: border-box; -webkit-box-sizing: border-box; }
+.invite .invite-main .popter{ padding: 1rem; }
+.invite .invite-main .popter i{ color: #2ea1f1; }
+.invite .invite-list{ margin-bottom: 1rem; background: #ffffff;  padding: 0 1rem; border-bottom: .1rem solid #ddd;}
+.invite .invite-list.last{ margin-bottom: 0;}
+.invite .invite-list .inp{ outline: none;  width: 100%;  border: none; vertical-align: middle;}
+.invite .invite-list li{ height: 3rem; line-height: 3rem; border-bottom: .1rem solid #ddd; }
+.invite .invite-list li:last-child{ border-bottom: none;  }
+.invite .invite-list li div{ width: 70% }
+.invite .invite-list .invite-left{ width: 6rem; }
+.invite .invite-list select{ margin-right: .5rem; height: 2rem; line-height: 2rem; outline: none; width: 40%;}
+.invite .invite-list .codes{ width: 6rem }
+.invite .invite-list img{ vertical-align: middle; margin-left: 1rem; }
+.invite .btn{ display: inline-block; padding: .5rem 4rem; border-radius: .5rem; border: .1rem solid #fe7620; background: #fe7620; color: #fff; margin: 1rem auto; }
+.invite .affiliate{ background: #fff; padding: 1rem;}
+.invite .affiliate .top{ padding: 1rem 0; border-bottom: .1rem solid #ddd; margin-bottom: 1rem;}
+.invite .affiliate h2{ margin: 0; font-weight: normal;}
+.invite .btn-warp{ background: #fff; padding-top: 1rem;}
+.invite .affiliate li{ padding: .5rem 0;}
+.suess{ padding-top: 10rem; background: #fff;}
+.suess i{ font-size: 4rem; color: #ff7620;}
+.suess .text{ padding: 0 3rem;}
+.suess .text p{ line-height: 1.6rem;}

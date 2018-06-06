@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+    IList<UserCard> UserCardList = ViewBag.UserCardList;
+    FastUser FastUser = ViewBag.FastUser;
+    string Act=ViewBag.Act;
+}
+<!DOCTYPE >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择收款银行</title>
+    <link href="/Content/Mobile/Fast/css/main.css?2017010901" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="/Content/Mobile/js/jquery.js"></script>
+</head>
+<body style="background-color: #3595f2;">
+    @if (Act == "setbank") { 
+    <div class="xz_text">
+        温馨提示：<br />
+        1.更换银行卡渠道需要重新验证商户信息，大约需要5分钟，系统将限制该时间内发起交易。<br />
+        2.部分换卡绑定后，原银行卡将不能再次被使用。<br />
+        3.<b style="color:red;">开通失败您将不能使用该交易，请谨慎选择收款银行卡。</b>
+    </div>
+    }else{
+    <div class="xz_text">
+        温馨提示：<br />
+        1.首次使用收付直通车功能，需要设定一张收款银行卡，<b style="color:#FF0;">由于后期换卡比较繁琐及不稳定，请谨慎选择常用卡。</b><br />
+        2.<b style="color:red;">开通失败您将不能使用该交易，请谨慎选择收款银行卡。</b><br />
+        3.如需“新增或删除”银行卡，请在“商户中心-银行卡列表”中进行管理。
+    </div>
+    }
+    <div class="xz_box">
+        <span class="sp06">请选择收款银行</span>
+        @foreach(var p in UserCardList){
+        <div class="bank @(p.Card==FastUser.Card?"bank2":"")" data-bank="@(p.Id)">
+            <em class="bankicon@(p.BId)"></em>
+            <span class="sp02">@(p.Bank)</span>
+            <span class="sp03">尾号@(p.Card.Substring(p.Card.Length-4,4))</span>
+        </div>
+        }
+        <span class="sp09">如需新增/删除请前往商户中心</span>
+        <span class="sp10"><input type="button" value="设为收款银行卡" id="saveBank" /></span>
+    </div>
+    <p>&nbsp;</p>
+    <script>
+        var userAgent = navigator.userAgent.toLowerCase();
+        var ismozilla = /mozilla/.test(userAgent) && !/(compatible|webkit)/.test(userAgent);
+        $(function () {
+
+            $(".bank").click(function () {
+                $(".bank").removeClass("bank2");
+                $(this).addClass("bank2");
+            }).each(function () {
+                var box = $(this);
+                var bh = box.height();
+                var BH = box.outerHeight();
+                var ico = box.find("em");
+                var icoh = 124;
+                var x = bh / icoh;
+                if (ismozilla) {
+                    ico.css({ transform: "scale(" + x + ")" });
+                    ico.css("position", "absolute");
+                    ico.css("left", (bh - icoh)/2);
+                    ico.css("top", (BH - icoh) / 2);
+                    box.find(".sp02").css("padding-left", bh + 15);
+                } else {
+                    ico.css({ zoom: x });
+                }
+            });
+            $("#saveBank").click(function () {
+                if ($(".bank2").length != 1) {
+                    alert("请选择银行");
+                    return false;
+                }
+                var bank = $(".bank2").data("bank");
+                if ($.isNumeric(bank)) {
+                    $.post("SetBank.html", { bankid: bank }, function (data) {
+                        if (data == "ok") {
+                            alert("设置成功");
+                            location.href = "myqrcode.html";
+                        } else {
+                            alert(data);
+                        }
+                    });
+                }
+                else {
+                    alert("获取银行出错，请重试！");
+                    return false;
+                }
+                
+            });
+        });
+    </script>
+</body>
+</html>
+
