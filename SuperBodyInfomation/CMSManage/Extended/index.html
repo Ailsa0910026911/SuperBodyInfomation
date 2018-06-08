@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<title>jQuery搜索框插件下拉菜单选择代码 - xw素材网</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/mock.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.dropdown.css">
+<script src="js/jquery.dropdown.js"></script>
+<style>
+body {
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 200px;
+}
+</style>
+</head>
+<body>
+<h2> Demo</h2>
+<br>
+<div class="row">
+<div class="col-sm-4">
+  <div class="text-info">多选、JSON渲染、分组功能</div><br>
+  <div class="dropdown-mul-1">
+	<select style="display:none" name="" id="" multiple placeholder="请选择"> </select>
+  </div>
+</div>
+</div>
+<br>
+<br>
+<div class="row">
+<div class="col-sm-4">
+  <div class="text-info">多选、Option渲染</div><br>
+  <div class="dropdown-mul-2">
+	<select style="display:none" name="" id="mul-2" multiple placeholder="请选择">
+	  <option value="1" selected>1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="3" selected>我是默认选中的</option>
+	  <option value="4" disabled>4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	</select>
+  </div>
+</div>
+</div>
+<br>
+<br>
+<div class="row">
+<div class="col-sm-4">
+  <div class="text-info">单选模式，Option渲染</div><br>
+  <div class="dropdown-sin-1">
+	<select style="display:none" placeholder="请选择：测试placeholder">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+	</select>
+  </div>
+</div>
+</div>
+<br>
+<br>
+<div class="row">
+<div class="col-sm-4">
+  <div class="text-info">10000 条数据搜索测试</div><br>
+  <div class="dropdown-sin-2">
+	<select style="display:none" multiple placeholder="请选择：测试placeholder"></select>
+  </div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+<script>
+var Random = Mock.Random;
+var json1 = Mock.mock({
+  "data|10-50": [{
+	name: function() {
+	  return Random.name(true)
+	},
+	"id|+1": 1,
+	"disabled|1-2": true,
+	groupName: '分组名',
+	"groupId|1-4": 1,
+	"selected": false
+  }]
+});
+$('.dropdown-mul-1').dropdown({
+  data: json1.data,
+  limitCount: 40,
+  multipleMode: 'label',
+  choice: function() {
+	// console.log(arguments,this);
+  }
+});
+var json2 = Mock.mock({
+  "data|10000-10000": [{
+	name: function() {
+	  return Random.name(true)
+	},
+	"id|+1": 1,
+	"disabled": false,
+	groupName: '分组名',
+	"groupId|1-4": 1,
+	"selected": false
+  }]
+});
+$('.dropdown-mul-2').dropdown({
+  limitCount: 5,
+  searchable: false
+});
+$('.dropdown-sin-1').dropdown({
+  readOnly: true,
+  input: '<input type="text" maxLength="20" placeholder="请输入搜索">'
+});
+$('.dropdown-sin-2').dropdown({
+  data: json2.data,
+  input: '<input type="text" maxLength="20" placeholder="请输入搜索">'
+});
+</script>
+<div style="text-align:center;margin:-150px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<p>来源：<a href="http://www.xwcms.net/" target="_blank">xw素材网</a></p>
+</div>
+</body>
+</html>

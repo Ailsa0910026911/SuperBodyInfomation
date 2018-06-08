@@ -38,7 +38,7 @@
         var money = $("#Money").val();
         $.ajax({
             type: 'post',
-            url: '/Methods/ShareProfit',
+            url: '/Methods/ShareProfit1',
             data: { "id": id, "money": money },
             success: function (msg) {
                 alert(msg);

@@ -148,6 +148,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Extended\css\bootstrap.min.css" />
+    <Content Include="Extended\css\jquery.dropdown.css" />
+    <Content Include="Extended\index.html" />
+    <Content Include="Extended\js\jquery.dropdown.js" />
+    <Content Include="Extended\js\jquery.js" />
+    <Content Include="Extended\js\mock.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="HtmlPage1.html" />
@@ -180,6 +186,10 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="Extended\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Extended\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Extended\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Extended\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -895,6 +905,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\MethodsController.cs" />
     <Compile Include="Extended\LoginCheckFilterAttribute.cs" />
+    <Compile Include="Extended\SysAgentList.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -982,6 +993,7 @@
     <Content Include="Views\Default\FenRunByUsers.cshtml" />
     <Content Include="Views\Shared\_FenRunByUsersTable.cshtml" />
     <Content Include="Views\Default\DistributionFenRun.cshtml" />
+    <Content Include="Views\Default\TiedCard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

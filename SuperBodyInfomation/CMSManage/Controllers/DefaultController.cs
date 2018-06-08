@@ -6,7 +6,7 @@ using LokFu.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -21,6 +21,8 @@ namespace CMSManage.Controllers
 
         public ActionResult Test()
         {
+            List<SysAgent> list = new List<SysAgent>();
+            list.Add(null);
             //var num = "17638836608";
             ////电信手机号码正则        
             //string dianxin = @"^1[3578][01379]\d{8}$";
@@ -305,6 +307,7 @@ namespace CMSManage.Controllers
 
         }
         #endregion
+        #region 分销分润配置
         //分销分润百分比配置
         [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult DistributionFenRunList(int id = 1)
@@ -314,7 +317,6 @@ namespace CMSManage.Controllers
                 return PartialView("_DistributionFenRunListTable", model);
             return View(model);
         }
-
         //添加/修改 BusinessShareProfit
         [LoginCheckFilterAttribute(IsCheck = true)]
         public ActionResult DistributionFenRun(BusinessShareProfit bs)
@@ -396,6 +398,42 @@ namespace CMSManage.Controllers
             if (Request.IsAjaxRequest())
                 return PartialView("_FenRunByUsersTable", model);
             return View(model);
+        }
+        #endregion
+        public ActionResult TiedCard(UserCard uc)
+        {
+            BankBin();
+            if (uc.Name != "" && uc.Name != null)
+            {
+                try
+                {
+                    var BasicBank = ct.BasicBank.Where(o => o.Id == uc.BId).FirstOrDefault();
+                    uc.Bank = BasicBank.Name;
+                    uc.Bin = BasicBank.BIN;
+                    uc.IsDel = 0;
+                    uc.ScanNo = uc.Card;
+                    uc.AddTime = DateTime.Now;
+                    uc.Pic = "0";
+                    ct.UserCard.Add(uc);
+                    ct.SaveChanges();
+                    return Content("<script>alert('添加成功！');history.go(-1);</script>");
+                }
+                catch (Exception e)
+                {
+                    Log.LoggerHelper.Error("用户绑卡失败,原因：" + e.Message);
+                    return Content("<script>alert('添加失败！');history.go(-1);</script>");
+                }
+            }
+            return View();
+        }
+        //绑定银行卡宾下拉列表
+        public void BankBin()
+        {
+            var bankbin = ct.BasicBank.ToList();
+            var slist = new List<SelectListItem>();
+            var list = new SelectList(bankbin, "Id", "Name");
+            slist.AddRange(list);
+            ViewBag.database = slist;
         }
     }
 }
